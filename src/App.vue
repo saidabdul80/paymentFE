@@ -5,6 +5,9 @@ import HelloWorld from "./components/HelloWorld.vue";
 
 <template>
   <header>
+    <v-btn variant="tonal">
+    Vuetify Button
+  </v-btn>
     <img
       alt="Vue logo"
       class="logo"
@@ -13,13 +16,8 @@ import HelloWorld from "./components/HelloWorld.vue";
       height="125"
     />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+    <div class="tw-bg-indigo-500 tw-text-white tw-flex tw-items-center tw-text-center tw-w-full tw-h-[300px]">
+      Tailwind used here for this container
     </div>
   </header>
 
