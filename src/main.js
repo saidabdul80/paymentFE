@@ -1,7 +1,8 @@
 import "./assets/main.css";
 
 import { createApp } from "vue";
-import { createPinia } from "pinia";
+//import { createPinia } from "pinia";
+import * as pinia from 'pinia'
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
@@ -12,8 +13,10 @@ import './assets/tailwind.css';
 
 import App from "./App.vue";
 import router from "./router";
-
+window.pinia = pinia
 const app = createApp(App);
+
+const { createPinia } = window.pinia
 
 app.use(createPinia());
 app.use(router);
@@ -23,4 +26,4 @@ const vuetify = createVuetify({
   })
 
 app.use(vuetify)
-app.mount("#app");
+app.mount("#app2");
