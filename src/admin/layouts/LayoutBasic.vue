@@ -1,5 +1,4 @@
 <template>
-
     <div class="tw-h-full tw-w-full tw-bg-red-200">
         <NotificationRoot />
         <main class="h-screen h-screen-ios overflow-y-auto md:pl-56 xl:pl-64 min-h-0">
@@ -20,17 +19,15 @@
 <script>
 import useUserStore from '@/admin/stores/user';
 import { useNotificationStore } from '@/stores/notification';
-import { RouterLink, RouterView } from 'vue-router';
 import NotificationRoot from '@/components/notifications/NotificationRoot.vue';
-import { ref, onMounted } from 'vue';
-
 
 export default {
+
     data() {
         return {
             userStore: useUserStore(),
-        };
-    },
+        }
+    }, 
     methods: {
         showNo() {
             const notificationStore = useNotificationStore();
@@ -46,8 +43,4 @@ export default {
     }
 }
 </script>
-
-
-
-
 <style scoped></style>
