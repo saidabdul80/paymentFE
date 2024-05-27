@@ -17,12 +17,15 @@
 
 
 <script>
+import { RouterLink, RouterView } from "vue-router";
 import useUserStore from '@/admin/stores/user';
 import { useNotificationStore } from '@/stores/notification';
 import NotificationRoot from '@/components/notifications/NotificationRoot.vue';
 
 export default {
-
+    components:{
+        RouterView
+    },
     data() {
         return {
             userStore: useUserStore(),
