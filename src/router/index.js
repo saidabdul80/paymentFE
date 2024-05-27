@@ -10,22 +10,15 @@ routes = routes.concat(AdminRoutes)
 const router = createRouter({
   history: createWebHistory(),
   linkActiveClass: 'active',
-  routes:[
-    {
-      path: "/",
-      name: "home",
-      component: () =>LayoutBasic,
-      meta: { requiresAuth: true },
-      },
-  ]
+  routes
 })
 
-router.beforeEach((to, from, next) => {
+/* router.beforeEach((to, from, next) => {
   const userStore = useUserStore()    
   let ability = to.meta.ability
   const { isAppLoaded } = globalStore
   next()
-/*  */
-})
+
+}) */
 
 export default router;

@@ -1,7 +1,9 @@
 <template>
-    <div class="tw-h-full tw-w-full tw-bg-red-200">
-        <NotificationRoot />
-        <main class="h-screen h-screen-ios overflow-y-auto md:pl-56 xl:pl-64 min-h-0">
+    <div class="tw-h-full tw-w-full tw-bg-gray-100">
+        <div class="tw-fixed tw-right-0 tw-top-0">
+            <NotificationRoot  />
+        </div>
+        <main class="overflow-y-auto md:pl-56 xl:pl-64 min-h-0">
             <div class="pt-16 pb-16">
                 <router-view />
             </div>
@@ -24,7 +26,8 @@ import NotificationRoot from '@/components/notifications/NotificationRoot.vue';
 
 export default {
     components:{
-        RouterView
+        RouterView,
+        NotificationRoot
     },
     data() {
         return {
@@ -33,6 +36,7 @@ export default {
     }, 
     methods: {
         showNo() {
+            alert()
             const notificationStore = useNotificationStore();
             notificationStore.showNotification({
                 type: 'success',

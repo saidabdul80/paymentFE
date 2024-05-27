@@ -170,4 +170,5 @@ function setNotificationTimeOut() {
 onMounted(() => {
   setNotificationTimeOut()
 })
+
 </script>
