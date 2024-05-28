@@ -1,18 +1,18 @@
 <template>
-    <div class="tw-h-full tw-w-full tw-bg-gray-100">
+    <div class="tw-flex tw-h-full tw-w-full tw-bg-gray-100">
         <div class="tw-fixed tw-right-0 tw-top-0">
             <NotificationRoot  />
         </div>
+        <SideBar />
         <main class="overflow-y-auto md:pl-56 xl:pl-64 min-h-0">
+            sdoisjoisdjoi
             <div class="pt-16 pb-16">
                 <router-view />
             </div>
         </main>
-        <v-btn variant="tonal" @click="showNo()">
-            Vuetify Button
-        </v-btn>
+ 
 
-        <v-icon color="teal-darken-2" icon="mdi-email" size="large"></v-icon>
+    
     </div>
 </template>
 
@@ -21,13 +21,15 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
 import useUserStore from '@/admin/stores/user';
+import SideBar from "@/components/sidebar/sidebar.vue"
 import { useNotificationStore } from '@/stores/notification';
 import NotificationRoot from '@/components/notifications/NotificationRoot.vue';
 
 export default {
     components:{
         RouterView,
-        NotificationRoot
+        NotificationRoot,
+        SideBar
     },
     data() {
         return {

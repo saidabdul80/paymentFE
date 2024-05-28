@@ -22,14 +22,28 @@ a,
 }
 
 @media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+}
+
+.translatex {
+  transform: scale(1.5);
+  transition: transform 2s ease-in;
+}
+
+.slide-fade-enter-active {
+  transition: all 2s ease;
+}
+
+.slide-fade-leave-active {
+  transition: all 2s ease;
+}
+
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(-30px);
+  opacity: 0;
+}
+
+/* Overriding the class*/
+.theme--light.v-application {
+  background: #011627;
 }
