@@ -13,10 +13,12 @@ import './assets/tailwind.css';
 
 import App from "./App.vue";
 import router from "./router";
+import { globals } from "./helpers/globals";
 window.pinia = pinia
 const app = createApp(App);
 
 const { createPinia } = window.pinia
+app.config.globalProperties.$globals = globals
 
 app.use(createPinia());
 app.use(router);
