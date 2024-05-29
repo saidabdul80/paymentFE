@@ -19,9 +19,9 @@
                         <v-btn :icon="!rail?'mdi-chevron-left':'mdi-chevron-right'" variant="text" @click.stop="rail = !rail"></v-btn>
                     </template>
                 </v-list-item>
-                <v-divider></v-divider>
-                <hr>
-                <br>
+                <v-list-item nav>
+                    <v-divider class="border-opacity-100" color="success"></v-divider>
+                </v-list-item>
                 <v-list density="compact" nav>
                     <v-list-item v-for="item in items" rounded="lg" active-class="tw-bg-green-100" size="xlarge"  :to="item.path"  :value="item.title">
                         <template v-slot:prepend>
