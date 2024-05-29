@@ -1,4 +1,4 @@
-export const globals ={
+export const constants ={
     text_size:{
         s1:'tw-text-sm',
         s2:'tw-text-md',
