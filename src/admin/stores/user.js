@@ -1,16 +1,10 @@
 import axios from 'axios';
 import { defineStore } from 'pinia';
 import { useNotificationStore } from '@/stores/notification';
-import { handleError } from '@/helpers/error-handling';
 
+import { useClient } from '@/stores/client';
 const useUserStore = (useWindow = false) => {
     const defineStoreFunc = useWindow ? window.pinia.defineStore : defineStore;
-
-    axios.interceptors.request.use((config) => {
-        config.headers['Authorization'] = `Bearer ${localStorage.getItem('auth.token')}`;
-        return config;
-    });
-
     return defineStoreFunc({
         id: 'user',
 
@@ -31,67 +25,42 @@ const useUserStore = (useWindow = false) => {
         },
 
         actions: {
-            updateCurrentUser(data) {
-                return new Promise((resolve, reject) => {
-                    axios.put('/api/staffs', data)
-                        .then((response) => {
-                            this.currentUser = response.data.data;
-                            Object.assign(this.userForm, response.data.data);
-                            const notificationStore = useNotificationStore();
-                            notificationStore.showNotification({
-                                type: 'success',
-                                message: '',
-                            });
-                            resolve(response);
-                        })
-                        .catch((err) => {
-                            handleError(err);
-                            reject(err);
-                        });
+            async updateCurrentUser(data) {
+                const response = await useClient().http({method:'put',path:'/staffs',data})
+                this.currentUser = response.data;
+                Object.assign(this.userForm, response.data.data);
+                const notificationStore = useNotificationStore();
+                notificationStore.showNotification({
+                    type: 'success',
+                    message: '',
+                });
+                    
+            },
+
+            async fetchCurrentUser(params) {
+                const response = await useClient().http({method:'get',path:'/staffs/me',data})
+                this.currentUser = response.data;
+                this.userForm = response.data;
+                const notificationStore = useNotificationStore();
+                notificationStore.showNotification({
+                    type: 'success',
+                    message: '',
                 });
             },
 
-            fetchCurrentUser(params) {
-                return new Promise((resolve, reject) => {
-                    axios.get('/api/staffs/me', { params })
-                        .then((response) => {
-                            this.currentUser = response.data.data;
-                            this.userForm = response.data.data;
-                            resolve(response);
-                        })
-                        .catch((err) => {
-                            handleError(err);
-                            reject(err);
-                        });
+            async uploadAvatar(data) {
+                const response = await useClient().http({method:'get',path:'/staffs/upload-avatar',data})
+                this.currentUser.avatar = response.data.avatar;
+                const notificationStore = useNotificationStore();
+                notificationStore.showNotification({
+                    type: 'success',
+                    message: '',
                 });
             },
 
-            uploadAvatar(data) {
-                return new Promise((resolve, reject) => {
-                    axios.post('/api/staffs/upload-avatar', data)
-                        .then((response) => {
-                            this.currentUser.avatar = response.data.data.avatar;
-                            resolve(response);
-                        })
-                        .catch((err) => {
-                            handleError(err);
-                            reject(err);
-                        });
-                });
-            },
-
-            fetchUserPermissions() {
-                return new Promise((resolve, reject) => {
-                    axios.get('/api/staffs/permissions')
-                        .then((response) => {
-                            this.currentAbilities = response.data.data;
-                            resolve(response);
-                        })
-                        .catch((err) => {
-                            handleError(err);
-                            reject(err);
-                        });
-                });
+            async fetchUserPermissions() {
+                const response = await useClient().http({method:'get',path:'/staffs/permissions',data})
+                this.currentAbilities = response.data.data;
             },
 
             hasAbilities(abilities) {

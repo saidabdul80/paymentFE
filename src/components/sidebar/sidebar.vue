@@ -1,20 +1,22 @@
 <template>
     <v-navigation-drawer v-model="pdrawer" :rail="rail" permanent>
-        <v-list-item nav class="tw-py-[7px]">
-            <template v-slot:prepend>
-                <v-btn icon="mdi-home" variant="text"></v-btn>
-            </template>
+        <v-list-item nav class="tw-py-[6px]">
             <template v-slot:default>
-                <transition name="slide-fade">
-                    <div class="text-truncate ">
-                        Gombe GIRAS
-                        <p>Other text</p>
+                <div class="tw-flex tw-py-4 tw-items-center">
+                    <v-btn icon="mdi-circle" color="green" class="tw-text-4xl " variant="text"></v-btn>
+                    <div>
+                        <transition name="slide-fade">
+                            <div class="tw-ms-2 tw-mt-1 text-truncate ">
+                                <span :class="$globals.text_size.s3" class="tw-text-green-900 tw-font-bold">Gombe State</span> 
+                                <p :class="$globals.text_size.s1">Internal Revenue</p>
+                            </div>
+                        </transition>
                     </div>
-                </transition>
+                </div>
             </template>
         </v-list-item>
         <v-divider class="border-opacity-100" color="success"></v-divider>
-        <v-list density="compact" nav>
+        <v-list density="compact" nav class="py-8">
             <v-list-item v-for="item in items" rounded="lg" active-class="tw-bg-green-100" size="xlarge" :to="item.path"
                 :value="item.title">
                 <template v-slot:prepend>
@@ -60,7 +62,6 @@ export default {
                 }
             ]
         }
-
     },
     watch: {
 

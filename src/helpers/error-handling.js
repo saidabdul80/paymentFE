@@ -13,9 +13,7 @@ export const handleError = (err) => {
     })
   } else {
     if (
-      err.response.data &&
-      (err.response.statusText === 'Unauthorized' ||
-        err.response.data === ' Unauthorized.')
+      err.response.data && err.response.data.includes('Unauthorized')
     ) {
       // Unauthorized and log out
       const msg = err.response.data.message

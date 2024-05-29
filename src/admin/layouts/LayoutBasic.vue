@@ -24,7 +24,6 @@
                 Main Content
             </v-main>
         </v-layout>
-   
     </div>
 </template>
 
