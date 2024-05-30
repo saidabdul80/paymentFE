@@ -3,12 +3,12 @@
         <v-list-item nav class="tw-py-[6px]">
             <template v-slot:default>
                 <div class="tw-flex tw-py-4 tw-items-center">
-                    <img class="tw-h-8 tw-w-auto" src="@/assets/logo.png" alt="Your Company" />
+                    <img class="tw-h-10 tw-w-auto" src="@/assets/logo.png" alt="Your Company" />
                     <div>
                         <transition name="slide-fade">
                             <div class="tw-ms-2 tw-mt-1 text-truncate ">
-                                <span :class="$constants.text_size.s3" class="tw-text-green-900 tw-font-bold">Gombe State</span> 
-                                <p :class="$constants.text_size.s1">Internal Revenue</p>
+                                <span :class="$constants.text_size.s5" class="tw-text-green-900 tw-font-bold">GOMBE STATE</span> 
+                                <p :class="$constants.text_size.s1" class="tw-text-xs tw-text-gray-500 ">IINTERNAL REVENUE SERVICE</p>
                             </div>
                         </transition>
                     </div>

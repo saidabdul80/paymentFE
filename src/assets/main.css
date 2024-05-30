@@ -63,4 +63,14 @@
             transform: rotate(360deg);
         }
     }
+
+
+    @font-face {
+        font-family: 'Visby Round CF Bold';
+        src: url('./fonts/Visby_Round_CF_Bold/Visby_Round_CF_Bold.otf') format('opentype');
+    }
+
+    * {
+        font-family: 'Visby Round CF Bold', sans-serif;
+    }
     

@@ -3,7 +3,7 @@
      
         <v-layout class="rounded rounded-md">
             <SideBar :drawer="drawer" :rail="drawer" />
-            <v-app-bar flat color="success">
+            <v-app-bar flat color="succes">
                 <v-app-bar-nav-icon variant="text" @click="drawer = !drawer"></v-app-bar-nav-icon>
 
                 <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
@@ -11,9 +11,15 @@
                 <v-spacer></v-spacer>
 
                 <template v-if="$vuetify.display.mdAndUp">
-                    <v-btn icon="mdi-magnify" variant="text"></v-btn>
 
-                    <v-btn icon="mdi-filter" variant="text"></v-btn>
+                    <v-switch
+                        v-model="mode"
+                        :label="`${mode}`"
+                        false-value="DARK"
+                        true-value="LIGHT"
+                        hide-details
+                    ></v-switch>
+
                 </template>
 
                 <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
@@ -59,6 +65,7 @@ export default {
             ],
             drawer:true,
             userStore: useUserStore(),
+            mode: 'LIGHT',
         }
     },
     watch:{
@@ -66,7 +73,7 @@ export default {
             this.items[1].title = n
         },
         '$route.name': function(n,o){
-            this.items[0].title = n   
+            this.items[0].title = n
         }
     },
     created(){

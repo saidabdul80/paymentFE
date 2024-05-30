@@ -18,7 +18,7 @@ export default [
             },
             {
                 path: "dashboard",
-                name: "Dashboard-Name",
+                name: "Admin Dashboard",
                 component: () => Dashboard,
                 meta: { ability: abilities.DASHBOARD },
             },
