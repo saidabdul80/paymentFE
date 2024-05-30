@@ -1,12 +1,12 @@
 <template>
-    <div class="sm:tw-col-span-2 sm:tw-col-start-1">
+    <div>
         <label :for="id" class="tw-block tw-text-sm tw-font-medium tw-leading-6 tw-text-gray-900">
             {{ label }}
             <span v-if="isRequired" class="text-red">*</span>
         </label>
         <div class="tw-mt-2">
-            <input type="text" :name="name" :id="id" :autocomplete="autoComplete" :placeholder="placeholder"
-                class="tw-block tw-w-full tw-rounded-md tw-border-0 tw-py-1.5 tw-text-gray-900 tw-shadow-sm tw-ring-1 tw-ring-inset tw-ring-gray-300 tw-placeholder:text-gray-400 tw-focus:ring-2 tw-focus:ring-inset tw-focus:ring-indigo-600 sm:tw-text-sm sm:tw-leading-6" />
+            <v-text-field variant="solo" color="green" :placeholder="placeholder" :required="isRequired" :id="id"
+                :name="name" :autocomplete="autoComplete" :rules="rules"></v-text-field>
         </div>
     </div>
 </template>
@@ -37,9 +37,25 @@ export default {
         },
         isRequired: {
             type: Boolean,
-            default: false
+            default: false,
         },
+        value: {
+            type: String,
+            default: '',
+        },
+        rules: {
+            type: Array,
+            default: () => [],
+        }
     },
+    watch: {
+        value(newVal) {
+            this.$emit('input', newVal);
+        },
+        vModel(newVal) {
+            this.$emit('input', newVal);
+        }
+    }
 };
 </script>
 

@@ -13,8 +13,7 @@
                     <div class="tw-mx-auto tw-w-full tw-max-w-sm lg:tw-w-96">
                         <div>
                             <div class="tw-flex tw-justify-center tw-mb-10">
-                                <img class="tw-h-20 tw-w-auto tw-mt-10 " src="@/assets/logo-full.png"
-                                    alt="Your Company" />
+                                <img class="tw-h-20 tw-w-auto tw-mt-10 " src="@/assets/logo.png" alt="Your Company" />
                             </div>
                             <p
                                 class="tw-mt-10 tw-text-sm tw-leading-6 tw-text-green-900 tw-text-center tw-text tw-font-semibold">
@@ -26,37 +25,25 @@
                                 <v-form>
                                     <v-row>
                                         <v-col cols="12" md="12" sm="12">
-                                            <v-text-field variant="solo" v-model="authStore.loginData.username"
-                                                :rules="usernameRules" required placeholder="G-TIN or phone number"
-                                                label="ID Number" color="green"></v-text-field>
-                                            <v-text-field variant="solo" :type="showPassword ? 'text' : 'password'"
-                                                v-model="authStore.loginData.password" :rules="passwordRules" required
-                                                placeholder="**********" label="Password" color="green"
-                                                :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                                @click:append-inner="showPassword = !showPassword"></v-text-field>
+                                            <TextField v-model="authStore.loginData.idNumber" :rules="idNumberRules"
+                                                label="ID Number" placeholder="G-TIN or phone number" id="idNumber"
+                                                name="idNumber" :isRequired="true" />
+
                                         </v-col>
                                     </v-row>
-                                    <div
-                                        class="tw-grid tw-gap-4 md:tw-grid-cols-2 tw-grid-cols-2   tw-items-center tw-justify-between">
-                                        <v-checkbox label="Remember me"></v-checkbox>
-                                        <div class=" tw-text-right  mb-3 ">
-                                            <a href="forgot-password"
-                                                class="tw-font-semibold tw-text-green-900 hover:tw-text-green-500">Forgot
-                                                password?</a>
-                                        </div>
-                                    </div>
                                     <div>
-                                        <v-btn @click.prevent="login()" type="submit" block color="green" size="large"
-                                            :class="`tw-bg-${$constants.primary}-900 tw-w-full`">
+                                        <v-btn @click.prevent="forgotPassword()" type="submit" block color="green"
+                                            size="large"
+                                            :class="`tw-bg-${$constants.primary}-900 tw-w-full tw-p-3 tw-mt-3`">
                                             <span v-if="isLoading" class="loader tw-h-5 tw-w-5"></span>
                                             Login
                                         </v-btn>
                                     </div>
                                     <p class="tw-mt-2 tw-text-sm tw-leading-6 tw-text-gray-500">
-                                        Don't have a GIRS account? Click here to
-                                        {{ ' ' }}
-                                        <a href="#" class="tw-font-semibold tw-text-green-900 hover:tw-text-green-700">
-                                            enrol yourself.
+                                        Already have an account?
+                                        <a href="login"
+                                            class="tw-font-semibold tw-text-green-900 hover:tw-text-green-700">
+                                            Login.
                                         </a>
                                     </p>
                                 </v-form>
@@ -74,9 +61,12 @@
 <script>
 import { useAuthStore } from '@/admin/stores/auth';
 import { useNotificationStore } from '@/stores/notification';
+import TextField from '@/components/TextField.vue';
+
 export default {
-    name: "Login",
+    name: "Forgot Password",
     components: {
+        TextField
     },
     data() {
         return {
@@ -84,26 +74,20 @@ export default {
             showPassword: false,
             notificationStore: useNotificationStore(),
             authStore: useAuthStore(),
-            usernameRules: [
+            idNumberRules: [
                 value => {
                     if (value) return true
-                    return 'Username is required.'
+                    return 'ID Number is required.'
                 }
-            ],
-            passwordRules: [
-                value => {
-                    if (value) return true
-                    return 'Password is required.'
-                },
             ],
         }
     },
     methods: {
 
-        async login() {
+        async forgotPassword() {
             //    alert()
             this.isLoading = true
-            await this.authStore.login(this.authStore.loginData)
+            await this.authStore.forgotPassword(this.authStore.forgotPasswordData)
             this.isLoading = false
 
         }

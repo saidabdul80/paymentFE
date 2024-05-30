@@ -6,7 +6,7 @@ import Ls from '@/services/ls.js'
 import { useClient } from '@/stores/client'
 import router from '@/router'
 export const useAuthStore = (useWindow = false) => {
-    const defineStoreFunc = useWindow ? window.pinia.defineStore : defineStore    
+    const defineStoreFunc = useWindow ? window.pinia.defineStore : defineStore
 
     return defineStoreFunc({
         id: 'auth',
@@ -14,25 +14,29 @@ export const useAuthStore = (useWindow = false) => {
             status: '',
 
             loginData: {
-                username : '',
+                username: '',
                 password: '',
                 remember: '',
             },
+
+            forgotPasswordData: {
+                idNumber: ''
+            }
         }),
 
         actions: {
             async login(data) {
-                const response = await useClient().http({method:'post',path:'/staffs/login',data})
-                if(response){
+                const response = await useClient().http({ method: 'post', path: '/staffs/login', data })
+                if (response) {
                     Ls.set('auth.token', response.token)
-                    this.loginData.username  = ''
+                    this.loginData.username = ''
                     this.loginData.password = ''
                     const notificationStore = useNotificationStore();
                     notificationStore.showNotification({
                         type: 'success',
                         message: 'Logged in successfully.',
                     })
-                     router.push('/admin/dashboard')
+                    router.push('/admin/dashboard')
                 }
             },
 
@@ -60,6 +64,16 @@ export const useAuthStore = (useWindow = false) => {
                         })
                 })
             },
+
+            async forgotPassword(data) {
+                console.log(data)
+                const notificationStore = useNotificationStore();
+                notificationStore.showNotification({
+                    type: 'success',
+                    message: 'Check your email and spam folder for the password reset link within 5 minutes.',
+                })
+            },
+
         },
     })()
 }

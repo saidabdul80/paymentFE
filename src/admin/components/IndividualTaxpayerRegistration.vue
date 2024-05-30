@@ -1,55 +1,54 @@
 <template>
     <div>
+        <v-row class="tw-p-14">
+            <v-col cols="4" md="4" sm="12">
+                <TextField :rules="idNumberRules" label="ID Number" placeholder="Enter NIN Number" id="nin" name="nin"
+                    :isRequired="true" />
+            </v-col>
 
-    <v-row>
-        <v-col cols="4" md="4" sm="12">
-            <v-text-field variant="solo" label="First Name" color="green" :isRequired='true' ></v-text-field>
-        </v-col>
+            <v-col cols="4" md="4" sm="12">
+                <TextField label="NIN" placeholder="G-TIN or Phone Number" id="bvn" name="bvn" :isRequired="true" />
+            </v-col>
 
-        <v-col cols="4" md="4" sm="12">
-            <v-text-field variant="solo" label="Middle Name" color="green" ></v-text-field>
-        </v-col>
+            <v-col cols="4" md="4" sm="12">
+                <TextField label="JTB" placeholder="Joint Tax Board ID Number" id="jtbNumber" name="jtbNumber"
+                    :isRequired="true" />
+            </v-col>
 
-        <v-col cols="4" md="4" sm="12">
-            <v-text-field variant="solo" label="Larst Name" color="green" :isRequired='true' ></v-text-field>
-        </v-col>
 
-        <v-col cols="4" md="4" sm="12">
-            <v-text-field variant="solo" label="BVN" color="green" :isRequired='true' ></v-text-field>
-        </v-col>
 
-        <v-col cols="4" md="4" sm="12">
-            <v-text-field variant="solo" label="NIN" color="green" :isRequired='true' ></v-text-field>
-        </v-col>
+            <v-container class="tw-mt-20">
+                <v-container class="tw-mt-20">
+                    <v-row align="center" justify="center" class="tw-mt-20">
+                        <v-col cols="auto">
+                            <v-btn type="submit" class="tw-bg-green-100">
+                                Cancel
+                            </v-btn>
+                        </v-col>
 
-        <v-col cols="4" md="4" sm="12">
-            <v-text-field variant="solo" label="JBT TIN" color="green" ></v-text-field>
-        </v-col>
-
-        <v-container class="tw-mt-20">
-            <v-row align="center" justify="center" class="tw-mt-20">
-                <v-col cols="auto">
-                    <v-btn type="submit" class="tw-bg-green-100">
-                        Cancel
-                    </v-btn>
-                </v-col>
-
-                <v-col cols="auto">
-                    <v-btn type="submit"
-                        class="tw-bg-green-700 tw-text-white">
-                        Proceed to Verification
-                    </v-btn>
-                </v-col>
-            </v-row>
-        </v-container>
-    </v-row>
+                        <v-col cols="auto">
+                            <v-btn type="submit" class="tw-bg-green-700 tw-text-white">
+                                Proceed to Verification
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-container>
+        </v-row>
     </div>
 </template>
 
 <script>
+// import { useUserStore } from '@/admin/stores/user';
+import TextField from '@/components/TextField.vue';
+
 export default {
     data() {
         return {
+            // isLoading: false,
+            // notificationStore: useNotificationStore(),
+            // userStore: useUserStore(),
+
             tab: 'Identification Details',
             items: [
                 'Identification Details', 'Personal Details', 'Contact Information', 'Business / Employer Details',
@@ -77,6 +76,7 @@ export default {
     },
     name: "IndividualTaxpayerRegistration",
     components: {
+        TextField
     }
     // data: () => ({ review: '30%' }),
 }

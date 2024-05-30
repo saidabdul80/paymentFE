@@ -10,13 +10,13 @@ const useUserStore = (useWindow = false) => {
 
         state: () => ({
             currentUser: null,
-            currentAbilities: [],            
+            currentAbilities: [],
 
             userForm: {
                 first_name: '',
                 email: '',
                 password: '',
-                confirm_password: '',                
+                confirm_password: '',
             },
         }),
 
@@ -26,7 +26,7 @@ const useUserStore = (useWindow = false) => {
 
         actions: {
             async updateCurrentUser(data) {
-                const response = await useClient().http({method:'put',path:'/staffs',data})
+                const response = await useClient().http({ method: 'put', path: '/staffs', data })
                 this.currentUser = response.data;
                 Object.assign(this.userForm, response.data.data);
                 const notificationStore = useNotificationStore();
@@ -34,11 +34,11 @@ const useUserStore = (useWindow = false) => {
                     type: 'success',
                     message: '',
                 });
-                    
+
             },
 
             async fetchCurrentUser(params) {
-                const response = await useClient().http({method:'get',path:'/staffs/me',data})
+                const response = await useClient().http({ method: 'get', path: '/staffs/me', data })
                 this.currentUser = response.data;
                 this.userForm = response.data;
                 const notificationStore = useNotificationStore();
@@ -49,7 +49,7 @@ const useUserStore = (useWindow = false) => {
             },
 
             async uploadAvatar(data) {
-                const response = await useClient().http({method:'get',path:'/staffs/upload-avatar',data})
+                const response = await useClient().http({ method: 'get', path: '/staffs/upload-avatar', data })
                 this.currentUser.avatar = response.data.avatar;
                 const notificationStore = useNotificationStore();
                 notificationStore.showNotification({
@@ -59,7 +59,7 @@ const useUserStore = (useWindow = false) => {
             },
 
             async fetchUserPermissions() {
-                const response = await useClient().http({method:'get',path:'/staffs/permissions',data})
+                const response = await useClient().http({ method: 'get', path: '/staffs/permissions', data })
                 this.currentAbilities = response.data.data;
             },
 
@@ -74,7 +74,7 @@ const useUserStore = (useWindow = false) => {
             },
 
             hasAllAbilities(abilities) {
-                return abilities.every((ability) => 
+                return abilities.every((ability) =>
                     this.currentAbilities.some((ab) => ab.name === ability || ab.name === '*')
                 );
             },
