@@ -1,5 +1,12 @@
 export default {
     DASHBOARD: 'dashboard',
+    USER:'user',
+    PAYMENT:'payment',
+    INVOICE:'invoice',
+    MESSAGE:'message',
+    CATEGORY:'category',
+    BUSINESS:'business',
+
 
     // STAFFs
     CREATE_STAFF: 'create-staff',

@@ -46,12 +46,12 @@ export default {
             pdrawer: true,
             items: [
                 { name: 'Dashboard', href: '/admin/dashboard', icon: 'mdi-home', current: true },
-                { name: 'Users', href: '/admin/dashboard/users', icon: 'mdi-account-group', current: false },
-                { name: 'Payments', href: '/admin/dashboard/payments', icon: 'mdi-file-document-check-outline', current: false },
-                { name: 'Invoices', href: '/admin/dashboard/invoices', icon: 'mdi-file-document-outline', current: false },
-                { name: 'Businesses', href: '/admin/dashboard/businesses', icon: 'mdi-calendar', current: false },
-                { name: 'Categories', href: '/admin/dashboard/categories', icon: 'mdi-file-document-multiple-outline', current: false },
-                { name: 'Messages', href: '/admin/dashboard/messages', icon: 'mdi-chart-pie-outline', current: false },
+                { name: 'Users', href: '/admin/users', icon: 'mdi-account-group', current: false },
+                { name: 'Payments', href: '/admin/payments', icon: 'mdi-file-document-check-outline', current: false },
+                { name: 'Invoices', href: '/admin/invoices', icon: 'mdi-file-document-outline', current: false },
+                { name: 'Businesses', href: '/admin/businesses', icon: 'mdi-calendar', current: false },
+                { name: 'Categories', href: '/admin/categories', icon: 'mdi-file-document-multiple-outline', current: false },
+                { name: 'Messages', href: '/admin/messages', icon: 'mdi-chart-pie-outline', current: false },
             ]
         }
     },

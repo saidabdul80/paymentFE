@@ -1,4 +1,5 @@
 import { useAuthStore } from '@/admin/stores/auth'
+import ls from '@/services/ls'
 import { useNotificationStore } from '@/stores/notification'
 
 export const handleError = (err) => {
@@ -13,7 +14,8 @@ export const handleError = (err) => {
     })
   } else {
     if (
-      err.response.data && err.response.data.includes('Unauthorized')
+      err.response.data &&  (err.response.statusText === 'Unauthorized' ||
+      err.response.data === ' Unauthorized.')
     ) {
       // Unauthorized and log out
       const msg = err.response.data.message
@@ -21,8 +23,9 @@ export const handleError = (err) => {
         : 'Unauthorized'
 
       showToaster(msg)
-
-      authStore.logout()
+      if(ls.get('auth.token')){
+        authStore.logout()
+      }
     } else if (err.response.data.errors) {
       // Show a notification per error
       const errors = JSON.parse(JSON.stringify(err.response.data.errors))
@@ -194,11 +197,12 @@ export const showError = (error) => {
 }
 
 export const showToaster = (msg, t = true) => {
-  const { global } = window.i18n
+ 
+
   const notificationStore = useNotificationStore()
 
   notificationStore.showNotification({
     type: 'error',
-    message: t ? global.t(msg) : msg,
+    message: msg,
   })
 }

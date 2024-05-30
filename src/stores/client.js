@@ -7,10 +7,10 @@ export const useClient = defineStore("client", () => {
 
   async function http(config={method:'get',path:'',data: {},fullPath :false})  {
     
-    const token = ls.get("token");
+    const token = ls.get("auth.token");
     let url = window.baseUrl + config?.path;
 
-    if (fullPath) {
+    if (config?.fullPath) {
       url = config?.path;
     }
 
@@ -18,7 +18,7 @@ export const useClient = defineStore("client", () => {
         Authorization: token ? `Bearer ${token}` : "",
     };
 
-    if (data instanceof FormData) {
+    if (config?.data instanceof FormData) {
         headers['Content-Type'] = 'multipart/form-data';
     }
 
@@ -27,15 +27,14 @@ export const useClient = defineStore("client", () => {
         method: config?.method,
         url: url,
         data:config?.data,
-        responseType: 'application/json',
         headers:headers,
       });
       return response.data;
     } catch (error) {
-      isLoading.value = false;
       handleError(error);
+      return false
     }
   }
 
-  return { isLoading, http };
+  return {  http };
 });

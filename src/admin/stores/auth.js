@@ -3,6 +3,8 @@ import { defineStore } from 'pinia'
 import { useNotificationStore } from '@/stores/notification'
 import { handleError } from '@/helpers/error-handling'
 import Ls from '@/services/ls.js'
+import { useClient } from '@/stores/client'
+import router from '@/router'
 export const useAuthStore = (useWindow = false) => {
     const defineStoreFunc = useWindow ? window.pinia.defineStore : defineStore    
 
@@ -19,24 +21,19 @@ export const useAuthStore = (useWindow = false) => {
         }),
 
         actions: {
-            login(data) {
-                return new Promise((resolve, reject) => {                    
-                    axios
-                        .post('/api/staffs/login', data)
-                        .then((response) => {
-                            Ls.set('auth.token', response.data.token)
-                            resolve(response)
-
-                            setTimeout(() => {
-                                this.loginData.username  = ''
-                                this.loginData.password = ''
-                            }, 1000)
-                        })
-                        .catch((err) => {
-                            handleError(err)
-                            reject(err)
-                        })
-                })
+            async login(data) {
+                const response = await useClient().http({method:'post',path:'/staffs/login',data})
+                if(response){
+                    Ls.set('auth.token', response.token)
+                    this.loginData.username  = ''
+                    this.loginData.password = ''
+                    const notificationStore = useNotificationStore();
+                    notificationStore.showNotification({
+                        type: 'success',
+                        message: 'Logged in successfully.',
+                    })
+                     router.push('/admin/dashboard')
+                }
             },
 
             logout() {

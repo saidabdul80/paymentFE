@@ -2,7 +2,7 @@
   <div class="
       tw-fixed
       tw-inset-0
-      tw-z-50
+      tw-z-[2050]
       tw-flex flex-col
       tw-items-end
       tw-justify-start
@@ -11,7 +11,7 @@
       tw-py-6
       tw-pointer-events-none
       tw-sm:p-6
-    ">
+    " style="flex-direction: column;">
     <transition-group enter-active-class="tw-transition tw-duration-300 tw-ease-out"
       enter-from-class="tw-translate-y-2 tw-opacity-0 tw-sm:translate-y-0 tw-sm:translate-x-2"
       enter-to-class="tw-translate-y-0 tw-opacity-100 tw-sm:translate-x-0" leave-active-class="tw-transition tw-duration-100 tw-ease-in"

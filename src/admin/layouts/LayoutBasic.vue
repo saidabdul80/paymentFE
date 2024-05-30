@@ -1,8 +1,6 @@
 <template>
     <div class="tw-flex tw-h-full tw-w-full tw-bg-gray-100">
-        <div class="tw-fixed tw-right-0 tw-top-0">
-            <NotificationRoot />
-        </div>
+     
         <v-layout class="rounded rounded-md">
             <SideBar :drawer="drawer" :rail="drawer" />
             <v-app-bar flat color="success">
@@ -26,13 +24,12 @@
                         <v-icon icon="mdi-chevron-right"></v-icon>
                     </template>
                     <template  v-slot:title="item">
-                        <span  style="text-transform: capitalize;">{{item.item.title.toLowerCase()}}</span>
+                        <span  style="text-transform: capitalize;">{{item.item.title.toLowerCase().replaceAll('-',' ')}}</span>
                     </template>
                 </v-breadcrumbs>
                 <RouterView></RouterView>
             </v-main>
         </v-layout>
-
     </div>
 
 </template>
@@ -44,14 +41,12 @@ import { RouterLink, RouterView } from "vue-router";
 import useUserStore from '@/admin/stores/user';
 import SideBar from "@/components/sidebar/sidebar.vue"
 import { useNotificationStore } from '@/stores/notification';
-import NotificationRoot from '@/components/notifications/NotificationRoot.vue';
 import { useGlobalsStore } from "@/stores/globals";
 import { storeToRefs } from "pinia";
 
 export default {
     components: {
         RouterView,
-        NotificationRoot,
         SideBar
     },
     data() {

@@ -7,7 +7,7 @@ export const constants ={
         s5:'tw-text-2xl',
         s6:'tw-text-4xl',
     },
-    primary:"",
+    primary:"green",
     secondary:"",
     acsent:"",
 }

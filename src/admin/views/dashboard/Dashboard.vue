@@ -4,6 +4,12 @@
             <template v-slot:Identification>
                 <IndividualTaxpayerRegistration />
             </template>
+            <template v-slot:Personal>
+              Personal
+            </template>
+            <template v-slot:Contact>
+              Personal
+            </template>
         </Tab>
     </div>
 </template>
@@ -11,8 +17,7 @@
 <script>
 import IndividualTaxpayerRegistration from '@/admin/components/IndividualTaxpayerRegistration.vue';
 import { useGlobalsStore } from '@/stores/globals';
-import { storeToRefs } from 'pinia';
-import Tab from '../components/tab.vue';
+import Tab from '@/components/tab.vue';
 export default {
    
     data(){
@@ -27,7 +32,7 @@ export default {
         }
     },
     created(){
-        useGlobalsStore().updateSubPageName("ADD INDIVIDUAL TAXPAYER")
+        useGlobalsStore().updateSubPageName("ADD INDIVIDUAL TAXPAYER3")
     },
     components: {
         Tab,

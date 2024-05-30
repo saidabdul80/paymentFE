@@ -47,8 +47,6 @@
 </template>
 
 <script>
-import TextField from '@/components/TextField.vue';
-
 export default {
     data() {
         return {
@@ -79,7 +77,6 @@ export default {
     },
     name: "IndividualTaxpayerRegistration",
     components: {
-        TextField
     }
     // data: () => ({ review: '30%' }),
 }
