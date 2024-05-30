@@ -42,8 +42,7 @@
                                     </div>
                                     <div>
                                         <v-btn @click.prevent="login()"  type="submit" block
-                                            color="green" :class="`tw-bg-${$constants.primary}-900 tw-w-full`">
-                                            <span v-if="isLoading" class="loader tw-h-5 tw-w-5"></span>
+                                        :color="$constants.primary" :class="`tw-w-full`" :loading="isLoading">
                                             Login
                                         </v-btn>
                                     </div>
