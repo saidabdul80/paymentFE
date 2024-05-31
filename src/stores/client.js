@@ -35,18 +35,7 @@ export const useClient = defineStore("client", () => {
     } catch (error) {
       const errors = error?.response?.data?.errors;
       if(errors){
-        const nameErrors = Object.values(errors);
-        let nameRules = {};
-        Object.keys(errors).forEach((key)=> {
-          nameRules[key] = [
-            value =>{
-              if (value) return true
-              return errors[key]
-            }
-          ]
-        });
-  
-        // Update nameRules in the store
+       
         useGlobalsStore().updateNameRules(errors);
         return false
       }
