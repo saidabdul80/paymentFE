@@ -1,9 +1,9 @@
 <template>
-    <div class="tw-flex tw-h-full tw-w-full tw-bg-gray-100">
+    <div class="tw-flex tw-h-full tw-w-full" :class="$constants.bg.gray">
      
         <v-layout class="rounded rounded-md">
             <SideBar :drawer="drawer" :rail="drawer" />
-            <v-app-bar flat color="succes">
+            <v-app-bar flat>
                 <v-app-bar-nav-icon variant="text" @click="drawer = !drawer"></v-app-bar-nav-icon>
 
                 <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
@@ -11,15 +11,14 @@
                 <v-spacer></v-spacer>
 
                 <template v-if="$vuetify.display.mdAndUp">
-
                     <v-switch
                         v-model="mode"
+                        :class="mode === 'LIGHT' ? 'tw-text-green-900' : 'tw-text-gray-500'"
                         :label="`${mode}`"
                         false-value="DARK"
                         true-value="LIGHT"
                         hide-details
                     ></v-switch>
-
                 </template>
 
                 <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>

@@ -64,6 +64,10 @@
         }
     }
 
+    :root {
+        --v-hover: #7fd0aa;
+    }
+
 
     @font-face {
         font-family: 'Visby Round CF Bold';
