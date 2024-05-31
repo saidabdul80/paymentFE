@@ -5,8 +5,9 @@
             <span v-if="isRequired" class="text-red">*</span>
         </label>
         <div class="tw-mt-2">
-            <v-text-field variant="solo" color="green" :placeholder="placeholder" :required="isRequired" :id="id"
-                :name="name" :autocomplete="autoComplete" :rules="rules" :type="type"></v-text-field>
+            <v-text-field variant="outlined" color="green" :placeholder="placeholder" :required="isRequired" :id="id"
+                :name="name" :autocomplete="autoComplete" :rules="rules" :type="type" bg-color="#f5f6fa"
+                border="#d5d5d5" shadow='false'></v-text-field>
         </div>
     </div>
 </template>

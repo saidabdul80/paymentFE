@@ -48,7 +48,7 @@
             <v-container class="tw-mt-20">
                 <v-row align="center" justify="center" class="tw-mt-20">
                     <v-col cols="auto">
-                        <v-btn type="submit" size="large" class="tw-bg-green-100">
+                        <v-btn type="submit" size="large" class="tw-bg-green-100 tw-px-20">
                             Cancel
                         </v-btn>
                     </v-col>

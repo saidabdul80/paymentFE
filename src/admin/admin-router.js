@@ -33,6 +33,18 @@ export default [
                 component: () => import("@/admin/views/users/Index.vue"),
             },
             {
+                path: "users/add-individual-taxpayer",
+                name: "Individual Taxpayer",
+                meta: { ability: abilities.USER_CREATE },
+                component: () => import("@/admin/views/users/AddIndividualTaxpayer.vue"),
+            },
+            {
+                path: "users/add-corporate-taxpayer",
+                name: "Corporate Taxpayer",
+                meta: { ability: abilities.USER_CREATE },
+                component: () => import("@/admin/views/users/AddCorporateTaxpayer.vue"),
+            },
+            {
                 path: "payments",
                 name: "Payments",
                 meta: { ability: abilities.PAYMENT },

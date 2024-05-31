@@ -1,29 +1,54 @@
 <template>
-    <div>
+    <div class="tw-px-20">
         <v-row class="tw-p-14">
-            <v-col cols="6" md="6" sm="12">
-                <TextField label="Phone Number" placeholder="" id="phoneNumber" name="phoneNumber" :isRequired="true" />
-            </v-col>
-
-            <v-col cols="6" md="6" sm="12">
-                <TextField label="Email" placeholder="" id="middleName" name="middleName" />
+            <v-col cols="4" md="4" sm="12">
+                <TextField label="RC Number" placeholder="" id="rcNumber" name="rcNumber" :isRequired="true" />
             </v-col>
 
             <v-col cols="4" md="4" sm="12">
-                <TextField label="House Number" placeholder="" id="houseNumber" name="houseNumber" />
-            </v-col>
-
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="Street Name" placeholder="" id="streetName" name="streetName" />
-            </v-col>
-
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="Area / Landmark" placeholder="" id="areaLandmark" name="areaLandmark"
+                <TextField label="Business Name" placeholder="" id="businessName" name="businessName"
                     :isRequired="true" />
             </v-col>
 
             <v-col cols="4" md="4" sm="12">
-                <TextField label="Town / District" placeholder="" id="townDistrict" name="townDistrict"
+                <SelectField label="Sector" name="sector" id="sector" :items="[
+                    'Agriculture and Agribusiness', 'Mining and Quarrying', 'Construction', 'Manufacturing', 'Energy and Utilities'
+                    , 'Financial Services', 'Healthcare', 'Information and Communication Technology (ICT)'
+                    , 'Tourism and Hospitality', 'Transportation and Logistics', 'Real Estate', 'Education'
+                    , 'Non-profit and Social Services', 'Government and Public Administration'
+                    , 'Media and Entertainment', 'Retail and Wholesale Trade', 'Food and Beverage'
+                    , 'Sports and Recreation', 'Arts and Culture', 'Environmental Services']" :isRequired="true" />
+            </v-col>
+
+            <v-col cols="4" md="4" sm="12">
+                <TextField label="Company Phone Number" placeholder="" id="companyPhoneNumber" name="companyPhoneNumber"
+                    :isRequired="true" />
+            </v-col>
+
+            <v-col cols="4" md="4" sm="12">
+                <TextField label="Company Email" placeholder="" id="companyEmail" name="companyEmail" />
+            </v-col>
+
+            <v-col cols="4" md="4" sm="12">
+                <TextField label="Number of staff" placeholder="" type="number" id="numberOfstaff" name="numberOfstaff"
+                    :isRequired="true" />
+            </v-col>
+
+            <v-col cols="4" md="4" sm="12">
+                <TextField label="Office Number" placeholder="No. 124" id="officeNumber" name="officeNumber" />
+            </v-col>
+
+            <v-col cols="4" md="4" sm="12">
+                <TextField label="Street Name" placeholder="Yaman Street ..." id="officeNumber" name="officeNumber" />
+            </v-col>
+
+            <v-col cols="4" md="4" sm="12">
+                <TextField label="Area / Landmark" placeholder="Name of estate or community or description"
+                    id="areaLandmark" name="areaLandmark" />
+            </v-col>
+
+            <v-col cols="4" md="4" sm="12">
+                <TextField label="Town / District" placeholder="Garin Nupawa" id="townDistrict" name="townDistrict"
                     :isRequired="true" />
             </v-col>
 
@@ -32,11 +57,11 @@
             </v-col>
 
             <v-col cols="4" md="4" sm="12">
-                <TextField label="ZIP Code" placeholder="" id="zipCode" name="zipCode" />
+                <TextField label="ZIP Code" placeholder="102554" id="zipCode" name="zipCode" />
             </v-col>
 
-            <v-container class="tw-mt-20">
-                <v-row align="center" justify="center" class="tw-mt-20">
+            <v-container class="tw-mt-2">
+                <v-row align="center" justify="center" class="tw-mt-5">
                     <v-col cols="auto">
                         <v-btn type="submit" size="large" class="tw-bg-green-100 tw-px-20">
                             Cancel
@@ -97,7 +122,7 @@ export default {
             this.$refs.form.resetValidation()
         },
     },
-    name: "IndividualTaxpayerRegistrationContact",
+    name: "CorporateTaxpayerRegistration",
     components: {
         TextField,
         SelectField,
