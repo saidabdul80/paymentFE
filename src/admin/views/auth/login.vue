@@ -26,14 +26,24 @@
                                 <v-form>
                                     <v-row>
                                         <v-col cols="12" md="12" sm="12">
-                                            <v-text-field variant="solo" v-model="authStore.loginData.username"
+
+                                            <!-- <v-text-field variant="solo" v-model="authStore.loginData.username"
                                                 :rules="usernameRules" required placeholder="G-TIN or phone number"
-                                                label="ID Number" color="green"></v-text-field>
-                                            <v-text-field variant="solo" :type="showPassword ? 'text' : 'password'"
+                                                label="ID Number" color="green"></v-text-field> -->
+
+                                            <TextField v-model="authStore.loginData.username" :rules="idNumberRules"
+                                                label="ID Number" placeholder="G-TIN or phone number" />
+
+                                            <label :for="id"
+                                                class="tw-block tw-text-sm tw-font-medium tw-leading-6 tw-text-gray-900">
+                                                Password
+                                            </label>
+                                            <v-text-field variant="outlined" :type="showPassword ? 'text' : 'password'"
                                                 v-model="authStore.loginData.password" :rules="passwordRules" required
-                                                placeholder="**********" label="Password" color="green"
+                                                placeholder="**********" color="green"
                                                 :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                                @click:append-inner="showPassword = !showPassword"></v-text-field>
+                                                @click:append-inner="showPassword = !showPassword" bg-color="#f5f6fa"
+                                                border="#d5d5d5"></v-text-field>
                                         </v-col>
                                     </v-row>
                                     <div
@@ -74,9 +84,12 @@
 <script>
 import { useAuthStore } from '@/admin/stores/auth';
 import { useNotificationStore } from '@/stores/notification';
+import TextField from '@/components/TextField.vue';
+
 export default {
     name: "Login",
     components: {
+        TextField
     },
     data() {
         return {

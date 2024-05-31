@@ -22,10 +22,10 @@
 </template>
 
 <script>
-import IndividualTaxpayerRegistration from '@/admin/components/IndividualTaxpayerRegistration.vue'
-import IndividualTaxpayerRegistrationPersonal from '@/admin/components/IndividualTaxpayerRegistrationPersonal.vue'
-import IndividualTaxpayerRegistrationContact from '@/admin/components/IndividualTaxpayerRegistrationContact.vue'
-import IndividualTaxpayerRegistrationBusiness from '@/admin/components/IndividualTaxpayerRegistrationBusiness.vue'
+import IndividualTaxpayerRegistration from '@/admin/views/users/forms/IndividualTaxpayerRegistration.vue'
+import IndividualTaxpayerRegistrationPersonal from '@/admin/views/users/forms/IndividualTaxpayerRegistrationPersonal.vue'
+import IndividualTaxpayerRegistrationContact from '@/admin/views/users/forms/IndividualTaxpayerRegistrationContact.vue'
+import IndividualTaxpayerRegistrationBusiness from '@/admin/views/users/forms/IndividualTaxpayerRegistrationBusiness.vue'
 
 import { useGlobalsStore } from '@/stores/globals';
 import Tab from '@/components/tab.vue';

@@ -28,7 +28,6 @@
                                             <TextField v-model="authStore.loginData.idNumber" :rules="idNumberRules"
                                                 label="ID Number" placeholder="G-TIN or phone number" id="idNumber"
                                                 name="idNumber" :isRequired="true" />
-
                                         </v-col>
                                     </v-row>
                                     <div>

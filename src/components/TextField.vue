@@ -1,14 +1,13 @@
 <template>
-    <div>
-        <label :for="id" class="tw-block tw-text-sm tw-font-medium tw-leading-6 tw-text-gray-900">
-            {{ label }}
-            <span v-if="isRequired" class="text-red">*</span>
-        </label>
-        <div class="tw-mt-2">
-            <v-text-field variant="outlined" color="green" :placeholder="placeholder" :required="isRequired" :id="id"
-                :name="name" :autocomplete="autoComplete" :rules="rules" :type="type" bg-color="#f5f6fa"
-                border="#d5d5d5" shadow='false'></v-text-field>
-        </div>
+    <label :for="id" class="tw-block tw-text-sm tw-font-medium tw-leading-6"
+        :class="`tw-text-[${$constants.secondary_dark}]`">
+        {{ label }}
+        <span v-if="isRequired" :class="`tw-text-[${$constants.danger}]`">*</span>
+    </label>
+    <div class="tw-mt-2">
+        <v-text-field variant="outlined" :color="$constants.secondary" :placeholder="placeholder" :id="id" :name="name"
+            :autocomplete="autoComplete" :type="type" :bg-color="$constants.secondary"
+            :border="$constants.secondary_dark" shadow='false'></v-text-field>
     </div>
 </template>
 
