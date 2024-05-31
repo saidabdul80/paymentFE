@@ -7,6 +7,7 @@ export const useGlobalsStore = defineStore('globals', {
   state: () => ({
     pageLoading:false,
     subPageName: null,
+    nameRules:ref([]),
   }),
   actions: {
     async bootstrap() {
@@ -22,6 +23,9 @@ export const useGlobalsStore = defineStore('globals', {
       },
     updateSubPageName(name) {
       this.subPageName = name;
+    },
+    updateNameRules(nameRules) {
+        this.nameRules = nameRules;
     },
   }
 });

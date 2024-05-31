@@ -22,14 +22,14 @@
                         </div>
                         <div class="tw-mt-10">
                             <div>
-                                <v-form >
+                                <v-form ref="form" validate-on="submit lazy"  @submit.prevent="login">
                                     <v-row>
                                         <v-col cols="12" md="12" sm="12">
                                             <v-text-field variant="solo" v-model="authStore.loginData.username"
-                                                :rules="usernameRules" required placeholder="G-TIN or phone number"
+                                                    :error-messages="globalStore.nameRules?.username" required placeholder="G-TIN or phone number"
                                                 label="ID Number" color="green"></v-text-field>
                                             <v-text-field variant="solo" :type="showPassword?'text':'password'" v-model="authStore.loginData.password"
-                                                :rules="passwordRules" required placeholder="**********"
+                                                    :error-messages="globalStore.nameRules?.password"  required placeholder="**********"
                                                 label="Password" color="green"   :append-inner-icon="showPassword?'mdi-eye':'mdi-eye-off'"  @click:append-inner="showPassword = !showPassword"></v-text-field>
                                         </v-col>
                                     </v-row>
@@ -41,7 +41,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <v-btn @click.prevent="login()"  type="submit" block
+                                        <v-btn   type="submit" block
                                         :color="$constants.primary" :class="`tw-w-full`" :loading="isLoading">
                                             Login
                                         </v-btn>
@@ -67,7 +67,9 @@
 
 <script>
 import { useAuthStore } from '@/admin/stores/auth';
+import { useGlobalsStore } from '@/stores/globals';
 import { useNotificationStore } from '@/stores/notification';
+
 export default {
     name: "Login",
     components: {
@@ -78,28 +80,18 @@ export default {
             showPassword:false,
             notificationStore: useNotificationStore(),
             authStore: useAuthStore(),
-            usernameRules: [
-                value => {
-                    if (value) return true
-                    return 'Username is required.'
-                }
-            ],
-            passwordRules: [
-                value => {
-                    if (value) return true
-                    return 'Password is required.'
-                },
-            ],
+            globalStore: useGlobalsStore(),
         }
     },
+    watch:{
+  
+    },
     methods: {
-
         async login() {
-        //    alert()
             this.isLoading = true
             await this.authStore.login(this.authStore.loginData)
+            this.$refs.form.validate(true)
             this.isLoading = false
-          
         }
     }
 };

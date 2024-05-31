@@ -3,10 +3,12 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import { handleError } from '@/helpers/error-handling';
 import ls from "@/services/ls";
+import { useGlobalsStore } from "./globals";
+
 export const useClient = defineStore("client", () => {
 
+
   async function http(config={method:'get',path:'',data: {},fullPath :false})  {
-    
     const token = ls.get("auth.token");
     let url = window.baseUrl + config?.path;
 
@@ -31,6 +33,23 @@ export const useClient = defineStore("client", () => {
       });
       return response.data;
     } catch (error) {
+      const errors = error?.response?.data?.errors;
+      if(errors){
+        const nameErrors = Object.values(errors);
+        let nameRules = {};
+        Object.keys(errors).forEach((key)=> {
+          nameRules[key] = [
+            value =>{
+              if (value) return true
+              return errors[key]
+            }
+          ]
+        });
+  
+        // Update nameRules in the store
+        useGlobalsStore().updateNameRules(errors);
+        return false
+      }
       handleError(error);
       return false
     }
