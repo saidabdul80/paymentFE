@@ -15,21 +15,39 @@
                     :isRequired="true" />
             </v-col>
 
-
-
             <v-container class="tw-mt-20">
                 <v-container class="tw-mt-20">
                     <v-row align="center" justify="center" class="tw-mt-20">
                         <v-col cols="auto">
-                            <v-btn type="submit" class="tw-bg-green-100">
+                            <v-btn type="submit" size="large" class="tw-bg-green-100">
                                 Cancel
                             </v-btn>
                         </v-col>
 
                         <v-col cols="auto">
-                            <v-btn type="submit" class="tw-bg-green-700 tw-text-white">
-                                Proceed to Verification
-                            </v-btn>
+                            <v-dialog max-width="500">
+                                <template v-slot:activator="{ props: activatorProps }">
+                                    <v-btn v-bind="activatorProps" type="submit" size="large"
+                                        class="tw-bg-green-700 tw-text-white">
+                                        Proceed to Verification
+                                    </v-btn>
+                                </template>
+
+                                <template v-slot:default="{ isActive }">
+                                    <v-card>
+                                        <v-card-text class=" text-center tw-p-5 mb-10">
+                                            <img class="mx-auto mt-5 mb-5" src="../../assets/good-sgin.png" width="150"
+                                                alt="" />
+                                            <h3 class="text-h5">
+                                                ID Verification Successful
+                                            </h3>
+                                            Identification Number matches <b>Amina Ahmad Musa</b>. Please proceed to
+                                            finish
+                                            registering this taxpayer.
+                                        </v-card-text>
+                                    </v-card>
+                                </template>
+                            </v-dialog>
                         </v-col>
                     </v-row>
                 </v-container>

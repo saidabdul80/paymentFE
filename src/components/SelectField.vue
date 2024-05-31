@@ -5,15 +5,16 @@
             <span v-if="isRequired" class="text-red">*</span>
         </label>
         <div class="tw-mt-2">
-            <v-text-field variant="solo" color="green" :placeholder="placeholder" :required="isRequired" :id="id"
-                :name="name" :autocomplete="autoComplete" :rules="rules" :type="type"></v-text-field>
+            <v-select variant="solo" color="green" :items="items" :required="isRequired" :id="id" :name="name"
+                :autocomplete="autoComplete" :rules="rules" :search-input.sync="search" :value="value" @input="onInput">
+            </v-select>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'TextField',
+    name: 'SelectField',
     props: {
         id: {
             type: String,
@@ -31,32 +32,25 @@ export default {
             type: String,
             default: 'off',
         },
-        placeholder: {
-            type: String,
-            default: '',
+        items: {
+            type: Array,
+            required: true,
         },
         isRequired: {
             type: Boolean,
             default: false,
         },
         value: {
-            type: String,
+            type: [String, Number],
             default: '',
         },
         rules: {
             type: Array,
             default: () => [],
-        },
-        type: {
-            type: String,
-            default: '',
         }
     },
-    watch: {
-        value(newVal) {
-            this.$emit('input', newVal);
-        },
-        vModel(newVal) {
+    methods: {
+        onInput(newVal) {
             this.$emit('input', newVal);
         }
     }
