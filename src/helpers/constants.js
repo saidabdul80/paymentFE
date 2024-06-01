@@ -13,4 +13,11 @@ export const constants = {
     danger: 'red',
     dark: '',
     acsent: "",
+
+    g1: '#CCDFD6',
+    g2: '#80AF99',
+    g3: '#559577',
+    g4: '#006033',
+    g5: '#004022',
+    g6: '#002011',
 }

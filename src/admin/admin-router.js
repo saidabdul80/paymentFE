@@ -45,6 +45,12 @@ export default [
                 component: () => import("@/admin/views/users/AddCorporateTaxpayer.vue"),
             },
             {
+                path: "users/add-vendor",
+                name: "Add New vendor",
+                meta: { ability: abilities.USER_CREATE },
+                component: () => import("@/admin/views/users/Addvendor.vue"),
+            },
+            {
                 path: "payments",
                 name: "Payments",
                 meta: { ability: abilities.PAYMENT },
