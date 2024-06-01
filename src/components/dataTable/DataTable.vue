@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-title class="d-flex align-center pe-2">
-      USERS
+      {{ title }}
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>

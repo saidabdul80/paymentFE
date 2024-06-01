@@ -42,7 +42,7 @@
 
             <!-- Table Tab -->
             <template v-slot:Tables>
-                <DataTable :headers="headers" :items="users" >
+                <DataTable title="USERS" :headers="headers" :items="users" >
                     <template #new_taxpayer_button>
                         <Button 
                             title="Add New Taxpayer" 
