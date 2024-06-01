@@ -79,7 +79,7 @@ export default [
                 path: "businesses",
                 name: "Businesses",
                 meta: { ability: abilities.BUSINESS },
-                component: () => import("@/admin/views/Businesses/Index.vue"),
+                component: () => import("@/admin/views/businesses/Index.vue"),
             },
             {
               path: "reusable_components",
