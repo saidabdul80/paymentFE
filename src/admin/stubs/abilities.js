@@ -7,7 +7,6 @@ export default {
   CATEGORY: "category",
   BUSINESS: "business",
   SETTING: "setting",
-  REUSABLE_COMPONENTS: "reusable_components",
 
   // STAFFs
   CREATE_STAFF: "create-staff",

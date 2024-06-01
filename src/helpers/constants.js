@@ -10,18 +10,30 @@ export const constants = {
   },
 
   color: {
-    primary: "tw-text-green-800",
-    secondary: "tw-text-green-100",
-    light: "tw-text-gray-50",
-    acsent: "",
+    primary: "tw-text-[#006033]",
+    primary_light: "tw-text-[#D1EFDF]",
+    primary_lighter: "tw-text-[#CCDFD6]",
+    danger: "tw-text-[#FF4C00]",
+    danger_light: "tw-text-[#FFD6C5]",
+    secondary: "tw-text-[#3D434A]",
+    secondary_light: "tw-text-[#7A7B78]",
+    warning: "tw-text-[#92400E]",
+    warning_light: "tw-text-[#FEF3C7]",
+    light: "tw-text-[#F5F6FA]",
+    dark: "tw-text-[#3D434A]",
   },
 
   bg: {
-    primary: "tw-bg-green-800",
-    secondary: "tw-bg-green-100",
-    gray: "tw-bg-gray-100",
-    acsent: "",
+    primary: "tw-bg-[#006033]",
+    primary_light: "tw-bg-[#D1EFDF]",
+    primary_lighter: "tw-bg-[#CCDFD6]",
+    danger: "tw-bg-[#FF4C00]",
+    danger_light: "tw-bg-[#FFD6C5]",
+    secondary: "tw-bg-[#3D434A]",
+    secondary_light: "tw-bg-[#7A7B78]",
+    warning: "tw-bg-[#92400E]",
+    warning_light: "tw-bg-[#FEF3C7]",
+    light: "tw-bg-[#F5F6FA]",
+    dark: "tw-bg-[#3D434A]",
   },
 };
-
-// #006033
