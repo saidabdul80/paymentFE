@@ -1,6 +1,6 @@
 <template>
     <label :for="id" class="tw-block tw-text-sm tw-font-medium tw-leading-6"
-        :class="`tw-text-[${$constants.secondary}]`">
+        :class="`tw-text-[${$constants.danger}] tw-bg-[${$constants.danger}]/20`">
         {{ label }}
         <span v-if="isRequired" :class="`tw-text-red-600`">*</span>
     </label>
@@ -15,7 +15,7 @@
             :error-messages="error_messages" 
             :type="type" :bg-color="$constants.secondary_light"
             :border="$constants.secondary" shadow='false'
-            variant="solo"  
+            variant="outlined"  
         ></v-text-field>
     </div>
 </template>

@@ -4,6 +4,7 @@ import Dashboard from '@/admin/views/dashboard/Dashboard.vue'
 // Auth
 import Login from '@/admin/views/auth/login.vue'
 import ForgotPassword from '@/admin/views/auth/ForgortPassword.vue'
+import RComponent from '@/admin/views/reusable_components/Reusable_components.vue'
 
 import abilities from './stubs/abilities'
 
@@ -80,6 +81,12 @@ export default [
                 meta: { ability: abilities.BUSINESS },
                 component: () => import("@/admin/views/Businesses/Index.vue"),
             },
+            {
+              path: "reusable_components",
+              name: "reusable_components",
+              component: () => RComponent,
+              meta: { requiresAuth: true },
+            },
         ],
     },
     {
@@ -94,6 +101,7 @@ export default [
         component: () => ForgotPassword,
         meta: { requiresAuth: true },
     },
+    
     {
         path: "/:pathMatch(.*)*",
         name: 'ErrorView',
