@@ -4,10 +4,11 @@
             <v-container>
                 <v-row>
                     <v-col cols="12" md="4">
-                        <v-card class="pa-5 tw-bg-white" :border="$constants.secondary_dark" variant="outlined">
+                        <v-card class="pa-5 tw-bg-white" border="green" variant="outlined">
                             <v-row align="center">
                                 <v-col cols="3" class="text-center">
-                                    <span class=" tw-bg-green-200 tw-py-7 tw-px-3 rounded-lg">
+                                    <!-- {{ $constants.primary }} -->
+                                    <span class=" tw-py-7 tw-px-3 rounded-lg" :class="`tw-bg-[${$constants.primary}]`">
                                         <v-icon size="48px" :color="$constants.g3">mdi-shield-check</v-icon>
                                     </span>
                                 </v-col>

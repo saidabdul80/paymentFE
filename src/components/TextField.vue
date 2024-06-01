@@ -2,7 +2,7 @@
     <label :for="id" class="tw-block tw-text-sm tw-font-medium tw-leading-6"
         :class="`tw-text-[${$constants.secondary_dark}]`">
         {{ label }}
-        <span v-if="isRequired" :class="`tw-text-[${$constants.danger}]`">*</span>
+        <span v-if="isRequired" :class="`tw-text-red-600`">*</span>
     </label>
     <div class="tw-mt-2">
         <v-text-field variant="outlined" :color="$constants.secondary" :placeholder="placeholder" :id="id" :name="name"
