@@ -24,7 +24,7 @@
                         <v-icon icon="mdi-chevron-right"></v-icon>
                     </template>
                     <template  v-slot:title="item">
-                        <span  style="text-transform: capitalize;">{{item.item.title.toLowerCase().replaceAll('-',' ')}}</span>
+                        <span  style="text-transform: capitalize;">{{item.item.title.toLowerCase()?.replaceAll('-',' ')}}</span>
                     </template>
                 </v-breadcrumbs>
                 <RouterView></RouterView>

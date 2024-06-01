@@ -1,20 +1,36 @@
 <template>
     <label :for="id" class="tw-block tw-text-sm tw-font-medium tw-leading-6"
-        :class="`tw-text-[${$constants.secondary_dark}]`">
+        :class="`tw-text-[${$constants.secondary}]`">
         {{ label }}
         <span v-if="isRequired" :class="`tw-text-red-600`">*</span>
     </label>
     <div class="tw-mt-2">
-        <v-text-field variant="outlined" :color="$constants.secondary" :placeholder="placeholder" :id="id" :name="name"
-            :autocomplete="autoComplete" :type="type" :bg-color="$constants.secondary"
-            :border="$constants.secondary_dark" shadow='false'></v-text-field>
+        <v-text-field
+            v-model="modelValue" :color="$constants.secondary_light"
+            @click:append-inner="$emit('click:append-inner')"
+            @input="$emit('update:modelValue', $event.target.value)" 
+            :append-inner-icon="append_inner_icon"
+            :placeholder="placeholder" :id="id" :name="name"
+            :autocomplete="autoComplete"  
+            :error-messages="error_messages" 
+            :type="type" :bg-color="$constants.secondary_light"
+            :border="$constants.secondary" shadow='false'
+            variant="solo"  
+        ></v-text-field>
     </div>
 </template>
 
 <script>
 export default {
     name: 'TextField',
+    emits: ['update:modelValue'],
     props: {
+        append_inner_icon:{
+            type:String,
+        },
+        error_messages:{
+            type:String,
+        },
         id: {
             type: String,
             required: true,

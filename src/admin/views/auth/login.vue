@@ -30,20 +30,20 @@
                                             <!-- <v-text-field variant="solo" v-model="authStore.loginData.username"
                                                 :rules="usernameRules" required placeholder="G-TIN or phone number"
                                                 label="ID Number" color="green"></v-text-field> -->
-
-                                            <TextField v-model="authStore.loginData.username" :rules="idNumberRules"
-                                                label="ID Number" placeholder="G-TIN or phone number" />
+                                                {{ authStore.loginData.username }}
+                                            <TextField v-model="authStore.loginData.username" 
+                                                label="ID Number"  :error_messages="globalStore.nameRules?.username" placeholder="G-TIN or phone number" />
 
                                             <label :for="id"
                                                 class="tw-block tw-text-sm tw-font-medium tw-leading-6 tw-text-gray-900">
                                                 Password
                                             </label>
-                                            <v-text-field variant="outlined" :type="showPassword ? 'text' : 'password'"
-                                                v-model="authStore.loginData.password" :rules="passwordRules" required
-                                                placeholder="**********" color="green"
-                                                :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                                @click:append-inner="showPassword = !showPassword" bg-color="#f5f6fa"
-                                                border="#d5d5d5"></v-text-field>
+                                            
+                                            <TextField  variant="outlined" :type="showPassword ? 'text' : 'password'"
+                                                v-model="authStore.loginData.password"
+                                                @click:append-inner="showPassword = !showPassword"
+                                                :append_inner_icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                                placeholder="**********"   :error_messages="globalStore.nameRules?.username"/>
                                         </v-col>
                                     </v-row>
                                     <div
@@ -83,6 +83,7 @@
 
 <script>
 import { useAuthStore } from '@/admin/stores/auth';
+import { useGlobalsStore } from '@/stores/globals';
 import { useNotificationStore } from '@/stores/notification';
 import TextField from '@/components/TextField.vue';
 
@@ -97,28 +98,18 @@ export default {
             showPassword: false,
             notificationStore: useNotificationStore(),
             authStore: useAuthStore(),
-            usernameRules: [
-                value => {
-                    if (value) return true
-                    return 'Username is required.'
-                }
-            ],
-            passwordRules: [
-                value => {
-                    if (value) return true
-                    return 'Password is required.'
-                },
-            ],
+            globalStore: useGlobalsStore(),
         }
     },
+    watch:{
+  
+    },
     methods: {
-
         async login() {
-            //    alert()
             this.isLoading = true
             await this.authStore.login(this.authStore.loginData)
+            this.$refs.form.validate(true)
             this.isLoading = false
-
         }
     }
 };

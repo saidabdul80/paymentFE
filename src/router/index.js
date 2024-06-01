@@ -17,7 +17,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   next()
   //### UN COMMENT THE BELOW TO ENABLE MIDDLWARE ###///
-  /* const userStore = useUserStore()
+  const userStore = useUserStore()
   const globalStore = useGlobalsStore()
   let ability = to.meta.ability
   let rootPath = to.matched[0].path;
@@ -34,7 +34,7 @@ router.beforeEach((to, from, next) => {
     } else next({ path: rootPath+'home' })
   } else {
     next()
-  } */
+  }
 })
 
 
