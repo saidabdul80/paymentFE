@@ -1,7 +1,7 @@
 <template>
   <div class="px-3 tw-mb-5">
     <v-tabs v-model="tab"  bg-color="transparent">
-      <v-tab v-for="(tab, index) in tabs" :color="$constants.light" :value="index" class="tw-capitalize">{{ tab.name }}</v-tab>
+      <v-tab v-for="(tab, index) in tabs" :color="$constants.dark" :value="index" class="tw-capitalize">{{ tab.name }}</v-tab>
     </v-tabs>
   </div>
   <v-card class="tw-min-h-[70vh]">

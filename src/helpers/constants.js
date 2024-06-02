@@ -15,20 +15,9 @@ export const constants = {
     warning: '#F4A100',
     success:'#32B573',
     light:'#fff',
+    dark:"#222",
     layout_background:'#FDFCFC',
     transparent_level:'15',
-    props:[
-      "primary",
-      "primary_light",
-      "secondary",
-      "secondary_light",
-      "danger",
-      "warning",
-      "success",
-      "light",
-      "layout_background",
-      "transparent_level",
-  ]
-
+    mode:'light'
 }
  

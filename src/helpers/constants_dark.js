@@ -15,20 +15,9 @@ export const constantsDark = {
     warning: '#F4A100',
     success:'#32B573',
     light:'#333',
+    dark:"#fff",
     layout_background:'#555',
     transparent_level:'15',
-    props:[
-        "primary",
-        "primary_light",
-        "secondary",
-        "secondary_light",
-        "danger",
-        "warning",
-        "success",
-        "light",
-        "layout_background",
-        "transparent_level",
-    ]
-
+    mode:'dark'
 }
  

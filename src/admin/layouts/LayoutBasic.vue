@@ -1,6 +1,6 @@
 <template>
-    <div :class="`tw-flex tw-h-full tw-p-0 tw-w-full`" >
-        <v-layout class="rounded rounded-md" :color="$constants.light">
+    <div class="`tw-flex  tw-p-0 tw-w-full`" :class="`tw-bg-[${$constants.light}]`"   >
+        <v-layout class="rounded rounded-md"  :color="`${$constants.light}`">
             <SideBar :drawer="drawer" :rail="drawer" />
             <v-app-bar flat :color="$constants.light" class="tw-shadow-md">
                 <v-app-bar-nav-icon variant="text" @click="drawer = !drawer"></v-app-bar-nav-icon>
@@ -34,9 +34,9 @@
                         <span style="text-transform: capitalize;">{{ item.item.title.toLowerCase()?.replaceAll('-', ' ') }}</span>
                     </template>
                 </v-breadcrumbs>
-                <RouterView v-slot="{ Component }">
+                <RouterView v-slot="{ Component }"  >
                     <transition name="scale">
-                        <component :is="Component"  :class="`tw-bg-[${$constants.light}]`" />
+                        <component :is="Component"    />
                     </transition>
                 </RouterView>
             </v-main>
