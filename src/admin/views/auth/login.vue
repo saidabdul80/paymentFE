@@ -26,11 +26,6 @@
                                 <v-form>
                                     <v-row>
                                         <v-col cols="12" md="12" sm="12">
-
-                                            <!-- <v-text-field variant="solo" v-model="authStore.loginData.username"
-                                                :rules="usernameRules" required placeholder="G-TIN or phone number"
-                                                label="ID Number" color="green"></v-text-field> -->
-
                                             <TextField v-model="authStore.loginData.username" :rules="idNumberRules"
                                                 label="ID Number" placeholder="G-TIN or phone number" />
 

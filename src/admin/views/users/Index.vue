@@ -87,9 +87,9 @@
 </template>
 
 <script>
-import Admins from '@/admin/views/users/usersList/Admins.vue'
-import Vendors from '@/admin/views/users/usersList/Vendors.vue'
-import Taxpayers from '@/admin/views/users/usersList/Taxpayers.vue'
+import Admins from '../usersusersList/Admins.vue'
+import Vendors from '../usersusers/usersList/Vendors.vue'
+import Taxpayers from '../usersusers/usersList/Taxpayers.vue'
 
 import { useGlobalsStore } from '@/stores/globals';
 import Tab from '@/components/tab.vue';

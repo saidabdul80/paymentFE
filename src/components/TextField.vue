@@ -6,8 +6,8 @@
     </label>
     <div class="tw-mt-2">
         <v-text-field variant="outlined" :color="$constants.secondary" :placeholder="placeholder" :id="id" :name="name"
-            :autocomplete="autoComplete" :type="type" :bg-color="$constants.secondary"
-            :border="$constants.secondary_dark" shadow='false'></v-text-field>
+            :autocomplete="autoComplete" :type="type" :bg-color="$constants.secondary_lighter"
+            :border="$constants.secondary_dark" :density="density" shadow='false'></v-text-field>
     </div>
 </template>
 
@@ -22,6 +22,9 @@ export default {
         name: {
             type: String,
             required: true,
+        },
+        density: {
+            type: String,
         },
         label: {
             type: String,
