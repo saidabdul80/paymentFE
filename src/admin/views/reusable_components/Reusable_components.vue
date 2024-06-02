@@ -4,26 +4,31 @@
             <!-- Dialog Tab -->
             <template v-slot:Dialogs>
                 <v-container>
-                    <v-btn @click="showDialog = true">Verification Dialog</v-btn>
+                    <Button 
+                        title="Verification Dialog"
+                        variant="outlined"
+                        :class="`tw-text-[${$constants.primary}]`"
+                        @click="showDialog = true"
+                    />
                     <Dialog
                         :dialog="showDialog"
                         @update:dialog="showDialog = $event"
                         icon="mdi-check-decagram-outline"
                         title="Verifying Vendor Details"
                         message="Please hold on as we verify your BVN and NIN"
-                        >
-                    <template #buttons>
-                        <v-checkbox
-                            v-model="terms"
-                            color="secondary"
-                            label="I agree to site terms and conditions"
-                        ></v-checkbox>
-                        <Button title="Cancel" variant="outlined" 
-                        :class="`tw-text-[${$constants.primary}]`" @click="handleButtonClick('cancel')"/>
-                        <Button title="Proceed"
-                        :class="`tw-text-[${$constants.light}] tw-bg-[${$constants.primary}]`" />
-                    </template>
-                </Dialog>
+                    >
+                        <template #buttons>
+                            <v-checkbox
+                                v-model="terms"
+                                color="secondary"
+                                label="I agree to site terms and conditions"
+                            ></v-checkbox>
+                            <Button title="Cancel" variant="outlined" 
+                            :class="`tw-text-[${$constants.primary}]`" @click="handleButtonClick('cancel')"/>
+                            <Button title="Proceed"
+                            :class="`tw-text-[${$constants.light}] tw-bg-[${$constants.primary}]`" />
+                        </template>
+                    </Dialog>
                 </v-container>
             </template>
 
@@ -43,7 +48,7 @@
             <!-- Table Tab -->
             <template v-slot:Tables>
                 <DataTable title="USERS" :headers="headers" :items="users" >
-                    <template #new_taxpayer_button>
+                    <template #action_button>
                         <Button 
                             title="Add New Taxpayer" 
                             prepend-icon="mdi-plus"
@@ -54,11 +59,17 @@
                         />
                         <v-menu activator="#menu-activator">
                             <v-list>
-                                <v-list-item>
-                                    <v-list-item-title
-                                     to="/admin/users"
-                                     size="xlarge"> Individual Taxpayer</v-list-item-title>
-                                    <v-list-item-title>Corporate Taxpayer</v-list-item-title>
+                                <v-list-item class="tw-ml-3">CHOOSE TAXPAYER TYPE</v-list-item>
+                                <v-list-item
+                                    v-for="(item, index) in taxpayers"
+                                    :key="index"
+                                    :value="index"
+                                    :to="item.link"
+                                >
+                                <div class="tw-flex">
+                                    <v-list-item-title class="tw-my-auto tw-ml-3 tw-mr-14">{{ item.title }}</v-list-item-title>
+                                    <v-radio :value="item" />
+                                </div>
                                 </v-list-item>
                             </v-list>
                         </v-menu>
@@ -244,6 +255,16 @@ export default {
                     status: 'Active',
                 },
             ],
+            taxpayers: [
+                {
+                    title: 'Individual Taxpayer',
+                    link: '/admin/users'
+                },
+                {
+                    title: 'Corporate Taxpayer',
+                    link: '/admin/dashboard'
+                }
+            ]
         }
     },
 

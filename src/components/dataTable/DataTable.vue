@@ -2,10 +2,7 @@
   <v-card flat>
     <v-card-title class="d-flex align-center pe-2">
       {{ title }}
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
+      <v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
 
       <v-text-field
         v-model="search"
@@ -17,7 +14,7 @@
         hide-details
         single-line
       ></v-text-field>
-      <slot name="new_taxpayer_button" />
+      <slot name="action_button" />
     </v-card-title>
 
     <v-divider></v-divider>
@@ -46,7 +43,7 @@
         </template>
 
         <template v-slot:item.photo="{ item }">
-            <v-card class="my-2 tw-h-9 tw-w-9" elevation="2" style="border-radius: 50%">
+            <v-card v-if="item.photo" class="my-2 tw-h-9 tw-w-9" elevation="2" style="border-radius: 50%">
             <v-img
                 :src="item.photo"
             ></v-img>
@@ -54,7 +51,7 @@
         </template>
 
         <template v-slot:item.status="{ item }">
-            <div class="text-nd">
+            <div class="text-nd" v-if="item.status">
             <span> </span>
             <v-chip
                 :color="getColor(item.status)"
@@ -71,14 +68,19 @@
 <script>
 export default {
   props: {
+    title: {
+      type: String,
+      required: true
+    },
     headers: {
       type: Array,
       required: true
     },
     items: {
       type: Array,
-      required: true
-    }
+      required: true,
+      default: ''
+    },
   },
   methods: {
     getColor(status) {
