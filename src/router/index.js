@@ -14,17 +14,15 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next)  => {
   next()
   //### UN COMMENT THE BELOW TO ENABLE MIDDLWARE ###///
-  /* const userStore = useUserStore()
+  const userStore = useUserStore()
   const globalStore = useGlobalsStore()
   let ability = to.meta.ability
   let rootPath = to.matched[0].path;
-  globalStore.bootstrap()
-  const { pageLoading } = globalStore
-
-  if (ability && pageLoading && to.meta.requiresAuth) {
+  globalStore.bootstrap(true)
+  if (ability  && to.meta.requiresAuth) {
     if (userStore.hasAbilities(ability)) {
       next()
     } else next({ path: rootPath+'/home' })
@@ -34,7 +32,7 @@ router.beforeEach((to, from, next) => {
     } else next({ path: rootPath+'home' })
   } else {
     next()
-  } */
+  }
 })
 
 

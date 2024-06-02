@@ -1,118 +1,123 @@
 <template>
-    <div class="tw-px-5">
-        <div class="text-caption pa-2 bg-grey-lighten-4">
-            <v-container>
-                <v-row>
-                    <v-col cols="12" md="4">
-                        <v-card class="pa-5 tw-bg-white" border="green" variant="outlined">
-                            <v-row align="center">
-                                <v-col cols="3" class="text-center">
-                                    <!-- {{ $constants.primary }} -->
-                                    <span class=" tw-py-7 tw-px-3 rounded-lg" :class="`tw-bg-[${$constants.primary}]`">
-                                        <v-icon size="48px" :color="$constants.g3">mdi-shield-check</v-icon>
-                                    </span>
-                                </v-col>
-                                <v-col cols="9">
-                                    <div class="title font-weight-bold tw-text-xl tw-text-green-700">124</div>
-                                    <div class="caption tw-mb-2">Administrators</div>
-                                    <span class="mr-2 mt-2 tw-rounded tw-text-xs tw-bg-green-200 px-2 py-1">34
-                                        Admins</span>
-                                    <span class="mt-2 tw-rounded tw-text-xs tw-bg-green-200 px-2 py-1" outlined>90
-                                        Sub-Admins</span>
-                                </v-col>
-                            </v-row>
-                        </v-card>
-                    </v-col>
-                    <v-col cols="12" md="4">
-                        <v-card class="pa-5 tw-bg-white" :border="$constants.secondary_dark" variant="outlined">
-                            <v-row align="center">
-                                <v-col cols="3" class="text-center">
-                                    <span class=" tw-bg-red-200 tw-py-7 tw-px-3 rounded-lg">
-                                        <v-icon size="48px" color="red">mdi-headset</v-icon>
-                                    </span>
-                                </v-col>
-                                <v-col cols="9">
-                                    <div class="title font-weight-bold tw-text-xl tw-text-green-700">5,689</div>
-                                    <div class="caption tw-mb-2">Vendors</div>
-                                    <span class="mr-2 mt-2 tw-rounded tw-text-xs tw-bg-green-200 px-2 py-1">
-                                        4,676 Active
-                                    </span>
-                                    <span class="mt-2 tw-rounded tw-text-xs tw-bg-green-200 px-2 py-1" outlined>
-                                        897 Inactive
-                                    </span>
-                                </v-col>
-                            </v-row>
-                        </v-card>
-                    </v-col>
-                    <v-col cols="12" md="4">
-                        <v-card class="pa-5 tw-bg-white" :border="$constants.secondary_dark" variant="outlined">
-                            <v-row align="center">
-                                <v-col cols="3" class="text-center">
-                                    <span class=" tw-bg-yellow-100 tw-py-7 tw-px-3 rounded-lg">
-                                        <v-icon size="48px" color="yellow">mdi-account-multiple</v-icon>
-                                    </span>
-                                </v-col>
-                                <v-col cols="9">
-                                    <div class="title font-weight-bold tw-text-xl tw-text-green-700">
-                                        3,456,890
-                                    </div>
-                                    <div class="caption tw-mb-2">Vendors</div>
-                                    <span class="mr-2 mt-2 tw-rounded tw-text-xs tw-bg-green-200 px-2 py-1">
-                                        985,345 Corporate
-                                    </span>
-                                    <span class="mt-2 tw-rounded tw-text-xs tw-bg-green-200 px-2 py-1">
-                                        2M+ Individual
-                                    </span>
-                                </v-col>
-                            </v-row>
-                        </v-card>
-                    </v-col>
-                </v-row>
-            </v-container>
-        </div>
-
-
-        <Tab :tabs="tabs">
-            <template v-slot:Admins>
-                <Admins />
-            </template>
-            <template v-slot:Vendors>
-                <Vendors />
-            </template>
-            <template v-slot:Taxpayers>
-                <Taxpayers />
-            </template>
-        </Tab>
+  <div class="tw-px-5">
+    <div class="text-caption">
+      <div class="tw-grid lg:tw-grid-cols-3 tw-grid-cols-1 tw-gap-5">
+        <v-card v-for="(card, index) in cards" :key="index" class="tw-p-[16px] tw-bg-white border-1 tw-flex"
+          :class="`tw-border-[${$constants.secondary_light}]`" variant="outlined">
+          <div>
+            <span :class="card.iconBgClass" class="tw-p-[10px] tw-inline-block tw-rounded-[24px]">
+              <v-icon size="56px" class="tw-w-[56px] tw-h-[56px]" :color="card.iconColor">{{ card.icon }}</v-icon>
+            </span>
+          </div>
+          <div class="tw-ml-4">
+            <span class="tw-font-bold leading-none"
+              :class="`${$constants.text_size.s4} tw-text-[${$constants.primary}]`">{{
+                globals.toCurrency(card.total,false) }}</span>
+            <p :class="`${$constants.text_size.s2}`" class="tw-font-thin tw-mb-[6px] tw-mt-[-3px]">{{ card.title }}</p>
+            <div>
+              <v-chip class="tw-font-[100] tw-mr-2 rounded-md" :class="`${$constants.text_size.s1}`" rounded="sm"
+                v-for="label in card.labels" size="x-small" :color="getColor(label.type)"
+                :text="`${globals.toCurrency(label.total, false)} ${label.type}`"></v-chip>
+            </div>
+          </div>
+        </v-card>
+      </div>
     </div>
+
+    <Tab :tabs="tabs">
+      <template v-slot:Admins>
+        <Admins />
+      </template>
+      <template v-slot:Vendors>
+        <Vendors />
+      </template>
+      <template v-slot:Taxpayers>
+        <Taxpayers />
+      </template>
+    </Tab>
+  </div>
 </template>
 
 <script>
-import Admins from '../usersusersList/Admins.vue'
-import Vendors from '../usersusers/usersList/Vendors.vue'
-import Taxpayers from '../usersusers/usersList/Taxpayers.vue'
-
+import Admins from '@/admin/views/users/usersList/Admins.vue'
+import Vendors from '@/admin/views/users/usersList/Vendors.vue'
+import Taxpayers from '@/admin/views/users/usersList/Taxpayers.vue'
 import { useGlobalsStore } from '@/stores/globals';
 import Tab from '@/components/tab.vue';
 
 export default {
-    data() {
-        return {
-            tabs: [
-                { name: 'Admins', key: 'Admins' },
-                { name: 'Vendors', key: 'Vendors' },
-                { name: 'Taxpayers', key: 'Taxpayers' },
-            ],
-            globals: useGlobalsStore()
+  components: {
+    Tab,
+    Admins,
+    Vendors,
+    Taxpayers
+  },
+  data() {
+    return {
+      globals: useGlobalsStore(),
+      tabs: [
+        { name: 'Admins', key: 'Admins' },
+        { name: 'Vendors', key: 'Vendors' },
+        { name: 'Taxpayers', key: 'Taxpayers' },
+      ],
+      cards: [
+        {
+
+          icon: 'mdi-shield-check',
+          iconColor: this.$constants.success,
+          iconBgClass: this.getBgClass(this.$constants.success, this.$constants.transparent_level),
+          total: 124,
+          title: 'Administrators',
+          labels: [
+            { total: 34, type: 'Admins' },
+            { total: 90, type: 'Sub-Admins' }
+          ]
+        },
+        {
+          border: this.$constants.secondary_dark,
+          icon: 'mdi-headset',
+          iconSize: '48px',
+          iconColor: this.$constants.danger,
+          iconBgClass: this.getBgClass(this.$constants.danger, this.$constants.transparent_level),
+          total: 5689,
+          title: 'Vendors',
+          labels: [
+            { total: 4676, type: 'Active' },
+            { total: 897, type: 'Inactive' }
+          ]
+        },
+        {
+          border: this.$constants.secondary_dark,
+          icon: 'mdi-account-multiple',
+          iconSize: '48px',
+          iconColor: this.$constants.warning,
+          iconBgClass: this.getBgClass(this.$constants.warning, this.$constants.transparent_level),
+          total: 3456890,
+          title: 'Taxpayers',
+          labels: [
+            { total: 985345, type: 'Corporate' },
+            { total: 2050400, type: 'Individual' }
+          ]
         }
+      ]
+    };
+  },
+  created() {
+    this.globals.updateSubPageName("LIST");
+  },
+  methods: {
+    getColor(type) {
+      if (type.toLowerCase() != 'inactive') {
+        return this.$constants.primary
+      }
     },
-    created() {
-        useGlobalsStore().updateSubPageName("LIST")
-    },
-    components: {
-        Tab,
-        Admins,
-        Vendors,
-        Taxpayers
-    },
+    getBgClass(color, transparencyLevel) {
+      return `tw-bg-[${color}]/${transparencyLevel}`;
+    }
+  }
 }
 </script>
+
+<style scoped>
+/* Scoped styles if needed */
+</style>

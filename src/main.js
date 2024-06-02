@@ -1,6 +1,6 @@
 import "./assets/main.css";
 
-import { createApp } from "vue";
+import { createApp, reactive } from "vue";
 //import { createPinia } from "pinia";
 import * as pinia from 'pinia'
 import '@mdi/font/css/materialdesignicons.css'
@@ -8,25 +8,28 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-
+import { useConstantsStore } from './stores/constants';
 import './assets/tailwind.css';
 
 import App from "./App.vue";
 import router from "./router";
-import { constants } from "./helpers/constants";
+import ls from "./services/ls";
 window.pinia = pinia
 const app = createApp(App);
 
 const { createPinia } = window.pinia
-app.config.globalProperties.$constants = constants
+
 
 app.use(createPinia());
 app.use(router);
 const vuetify = createVuetify({
-    components,
-    directives
-  })
+  components,
+  directives
+})
 
 app.use(vuetify)
 app.mount("#main");
+const constantsStore = useConstantsStore();
+app.config.globalProperties.$constants = constantsStore.values;
 window.baseUrl = 'http://localhost:8000/api'
+

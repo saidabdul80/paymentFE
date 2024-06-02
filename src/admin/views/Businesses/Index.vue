@@ -1,1 +1,6 @@
-<template></template>
+<template>
+    Businesses
+</template>
+
+<script>
+</script>
