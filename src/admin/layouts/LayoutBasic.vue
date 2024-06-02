@@ -23,7 +23,7 @@
 
                 <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
             </v-app-bar>
-            <v-main style="height:100vh;">
+            <v-main style="height:100vh;" class="tw-bg-gray-100/70">
                 <v-breadcrumbs :items="items" >
                     <template v-slot:divider color="red">
                         <v-icon icon="mdi-chevron-right"></v-icon>
@@ -32,7 +32,9 @@
                         <span  style="text-transform: capitalize;">{{item.item.title.toLowerCase()?.replaceAll('-',' ')}}</span>
                     </template>
                 </v-breadcrumbs>
-                <RouterView></RouterView>
+                <Transition name="scale">
+                    <RouterView :key="$route.fullPath"></RouterView>
+                </Transition>
             </v-main>
         </v-layout>
     </div>

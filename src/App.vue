@@ -7,7 +7,7 @@
     </div>
   </div>
   <NotificationRoot />
-  <RouterView />
+  <RouterView/>
 </template>
 <script setup>
 
@@ -18,8 +18,27 @@ import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue';
 const globals = useGlobalsStore();
 const isLoading = ref(false);
-
 watch(() => globals.pageLoading, (newVal) => {
   isLoading.value = newVal;
 });
+async function loadBoot(){
+  await globals.bootstrap()
+}
+
+loadBoot()
 </script>
+
+<style>
+
+.scale-enter-active,
+.scale-leave-active {
+  transition: all 0.3s ease;
+}
+
+.scale-enter-from,
+.scale-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+</style>

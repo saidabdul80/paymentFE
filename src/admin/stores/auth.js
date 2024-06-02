@@ -12,13 +12,11 @@ export const useAuthStore = (useWindow = false) => {
         id: 'auth',
         state: () => ({
             status: '',
-
             loginData: {
                 username: '',
                 password: '',
                 remember: '',
             },
-
             forgotPasswordData: {
                 idNumber: ''
             }

@@ -23,6 +23,7 @@
                         </div>
                         <div class="tw-mt-10">
                             <div>
+                                
                                 <v-form ref="form">
                                     <v-row>
                                         <v-col cols="12" md="12" sm="12">
@@ -38,7 +39,7 @@
                                                 Password
                                             </label>
                                             
-                                            <TextField  variant="outlined" :type="showPassword ? 'text' : 'password'"
+                                            <TextField lable="Password" variant="outlined" :type="showPassword ? 'text' : 'password'"
                                                 v-model="authStore.loginData.password"
                                                 @click:append-inner="showPassword = !showPassword"
                                                 :append_inner_icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"

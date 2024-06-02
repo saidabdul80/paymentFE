@@ -68,13 +68,16 @@
         --v-hover: #7fd0aa;
     }
 
-
-    @font-face {
-        font-family: 'Visby Round CF Bold';
-        src: url('./fonts/Visby_Round_CF_Bold/Visby_Round_CF_Bold.otf') format('opentype');
-    }
-
     * {
-        font-family: 'Visby Round CF Bold', sans-serif;
+        font-family: 'VisbyRoundCF', sans-serif;
     }
-    
+    .uppercase{text-transform: uppercase};
+    .marquee {
+        overflow: visible;
+        animation: marquee 5s linear infinite;
+      }
+      
+      @keyframes marquee {
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(-100%); }
+      }
