@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="pdrawer" :rail="rail" permanent>
+    <v-navigation-drawer v-model="pdrawer" :rail="rail" permanent :color="$constants.light">
         <div class="tw-h-[calc(100vh-160px)] tw-overflow-y-auto tw-font-[300]">
             <v-list-item nav class="tw-py-[6px] tw-px-[6px]" @mouseenter="startMarquee" @mouseleave="stopMarquee">
                 <template v-slot:default>
@@ -58,12 +58,12 @@
             <v-list-item nav class="tw-pb-[26px] tw-px-[8px] " :class="`${$constants.text_size.s1}`"
                 :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.primary">
                 <template v-slot:prepend>
-                    <img class="tw-h-8 tw-w-auto tw-rounded-full tw-ml-3"
+                    <img class="tw-h-8  tw-rounded-full tw-ml-1"
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s"
                         alt="logo" />
                 </template>
                 <template v-slot:default>
-                    <div class="tw-ms-2 tw-ml-7 text-truncate">
+                    <div class="tw-ms-2 tw-ml-7 tw-mt-1 text-truncate">
                         <span :class="`tw-text-${$constants.text_size.s1} tw-text-[${$constants.primary}]`"
                             class="tw-font-bold">AMINU MUDI</span>
                         <p :class="`tw-text-${$constants.text_size.s1} tw-text-[${$constants.dark}]`"

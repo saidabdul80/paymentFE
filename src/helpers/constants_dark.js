@@ -1,4 +1,4 @@
-export const constants = {
+export const constantsDark = {
     text_size: {
         s1: 'tw-text-sm',
         s2: 'tw-text-base',
@@ -14,21 +14,21 @@ export const constants = {
     danger: '#FF4C00',
     warning: '#F4A100',
     success:'#32B573',
-    light:'#fff',
-    layout_background:'#FDFCFC',
+    light:'#333',
+    layout_background:'#555',
     transparent_level:'15',
     props:[
-      "primary",
-      "primary_light",
-      "secondary",
-      "secondary_light",
-      "danger",
-      "warning",
-      "success",
-      "light",
-      "layout_background",
-      "transparent_level",
-  ]
+        "primary",
+        "primary_light",
+        "secondary",
+        "secondary_light",
+        "danger",
+        "warning",
+        "success",
+        "light",
+        "layout_background",
+        "transparent_level",
+    ]
 
 }
  
