@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="showDialog" max-width="400">
+  <v-dialog v-model="showDialog" max-width="450">
     <v-card class="text-center tw-py-8">
       <v-card-text class="text-center">
         <v-icon size="96px" :class="`tw-text-[${$constants.primary}]`" :icon="icon" ></v-icon>
