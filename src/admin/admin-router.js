@@ -37,19 +37,19 @@ export default [
                 path: "users/add-individual-taxpayer",
                 name: "Individual Taxpayer",
                 meta: { ability: abilities.USER_CREATE },
-                component: () => import("@/admin/views/users/AddIndividualTaxpayer.vue"),
+                component: () => import("@/admin/views/users/taxpayers/AddIndividualTaxpayer.vue"),
             },
             {
                 path: "users/add-corporate-taxpayer",
                 name: "Corporate Taxpayer",
                 meta: { ability: abilities.USER_CREATE },
-                component: () => import("@/admin/views/users/AddCorporateTaxpayer.vue"),
+                component: () => import("@/admin/views/users/taxpayers/AddCorporateTaxpayer.vue"),
             },
             {
                 path: "users/add-vendor",
                 name: "Add New vendor",
                 meta: { ability: abilities.USER_CREATE },
-                component: () => import("@/admin/views/users/Addvendor.vue"),
+                component: () => import("@/admin/views/users/vendors/Addvendor.vue"),
             },
             {
                 path: "payments",

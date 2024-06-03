@@ -26,6 +26,7 @@
                     :class="`${$constants.text_size.s1}`"
                     :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.mode =='light'? $constants.primary:''"
                     :color="$constants.primary"
+                    @click="globals.setCurrentPageName(item)"
                     :to="item.href" :value="item.title">
                     <template v-slot:prepend>
                         <v-icon size="small"
@@ -79,6 +80,7 @@
 
 <script>
 
+import { useGlobalsStore } from "@/stores/globals";
 import {
     PhSquaresFour,
     PhUsersThree,
@@ -125,6 +127,7 @@ export default {
     },
     data() {
         return {
+            globals: useGlobalsStore(),
             isHovered: false,
             pdrawer: true,
             items: [

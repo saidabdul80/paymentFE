@@ -17,7 +17,7 @@
             :value="index"
             :to="item.link">
             <div class="tw-flex">
-              <v-list-item-title @click="$emit('click', item)" class="tw-my-auto tw-ml-3 tw-mr-14">{{ item.title }}</v-list-item-title>
+              <v-list-item-title class="tw-my-auto tw-ml-3 tw-mr-14">{{ item.title }}</v-list-item-title>
               <v-radio :value="item" />
             </div>
           </v-list-item>

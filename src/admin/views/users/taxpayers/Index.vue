@@ -7,8 +7,15 @@
             </v-col>
             <v-col cols="auto">
                 <v-tooltip activator="parent" location="top">Add New Admin</v-tooltip>
-                <v-btn :disabled="loading" size="large" @click="navigateToNewTaxpayer" :color="$constants.primary"
-                    class="mb-5" density="comfortable" icon="mdi-plus"></v-btn>
+
+                <DropdownButton 
+                @click="navigateToNewTaxpayer"
+                            title="Add New Taxpayer" 
+                            prepend-icon="mdi-plus"
+                            header="CHOOSE TAXPAYER TYPE"
+                            :items="taxpayers"
+                            />
+               
             </v-col>
             <v-col cols="auto">
                 <v-tooltip activator="parent" location="top">Refresh</v-tooltip>
@@ -32,6 +39,7 @@
 import { shallowRef, computed } from 'vue'
 import { useGlobalsStore } from '@/stores/globals';
 import TextField from '@/components/TextField.vue';
+import DropdownButton  from '@/components/DropdownButton.vue';
 
 export default {
     data() {
@@ -49,6 +57,16 @@ export default {
                 { title: 'Taxpayer Type', key: 'taxpayerType' },
                 { title: 'Phone Number', key: 'phoneNumber' },
                 { title: 'Email', key: 'email' },
+            ],
+            taxpayers: [
+                {
+                    title: 'Individual Taxpayer',
+                    link: 'users/add-individual-taxpayer/'
+                },
+                {
+                    title: 'Corporate Taxpayer',
+                    link: 'users/add-corporate-taxpayer/'
+                }
             ],
             items: [
                 { serialNo: 1, image: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', name: 'Halima Umar Samb', gtin: 'GTG4773', gender: 'Female', taxpayerType: 'Individual', phoneNumber: '09067543245', email: 'halima773@gmail.com' },
@@ -72,7 +90,8 @@ export default {
     },
 
     components: {
-        TextField
+        TextField,
+        DropdownButton
     },
 
     computed: {

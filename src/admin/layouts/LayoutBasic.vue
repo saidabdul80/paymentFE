@@ -26,14 +26,21 @@
                 <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
             </v-app-bar>
             <v-main style="height:100vh;" >
-                <v-breadcrumbs :items="items" :bg-color="$constants.light">
-                    <template v-slot:divider >
-                        <v-icon icon="mdi-chevron-right"></v-icon>
-                    </template>
-                    <template v-slot:title="item">
-                        <span style="text-transform: capitalize;">{{ item.item.title.toLowerCase()?.replaceAll('-', ' ') }}</span>
-                    </template>
-                </v-breadcrumbs>
+                <v-list lines="one">
+                    <v-list-item
+                        v-for="item in items"
+                        :title="item.title"
+                        :to="item.href"
+                        append-icon="mdi-chevron-right"
+                    ></v-list-item>
+                    </v-list>
+             <!--    <v-breadcrumbs  :bg-color="$constants.light" divider="/">
+                    <v-breadcrumbs-item >
+                        <span  style="text-transform: capitalize;">
+                            {{ item.title}}
+                        </span>
+                    </v-breadcrumbs-item>
+                </v-breadcrumbs> -->
                 <RouterView v-slot="{ Component }"  >
                     <transition name="scale">
                         <component :is="Component"    />
@@ -73,10 +80,24 @@ export default {
     },
     watch: {
         'globals.subPageName': function(n, o) {
-            this.items[1].title = n;
+          /*   this.items[1] =
+            {
+                title: n.name,
+                href: n.href
+            } */
         },
-        '$route.name': function(n, o) {
-            this.items[0].title = n;
+        'globals.currentPageName': function(n, o) {
+            if(this.items.some(item=>item.name == n.name)){
+                /* this.items.push({
+                    title: n.name,
+                    link: n.href
+                }) */
+            }else{
+                this.items.push({
+                    title: n.name,
+                    href: n.href
+                })
+            }
         }
     },
     computed: {

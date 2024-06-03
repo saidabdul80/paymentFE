@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import CorporateTaxpayerRegistration from './forms/CorporateTaxpayerRegistration.vue'
+import CorporateTaxpayerRegistration from './CorporateTaxpayerRegistration.vue'
 import { useGlobalsStore } from '@/stores/globals';
 import Tab from '@/components/tab.vue';
 
