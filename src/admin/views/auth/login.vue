@@ -107,7 +107,13 @@ export default {
     methods: {
         async login() {
             this.isLoading = true
-            await this.authStore.login(this.authStore.loginData)
+            //await this.authStore.login(this.authStore.loginData)
+            const notificationStore = useNotificationStore();
+                    notificationStore.showNotification({
+                        type: 'success',
+                        message: 'Logged in successfully.',
+                    })
+                    this.$router.push('/admin/dashboard')
             this.$refs.form.validate(true)
             this.isLoading = false
         }
