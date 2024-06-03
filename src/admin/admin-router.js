@@ -117,13 +117,25 @@ export default [
     {
         path: '/auth',
         component: AuthTopBar,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
         children: [
             {
                 path: "individual-taxpayer",
                 name: "Individual Taxpayer",
                 component: () => import("@/admin/views/auth/IndividualTaxpayerRegistration.vue"),
-                meta: { requiresAuth: true },
+                meta: { requiresAuth: false },
+            },
+            {
+                path: "corporate-taxpayer",
+                name: "Corporate Taxpayer",
+                component: () => import("@/admin/views/auth/CorporateTaxpayerRegistration.vue"),
+                meta: { requiresAuth: false },
+            },
+            {
+                path: "self-enrolment",
+                name: "Self Enrolment",
+                component: () => import("@/admin/views/auth/SelfEnrolment.vue"),
+                meta: { requiresAuth: false },
             },
         ]
     },
