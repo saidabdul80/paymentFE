@@ -1,6 +1,6 @@
 <template>
-    <div :class="`tw-flex tw-h-full tw-p-0 tw-w-full`">
-        <v-layout class="rounded rounded-md" :color="$constants.light">
+    <div class="`tw-flex  tw-p-0 tw-w-full`" :class="`tw-bg-[${$constants.light}]`">
+        <v-layout class="rounded rounded-md" :color="`${$constants.light}`">
             <SideBar :drawer="drawer" :rail="drawer" />
             <v-app-bar flat :color="$constants.light" class="tw-shadow-md">
                 <v-app-bar-nav-icon variant="text" @click="drawer = !drawer"></v-app-bar-nav-icon>
@@ -19,18 +19,15 @@
                 <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
             </v-app-bar>
             <v-main style="height:100vh;">
-                <v-breadcrumbs :items="items" :bg-color="$constants.light">
+
+                <v-breadcrumbs :items="breadcrumbs">
                     <template v-slot:divider>
                         <v-icon icon="mdi-chevron-right"></v-icon>
-                    </template>
-                    <template v-slot:title="item">
-                        <span style="text-transform: capitalize;">{{ item.item.title.toLowerCase()?.replaceAll('-', ' ')
-                            }}</span>
                     </template>
                 </v-breadcrumbs>
                 <RouterView v-slot="{ Component }">
                     <transition name="scale">
-                        <component :is="Component" :class="`tw-bg-[${$constants.light}]`" />
+                        <component :is="Component" />
                     </transition>
                 </RouterView>
             </v-main>
@@ -44,7 +41,6 @@ import useUserStore from '@/admin/stores/user';
 import SideBar from "@/components/sidebar/sidebar.vue"
 import { useNotificationStore } from '@/stores/notification';
 import { useGlobalsStore } from "@/stores/globals";
-import { storeToRefs } from "pinia";
 import ls from "@/services/ls";
 import { useConstantsStore } from '@/stores/constants';
 export default {
@@ -62,15 +58,25 @@ export default {
             ],
             drawer: true,
             userStore: useUserStore(),
+            constantsStore: useConstantsStore()
 
         }
     },
     watch: {
         'globals.subPageName': function (n, o) {
-            this.items[1].title = n;
+            /*   this.items[1] =
+              {
+                  title: n.name,
+                  href: n.href
+              } */
         },
-        '$route.name': function (n, o) {
-            this.items[0].title = n;
+        'globals.currentPageName': function (newPage, oldPage) {
+            if (!this.items.some(item => item.title === newPage.name)) {
+                this.items.push({
+                    title: newPage.name,
+                    to: newPage.href
+                });
+            }
         }
     },
     computed: {
@@ -83,23 +89,42 @@ export default {
     },
     created() {
         const savedMode = ls.get('mode');
-        if (savedMode) {
-            this.constantsStore.setMode(savedMode);
+        /*   if (savedMode) {
+              this.constantsStore.setMode(savedMode);
+          } */
+
+    },
+    computed: {
+        breadcrumbs() {
+            let matchedRoutes = this.$route.matched;
+            let breadcrumbs = [];
+
+            matchedRoutes.forEach(route => {
+                if (route.meta.breadcrumb) {
+                    breadcrumbs.push({
+                        title: typeof route.meta.breadcrumb === 'function'
+                            ? route.meta.breadcrumb(this.$route)
+                            : route.meta.breadcrumb,
+                        to: route.path,
+                        exact: true
+                    });
+
+                    // Check for parent routes
+                    if (route.meta.parent) {
+                        let parentRoute = this.$router.options.routes.find(r => r.name === route.meta.parent);
+                        if (parentRoute) {
+                            breadcrumbs.unshift({
+                                title: parentRoute.meta.breadcrumb,
+                                to: parentRoute.path,
+                                exact: true
+                            });
+                        }
+                    }
+                }
+            });
+
+            return [{ title: 'Home', to: '/admin' }, ...breadcrumbs];
         }
-        this.items = [
-            {
-                title: this.$route.name.replaceAll('-', ''),
-                disabled: false,
-                href: '#',
-                class: 'tw-text-gray-500 tw-font-bold'
-            },
-            {
-                title: '',
-                disabled: false,
-                href: '#',
-                class: 'tw-text-green-700 tw-font-bold'
-            }
-        ];
     },
     methods: {
         toggleMode() {
@@ -118,6 +143,7 @@ export default {
         },
     }
 }
+
 </script>
 
 <style scoped>

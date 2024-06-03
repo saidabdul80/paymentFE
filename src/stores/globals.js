@@ -8,6 +8,7 @@ export const useGlobalsStore = defineStore('globals', {
     pageLoading:false,
     subPageName: null,
     nameRules:ref(),
+    currentPageName:{},
   }),
   actions: {
     /* async bootstrap() {
@@ -45,6 +46,9 @@ export const useGlobalsStore = defineStore('globals', {
     },
     updateNameRules(nameRules) {
         this.nameRules = nameRules;
+    },
+    setCurrentPageName(item) {
+        this.currentPageName = item;
     },
     toCurrency(amount, symbol = true) {
       if (amount == null || isNaN(amount)) {

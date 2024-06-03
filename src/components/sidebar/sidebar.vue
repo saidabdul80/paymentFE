@@ -10,7 +10,7 @@
                                 <div class="tw-ms-2 tw-mt-1 text-truncate uppercase">
                                     <span :class="`${$constants.text_size.s3} tw-text-${$constants.primary}`"
                                         class="tw-font-bold">GOMBE STATE</span>
-                                    <p :class="$constants.text_size.s1" class="marquee tw-text-gray-500 tw-mt-[-3px]">
+                                    <p :class="[$constants.text_size.s1,isHovered?'marquee':'']"  class=" tw-text-gray-500 tw-mt-[-3px]">
                                         INTERNAL REVENUE SERVICE</p>
                                 </div>
                             </transition>
@@ -24,7 +24,9 @@
             <v-list density="compact" nav class="py-8">
                 <v-list-item v-for="item in items" rounded="lg" class="tw-p-[12px] tw-m-0"
                     :class="`${$constants.text_size.s1}`"
-                    :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.primary"
+                    :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.mode =='light'? $constants.primary:''"
+                    :color="$constants.primary"
+                    @click="globals.setCurrentPageName(item)"
                     :to="item.href" :value="item.title">
                     <template v-slot:prepend>
                         <v-icon size="small"
@@ -44,19 +46,19 @@
             <v-list density="compact" nav class="py-1">
                 <v-list-item v-for="item in subItems" rounded="lg" class="tw-p-[12px] tw-m-0"
                     :class="`${$constants.text_size.s1}`"
-                    :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.primary"
+                    :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.mode =='light'? $constants.primary:''"
                     :to="item.href" :value="item.title">
                     <template v-slot:prepend>
-                        <v-icon :class="getClasses(item.href)" size="small" :icon="item.icon"></v-icon>
+                        <v-icon size="small" :icon="item.icon"></v-icon>
                     </template>
                     <template v-slot:default>
-                        <span class="text-truncate" :class="getClasses(item.href)">{{ item.name }}</span>
+                        <span class="text-truncate">{{ item.name }}</span>
                     </template>
                 </v-list-item>
             </v-list>
             <v-divider class="border-opacity-100 tw-mx-4 tw-mb-2" :class="`tw-bg-[${$constants.primary}]`"></v-divider>
             <v-list-item nav class="tw-pb-[26px] tw-px-[8px] " :class="`${$constants.text_size.s1}`"
-                :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.primary">
+                :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.mode =='light'? $constants.primary:''">
                 <template v-slot:prepend>
                     <img class="tw-h-8  tw-rounded-full tw-ml-1"
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s"
@@ -78,6 +80,7 @@
 
 <script>
 
+import { useGlobalsStore } from "@/stores/globals";
 import {
     PhSquaresFour,
     PhUsersThree,
@@ -124,6 +127,7 @@ export default {
     },
     data() {
         return {
+            globals: useGlobalsStore(),
             isHovered: false,
             pdrawer: true,
             items: [
@@ -167,4 +171,13 @@ export default {
 .theme--light.v-application {
     background: #011627;
 }
+.marquee {
+        overflow: visible;
+        animation: marquee 5s linear infinite;
+      }
+      
+      @keyframes marquee {
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(-100%); }
+      }
 </style>

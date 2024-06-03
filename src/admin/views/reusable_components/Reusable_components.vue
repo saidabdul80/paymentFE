@@ -49,30 +49,12 @@
             <template v-slot:Tables>
                 <DataTable title="USERS" :headers="headers" :items="users" >
                     <template #action_button>
-                        <Button 
+                        <DropdownButton 
                             title="Add New Taxpayer" 
                             prepend-icon="mdi-plus"
-                            rounded="lg"
-                            size="large"
-                            :class="`tw-text-[${$constants.light}] tw-bg-[${$constants.primary}]`"
-                            id="menu-activator"
-                        />
-                        <v-menu activator="#menu-activator">
-                            <v-list>
-                                <v-list-item class="tw-ml-3">CHOOSE TAXPAYER TYPE</v-list-item>
-                                <v-list-item
-                                    v-for="(item, index) in taxpayers"
-                                    :key="index"
-                                    :value="index"
-                                    :to="item.link"
-                                >
-                                <div class="tw-flex">
-                                    <v-list-item-title class="tw-my-auto tw-ml-3 tw-mr-14">{{ item.title }}</v-list-item-title>
-                                    <v-radio :value="item" />
-                                </div>
-                                </v-list-item>
-                            </v-list>
-                        </v-menu>
+                            header="CHOOSE TAXPAYER TYPE"
+                            :items="taxpayers"
+                            />
                     </template>
                 </DataTable>
             </template>
@@ -86,6 +68,8 @@ import { useGlobalsStore } from '@/stores/globals';
 import Tab from '@/components/tab.vue';
 import Button from '@/components/button/Button.vue';
 import DataTable  from '@/components/dataTable/DataTable.vue';
+import DropdownButton  from '@/components/DropdownButton.vue';
+
 import {
     PhSquaresFour,
     PhUsersThree,
@@ -270,6 +254,7 @@ export default {
 
     components: {
         Tab,
+        DropdownButton,
         Button,
         Dialog,
         DataTable,

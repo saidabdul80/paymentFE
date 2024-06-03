@@ -68,32 +68,3 @@
         transform: rotate(360deg);
     }
 }
-
-:root {
-    --v-hover: #7fd0aa;
-}
-
-* {
-    font-family: 'VisbyRoundCF', sans-serif;
-}
-
-.uppercase {
-    text-transform: uppercase
-}
-
-;
-
-.marquee {
-    overflow: visible;
-    animation: marquee 5s linear infinite;
-}
-
-@keyframes marquee {
-    0% {
-        transform: translateX(0%);
-    }
-
-    100% {
-        transform: translateX(-100%);
-    }
-}
