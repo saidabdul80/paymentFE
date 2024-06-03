@@ -13,7 +13,7 @@
                     <div class="tw-mx-auto tw-w-full tw-max-w-sm lg:tw-w-96">
                         <div>
                             <div class="tw-flex tw-justify-center tw-mb-10">
-                                <img class="tw-h-20 tw-w-auto tw-mt-10 " src="@/assets/logo-full.png"
+                                <img class="tw-h-20 tw-w-auto tw-mt-10 " src="@/assets/logo-full-color.png"
                                     alt="Your Company" />
                             </div>
                             <p

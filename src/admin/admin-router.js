@@ -1,4 +1,5 @@
 import LayoutBasic from '@/admin/layouts/LayoutBasic.vue'
+import AuthTopBar from '@/admin/layouts/AuthTopBar.vue'
 import Dashboard from '@/admin/views/dashboard/Dashboard.vue'
 
 // Auth
@@ -105,15 +106,27 @@ export default [
         path: "/admin/login",
         name: "Login",
         component: () => Login,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
     },
     {
         path: "/admin/forgot-password",
         name: "Forgot Password",
         component: () => ForgotPassword,
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
     },
-
+    {
+        path: '/auth',
+        component: AuthTopBar,
+        meta: { requiresAuth: true },
+        children: [
+            {
+                path: "individual-taxpayer",
+                name: "Individual Taxpayer",
+                component: () => import("@/admin/views/auth/IndividualTaxpayerRegistration.vue"),
+                meta: { requiresAuth: true },
+            },
+        ]
+    },
     {
         path: "/:pathMatch(.*)*",
         name: 'ErrorView',
