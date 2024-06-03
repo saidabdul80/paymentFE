@@ -49,14 +49,57 @@
             <template v-slot:Tables>
                 <DataTable title="USERS" :headers="headers" :items="users" >
                     <template #action_button>
-                        <DropdownButton 
+                        <Button 
                             title="Add New Taxpayer" 
                             prepend-icon="mdi-plus"
-                            header="CHOOSE TAXPAYER TYPE"
-                            :items="taxpayers"
-                            />
+                            rounded="lg"
+                            size="large"
+                            :class="`tw-text-[${$constants.light}] tw-bg-[${$constants.primary}]`"
+                            id="menu-activator"
+                        />
+                        <v-menu activator="#menu-activator">
+                            <v-list>
+                                <v-list-item class="tw-ml-3">CHOOSE TAXPAYER TYPE</v-list-item>
+                                <v-list-item
+                                    v-for="(item, index) in taxpayers"
+                                    :key="index"
+                                    :value="index"
+                                    :to="item.link"
+                                >
+                                <div class="tw-flex">
+                                    <v-list-item-title class="tw-my-auto tw-ml-3 tw-mr-14">{{ item.title }}</v-list-item-title>
+                                    <v-radio :value="item" />
+                                </div>
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
                     </template>
                 </DataTable>
+            </template>
+
+
+            <!-- Self Enrolment Tab -->
+            <template v-slot:SelfEnrolment>
+                <div class="tw-px-5 md:tw-px-20 mt-10">
+                    <h4 class="text-h5 tw-text-green-700 font-weight-bold">SELF - ENROLMENT</h4>
+                    <p>Choose the option that best describes you as a taxpayer.</p>
+                    
+                    <SelfEnrolmentFrom />
+                </div>
+
+                <v-row class="mt-5" justify="center">
+                    <Button 
+                        title="Go Back"
+                        variant="outlined"
+                        :class="`tw-text-[${$constants.primary}]`"
+                        @click="goBack"
+                    />
+                    <Button 
+                        title="Proceed to Enrolment"
+                        :class="`tw-text-[${$constants.light}] tw-bg-[${$constants.primary}]`"
+                        @click="proceedToEnrolment"
+                    />
+                    </v-row>
             </template>
         </Tab>
     </div>
@@ -67,8 +110,8 @@ import Dialog from '@/components/dialog/Dialog.vue'
 import { useGlobalsStore } from '@/stores/globals';
 import Tab from '@/components/tab.vue';
 import Button from '@/components/button/Button.vue';
-import DataTable  from '@/components/dataTable/DataTable.vue';
-import DropdownButton  from '@/components/DropdownButton.vue';
+import DataTable from '@/components/dataTable/DataTable.vue';
+import SelfEnrolmentFrom from '@/components/SelfEnrolmentFrom.vue';
 
 import {
     PhSquaresFour,
@@ -85,6 +128,7 @@ export default {
     data(){
         return {    
             tabs:[
+                { name: 'Self Enrolment', key:'SelfEnrolment'},
                 { name: 'Tables', key:'Tables'},
                 { name: 'Dialogs', key:'Dialogs'},
                 { name: 'Buttons', key:'Buttons'},
@@ -248,16 +292,29 @@ export default {
                     title: 'Corporate Taxpayer',
                     link: '/admin/dashboard'
                 }
+            ],
+            cards: [
+                {
+                    icon: 'mdi-shield-check',
+                    iconColor: this.$constants.success,
+                    iconBgClass: this.getBgClass(this.$constants.success, this.$constants.transparent_level),
+                    total: 124,
+                    title: 'Administrators',
+                    labels: [
+                        { total: 34, type:'Admins'},
+                        { total: 90, type:'Sub-Admins'}
+                    ]
+                },
             ]
         }
     },
 
     components: {
         Tab,
-        DropdownButton,
         Button,
         Dialog,
         DataTable,
+        SelfEnrolmentFrom,
         PhSquaresFour,
         PhUsersThree,
         PhCardholder,
@@ -278,6 +335,14 @@ export default {
                 this.showDialog = false;
             }
         },
+        getColor(type){
+            if(type.toLowerCase() != 'inactive' ){
+                return this.$constants.primary
+            }
+        },
+        getBgClass(color, transparencyLevel) {
+            return `tw-bg-[${color}]/${transparencyLevel}`;
+        }
     }
 }
 
