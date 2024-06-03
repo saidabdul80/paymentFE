@@ -58,6 +58,7 @@ export default {
             ],
             drawer: true,
             userStore: useUserStore(),
+            constantsStore:useConstantsStore()
 
         }
     },
