@@ -98,7 +98,7 @@ export default [
         path: "/admin/forgot-password",
         name: "ForgotPassword",
         component: () => ForgotPassword,
-        meta: { breadcrumb: 'Forgot Password', requiresAuth: true },
+        meta: { requiresAuth: false },
     },
     {
         path: "/:pathMatch(.*)*",
