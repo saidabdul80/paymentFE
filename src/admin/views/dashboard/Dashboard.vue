@@ -1,16 +1,6 @@
 <template>
     <div>
-        <Tab :tabs="tabs">
-            <template v-slot:Identification>
-              
-            </template>
-            <template v-slot:Personal>
-                Personal
-            </template>
-            <template v-slot:Contact>
-                Personal
-            </template>
-        </Tab>
+
     </div>
 </template>
 

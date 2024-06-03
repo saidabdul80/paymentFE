@@ -25,22 +25,8 @@
                 </template>
                 <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
             </v-app-bar>
-            <v-main style="height:100vh;" >
-                <v-list lines="one">
-                    <v-list-item
-                        v-for="item in items"
-                        :title="item.title"
-                        :to="item.href"
-                        append-icon="mdi-chevron-right"
-                    ></v-list-item>
-                    </v-list>
-             <!--    <v-breadcrumbs  :bg-color="$constants.light" divider="/">
-                    <v-breadcrumbs-item >
-                        <span  style="text-transform: capitalize;">
-                            {{ item.title}}
-                        </span>
-                    </v-breadcrumbs-item>
-                </v-breadcrumbs> -->
+            <v-main style="height:100vh;" >             
+              <v-breadcrumbs  :item="items"  :bg-color="$constants.light" divider="/"></v-breadcrumbs>
                 <RouterView v-slot="{ Component }"  >
                     <transition name="scale">
                         <component :is="Component"    />
@@ -95,7 +81,7 @@ export default {
             }else{
                 this.items.push({
                     title: n.name,
-                    href: n.href
+                    to: n.href
                 })
             }
         }

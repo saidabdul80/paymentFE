@@ -1,29 +1,27 @@
 <template>
     <div class="tw-px-5">
-        <v-row justify="end" align="center">
-            <v-col cols="6" sm="12" md="2">
-                <v-text-field variant="outlined" placeholder="Search" v-model="searchInput"
-                    prepend-inner-icon="mdi-magnify" density="compact"></v-text-field>
-            </v-col>
-            <v-col cols="auto">
-                <v-tooltip activator="parent" location="top">Add New Admin</v-tooltip>
-
-                <DropdownButton 
-                @click="navigateToNewTaxpayer"
-                            title="Add New Taxpayer" 
-                            prepend-icon="mdi-plus"
-                            header="CHOOSE TAXPAYER TYPE"
-                            :items="taxpayers"
-                            />
-               
-            </v-col>
-            <v-col cols="auto">
+        <div class="">
+            <div class="tw-float-right">
                 <v-tooltip activator="parent" location="top">Refresh</v-tooltip>
                 <v-btn :disabled="loading" size="large" @click="onClick" :color="$constants.primary" class="mb-5"
-                    density="comfortable" icon="mdi-refresh"></v-btn>
-            </v-col>
-        </v-row>
-
+                density="comfortable" icon="mdi-refresh"></v-btn>
+            </div>
+            <div class="tw-float-right clear-right">
+                <v-tooltip activator="parent" location="top">Add New Admin</v-tooltip>
+                <DropdownButton 
+                @click="navigateToNewTaxpayer"
+                title="Add New Taxpayer" 
+                prepend-icon="mdi-plus"
+                header="CHOOSE TAXPAYER TYPE"
+                :items="taxpayers"
+                            />
+               
+            </div>
+            <div class="tw-float-right tw-w-[250px] ">
+                <v-text-field variant="outlined" placeholder="Search" v-model="searchInput"
+                    prepend-inner-icon="mdi-magnify" density="compact"></v-text-field>
+            </div>
+        </div>
         <v-data-table :headers="headers" :items="filteredItems" :loading="loading">
             <template v-slot:loading>
                 <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
