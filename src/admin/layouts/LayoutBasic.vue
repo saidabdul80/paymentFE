@@ -1,23 +1,16 @@
 <template>
-    <div class="`tw-flex  tw-p-0 tw-w-full`" :class="`tw-bg-[${$constants.light}]`"   >
-        <v-layout class="rounded rounded-md"  :color="`${$constants.light}`">
+    <div class="`tw-flex  tw-p-0 tw-w-full`" :class="`tw-bg-[${$constants.light}]`">
+        <v-layout class="rounded rounded-md" :color="`${$constants.light}`">
             <SideBar :drawer="drawer" :rail="drawer" />
             <v-app-bar flat :color="$constants.light" class="tw-shadow-md">
                 <v-app-bar-nav-icon variant="text" @click="drawer = !drawer"></v-app-bar-nav-icon>
                 <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <template v-if="$vuetify.display.mdAndUp">
-                    <v-switch
-                        v-model="mode"
-                        @change="toggleMode"
-                        class="tw-text-sm tw-w-[150px]"
+                    <v-switch v-model="mode" @change="toggleMode" class="tw-text-sm tw-w-[150px]"
                         :class="mode === 'LIGHT' ? 'tw-text-green-900' : 'tw-text-gray-500'"
-                        :color="mode === 'LIGHT' ? $constants.success : 'gray-500'"
-                        :label="`${mode}`"
-                        false-value="DARK"
-                        true-value="LIGHT"
-                        hide-details
-                    >
+                        :color="mode === 'LIGHT' ? $constants.success : 'gray-500'" :label="`${mode}`"
+                        false-value="DARK" true-value="LIGHT" hide-details>
                         <template v-slot:prepend>
                             <v-icon icon="mdi-white-balance-sunny"></v-icon>
                         </template>
@@ -25,18 +18,16 @@
                 </template>
                 <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
             </v-app-bar>
-            <v-main style="height:100vh;" >
-                <v-breadcrumbs :items="items" :bg-color="$constants.light">
-                    <template v-slot:divider >
+            <v-main style="height:100vh;">
+                
+                <v-breadcrumbs :items="breadcrumbs">
+                    <template v-slot:divider>
                         <v-icon icon="mdi-chevron-right"></v-icon>
                     </template>
-                    <template v-slot:title="item">
-                        <span style="text-transform: capitalize;">{{ item.item.title.toLowerCase()?.replaceAll('-', ' ') }}</span>
-                    </template>
                 </v-breadcrumbs>
-                <RouterView v-slot="{ Component }"  >
+                <RouterView v-slot="{ Component }">
                     <transition name="scale">
-                        <component :is="Component"    />
+                        <component :is="Component" />
                     </transition>
                 </RouterView>
             </v-main>
@@ -50,7 +41,6 @@ import useUserStore from '@/admin/stores/user';
 import SideBar from "@/components/sidebar/sidebar.vue"
 import { useNotificationStore } from '@/stores/notification';
 import { useGlobalsStore } from "@/stores/globals";
-import { storeToRefs } from "pinia";
 import ls from "@/services/ls";
 import { useConstantsStore } from '@/stores/constants';
 export default {
@@ -68,15 +58,25 @@ export default {
             ],
             drawer: true,
             userStore: useUserStore(),
+            constantsStore:useConstantsStore()
 
         }
     },
     watch: {
-        'globals.subPageName': function(n, o) {
-            this.items[1].title = n;
+        'globals.subPageName': function (n, o) {
+            /*   this.items[1] =
+              {
+                  title: n.name,
+                  href: n.href
+              } */
         },
-        '$route.name': function(n, o) {
-            this.items[0].title = n;
+        'globals.currentPageName': function (newPage, oldPage) {
+            if (!this.items.some(item => item.title === newPage.name)) {
+                this.items.push({
+                    title: newPage.name,
+                    to: newPage.href
+                });
+            }
         }
     },
     computed: {
@@ -89,64 +89,89 @@ export default {
     },
     created() {
         const savedMode = ls.get('mode');
-        if (savedMode) {
+      /*   if (savedMode) {
             this.constantsStore.setMode(savedMode);
-        }
-        this.items = [
-            {
-                title: this.$route.name.replaceAll('-', ''),
-                disabled: false,
-                href: '#',
-                class: 'tw-text-gray-500 tw-font-bold'
-            },
-            {
-                title: '',
-                disabled: false,
-                href: '#',
-                class: 'tw-text-green-700 tw-font-bold'
-            }
-        ];
+        } */
+
     },
-    methods: {
-        toggleMode() {
-            this.constantsStore.toggleMode();
-            ls.set('mode', this.constantsStore.mode);
-        },
-        showNo() {
-            const notificationStore = useNotificationStore();
-            notificationStore.showNotification({
-                type: 'success',
-                message: 'Notification triggered!',
-            });
-        },
-        async created() {
-            await this.userStore.fetchUserPermissions();
-        },
+    computed: {
+    breadcrumbs() {
+      let matchedRoutes = this.$route.matched;
+      let breadcrumbs = [];
+
+      matchedRoutes.forEach(route => {
+        if (route.meta.breadcrumb) {
+          breadcrumbs.push({
+            title: typeof route.meta.breadcrumb === 'function'
+              ? route.meta.breadcrumb(this.$route)
+              : route.meta.breadcrumb,
+            to: route.path,
+            exact: true
+          });
+
+          // Check for parent routes
+          if (route.meta.parent) {
+            let parentRoute = this.$router.options.routes.find(r => r.name === route.meta.parent);
+            if (parentRoute) {
+              breadcrumbs.unshift({
+                title: parentRoute.meta.breadcrumb,
+                to: parentRoute.path,
+                exact: true
+              });
+            }
+          }
+        }
+      });
+
+      return [{ title: 'Home', to: '/admin' }, ...breadcrumbs];
     }
-}
+  },
+        methods: {
+            toggleMode() {
+                this.constantsStore.toggleMode();
+                ls.set('mode', this.constantsStore.mode);
+            },
+            showNo() {
+                const notificationStore = useNotificationStore();
+                notificationStore.showNotification({
+                    type: 'success',
+                    message: 'Notification triggered!',
+                });
+            },
+            async created() {
+                await this.userStore.fetchUserPermissions();
+            },
+        }
+    }
+
 </script>
 
 <style scoped>
 .slide-leave-active,
 .slide-enter-active {
-  transition: .4s;
+    transition: .4s;
 }
+
 .slide-enter {
-  transform: translate(-100%, 0);
+    transform: translate(-100%, 0);
 }
+
 .slide-leave-to {
-  transform: translate(100%, 0);
+    transform: translate(100%, 0);
 }
+
 .scale-enter-active,
 .scale-leave-active {
-  transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
+
 .scale-enter-from {
-  opacity: 0;
-  transform: scale(0);
+    opacity: 0;
+    transform: scale(0);
 }
+
 .scale-leave-to {
-  opacity: 0;
-  transform: scale(0.9);
+    opacity: 0;
+    transform: scale(0.9);
 }
 </style>

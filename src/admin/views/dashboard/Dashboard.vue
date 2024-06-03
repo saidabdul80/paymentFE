@@ -1,21 +1,10 @@
 <template>
     <div>
-        <Tab :tabs="tabs">
-            <template v-slot:Identification>
-                <IndividualTaxpayerRegistration />
-            </template>
-            <template v-slot:Personal>
-                Personal
-            </template>
-            <template v-slot:Contact>
-                Personal
-            </template>
-        </Tab>
+
     </div>
 </template>
 
 <script>
-import IndividualTaxpayerRegistration from '@/admin/views/users/forms/IndividualTaxpayerRegistration.vue';
 import { useGlobalsStore } from '@/stores/globals';
 import Tab from '@/components/tab.vue';
 export default {
@@ -36,7 +25,6 @@ export default {
     },
     components: {
         Tab,
-        IndividualTaxpayerRegistration,
     },
 }
 </script>
