@@ -7,7 +7,7 @@ export const constantsDark = {
         s5: 'tw-text-2xl',
         s6: 'tw-text-4xl',
     },
-    primary: "#006033",
+    primary: "#07e47d",
     primary_light: "#006033",
     secondary: "#3D434A",
     secondary_light: "#D9D9D9",

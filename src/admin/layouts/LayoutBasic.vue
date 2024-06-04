@@ -20,9 +20,9 @@
             </v-app-bar>
             <v-main style="height:100vh;">
 
-                <v-breadcrumbs :items="breadcrumbs">
+                <v-breadcrumbs :items="breadcrumbs" :color="mode === 'LIGHT' ?'white' : ''" :active-class="mode === 'LIGHT' ?'tw-text-white' : ''">
                     <template v-slot:divider>
-                        <v-icon icon="mdi-chevron-right"></v-icon>
+                        <v-icon icon="mdi-chevron-right" :color="mode === 'LIGHT' ?'white' : ''"></v-icon>
                     </template>
                 </v-breadcrumbs>
                 <RouterView v-slot="{ Component }">

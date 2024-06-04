@@ -79,7 +79,7 @@
             dropDownLabel: 'Add New Vendor',
             dropdownItem: [{
                     title: 'Individual Taxpayer',
-                    link: 'users/add-individual-taxpayer/'
+                    link: 'users/add-vendor'
                 }]
           },
           'Taxpayers':{

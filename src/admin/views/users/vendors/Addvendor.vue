@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container class="add-vendor">
         <v-card class="mx-auto">
             <div class="text-caption pa-2 mt-15">
                 <h4 class="text-h5 tw-text-green-700 text-center font-weight-bold mb-5">
@@ -48,17 +48,17 @@ export default {
 </script>
 
 <style>
-.v-stepper-header {
+.add-vendor .v-stepper-header {
     box-shadow: none;
     width: 80%;
     margin: 0 auto;
 }
 
-.v-divider {
+.add-vendor .v-divider {
     border: 1px solid #424242;
 }
 
-.v-stepper.v-sheet {
+.add-vendor .v-stepper.v-sheet {
     box-shadow: none;
 }
 </style>
