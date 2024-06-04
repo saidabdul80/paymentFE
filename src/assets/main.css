@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 .loader {
     width: 48px;
     height: 48px;
@@ -12,68 +13,58 @@
     display: inline-block;
     box-sizing: border-box;
     animation: rotation .8s linear infinite;
-    }
+}
 
-    @keyframes rotation {
+@keyframes rotation {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
-    } 
+}
 
-    .page-loader {
-        position: relative;
-        width: 120px;
-        height: 120px;
-        background-color: white;
-        border-radius: 50%;
-    }
-    
-    .loader-inner {
-        border: 16px solid #f3f3f3; /* Light grey */
-        border-top: 16px solid #048023; /* Dark Green */
-        border-radius: 50%;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        animation: spinloader 2s linear infinite;
-    }
-    
-    .loader-image {
-        width: 100%;
-        height: 100%;
-        background-size: 40%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-image: url('logo.png');
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-    
-    @keyframes spinloader {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
+.page-loader {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.loader-inner {
+    border: 16px solid #f3f3f3;
+    /* Light grey */
+    border-top: 16px solid #048023;
+    /* Dark Green */
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: spinloader 2s linear infinite;
+}
+
+.loader-image {
+    width: 100%;
+    height: 100%;
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('logo.png');
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+@keyframes spinloader {
+    0% {
+        transform: rotate(0deg);
     }
 
-    :root {
-        --v-hover: #7fd0aa;
+    100% {
+        transform: rotate(360deg);
     }
-
-    * {
-        font-family: 'VisbyRoundCF', sans-serif;
-    }
-    .uppercase{text-transform: uppercase};
-    
-    .upload-icon{
-        content: 'Upload File';
-        display: block;
-    }
+}

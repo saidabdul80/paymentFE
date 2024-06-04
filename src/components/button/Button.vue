@@ -17,10 +17,14 @@ export default {
       type: String,
       required: true // title is a required prop
     },
+    style:{
+      default:{}
+    },
     variant: {
       type: String,
       default: '' // 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
     },
+    to:''
   }
 }
 </script>

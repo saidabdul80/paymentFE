@@ -13,7 +13,7 @@
                     <div class="tw-mx-auto tw-w-full tw-max-w-sm lg:tw-w-96">
                         <div>
                             <div class="tw-flex tw-justify-center tw-mb-10">
-                                <img class="tw-h-20 tw-w-auto tw-mt-10 " src="@/assets/logo-full.png"
+                                <img class="tw-h-20 tw-w-auto tw-mt-10 " src="@/assets/logo-full-color.png"
                                     alt="Your Company" />
                             </div>
                             <p
@@ -23,7 +23,7 @@
                         </div>
                         <div class="tw-mt-10">
                             <div>
-                                
+
                                 <v-form ref="form">
                                     <v-row>
                                         <v-col cols="12" md="12" sm="12">
@@ -31,19 +31,22 @@
                                             <!-- <v-text-field variant="solo" v-model="authStore.loginData.username"
                                                 :rules="usernameRules" required placeholder="G-TIN or phone number"
                                                 label="ID Number" color="green"></v-text-field> -->
-                                            <TextField v-model="authStore.loginData.username" 
-                                                label="ID Number"  :error_messages="globalStore.nameRules?.username" placeholder="G-TIN or phone number" />
+                                            <TextField v-model="authStore.loginData.username" label="ID Number"
+                                                :error_messages="globalStore.nameRules?.username"
+                                                placeholder="G-TIN or phone number" />
 
                                             <label :for="id"
                                                 class="tw-block tw-text-sm tw-font-medium tw-leading-6 tw-text-gray-900">
                                                 Password
                                             </label>
-                                            
-                                            <TextField lable="Password" variant="outlined" :type="showPassword ? 'text' : 'password'"
+
+                                            <TextField lable="Password" variant="outlined"
+                                                :type="showPassword ? 'text' : 'password'"
                                                 v-model="authStore.loginData.password"
                                                 @click:append-inner="showPassword = !showPassword"
                                                 :append_inner_icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                                placeholder="**********"   :error_messages="globalStore.nameRules?.password"/>
+                                                placeholder="**********"
+                                                :error_messages="globalStore.nameRules?.password" />
                                         </v-col>
                                     </v-row>
                                     <div
@@ -101,8 +104,8 @@ export default {
             globalStore: useGlobalsStore(),
         }
     },
-    watch:{
-  
+    watch: {
+
     },
     methods: {
         async login() {

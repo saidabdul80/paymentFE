@@ -46,9 +46,15 @@ export default [
             },
             {
                 path: "users/add-vendor",
-                name: "AddVendor",
+                name: "Add Vendor",
                 meta: { breadcrumb: "Add Vendor", parent: "Users", ability: abilities.USER_CREATE },
                 component: () => import("@/admin/views/users/vendors/Addvendor.vue"),
+            },
+            {
+                path: "users/add-admin",
+                name: "Add Admin",
+                meta: { breadcrumb: "Add Admin", parent: "Users", ability: abilities.USER_CREATE },
+                component: () => import("@/admin/views/users/admin/create.vue"),
             },
             {
                 path: "payments",
@@ -81,10 +87,10 @@ export default [
                 component: () => import("@/admin/views/businesses/Index.vue"),
             },
             {
-              path: "reusable_components",
-              name: "ReusableComponents",
-              component: () => RComponent,
-              meta: { breadcrumb: "Reusable Components", requiresAuth: true },
+                path: "reusable_components",
+                name: "ReusableComponents",
+                component: () => RComponent,
+                meta: { breadcrumb: "Reusable Components", requiresAuth: true },
             },
         ],
     },
@@ -98,7 +104,7 @@ export default [
         path: "/admin/forgot-password",
         name: "ForgotPassword",
         component: () => ForgotPassword,
-        meta: { breadcrumb: 'Forgot Password', requiresAuth: true },
+        meta: { requiresAuth: false },
     },
     {
         path: "/:pathMatch(.*)*",

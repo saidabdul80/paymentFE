@@ -19,7 +19,7 @@
                 <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
             </v-app-bar>
             <v-main style="height:100vh;">
-                
+
                 <v-breadcrumbs :items="breadcrumbs">
                     <template v-slot:divider>
                         <v-icon icon="mdi-chevron-right"></v-icon>
@@ -58,7 +58,7 @@ export default {
             ],
             drawer: true,
             userStore: useUserStore(),
-            constantsStore:useConstantsStore()
+            constantsStore: useConstantsStore()
 
         }
     },
@@ -89,60 +89,69 @@ export default {
     },
     created() {
         const savedMode = ls.get('mode');
-      /*   if (savedMode) {
-            this.constantsStore.setMode(savedMode);
-        } */
+        /*   if (savedMode) {
+              this.constantsStore.setMode(savedMode);
+          } */
 
     },
     computed: {
-    breadcrumbs() {
-      let matchedRoutes = this.$route.matched;
-      let breadcrumbs = [];
+        breadcrumbs() {
+            let matchedRoutes = this.$route.matched;
+            let breadcrumbs = [];
 
-      matchedRoutes.forEach(route => {
-        if (route.meta.breadcrumb) {
-          breadcrumbs.push({
-            title: typeof route.meta.breadcrumb === 'function'
-              ? route.meta.breadcrumb(this.$route)
-              : route.meta.breadcrumb,
-            to: route.path,
-            exact: true
-          });
+            matchedRoutes.forEach(route => {
+                if (route.meta.parent) {
+                    let parentRoute = this.$router.options.routes.find(r => {
+                        if (r.children) {
+                            return r.children.find(c => c.name === route.meta.parent);
+                        }
+                        return r?.name === route.meta.parent;
+                    });
 
-          // Check for parent routes
-          if (route.meta.parent) {
-            let parentRoute = this.$router.options.routes.find(r => r.name === route.meta.parent);
-            if (parentRoute) {
-              breadcrumbs.unshift({
-                title: parentRoute.meta.breadcrumb,
-                to: parentRoute.path,
-                exact: true
-              });
-            }
-          }
+                    if (parentRoute) {
+                        const topParentPath = parentRoute.path
+                        if (parentRoute?.children) {
+                            parentRoute = parentRoute.children.find(r => r?.name === route.meta.parent);
+                        }
+                        breadcrumbs.push({
+                            title: parentRoute.meta.breadcrumb,
+                            to: topParentPath + '/' + parentRoute.path,
+                            exact: true
+                        });
+                    }
+                }
+
+                if (route.meta.breadcrumb) {
+                    breadcrumbs.push({
+                        title: typeof route.meta.breadcrumb === 'function'
+                            ? route.meta.breadcrumb(this.$route)
+                            : route.meta.breadcrumb,
+                        to: route.path,
+                        exact: true
+                    });
+                }
+            });
+
+            return [...breadcrumbs];
         }
-      });
-
-      return [{ title: 'Home', to: '/admin' }, ...breadcrumbs];
+    },
+    methods: {
+        toggleMode() {
+            this.constantsStore.toggleMode();
+            ls.set('mode', this.constantsStore.mode);
+        },
+        showNo() {
+            const notificationStore = useNotificationStore();
+            notificationStore.showNotification({
+                type: 'success',
+                message: 'Notification triggered!',
+            });
+        },
+        async created() {
+            await this.userStore.fetchUserPermissions();
+        },
     }
-  },
-        methods: {
-            toggleMode() {
-                this.constantsStore.toggleMode();
-                ls.set('mode', this.constantsStore.mode);
-            },
-            showNo() {
-                const notificationStore = useNotificationStore();
-                notificationStore.showNotification({
-                    type: 'success',
-                    message: 'Notification triggered!',
-                });
-            },
-            async created() {
-                await this.userStore.fetchUserPermissions();
-            },
-        }
-    }
+}
 
 </script>
 
