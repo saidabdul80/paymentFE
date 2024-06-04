@@ -9,7 +9,7 @@
                 <template v-if="$vuetify.display.mdAndUp">
                     <v-switch v-model="mode" @change="toggleMode" class="tw-text-sm tw-w-[150px]"
                         :class="mode === 'LIGHT' ? 'tw-text-green-900' : 'tw-text-gray-500'"
-                        :color="mode === 'LIGHT' ? $constants.success : 'gray-500'" :label="`${mode}`"
+                        :color="mode === 'LIGHT' ? $constants.success : 'gray-500'" :label="`${constantsStore.mode}`"
                         false-value="DARK" true-value="LIGHT" hide-details>
                         <template v-slot:prepend>
                             <v-icon icon="mdi-white-balance-sunny"></v-icon>
@@ -19,12 +19,8 @@
                 <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
             </v-app-bar>
             <v-main style="height:100vh;">
-
-                <v-breadcrumbs :items="breadcrumbs" :color="mode === 'LIGHT' ?'white' : ''" :active-class="mode === 'LIGHT' ?'tw-text-white' : ''">
-                    <template v-slot:divider>
-                        <v-icon icon="mdi-chevron-right" :color="mode === 'LIGHT' ?'white' : ''"></v-icon>
-                    </template>
-                </v-breadcrumbs>
+                <BreadCrumbs />
+            
                 <RouterView v-slot="{ Component }">
                     <transition name="scale">
                         <component :is="Component" />
@@ -43,10 +39,12 @@ import { useNotificationStore } from '@/stores/notification';
 import { useGlobalsStore } from "@/stores/globals";
 import ls from "@/services/ls";
 import { useConstantsStore } from '@/stores/constants';
+import BreadCrumbs  from '@/components/BreadCrumbs.vue' 
 export default {
     components: {
         RouterView,
-        SideBar
+        SideBar,
+        BreadCrumbs
     },
     data() {
         return {
@@ -89,51 +87,13 @@ export default {
     },
     created() {
         const savedMode = ls.get('mode');
-        /*   if (savedMode) {
+         if (savedMode) {
               this.constantsStore.setMode(savedMode);
-          } */
+          } 
 
     },
     computed: {
-        breadcrumbs() {
-            let matchedRoutes = this.$route.matched;
-            let breadcrumbs = [];
-
-            matchedRoutes.forEach(route => {
-                if (route.meta.parent) {
-                    let parentRoute = this.$router.options.routes.find(r => {
-                        if (r.children) {
-                            return r.children.find(c => c.name === route.meta.parent);
-                        }
-                        return r?.name === route.meta.parent;
-                    });
-
-                    if (parentRoute) {
-                        const topParentPath = parentRoute.path
-                        if (parentRoute?.children) {
-                            parentRoute = parentRoute.children.find(r => r?.name === route.meta.parent);
-                        }
-                        breadcrumbs.push({
-                            title: parentRoute.meta.breadcrumb,
-                            to: topParentPath + '/' + parentRoute.path,
-                            exact: true
-                        });
-                    }
-                }
-
-                if (route.meta.breadcrumb) {
-                    breadcrumbs.push({
-                        title: typeof route.meta.breadcrumb === 'function'
-                            ? route.meta.breadcrumb(this.$route)
-                            : route.meta.breadcrumb,
-                        to: route.path,
-                        exact: true
-                    });
-                }
-            });
-
-            return [...breadcrumbs];
-        }
+     
     },
     methods: {
         toggleMode() {

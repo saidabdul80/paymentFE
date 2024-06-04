@@ -6,11 +6,13 @@ import CorporateTaxPayerRoutes from '@/corperateTaxPayer/corperate-tax-payer-rou
 import useUserStore from '@/admin/stores/user'
 import LayoutBasic from '@/admin/layouts/LayoutBasic.vue'
 import { useGlobalsStore } from "@/stores/globals";
+import RootRoutes from './root';
 
 let routes = []
 routes = routes.concat(AdminRoutes)
 routes = routes.concat(IndividualTaxPayerRoutes)
 routes = routes.concat(CorporateTaxPayerRoutes)
+routes = routes.concat(RootRoutes)
 
 const router = createRouter({
   history: createWebHistory(),

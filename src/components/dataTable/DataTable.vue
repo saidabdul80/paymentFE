@@ -19,6 +19,8 @@
 
     <v-divider></v-divider>
     <v-data-table 
+        ref="table"
+        @click:row="handleClick"
         v-model:search="search" 
         :headers="headers"
         :items="items"
@@ -91,7 +93,15 @@ export default {
       } else {
         return `${this.$constants.danger}`
       }
+    },
+    handleClick(data){
+      alert()
+      console.log(data)
     }
+  },
+  mounted(){
+    alert(3)
+    console.log(this.$refs.table,3233)
   },
   data() {
     return {

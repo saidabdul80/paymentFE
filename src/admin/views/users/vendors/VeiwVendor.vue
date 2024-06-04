@@ -36,9 +36,9 @@
 
 <script>
 import { useGlobalsStore } from '@/stores/globals';
-import VendorDetails from '../details/VendorDetails.vue'
-import VendorAnalytics from '../details/VendorAnalytics.vue'
-import RecentCollections from '../details/RecentCollections.vue'
+import VendorDetails from './details/VendorDetails.vue'
+import VendorAnalytics from './details/VendorAnalytics.vue'
+import RecentCollections from './details/RecentCollections.vue'
 
 export default {
     data: () => ({

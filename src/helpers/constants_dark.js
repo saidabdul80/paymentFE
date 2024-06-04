@@ -18,6 +18,6 @@ export const constantsDark = {
     dark:"#fff",
     layout_background:'#555',
     transparent_level:'15',
-    mode:'dark'
+    mode:'DARK'
 }
  

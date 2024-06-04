@@ -18,6 +18,7 @@
             </v-app-bar>
             <v-main style="height:100vh;"
                 :class="`tw-bg-[${mode === 'LIGHT' ? $constants.light : $constants.secondary}]`">
+                <BreadCrumbs />
                 <router-view></router-view>
             </v-main>
         </v-layout>
@@ -29,10 +30,13 @@ import { RouterView } from "vue-router";
 import ls from "@/services/ls";
 import { useConstantsStore } from '@/stores/constants';
 
+import BreadCrumbs  from '@/components/BreadCrumbs.vue' 
+
 export default {
-    name: 'LayoutBasic',
+    name: 'AuthTopBar',
     components: {
         RouterView,
+        BreadCrumbs
     },
     computed: {
         mode() {

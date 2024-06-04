@@ -1,6 +1,5 @@
 <template>
     <div class="tw-px-5">
-
         <v-data-table :headers="headers" :items="filteredItems" :loading="loading">
             <template v-slot:loading>
                 <v-skeleton-loader type="table-row@10"></v-skeleton-loader>

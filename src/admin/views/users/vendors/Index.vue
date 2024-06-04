@@ -1,13 +1,16 @@
 <template>
     <div class="tw-px-5">
 
-        <v-data-table :headers="headers" :items="filteredItems" :loading="loading">
+        <v-data-table 
+        @click:row="handleClick($event)"
+         :headers="headers" :items="filteredItems" :loading="loading">
             <template v-slot:loading>
                 <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
             </template>
             <template v-slot:item.image="{ item }">
                 <img :src="item.image" alt="User Image" style="width: 30px; height: auto;" />
             </template>
+            
         </v-data-table>
     </div>
 </template>
@@ -71,6 +74,9 @@ export default {
     },
 
     methods: {
+        handleClick(data){
+            this.$router.push('/admin/users/view-vendor');
+        },
         onClick() {
             this.loading = true
             setTimeout(() => {

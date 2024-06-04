@@ -11,7 +11,7 @@ export default [
                 path: "register",
                 name: "Corporate Taxpayer",
                 component: () => import("@/admin/views/auth/CorporateTaxpayerRegistration.vue"),
-                meta: { requiresAuth: false },
+                meta: { requiresAuth: false, breadcrumb:'Corporate Tax Payer'  },
             },
         ],
 

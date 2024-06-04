@@ -10,7 +10,7 @@
                                 <div class="tw-ms-2 tw-mt-1 text-truncate uppercase">
                                     <span :class="`${$constants.text_size.s3} tw-text-${$constants.primary}`"
                                         class="tw-font-bold">GOMBE STATE</span>
-                                    <p :class="[$constants.text_size.s1,isHovered?'marquee':'']"  class=" tw-text-gray-500 tw-mt-[-3px]">
+                                    <p :class="[$constants.text_size.s1,isHovered?'marquee':'']"  class="tw-text-xs tw-text-gray-500 tw-mt-[-3px]">
                                         INTERNAL REVENUE SERVICE</p>
                                 </div>
                             </transition>

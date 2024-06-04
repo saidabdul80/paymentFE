@@ -1,6 +1,5 @@
 <template>
     <div>
-      
       <Button
           v-if="items.length>1"
         :title="title"
@@ -12,7 +11,7 @@
         id="menu-activator"
       />
       <Button
-          v-else
+        v-else
         :title="title"
         :prepend-icon="prependIcon"
         rounded="lg"
