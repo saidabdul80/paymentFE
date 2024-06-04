@@ -1,30 +1,27 @@
 <template>
-    <div class="tw-px-5">
-      <div class="text-caption" >
-            <div class="tw-grid lg:tw-grid-cols-3 tw-grid-cols-1 tw-gap-5">
-              <v-card   v-for="(card, index) in cards" :key="index" class="tw-p-[16px] border-1 tw-flex" :class="`tw-border-[${$constants.secondary_light}]`"  variant="outlined">
-                <div>
-                    <span :class="card.iconBgClass" class="tw-p-[10px] tw-inline-block tw-rounded-[24px]">
-                      <v-icon size="56px" class="tw-w-[56px] tw-h-[56px]" :color="card.iconColor">{{ card.icon }}</v-icon>
-                    </span>
-                </div>
-                <div class="tw-ml-4">
-                    <span class="tw-font-bold leading-none" :class="`${$constants.text_size.s4} tw-text-[${$constants.primary}]`">{{ globals.toCurrency(card.total,false) }}</span>
-                    <p :class="`${$constants.text_size.s2} tw-text-[${$constants.dark}]`" class="tw-font-thin tw-mb-[6px] tw-mt-[-3px]">{{ card.title }}</p>
-                    <div>
-                        <v-chip 
-                            class="tw-font-[100] tw-mr-2 rounded-md"
-                            :class="`${$constants.text_size.s1}`"
-                            rounded="sm"
-                            v-for="label in card.labels"
-                            size="x-small" 
-                            :color="getColor(label.type)"
-                            :text="`${globals.toCurrency(label.total,false)} ${label.type}`"
-                            ></v-chip>
-                    </div>
-                </div>
-              </v-card>
+  <div class="tw-px-5">
+    <div class="text-caption">
+      <div class="tw-grid lg:tw-grid-cols-3 tw-grid-cols-1 tw-gap-5">
+        <v-card v-for="(card, index) in cards" :key="index" class="tw-p-[16px] border-1 tw-flex"
+          :class="`tw-border-[${$constants.secondary_light}]`" variant="outlined">
+          <div>
+            <span :class="card.iconBgClass" class="tw-p-[10px] tw-inline-block tw-rounded-[24px]">
+              <v-icon size="56px" class="tw-w-[56px] tw-h-[56px]" :color="card.iconColor">{{ card.icon }}</v-icon>
+            </span>
+          </div>
+          <div class="tw-ml-4">
+            <span class="tw-font-bold leading-none"
+              :class="`${$constants.text_size.s4} tw-text-[${$constants.primary}]`">{{
+                globals.toCurrency(card.total, false) }}</span>
+            <p :class="`${$constants.text_size.s2} tw-text-[${$constants.dark}]`"
+              class="tw-font-thin tw-mb-[6px] tw-mt-[-3px]">{{ card.title }}</p>
+            <div>
+              <v-chip class="tw-font-[100] tw-mr-2 rounded-md" :class="`${$constants.text_size.s1}`" rounded="sm"
+                v-for="label in card.labels" size="x-small" :color="getColor(label.type)"
+                :text="`${globals.toCurrency(label.total, false)} ${label.type}`"></v-chip>
             </div>
+          </div>
+        </v-card>
       </div>
   
       <Tab :tabs="tabs" :config="tabConfig">
@@ -39,6 +36,7 @@
         </template>
       </Tab>
     </div>
+  </div>
   </template>
   
   <script>
@@ -154,12 +152,11 @@
         },
         getBgClass(color, transparencyLevel) {
             return `tw-bg-[${color}]/${transparencyLevel}`;
-        }
+          }
+      }
     }
-  }
-  </script>
-  
-  <style scoped>
-  /* Scoped styles if needed */
-  </style>
-  
+</script>
+
+<style scoped>
+/* Scoped styles if needed */
+</style>

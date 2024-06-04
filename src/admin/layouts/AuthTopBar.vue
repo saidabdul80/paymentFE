@@ -30,7 +30,7 @@ import ls from "@/services/ls";
 import { useConstantsStore } from '@/stores/constants';
 
 export default {
-    name: 'LayoutBasic',
+    name: 'AuthTopBar',
     components: {
         RouterView,
     },
