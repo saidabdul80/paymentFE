@@ -10,7 +10,7 @@
       />
       <v-menu activator="#menu-activator">
         <v-list>
-          <v-list-item class="tw-ml-3">{{ header }}</v-list-item>
+          <v-list-item class="tw-ml-3 tw-text-sm">{{ header }}</v-list-item>
           <v-list-item
             v-for="(item, index) in items"
             :key="index"
