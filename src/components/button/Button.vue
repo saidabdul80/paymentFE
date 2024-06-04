@@ -4,9 +4,7 @@
     elevation="2"
     rounded="lg"
     size="large"
-    :to="to"
-    class="tw-px-6 tw-mx-1"
-    :style="style"
+    class="tw-px-6 tw-mx-2"
   >
     {{ title }}
   </v-btn>
