@@ -13,11 +13,10 @@ export const constants = {
     secondary_light: "#D9D9D9",
     danger: '#FF4C00',
     warning: '#F4A100',
-    success:'#32B573',
-    light:'#fff',
-    dark:"#222",
-    layout_background:'#FDFCFC',
-    transparent_level:'15',
-    mode:'light'
+    success: '#32B573',
+    light: '#fff',
+    dark: "#222",
+    layout_background: '#FDFCFC',
+    transparent_level: '15',
+    mode: 'light'
 }
- 

@@ -112,10 +112,10 @@ export default {
                         const topParentPath = parentRoute.path
                         if (parentRoute?.children) {
                             parentRoute = parentRoute.children.find(r => r?.name === route.meta.parent);
-                        }               
+                        }
                         breadcrumbs.push({
                             title: parentRoute.meta.breadcrumb,
-                            to: topParentPath+'/'+ parentRoute.path,
+                            to: topParentPath + '/' + parentRoute.path,
                             exact: true
                         });
                     }

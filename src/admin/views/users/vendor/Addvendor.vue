@@ -1,26 +1,22 @@
 <template>
     <v-container>
         <v-card class="mx-auto">
-            <div class="text-caption pa-2 mt-15">
-                <h4 class="text-h5 tw-text-green-700 text-center font-weight-bold mb-5">
-                    Follow the steps to create a new vendor
-                </h4>
-            </div>
-            <v-stepper alt-labels hide-actions editable :items="tabs" class="tw-px-20 no-shadow ">
+            <v-stepper alt-labels hide-actions editable :items="['Enter Vendor Details', 'Verify Details', 'Finish']"
+                class="tw-px-20 no-shadow tw-pt-10 ">
                 <template v-slot:item.1>
-                    <v-card flat>
+                    <v-card flat class="no-shadow">
                         <EnterVendorDetailsRegistration />
                     </v-card>
                 </template>
 
                 <template v-slot:item.2>
-                    <v-card flat>
+                    <v-card flat class="no-shadow">
                         Verify Details
                     </v-card>
                 </template>
 
                 <template v-slot:item.3>
-                    <v-card flat>
+                    <v-card flat class="no-shadow">
                         Finish
                     </v-card>
                 </template>
@@ -30,15 +26,14 @@
 </template>
 
 <script>
-import EnterVendorDetailsRegistration from './EnterVendorDetailsRegistration.vue'
+import EnterVendorDetailsRegistration from '../forms/EnterVendorDetailsRegistration.vue'
 import { useGlobalsStore } from '@/stores/globals';
 
 export default {
     data() {
         return {
             globals: useGlobalsStore(),
-            step: 1,
-            tabs: ['Enter Vendor Details', 'Verify Details', 'Finish']
+            step: 1 // Starting step
         }
     },
     components: {
@@ -48,17 +43,7 @@ export default {
 </script>
 
 <style>
-.v-stepper-header {
-    box-shadow: none;
-    width: 80%;
-    margin: 0 auto;
-}
-
-.v-divider {
-    border: 1px solid #424242;
-}
-
-.v-stepper.v-sheet {
+.no-shadow {
     box-shadow: none;
 }
 </style>

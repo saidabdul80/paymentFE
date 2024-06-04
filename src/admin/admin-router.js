@@ -81,10 +81,10 @@ export default [
                 component: () => import("@/admin/views/businesses/Index.vue"),
             },
             {
-              path: "reusable_components",
-              name: "ReusableComponents",
-              component: () => RComponent,
-              meta: { breadcrumb: "Reusable Components", requiresAuth: true },
+                path: "reusable_components",
+                name: "ReusableComponents",
+                component: () => RComponent,
+                meta: { breadcrumb: "Reusable Components", requiresAuth: true },
             },
         ],
     },
@@ -98,7 +98,7 @@ export default [
         path: "/admin/forgot-password",
         name: "ForgotPassword",
         component: () => ForgotPassword,
-        meta: { breadcrumb: 'Forgot Password', requiresAuth: true },
+        meta: { requiresAuth: false },
     },
     {
         path: "/:pathMatch(.*)*",
