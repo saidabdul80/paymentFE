@@ -100,6 +100,27 @@ export default {
             let breadcrumbs = [];
 
             matchedRoutes.forEach(route => {
+                if (route.meta.parent) {
+                    let parentRoute = this.$router.options.routes.find(r => {
+                        if (r.children) {
+                            return r.children.find(c => c.name === route.meta.parent);
+                        }
+                        return r?.name === route.meta.parent;
+                    });
+
+                    if (parentRoute) {
+                        const topParentPath = parentRoute.path
+                        if (parentRoute?.children) {
+                            parentRoute = parentRoute.children.find(r => r?.name === route.meta.parent);
+                        }
+                        breadcrumbs.push({
+                            title: parentRoute.meta.breadcrumb,
+                            to: topParentPath + '/' + parentRoute.path,
+                            exact: true
+                        });
+                    }
+                }
+
                 if (route.meta.breadcrumb) {
                     breadcrumbs.push({
                         title: typeof route.meta.breadcrumb === 'function'
@@ -108,22 +129,10 @@ export default {
                         to: route.path,
                         exact: true
                     });
-
-                    // Check for parent routes
-                    if (route.meta.parent) {
-                        let parentRoute = this.$router.options.routes.find(r => r.name === route.meta.parent);
-                        if (parentRoute) {
-                            breadcrumbs.unshift({
-                                title: parentRoute.meta.breadcrumb,
-                                to: parentRoute.path,
-                                exact: true
-                            });
-                        }
-                    }
                 }
             });
 
-            return [{ title: 'Home', to: '/admin' }, ...breadcrumbs];
+            return [...breadcrumbs];
         }
     },
     methods: {
