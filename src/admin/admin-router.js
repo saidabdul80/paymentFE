@@ -46,9 +46,15 @@ export default [
             },
             {
                 path: "users/add-vendor",
-                name: "AddVendor",
+                name: "Add Vendor",
                 meta: { breadcrumb: "Add Vendor", parent: "Users", ability: abilities.USER_CREATE },
                 component: () => import("@/admin/views/users/vendors/Addvendor.vue"),
+            },
+            {
+                path: "users/add-admin",
+                name: "Add Admin",
+                meta: { breadcrumb: "Add Admin", parent: "Users", ability: abilities.USER_CREATE },
+                component: () => import("@/admin/views/users/admin/create.vue"),
             },
             {
                 path: "payments",

@@ -4,7 +4,9 @@
     elevation="2"
     rounded="lg"
     size="large"
+    :to="to"
     class="tw-px-6 tw-mx-1"
+    :style="style"
   >
     {{ title }}
   </v-btn>
@@ -17,10 +19,14 @@ export default {
       type: String,
       required: true // title is a required prop
     },
+    style:{
+      default:{}
+    },
     variant: {
       type: String,
       default: '' // 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
     },
+    to:''
   }
 }
 </script>

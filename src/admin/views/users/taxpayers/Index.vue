@@ -1,22 +1,5 @@
 <template>
     <div class="tw-px-5">
-        <v-row justify="end" align="center">
-            <v-col cols="6" sm="12" md="2">
-                <v-text-field variant="outlined" placeholder="Search" v-model="searchInput"
-                    prepend-inner-icon="mdi-magnify" density="compact"></v-text-field>
-            </v-col>
-            <v-col cols="auto">
-                <v-tooltip activator="parent" location="top">Add New Admin</v-tooltip>
-                <v-btn :disabled="loading" size="large" @click="navigateToNewTaxpayer" :color="$constants.primary"
-                    class="mb-5" density="comfortable" icon="mdi-plus"></v-btn>
-            </v-col>
-            <v-col cols="auto">
-                <v-tooltip activator="parent" location="top">Refresh</v-tooltip>
-                <v-btn :disabled="loading" size="large" @click="onClick" :color="$constants.primary" class="mb-5"
-                    density="comfortable" icon="mdi-refresh"></v-btn>
-            </v-col>
-        </v-row>
-
         <v-data-table :headers="headers" :items="filteredItems" :loading="loading">
             <template v-slot:loading>
                 <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
@@ -32,6 +15,8 @@
 import { shallowRef, computed } from 'vue'
 import { useGlobalsStore } from '@/stores/globals';
 import TextField from '@/components/TextField.vue';
+import DropdownButton  from '@/components/DropdownButton.vue';
+import Search from '@/components/Search.vue'
 
 export default {
     data() {
@@ -50,6 +35,7 @@ export default {
                 { title: 'Phone Number', key: 'phoneNumber' },
                 { title: 'Email', key: 'email' },
             ],
+        
             items: [
                 { serialNo: 1, image: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', name: 'Halima Umar Samb', gtin: 'GTG4773', gender: 'Female', taxpayerType: 'Individual', phoneNumber: '09067543245', email: 'halima773@gmail.com' },
                 { serialNo: 2, image: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', name: 'Adamu Lawan', gtin: 'GTG3454', gender: 'Female', taxpayerType: 'Corporate', phoneNumber: '09067543245', email: 'yusuftankostore@yahoo.com' },
@@ -72,7 +58,9 @@ export default {
     },
 
     components: {
-        TextField
+        TextField,
+        DropdownButton,
+        Search
     },
 
     computed: {

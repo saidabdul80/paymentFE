@@ -23,100 +23,138 @@
           </div>
         </v-card>
       </div>
+  
+      <Tab :tabs="tabs" :config="tabConfig">
+        <template v-slot:Admins>
+          <Admins />
+        </template>
+        <template v-slot:Vendors>
+          <Vendors />
+        </template>
+        <template v-slot:Taxpayers>
+          <Taxpayers />
+        </template>
+      </Tab>
     </div>
-
-    <Tab :tabs="tabs">
-      <template v-slot:Admins>
-        <Admins />
-      </template>
-      <template v-slot:Vendors>
-        <Vendors />
-      </template>
-      <template v-slot:Taxpayers>
-        <!-- <Taxpayers /> -->
-      </template>
-    </Tab>
   </div>
-</template>
-
-<script>
-import Admins from '@/admin/views/users/admin/Admins.vue'
-import Vendors from '@/admin/views/users/vendors/Vendors.vue'
-// import Taxpayers from '@/admin/views/users/taxpayers/Index.vue'
-import { useGlobalsStore } from '@/stores/globals';
-import Tab from '@/components/tab.vue';
-
-export default {
-  components: {
-    Tab,
-    Admins,
-    Vendors,
-    // Taxpayers
-  },
-  data() {
-    return {
-      globals: useGlobalsStore(),
-      tabs: [
-        { name: 'Admins', key: 'Admins' },
-        { name: 'Vendors', key: 'Vendors' },
-        { name: 'Taxpayers', key: 'Taxpayers' },
-      ],
-      cards: [
-        {
-
-          icon: 'mdi-shield-check',
-          iconColor: this.$constants.success,
-          iconBgClass: this.getBgClass(this.$constants.success, this.$constants.transparent_level),
-          total: 124,
-          title: 'Administrators',
-          labels: [
-            { total: 34, type: 'Admins' },
-            { total: 90, type: 'Sub-Admins' }
-          ]
-        },
-        {
-          border: this.$constants.secondary_dark,
-          icon: 'mdi-headset',
-          iconSize: '48px',
-          iconColor: this.$constants.danger,
-          iconBgClass: this.getBgClass(this.$constants.danger, this.$constants.transparent_level),
-          total: 5689,
-          title: 'Vendors',
-          labels: [
-            { total: 4676, type: 'Active' },
-            { total: 897, type: 'Inactive' }
-          ]
-        },
-        {
-          border: this.$constants.secondary_dark,
-          icon: 'mdi-account-multiple',
-          iconSize: '48px',
-          iconColor: this.$constants.warning,
-          iconBgClass: this.getBgClass(this.$constants.warning, this.$constants.transparent_level),
-          total: 3456890,
-          title: 'Taxpayers',
-          labels: [
-            { total: 985345, type: 'Corporate' },
-            { total: 2050400, type: 'Individual' }
-          ]
-        }
-      ]
-    };
-  },
-  created() {
-    this.globals.updateSubPageName("LIST");
-  },
-  methods: {
-    getColor(type) {
-      if (type.toLowerCase() != 'inactive') {
-        return this.$constants.primary
-      }
+  </template>
+  
+  <script>
+  import Admins from '@/admin/views/users/admin/Index.vue'
+  import Vendors from '@/admin/views/users/vendors/Index.vue'
+  import Taxpayers from '@/admin/views/users/taxpayers/Index.vue'
+  import { useGlobalsStore } from '@/stores/globals';
+  import Tab from '@/components/tab.vue';
+  
+  export default {
+    components: {
+      Tab,
+      Admins,
+      Vendors,
+      Taxpayers
     },
-    getBgClass(color, transparencyLevel) {
-      return `tw-bg-[${color}]/${transparencyLevel}`;
+    data() {
+      return {
+        globals:useGlobalsStore(),
+        tabs: [
+          { name: 'Admins', key: 'Admins' },
+          { name: 'Vendors', key: 'Vendors' },
+          { name: 'Taxpayers', key: 'Taxpayers' },
+        ],
+        tabConfig:{
+          'Admins':{
+            search: true,
+            sideButton: true,
+            toolTipText: '',
+            dropDownLabel: 'Add New Admin',
+            dropdownItem: [{
+                    title: 'Add Admin',
+                    link: 'users/add-admin'
+                }]
+          },
+          'Vendors':{
+            search: true,
+            sideButton: true,
+            toolTipText: '',
+            dropDownLabel: 'Add New Vendor',
+            dropdownItem: [{
+                    title: 'Individual Taxpayer',
+                    link: 'users/add-individual-taxpayer/'
+                }]
+          },
+          'Taxpayers':{
+            search: true,
+            sideButton: true,
+            toolTipText: '',
+            dropDownLabel: 'Add New TaxPayer',
+            dropdownItem: [
+                {
+                    title: 'Individual Taxpayer',
+                    link: 'users/add-individual-taxpayer/'
+                },
+                {
+                    title: 'Corporate Taxpayer',
+                    link: 'users/add-corporate-taxpayer/'
+                }
+            ]
+          },
+        },
+        cards: [
+          {
+    
+            icon: 'mdi-shield-check',
+            iconColor: this.$constants.success,
+            iconBgClass: this.getBgClass(this.$constants.success, this.$constants.transparent_level),
+            total: 124,
+            title: 'Administrators',
+            labels: [
+              { total: 34, type:'Admins'},
+              { total: 90, type:'Sub-Admins'}
+            ]
+          },
+          {
+            border: this.$constants.secondary_dark,
+            icon: 'mdi-headset',
+            iconSize: '48px',
+            iconColor: this.$constants.danger,
+            iconBgClass: this.getBgClass(this.$constants.danger, this.$constants.transparent_level),
+            total: 5689,
+            title: 'Vendors',
+            labels: [
+              { total: 4676, type:'Active'},
+              { total: 897,type:'Inactive'}
+            ]
+          },
+          {
+            border: this.$constants.secondary_dark,
+            icon: 'mdi-account-multiple',
+            iconSize: '48px',
+            iconColor: this.$constants.warning,
+            iconBgClass:  this.getBgClass(this.$constants.warning, this.$constants.transparent_level),
+            total: 3456890,
+            title: 'Taxpayers',
+            labels: [
+              { total: 985345,type: 'Corporate'},
+              { total: 2050400, type: 'Individual'}
+            ]
+          }
+        ]
+      };
+    },
+    created() {
+      this.globals.updateSubPageName("LIST");
+    },
+    methods: {
+        getColor(type){
+            if(type.toLowerCase() != 'inactive' ){
+                return this.$constants.primary
+            }
+        },
+        getBgClass(color, transparencyLevel) {
+            return `tw-bg-[${color}]/${transparencyLevel}`;
+          }
+      }
     }
-  }
-}
 </script>
 
 <style scoped>

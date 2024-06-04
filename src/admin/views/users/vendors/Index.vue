@@ -1,21 +1,5 @@
 <template>
     <div class="tw-px-5">
-        <v-row justify="end" align="center">
-            <v-col cols="6" sm="12" md="2">
-                <v-text-field variant="outlined" placeholder="Search" v-model="searchInput"
-                    prepend-inner-icon="mdi-magnify" density="compact"></v-text-field>
-            </v-col>
-            <v-col cols="auto">
-                <v-tooltip activator="parent" location="top">Add New Vendor</v-tooltip>
-                <v-btn :disabled="loading" size="large" @click="navigateToNewVendor" :color="$constants.primary"
-                    class="mb-5" density="comfortable" icon="mdi-plus"></v-btn>
-            </v-col>
-            <v-col cols="auto">
-                <v-tooltip activator="parent" location="top">Refresh</v-tooltip>
-                <v-btn :disabled="loading" size="large" @click="onClick" :color="$constants.primary" class="mb-5"
-                    density="comfortable" icon="mdi-refresh"></v-btn>
-            </v-col>
-        </v-row>
 
         <v-data-table :headers="headers" :items="filteredItems" :loading="loading">
             <template v-slot:loading>
@@ -72,7 +56,7 @@ export default {
     },
 
     components: {
-        TextField
+        TextField,
     },
 
     computed: {
