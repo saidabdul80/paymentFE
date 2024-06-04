@@ -9,7 +9,7 @@ export const constants = {
     },
     primary: "#006033",
     primary_light: "#006033",
-    secondary: "#3D434A",
+    secondary: "#ABACA8",
     secondary_light: "#D9D9D9",
     danger: '#FF4C00',
     warning: '#F4A100',

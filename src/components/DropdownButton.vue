@@ -1,14 +1,28 @@
 <template>
     <div>
+      
       <Button
+          v-if="items.length>1"
         :title="title"
         :prepend-icon="prependIcon"
         rounded="lg"
         size="large"
         :class="buttonClasses"
+        :style="{width:width}"
         id="menu-activator"
       />
-      <v-menu activator="#menu-activator">
+      <Button
+          v-else
+        :title="title"
+        :prepend-icon="prependIcon"
+        rounded="lg"
+        :to="items[0]?.link"
+        size="large"
+        :class="buttonClasses"
+        :style="{width:width}"
+        id="menu-activator"
+      />
+      <v-menu activator="#menu-activator" v-if="items.length>1">
         <v-list>
           <v-list-item class="tw-ml-3 tw-text-sm">{{ header }}</v-list-item>
           <v-list-item
@@ -51,10 +65,13 @@
         type: Array,
         required: true,
       },
+      width:{
+        default:'240px'
+      }
     },
     setup() {
       const constantsStore = useConstantsStore();
-      const buttonClasses = computed(() => `tw-text-[${constantsStore.values.light}] tw-bg-[${constantsStore.values.primary}]`);
+      const buttonClasses = computed(() => `tw-text-[${constantsStore.values.light}] tw-bg-[${constantsStore.values.primary}] `);
   
       return {
         buttonClasses,

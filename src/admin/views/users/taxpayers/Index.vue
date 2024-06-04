@@ -1,47 +1,5 @@
 <template>
     <div class="tw-px-5">
-        <v-row justify="end" class="tw-flex ">
-            <v-col cols="5" class="tw-flex-grow tw-mr-0">
-                <v-row class="tw-flex tw-items-center tw-m-0 lg:tw-w-[100%]">
-                    <v-select
-                    v-model="filter"
-                    :items="filters"
-                    placeholder="Filter"
-                    prepend-inner-icon="mdi-filter-variant"
-                    variant="outlined"
-                    density="compact"
-                    hide-details
-                    class="tw-rounded-r-none lg:tw-w-[30%]"
-                    ></v-select> 
-                   
-                    <v-text-field
-                    variant="outlined"
-                    placeholder="Search"
-                    v-model="searchInput"
-                    prepend-inner-icon="mdi-magnify"
-                    density="compact"
-                    hide-details
-                    class="tw-rounded-l-none lg:tw-w-[70%]"
-                    ></v-text-field>
-           
-               
-                </v-row>
-            </v-col>
-
-
-            <v-col cols="auto" class="tw-ml-0">
-                <v-tooltip activator="parent" class="tw-border" location="top">Add New Taxpayer</v-tooltip>
-                <DropdownButton 
-                @click="navigateToNewTaxpayer"
-                            title="Add New Taxpayer" 
-                            prepend-icon="mdi-plus"
-                            header="CHOOSE TAXPAYER TYPE"
-                            :items="taxpayers"
-                            />
-               
-            </v-col>
-        </v-row>
-
         <v-data-table :headers="headers" :items="filteredItems" :loading="loading">
             <template v-slot:loading>
                 <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
@@ -58,6 +16,7 @@ import { shallowRef, computed } from 'vue'
 import { useGlobalsStore } from '@/stores/globals';
 import TextField from '@/components/TextField.vue';
 import DropdownButton  from '@/components/DropdownButton.vue';
+import Search from '@/components/Search.vue'
 
 export default {
     data() {
@@ -76,16 +35,7 @@ export default {
                 { title: 'Phone Number', key: 'phoneNumber' },
                 { title: 'Email', key: 'email' },
             ],
-            taxpayers: [
-                {
-                    title: 'Individual Taxpayer',
-                    link: 'users/add-individual-taxpayer/'
-                },
-                {
-                    title: 'Corporate Taxpayer',
-                    link: 'users/add-corporate-taxpayer/'
-                }
-            ],
+        
             items: [
                 { serialNo: 1, image: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', name: 'Halima Umar Samb', gtin: 'GTG4773', gender: 'Female', taxpayerType: 'Individual', phoneNumber: '09067543245', email: 'halima773@gmail.com' },
                 { serialNo: 2, image: 'https://cdn-icons-png.flaticon.com/512/149/149071.png', name: 'Adamu Lawan', gtin: 'GTG3454', gender: 'Female', taxpayerType: 'Corporate', phoneNumber: '09067543245', email: 'yusuftankostore@yahoo.com' },
@@ -109,7 +59,8 @@ export default {
 
     components: {
         TextField,
-        DropdownButton
+        DropdownButton,
+        Search
     },
 
     computed: {

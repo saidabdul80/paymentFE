@@ -27,7 +27,7 @@
             </div>
       </div>
   
-      <Tab :tabs="tabs">
+      <Tab :tabs="tabs" :config="tabConfig">
         <template v-slot:Admins>
           <Admins />
         </template>
@@ -42,8 +42,8 @@
   </template>
   
   <script>
-  import Admins from '@/admin/views/users/admin/Admins.vue'
-  import Vendors from '@/admin/views/users/vendors/Vendors.vue'
+  import Admins from '@/admin/views/users/admin/Index.vue'
+  import Vendors from '@/admin/views/users/vendors/Index.vue'
   import Taxpayers from '@/admin/views/users/taxpayers/Index.vue'
   import { useGlobalsStore } from '@/stores/globals';
   import Tab from '@/components/tab.vue';
@@ -63,6 +63,44 @@
           { name: 'Vendors', key: 'Vendors' },
           { name: 'Taxpayers', key: 'Taxpayers' },
         ],
+        tabConfig:{
+          'Admins':{
+            search: true,
+            sideButton: true,
+            toolTipText: '',
+            dropDownLabel: 'Add New Admin',
+            dropdownItem: [{
+                    title: 'Add Admin',
+                    link: 'users/add-admin'
+                }]
+          },
+          'Vendors':{
+            search: true,
+            sideButton: true,
+            toolTipText: '',
+            dropDownLabel: 'Add New Vendor',
+            dropdownItem: [{
+                    title: 'Individual Taxpayer',
+                    link: 'users/add-individual-taxpayer/'
+                }]
+          },
+          'Taxpayers':{
+            search: true,
+            sideButton: true,
+            toolTipText: '',
+            dropDownLabel: 'Add New TaxPayer',
+            dropdownItem: [
+                {
+                    title: 'Individual Taxpayer',
+                    link: 'users/add-individual-taxpayer/'
+                },
+                {
+                    title: 'Corporate Taxpayer',
+                    link: 'users/add-corporate-taxpayer/'
+                }
+            ]
+          },
+        },
         cards: [
           {
     

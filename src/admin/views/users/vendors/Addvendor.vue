@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import EnterVendorDetailsRegistration from './forms/EnterVendorDetailsRegistration.vue'
+import EnterVendorDetailsRegistration from './EnterVendorDetailsRegistration.vue'
 import { useGlobalsStore } from '@/stores/globals';
 
 export default {
