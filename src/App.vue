@@ -1,4 +1,3 @@
-
 <template>
   <div v-if="isLoading" class="tw-fixed tw-w-full tw-h-full tw-bg-gray-200 tw-flex tw-items-center tw-justify-center tw-top-0 tw-z-[9000]">
     <div class="page-loader">
