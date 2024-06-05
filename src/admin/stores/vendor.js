@@ -3,26 +3,27 @@ import { defineStore } from 'pinia';
 import { useNotificationStore } from '@/stores/notification';
 
 import { useClient } from '@/stores/client';
-import { computed } from 'vue';
-const useUserStore = (useWindow = false) => {
+const useVendorStore = (useWindow = false) => {
     const defineStoreFunc = useWindow ? window.pinia.defineStore : defineStore;
     return defineStoreFunc({
-        id: 'user',
+        id: 'vendor',
 
         state: () => ({
-            currentUser: null,
+            currentvendor: null,
             currentAbilities: [],
-            userForm: {},
+
+            vendorForm: {},
         }),
 
         getters: {
             currentAbilitiesCount: (state) => state.currentAbilities.length,
-        },        
+        },
+
         actions: {
-            async updateCurrentUser(data) {
-                const response = await useClient().http({ method: 'put', path: '/staffs', data })
-                this.currentUser = response.data;
-                Object.assign(this.userForm, response.data.data);
+            async updateCurrentvendor(data) {
+                const response = await useClient().http({ method: 'put', path: '/vendors', data })
+                this.currentvendor = response.data;
+                Object.assign(this.vendorForm, response.data.data);
                 const notificationStore = useNotificationStore();
                 notificationStore.showNotification({
                     type: 'success',
@@ -31,10 +32,10 @@ const useUserStore = (useWindow = false) => {
 
             },
 
-            async fetchCurrentUser(params) {
-                const response = await useClient().http({ method: 'get', path: '/staffs/me', data })
-                this.currentUser = response.data;
-                this.userForm = response.data;
+            async fetchCurrentvendor(params) {
+                const response = await useClient().http({ method: 'get', path: '/vendors/me', data })
+                this.currentvendor = response.data;
+                this.vendorForm = response.data;
                 const notificationStore = useNotificationStore();
                 notificationStore.showNotification({
                     type: 'success',
@@ -44,7 +45,7 @@ const useUserStore = (useWindow = false) => {
 
             async uploadAvatar(data) {
                 const response = await useClient().http({ method: 'get', path: '/staffs/upload-avatar', data })
-                this.currentUser.avatar = response.data.avatar;
+                this.currentvendor.avatar = response.data.avatar;
                 const notificationStore = useNotificationStore();
                 notificationStore.showNotification({
                     type: 'success',
@@ -52,7 +53,7 @@ const useUserStore = (useWindow = false) => {
                 });
             },
 
-            async fetchUserPermissions() {
+            async fetchvendorPermissions() {
                 const response = await useClient().http({ method: 'get', path: '/staffs/permissions', data })
                 this.currentAbilities = response.data.data;
             },
@@ -76,4 +77,4 @@ const useUserStore = (useWindow = false) => {
     })();
 };
 
-export default useUserStore;
+export default usevendorStore;

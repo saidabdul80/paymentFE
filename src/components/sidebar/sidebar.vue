@@ -22,20 +22,7 @@
             <v-divider class="border-opacity-100" :class="`tw-bg-[${$constants.primary}]`"></v-divider>
 
             <v-list density="compact" nav class="py-8">
-                <v-list-item v-for="item in items" rounded="lg" class="tw-p-[12px] tw-m-0"
-                    :class="`${$constants.text_size.s1}`"
-                    :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.mode =='light'? $constants.primary:''"
-                    :color="$constants.primary"
-                    @click="globals.setCurrentPageName(item)"
-                    :to="item.href" :value="item.title">
-                    <template v-slot:prepend>
-                        <v-icon size="small"
-                            :icon="item.href === this.$route.path ? item.icon : item.icon + '-outline'"></v-icon>
-                    </template>
-                    <template v-slot:default>
-                        <span class="text-truncate ">{{ item.name }}</span>
-                    </template>
-                </v-list-item>
+                <SideBarItem v-for="item in items" :item="item" />
             </v-list>
         </div>
 
@@ -44,17 +31,7 @@
         <div class="tw-py-[6px] tw-fixed tw-bottom-0 tw-w-full">
             <v-divider class="border-opacity-100 tw-mx-4" :class="`tw-bg[${$constants.primary}]`"></v-divider>
             <v-list density="compact" nav class="py-1">
-                <v-list-item v-for="item in subItems" rounded="lg" class="tw-p-[12px] tw-m-0"
-                    :class="`${$constants.text_size.s1}`"
-                    :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.mode =='light'? $constants.primary:''"
-                    :to="item.href" :value="item.title">
-                    <template v-slot:prepend>
-                        <v-icon size="small" :icon="item.icon"></v-icon>
-                    </template>
-                    <template v-slot:default>
-                        <span class="text-truncate">{{ item.name }}</span>
-                    </template>
-                </v-list-item>
+                <SideBarItem v-for="item in subItems" :item="item" />            
             </v-list>
             <v-divider class="border-opacity-100 tw-mx-4 tw-mb-2" :class="`tw-bg-[${$constants.primary}]`"></v-divider>
             <v-list-item nav class="tw-pb-[26px] tw-px-[8px] " :class="`${$constants.text_size.s1}`"
@@ -79,7 +56,7 @@
 </template>
 
 <script>
-
+import SideBarItem from "./SideBarItem.vue"
 import { useGlobalsStore } from "@/stores/globals";
 import {
     PhSquaresFour,
@@ -95,6 +72,7 @@ import {
 
 export default {
     components: {
+        SideBarItem,
         PhSquaresFour,
         PhUsersThree,
         PhCardholder,
