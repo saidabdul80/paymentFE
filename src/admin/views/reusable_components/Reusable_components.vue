@@ -1,38 +1,18 @@
 <template>
   <div>
-    <Tab :tabs="tabs">
+    <Tab :tabs="tabs" :showBottomNavigations="true">
       <!-- Dialog Tab -->
       <template v-slot:Dialogs>
         <v-container>
-          <Button
-            title="Verification Dialog"
-            variant="outlined"
-            :class="`tw-text-[${$constants.primary}]`"
-            @click="showDialog = true"
-          />
-          <Dialog
-            :dialog="showDialog"
-            @update:dialog="showDialog = $event"
-            icon="mdi-check-decagram-outline"
-            title="Verifying Vendor Details"
-            message="Please hold on as we verify your BVN and NIN"
-          >
+          <Button title="Verification Dialog" variant="outlined" :class="`tw-text-[${$constants.primary}]`"
+            @click="showDialog = true" />
+          <Dialog :dialog="showDialog" @update:dialog="showDialog = $event" icon="mdi-check-decagram-outline"
+            title="Verifying Vendor Details" message="Please hold on as we verify your BVN and NIN">
             <template #buttons>
-              <v-checkbox
-                v-model="terms"
-                color="secondary"
-                label="I agree to site terms and conditions"
-              ></v-checkbox>
-              <Button
-                title="Cancel"
-                variant="outlined"
-                :class="`tw-text-[${$constants.primary}]`"
-                @click="handleButtonClick('cancel')"
-              />
-              <Button
-                title="Proceed"
-                :class="`tw-text-[${$constants.light}] tw-bg-[${$constants.primary}]`"
-              />
+              <v-checkbox v-model="terms" color="secondary" label="I agree to site terms and conditions"></v-checkbox>
+              <Button title="Cancel" variant="outlined" :class="`tw-text-[${$constants.primary}]`"
+                @click="handleButtonClick('cancel')" />
+              <Button title="Proceed" :class="`tw-text-[${$constants.light}] tw-bg-[${$constants.primary}]`" />
             </template>
           </Dialog>
         </v-container>
@@ -40,42 +20,25 @@
 
       <!-- Buttons Tab -->
       <template v-slot:Buttons>
-        <Button
-          title="Cancel"
-          variant="outlined"
-          :class="`tw-text-[${$constants.primary}]`"
-        />
-        <Button
-          title="Proceed"
-          :class="`tw-text-[${$constants.light}] tw-bg-[${$constants.primary}]`"
-        />
+        <Button title="Cancel" variant="outlined" :class="`tw-text-[${$constants.primary}]`" />
+        <Button title="Proceed" 
+          :class="`tw-text-[${$constants.light}] tw-bg-[${$constants.primary}]`" />
       </template>
 
       <!-- Table Tab -->
       <template v-slot:Tables>
         <DataTable title="USERS" :headers="headers" :items="users">
           <template #action_button>
-            <Button
-              title="Add New Taxpayer"
-              prepend-icon="mdi-plus"
-              rounded="lg"
-              size="large"
-              :class="`tw-text-[${$constants.light}] tw-bg-[${$constants.primary}]`"
-              id="menu-activator"
-            />
+            <Button title="Add New Taxpayer" prepend-icon="mdi-plus" rounded="lg" size="large"
+              :class="`tw-text-[${$constants.light}] tw-bg-[${$constants.primary}]`" id="menu-activator"></Button>
             <v-menu activator="#menu-activator">
               <v-list>
                 <v-list-item class="tw-ml-3">CHOOSE TAXPAYER TYPE</v-list-item>
-                <v-list-item
-                  v-for="(item, index) in taxpayers"
-                  :key="index"
-                  :value="index"
-                  :to="item.link"
-                >
+                <v-list-item v-for="(item, index) in taxpayers" :key="index" :value="index" :to="item.link">
                   <div class="tw-flex">
                     <v-list-item-title class="tw-my-auto tw-ml-3 tw-mr-14">{{
                       item.title
-                    }}</v-list-item-title>
+                      }}</v-list-item-title>
                     <v-radio :value="item" />
                   </div>
                 </v-list-item>
@@ -88,50 +51,24 @@
       <!-- Self Enrolment Tab -->
       <template v-slot:SelfEnrolment>
         <div class="sm:tw-px-20 md:tw-px-60 mt-10">
-            <div class="tw-mb-8">
-                <h4 :class="`tw-text-[${$constants.primary}]`" class="text-h5 font-weight-bold">
-                  SELF - ENROLMENT
-                </h4>
-                <p>Choose the option that best describes you as a taxpayer.</p>
-            </div>
+          <div class="tw-mb-8">
+            <h4 :class="`tw-text-[${$constants.primary}]`" class="text-h5 font-weight-bold">
+              SELF - ENROLMENT
+            </h4>
+            <p>Choose the option that best describes you as a taxpayer.</p>
+          </div>
 
-            <SelfServiceCard 
-                v-for="(card, index) in cards"
-                :key="index"
-                :card="card"
-                @selectCard="selectCard"
-            />
+          <SelfServiceCard v-for="(card, index) in cards" :key="index" :card="card" :loading="card.loading"
+            @selectCard="selectCard" />
         </div>
-
-        <v-row class="tw-my-10" justify="center">
-          <Button
-            title="Go Back"
-            variant="outlined"
-            :class="`tw-text-[${$constants.primary}]`"
-            @click="goBack"
-          />
-          <Button
-            title="Proceed to Enrolment"
-            :class="`tw-text-[${$constants.light}] tw-bg-[${$constants.primary}]`"
-            @click="proceedToEnrolment"
-          />
-        </v-row>
       </template>
 
       <!-- Self Enrolment Tab -->
-      <template v-slot:CudtomFileInput>
-            <div class="mx-6">
-                <v-file-input 
-                    label="NIN Slip or National ID Card"
-                    prepend-icon=""
-                >
-                <template v-slot:append> 
-                    <span class="tw-p-4 tw-rounded-r-lg tw-m-[-17px]" :class="`tw-text-[${$constants.light}], tw-bg-[${$constants.primary_light}]`" >
-                    Upload Image
-                    </span>
-                </template>
-                </v-file-input>
-            </div>
+      <template v-slot:CustomFileInput>
+        <div class="tw-px-80">
+          <FileInput outerLabel="Verification Document" innerLabel="NIN Slip or National ID Card"
+            title="Upload Image" />
+        </div>
       </template>
     </Tab>
   </div>
@@ -144,6 +81,7 @@ import Tab from "@/components/tab.vue";
 import Button from "@/components/button/Button.vue";
 import DataTable from "@/components/dataTable/DataTable.vue";
 import SelfServiceCard from "@/components/SelfServiceCard.vue";
+import FileInput from "@/components/FileInput.vue";
 import SelfService from "@/views/SelfService.vue";
 
 import {
@@ -161,16 +99,17 @@ export default {
   data() {
     return {
       tabs: [
+        { name: "Custom File Input", key: "CustomFileInput" },
         { name: "Self Enrolment", key: "SelfEnrolment" },
         { name: "Tables", key: "Tables" },
         { name: "Dialogs", key: "Dialogs" },
         { name: "Buttons", key: "Buttons" },
-        { name: "Cudtom File Input", key: "CudtomFileInput" },
       ],
       globals: useGlobalsStore(),
       dialog: false,
       showDialog: false,
       terms: false,
+      selectedFile: null,
       headers: [
         { key: "id", title: "ID" },
         { key: "photo", title: "PHOTO" },
@@ -351,16 +290,16 @@ export default {
           iconBgClass: this.getBgClass(this.$constants.success, this.$constants.transparent_level),
           title: 'Individual Taxpayer',
           content: 'Lorem ipsum dolor sit amet consectetur. Aenean vel ut consectetur elementum integer rutrum purus. Aenean vel ut consectetur elementum integer rutrum purus ac vitae. Feugiat pulvinar imperdiet sodales sed phasellus mattis vel nulla.',
-          link: '../individualTaxpayer/individual-taxpayer',
+          link: '../individual/register',
           selected: false,
         },
         {
           icon: 'mdi-store',
-          iconColor: this.$constants.success,
-          iconBgClass: this.getBgClass(this.$constants.success, this.$constants.transparent_level),
+          iconColor: this.$constants.warning,
+          iconBgClass: this.getBgClass(this.$constants.warning, this.$constants.transparent_level),
           title: 'Corporate Taxpayer',
           content: 'Lorem ipsum dolor sit amet consectetur. Aenean vel ut consectetur elementum integer rutrum purus. Aenean vel ut consectetur elementum integer rutrum purus ac vitae. Feugiat pulvinar imperdiet sodales sed phasellus mattis vel nulla.',
-          link: '../corporateTaxpayer/corporate-taxpayer',
+          link: '../corporate/register',
           selected: false,
         },
       ],
@@ -373,6 +312,7 @@ export default {
     Dialog,
     DataTable,
     SelfServiceCard,
+    FileInput,
     SelfService,
     PhSquaresFour,
     PhUsersThree,
@@ -400,13 +340,19 @@ export default {
       },
     
     selectCard(card) {
-        this.cards.forEach(c => c.selected = false);
-        card.selected = true;
-      },
+      this.cards.forEach(c => c.selected = false);
+      card.selected = true;
+      card.loading = true; // set loading to true
+
+      setTimeout(() => {
+        card.loading = false; // set loading to false after 3 seconds
+        window.location.href = card.link; // navigate to card link
+      }, 3000);
+    },
      // navigate to the previous page
     goBack() {
         this.$router.go(-1);
-      },
+    },
     // proceed to the selected item
     proceedToEnrolment() {
         const selectedCard = this.cards.find(card => card.selected);

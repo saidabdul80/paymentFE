@@ -1,11 +1,14 @@
 <template>
   <v-btn 
     :variant="variant" 
-    elevation="2"
+    elevation="1" 
+    :disabled="disabled"
     rounded="lg"
     size="large"
     :to="to"
-    class="tw-px-6 tw-mx-2"
+    class="tw-px-24 tw-mx-2"
+    height="60px"
+    :style="{width:width}"
   >
     {{ title }}
   </v-btn>
@@ -23,7 +26,14 @@ export default {
     },
     variant: {
       type: String,
-      default: '' // 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
+      default: 'text' // 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    width:{
+      default:''
     },
     to:''
   }
