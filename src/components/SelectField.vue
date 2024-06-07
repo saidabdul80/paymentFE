@@ -1,14 +1,10 @@
 <template>
-    <label :for="id" class="tw-block tw-text-sm tw-font-medium tw-leading-6 tw-text-gray-900">
+    <label :class="`tw-text-[${$constants.dark}]`">
         {{ label }}
         <span v-if="isRequired" class="text-red">*</span>
     </label>
-    <div class="tw-mt-2">
-        <!-- <v-select variant="outlined" :items="items"></v-select> -->
-        <v-select :items="items" variant="outlined" v-bind="$attrs" v-on="$listeners"></v-select>
-    </div>
-    <!-- <v-select :items="items" v-model="individualTaxPayerStore.individualTaxPayerData.personalGender"
-        :error_messages="globalStore.nameRules?.personalGender" variant="outlined"></v-select> -->
+    <v-select :items="items" variant="outlined" v-bind="$attrs" v-on="$listeners"
+        :bg-color="$constants.input_background"></v-select>
 </template>
 
 <script>

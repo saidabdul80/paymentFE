@@ -13,22 +13,16 @@
                     id="emailAddress" name="emailAddress" />
             </v-col>
 
-            <v-col cols="4" md="4" sm="12">
-                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.contactHouseNumber"
-                    :error_messages="globalStore.nameRules?.contactHouseNumber" label="House Number" placeholder=""
-                    id="houseNumber" name="houseNumber" />
+            <v-col cols="4" md="6" sm="12">
+                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.contact_address_line_one"
+                    :error_messages="globalStore.nameRules?.contact_address_line_one" label="Address Line 1"
+                    placeholder="House number, street name" id="houseNumber" name="houseNumber" />
             </v-col>
 
-            <v-col cols="4" md="4" sm="12">
-                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.contactStreetName"
-                    :error_messages="globalStore.nameRules?.contactStreetName" label="Street Name" placeholder=""
-                    id="streetName" name="streetName" />
-            </v-col>
-
-            <v-col cols="4" md="4" sm="12">
-                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.contactAreaLandmark"
-                    :error_messages="globalStore.nameRules?.contactAreaLandmark" label="Area / Landmark" placeholder=""
-                    id="areaLandmark" name="areaLandmark" :isRequired="true" />
+            <v-col cols="4" md="6" sm="12">
+                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.contact_address_line_two"
+                    :error_messages="globalStore.nameRules?.contact_address_line_two" label="Address Line 2"
+                    placeholder="Area / landmark" id="streetName" name="streetName" />
             </v-col>
 
             <v-col cols="4" md="4" sm="12">
@@ -39,8 +33,8 @@
 
             <v-col cols="4" md="4" sm="12">
                 <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.contactLga"
-                    :error_messages="globalStore.nameRules?.contactLga" label="L.G.A" name="lga" id="lga"
-                    :items="['Gombe', 'Akko']" :isRequired="true" />
+                    :error_messages="globalStore.nameRules?.contactLga" label="L.G.A" name="lga" id="lga" :items="lgas"
+                    :isRequired="true" />
             </v-col>
 
             <v-col cols="4" md="4" sm="12">
@@ -63,6 +57,19 @@ export default {
         return {
             individualTaxPayerStore: useIndividualTaxPayerStore(),
             globalStore: useGlobalsStore(),
+            lgas: [
+                "Akko",
+                "Balanga",
+                "Billiri",
+                "Dukku",
+                "Funakaye",
+                "Gombe",
+                "Kaltungo",
+                "Kwami",
+                "Nafada",
+                "Shongom",
+                "Yamaltu/Deba"
+            ],
         }
     },
 

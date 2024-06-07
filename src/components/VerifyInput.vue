@@ -1,12 +1,13 @@
 <template>
   <div class="tw-mr-4">
-    <label class="tw-block tw-text-sm tw-font-medium tw-leading-6" :class="`tw-text-[${$constants.dark}]`">
+    <label :class="`tw-text-[${$constants.dark}]`">
       {{ outerLabel }}
     </label>
-    <v-text-field :placeholder="placeholder" prepend-icon="">
+    <v-text-field :placeholder="placeholder" variant="outlined" prepend-icon="" :bg-color="$constants.input_background">
       <template v-slot:append>
-        <span class="tw-p-4 tw-rounded-r-md tw-m-[-17px] cursor-pointer"
-          :class="`tw-text-[${$constants.light}], tw-bg-[${$constants.primary_light}]`" @click="handleClick">
+        <span
+          class="tw-p-4 tw-rounded-r-md tw-border tw-border-gray-400 tw-ml-[-18px]  tw-bg-[#CCDFD6] tw-text-green-900 cursor-pointer"
+          @click="handleClick">
           {{ title }}
         </span>
       </template>
