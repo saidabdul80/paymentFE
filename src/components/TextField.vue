@@ -5,7 +5,7 @@
         <span v-if="isRequired" :class="`tw-text-red-600`">*</span>
     </label>
     <div class="tw-mt-2">
-        <v-text-field v-model="modelValue" :color="$constants.secondary_light"
+        <v-text-field v-model="modelValue" :color="$constants.secondary_light" :rules="rules"
             @click:append-inner="$emit('click:append-inner')" @input="$emit('update:modelValue', $event.target.value)"
             :append-inner-icon="append_inner_icon" :placeholder="placeholder" :id="id" :name="name"
             :autocomplete="autoComplete" :error-messages="error_messages" :type="type"

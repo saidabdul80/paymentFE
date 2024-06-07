@@ -1,7 +1,7 @@
 <template>
   <div>
     <label :for="id" class="tw-block tw-text-sm tw-font-medium tw-leading-6"
-        :class="`tw-text-[${$constants.danger}] tw-bg-[${$constants.danger}]/20`">
+        :class="`tw-text-[${$constants.secondary}] tw-bg-[${$constants.danger}]/20`">
         {{ label }}
         <span v-if="isRequired" :class="`tw-text-red-600`">*</span>
     </label>

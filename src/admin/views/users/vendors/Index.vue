@@ -1,8 +1,7 @@
 <template>
     <div class="tw-px-5">
 
-        <v-data-table 
-        @click:row="handleClick($event)"
+        <v-data-table @click:row="handleClick"
          :headers="headers" :items="filteredItems" :loading="loading">
             <template v-slot:loading>
                 <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
@@ -74,7 +73,9 @@ export default {
     },
 
     methods: {
-        handleClick(data){
+        handleClick: function (item,row) {    
+            const rowData = row.item;
+            console.log('Row clicked:', rowData);
             this.$router.push('/admin/users/view-vendor');
         },
         onClick() {
@@ -97,5 +98,13 @@ export default {
     /* Adjust the font size */
     padding: -2px 4px;
     /* Adjust the padding */
+}
+
+.clickable-rows .v-data-table__row {
+  cursor: pointer;
+}
+
+.v-data-table__tr--clickable:hover {
+    background-color:  #f0f0f0 ;
 }
 </style>
