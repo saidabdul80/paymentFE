@@ -37,7 +37,7 @@
         console.log('Edit permissions clicked');
       }
     }
-  }
+}
   </script>
   
   <style scoped>

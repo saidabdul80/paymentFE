@@ -20,13 +20,7 @@
         default:'Follow the steps to register a new vendor.',
       },
     },
-    setup() {
-  
-  
-      return {
-        
-      };
-    },
+ 
   };
   </script>
   
