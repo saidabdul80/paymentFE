@@ -11,6 +11,25 @@
       </span>
     </template>
   </v-file-input>
+  <!-- <div>
+    <label :for="id" class="tw-block tw-text-sm tw-font-medium tw-leading-6"
+        :class="`tw-text-[${$constants.secondary}] tw-bg-[${$constants.danger}]/20`">
+        {{ label }}
+        <span v-if="isRequired" :class="`tw-text-red-600`">*</span>
+    </label>
+    <v-list> 
+        <v-list-item to="" round :loading="isSelecting" @click="onButtonClick">
+        {{placeholder}}
+      </v-list-item>
+    </v-list>
+      <input 
+        ref="uploader"
+        class="d-none"
+        type="file"
+        accept="image/*"
+        @change="onFileChanged">
+  </div> -->
+
 </template>
 
 <script>

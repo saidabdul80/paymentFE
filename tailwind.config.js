@@ -23,7 +23,11 @@ export default {
   important: true,
   darkMode: false,
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        visby: ['VisbyRoundCF', 'sans-serif'],
+      },
+    },
   },
   plugins: [
     // require('@tailwindcss/forms'),

@@ -73,7 +73,7 @@
             dropDownLabel: 'Add New Admin',
             dropdownItem: [{
                     title: 'Add Admin',
-                    link: 'users/add-admin'
+                    link: 'users/add-admin/'
                 }]
           },
           'Vendors':{
@@ -83,7 +83,7 @@
             dropDownLabel: 'Add New Vendor',
             dropdownItem: [{
                     title: 'Individual Taxpayer',
-                    link: 'users/add-vendor'
+                    link: 'users/add-vendor/'
                 }]
           },
           'Taxpayers':{

@@ -7,8 +7,8 @@
                         <img class="tw-h-12 tw-w-auto tw-mt-2" src="@/assets/logo.png" alt="logo" />
                         <div>
                             <transition name="slide-fade">
-                                <div class="tw-ms-2 tw-mt-1 text-truncate uppercase">
-                                    <span :class="`${$constants.text_size.s3} tw-text-${$constants.primary}`"
+                                <div class="tw-ms-2 tw-mt-1 text-truncate tw-font-visby uppercase">
+                                    <span :class="`${$constants.text_size.s3} tw-text-[${$constants.primary}]`"
                                         class="tw-font-bold">GOMBE STATE</span>
                                     <p :class="[$constants.text_size.s1,isHovered?'marquee':'']"  class="tw-text-xs tw-text-gray-500 tw-mt-[-3px]">
                                         INTERNAL REVENUE SERVICE</p>
@@ -22,9 +22,10 @@
             <v-divider class="border-opacity-100" :class="`tw-bg-[${$constants.primary}]`"></v-divider>
 
             <v-list density="compact" nav class="py-8">
-                <v-list-item v-for="item in items" rounded="lg" class="tw-p-[12px] tw-m-0"
+                <v-list-item v-for="item in items" rounded="lg" class="tw-p-[12px] tw-font-semibold tw-text-base tw-uppercase tw-font-visby tw-m-0"
                     :class="`${$constants.text_size.s1}`"
-                    :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.mode =='light'? $constants.primary:''"
+                    :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" 
+                    :base-color="$constants.mode =='LIGHT'? $constants.primary:''"
                     :color="$constants.primary"
                     @click="globals.setCurrentPageName(item)"
                     :to="item.href" :value="item.title">
@@ -44,9 +45,9 @@
         <div class="tw-py-[6px] tw-fixed tw-bottom-0 tw-w-full">
             <v-divider class="border-opacity-100 tw-mx-4" :class="`tw-bg[${$constants.primary}]`"></v-divider>
             <v-list density="compact" nav class="py-1">
-                <v-list-item v-for="item in subItems" rounded="lg" class="tw-p-[12px] tw-m-0"
+                <v-list-item v-for="item in subItems" rounded="lg" class="tw-p-[12px] tw-m-0 tw-font-semibold tw-text-base tw-uppercase tw-font-visby"
                     :class="`${$constants.text_size.s1}`"
-                    :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.mode =='light'? $constants.primary:''"
+                    :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.mode =='LIGHT'? $constants.primary:''"
                     :to="item.href" :value="item.title">
                     <template v-slot:prepend>
                         <v-icon size="small" :icon="item.icon"></v-icon>
@@ -67,9 +68,9 @@
                 <template v-slot:default>
                     <div class="tw-ms-2 tw-ml-7 tw-mt-1 text-truncate">
                         <span :class="`tw-text-${$constants.text_size.s1} tw-text-[${$constants.primary}]`"
-                            class="tw-font-bold">AMINU MUDI</span>
+                            class="tw-font-bold tw-text-base tw-font-visby">AMINU MUDI</span>
                         <p :class="`tw-text-${$constants.text_size.s1} tw-text-[${$constants.dark}]`"
-                            class="tw-mt-[-3px]">SUB - ADMIN</p>
+                            class="tw-mt-[-3px] tw-font-visby tw-text-xs tw-font-bold tw-text-[#626260]">SUB - ADMIN</p>
                     </div>
 
                 </template>

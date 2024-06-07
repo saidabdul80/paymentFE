@@ -2,7 +2,7 @@
     <div>
         <div class="tw-flex">
             <FormsHeader title="Showing all administrator roles and assigned permissions." header="role management" />
-           
+            
         </div>
 
         <div class="tw-container tw-mx-auto tw-p-6">

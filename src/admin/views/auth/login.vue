@@ -40,7 +40,7 @@
                                                 Password
                                             </label>
 
-                                            <TextField lable="Password" variant="outlined"
+                                            <TextField label="Password" variant="outlined"
                                                 :type="showPassword ? 'text' : 'password'"
                                                 v-model="authStore.loginData.password"
                                                 @click:append-inner="showPassword = !showPassword"
