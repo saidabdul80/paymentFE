@@ -29,10 +29,6 @@ export default {
             type: String,
             default: '',
         },
-        type: {
-            type: String,
-            default: '',
-        }
     },
     watch: {
         value(newVal) {

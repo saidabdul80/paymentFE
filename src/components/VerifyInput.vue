@@ -1,9 +1,10 @@
 <template>
-  <div class="tw-mr-4">
+  <div>
     <label :class="`tw-text-[${$constants.dark}]`">
       {{ outerLabel }}
     </label>
-    <v-text-field :placeholder="placeholder" variant="outlined" prepend-icon="" :bg-color="$constants.input_background">
+    <v-text-field v-model="inputValue" :placeholder="placeholder" variant="outlined" prepend-icon=""
+      @input="$emit('update:modelValue', $event.target.value)" :bg-color="$constants.input_background">
       <template v-slot:append>
         <span
           class="tw-p-4 tw-rounded-r-md tw-border tw-border-gray-400 tw-ml-[-18px]  tw-bg-[#CCDFD6] tw-text-green-900 cursor-pointer"
@@ -17,7 +18,8 @@
 
 <script>
 export default {
-  // name: "VerifyInput",
+  name: "VerifyInput",
+  emits: ['update:modelValue'],
   props: {
     outerLabel: {
       type: String,
@@ -30,11 +32,27 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    value: {
+      type: String,
+      default: '',
+    },
+  },
+  watch: {
+    value(newVal) {
+      this.$emit('input', newVal);
+    },
+    vModel(newVal) {
+      this.$emit('input', newVal);
     }
   },
+
+
+
   methods: {
     handleClick() {
-      this.$emit('handleClick');
+      // Emit the inputValue along with the event
+      this.$emit('handleClick', this.inputValue)
     }
   }
 }

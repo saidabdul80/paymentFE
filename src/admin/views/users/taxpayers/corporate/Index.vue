@@ -1,13 +1,15 @@
 <template>
+    <!-- admin register page -->
     <div class="tw-px-5">
-        <div class="text-caption pa-2 bg-grey-lighten-4 mb-8">
-            <h4 class="text-h4 tw-text-green-700 font-weight-bold">CORPORATE TAXPAYER REGISTRATION</h4>
-            <div class="text-grey-darken-1 text-h6">Follow the steps to register a new corporate taxpayer.</div>
+        <div class="text-caption pa-2 mb-8 tw-mt-5">
+            <h4 class="text-h5 tw-text-green-700 font-weight-bold">CORPORATE TAXPAYER REGISTRATION</h4>
+            <div class="text-grey-darken-1 text-subtitle-1">
+                Follow the steps to complete your GIRS taxpayer registration
+            </div>
         </div>
 
-        <v-card>
-            <CorporateTaxpayerRegistration />
-        </v-card>
+        <CorporateTaxpayerRegistration />
+
     </div>
 </template>
 

@@ -19,7 +19,8 @@
     </div>
   </div>
 
-  <div class="tw-min-h-[240px] border tw-rounded-lg" :class="`tw-text-[${$constants.dark}] tw-bg-[${$constants.light}]`">
+  <div class="tw-min-h-[240px] border tw-rounded-lg"
+    :class="`tw-text-[${$constants.dark}] tw-bg-[${$constants.light}]`">
     <v-tabs-window v-model="tab">
       <v-tabs-window-item v-for="(tab, n) in tabs" :key="n" :value="n">
         <v-container fluid>
@@ -126,7 +127,7 @@ export default {
       if (index >= 0 && index < this.tabs.length) {
         this.tab = index;
       }
-    }, 
+    },
     //  move to the next tab
     nextTab() {
       if (this.tab < this.tabs.length - 1) {
@@ -140,7 +141,7 @@ export default {
       }
     },
     goBack() {
-        this.$router.go(-1);
+      this.$router.go(-1);
     },
   }
 };

@@ -6,48 +6,30 @@ import Ls from "@/services/ls.js";
 import { useClient } from "@/stores/client";
 import router from "@/router";
 
-export const useIndividualTaxPayerStore = (useWindow = false) => {
+export const useCorporateTaxPayerStore = (useWindow = false) => {
   const defineStoreFunc = useWindow ? window.pinia.defineStore : defineStore;
 
   return defineStoreFunc({
-    id: "individual",
+    id: "corporate",
     state: () => ({
       status: "",
-      individualTaxPayerData: {
-        means_of_verification: "",
-        verification_number: "",
-        verification_document: "",
-        personalFirstName: "",
-        personalMiddleName: "",
-        personalLastName: "",
-        personalTitle: "",
-        personalGender: "",
-        personalDateofBirth: "",
-        personalNationality: "",
-        personalStateofOrigin: "",
-        personalLga: "",
-
-        contactPhoneNumber: "",
-        contactEmailAddress: "",
-        contact_address_line_one: "",
-        contact_address_line_two: "",
-        contactTownDistrict: "",
-        contactLga: "",
-        contactZipCode: "",
-
-        businessOccupation: "",
-        businessEmploymentStatus: "",
-        businessEmployerName: "",
-        business_address_line_one: "",
-        business_address_line_two: "",
-        businessCountry: "",
-        businessState: "",
-        businessZipCode: "",
+      corporateTaxPayerData: {
+        rcNumber: "",
+        businessName: "",
+        sector: "",
+        companyPhoneNumber: "",
+        companyEmail: "",
+        address_line_one: "",
+        address_line_two: "",
+        townDistrict: "",
+        lga: "",
+        zipCode: "",
+        cac_certificate: "",
       },
     }),
 
     actions: {
-      async createIndividualTaxPayer(data) {
+      async createCorporateTaxPayer(data) {
         console.log(data);
         // const response = await useClient().http({ method: 'post', path: '/staffs/login', data })
         // if (response) {

@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <v-row class="tw-p-14">
+    <v-container>
+        <v-row class="tw-py-14">
             <v-col cols="6" md="6" sm="12">
                 <TextField v-model="individualTaxPayerStore.individualTaxPayerData.contactPhoneNumber"
                     :error_messages="globalStore.nameRules?.contactPhoneNumber" label="Phone Number" placeholder=""
@@ -43,7 +43,7 @@
                     name="zipCode" />
             </v-col>
         </v-row>
-    </div>
+    </v-container>
 </template>
 
 <script>

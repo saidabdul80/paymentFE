@@ -1,81 +1,78 @@
 <template>
-    <div>
-        <v-container>
-            <v-row class="tw-p-14">
-                <v-col cols="12" md="4" sm="12" xs="12">
-                    <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.means_of_verification"
-                        :error_messages="globalStore.nameRules?.means_of_verification" label="Mode of Identification"
-                        :items="['NIN', 'BVN', 'Drivers Licence']" :isRequired="true" />
-                </v-col>
+    <v-container>
+        <v-row class="tw-py-14">
+            <v-col cols="12" md="4" sm="12">
+                <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.means_of_verification"
+                    :error_messages="globalStore.nameRules?.means_of_verification" label="Mode of Identification"
+                    :items="['NIN', 'BVN', 'Drivers Licence']" :isRequired="true" />
+            </v-col>
 
-                <v-col cols="12" md="4" sm="12" xs="12">
-                    <VerifyInput v-model="individualTaxPayerStore.individualTaxPayerData.verification_number"
-                        :error_messages="globalStore.nameRules?.verification_number" outerLabel="ID Number"
-                        placeholder="Chosen ID Number" title="Verify" @handleClick="verifyTaxpayer" />
-                </v-col>
+            <v-col cols="12" md="4" sm="12">
+                <VerifyInput v-model="individualTaxPayerStore.individualTaxPayerData.verification_number"
+                    :error_messages="globalStore.nameRules?.verification_number" outerLabel="ID Number"
+                    placeholder="Chosen ID Number" title="Verify" @handleClick="verifyTaxpayer" />
+            </v-col>
 
-                <v-col cols="12" md="4" sm="12" xs="12">
-                    <FileInput v-model="individualTaxPayerStore.individualTaxPayerData.verification_document"
-                        :error_messages="globalStore.nameRules?.verification_document"
-                        outerLabel="Verification Document" placeholder="NIN Slip or National ID Card"
-                        title="Upload Image" />
-                </v-col>
+            <v-col cols="12" md="4" sm="12">
+                <FileInput v-model="individualTaxPayerStore.individualTaxPayerData.verification_document"
+                    :error_messages="globalStore.nameRules?.verification_document" outerLabel="Verification Document"
+                    placeholder="NIN Slip or National ID Card" title="Upload Image"
+                    @file-selected="handleFileSelected" />
+            </v-col>
 
-                <v-col cols="12" md="4" sm="12" xs="12">
-                    <TextField v-model="individualTaxPayerStore.individualTaxPayerData.personalFirstName"
-                        :error_messages="globalStore.nameRules?.personalFirstName" label="First Name" placeholder=""
-                        :isRequired="true" />
-                </v-col>
+            <v-col cols="12" md="4" sm="12">
+                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.personalFirstName"
+                    :error_messages="globalStore.nameRules?.personalFirstName" label="First Name" placeholder=""
+                    :isRequired="true" />
+            </v-col>
 
-                <v-col cols="12" md="4" sm="12" xs="12">
-                    <TextField v-model="individualTaxPayerStore.individualTaxPayerData.personalMiddleName"
-                        :error_messages="globalStore.nameRules?.personalMiddleName" label="Middle Name"
-                        placeholder="" />
-                </v-col>
+            <v-col cols="12" md="4" sm="12">
+                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.personalMiddleName"
+                    :error_messages="globalStore.nameRules?.personalMiddleName" label="Middle Name" placeholder="" />
+            </v-col>
 
-                <v-col cols="12" md="4" sm="12" xs="12">
-                    <TextField v-model="individualTaxPayerStore.individualTaxPayerData.personalLastName"
-                        :error_messages="globalStore.nameRules?.personalLastName" label="Last Name" placeholder="" />
-                </v-col>
+            <v-col cols="12" md="4" sm="12">
+                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.personalLastName"
+                    :error_messages="globalStore.nameRules?.personalLastName" label="Last Name" placeholder="" />
+            </v-col>
 
-                <v-col cols="12" md="4" sm="12" xs="12">
-                    <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.personalTitle"
-                        :error_messages="globalStore.nameRules?.personalTitle" label="Title" :items="titles"
-                        :isRequired="true" />
-                </v-col>
+            <v-col cols="12" md="4" sm="12">
+                <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.personalTitle"
+                    :error_messages="globalStore.nameRules?.personalTitle" label="Title" :items="titles"
+                    :isRequired="true" />
+            </v-col>
 
-                <v-col cols="12" md="4" sm="12" xs="12">
-                    <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.personalGender"
-                        :error_messages="globalStore.nameRules?.personalGender" label="Gender" :items="gender"
-                        :isRequired="true" />
-                </v-col>
+            <v-col cols="12" md="4" sm="12">
+                <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.personalGender"
+                    :error_messages="globalStore.nameRules?.personalGender" label="Gender" :items="gender"
+                    :isRequired="true" />
+            </v-col>
 
-                <v-col cols="12" md="4" sm="12" xs="12">
-                    <TextField v-model="individualTaxPayerStore.individualTaxPayerData.personalDateofBirth"
-                        :error_messages="globalStore.nameRules?.personalDateofBirth" label="Date of Birth" type="date"
-                        placeholder="" />
-                </v-col>
+            <v-col cols="12" md="4" sm="12">
+                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.personalDateofBirth"
+                    :error_messages="globalStore.nameRules?.personalDateofBirth" label="Date of Birth" type="date"
+                    placeholder="" />
+            </v-col>
 
-                <v-col cols="12" md="4" sm="12" xs="12">
-                    <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.personalNationality"
-                        :error_messages="globalStore.nameRules?.personalNationality" label="Nationality"
-                        :items="nationality" :isRequired="true" />
-                </v-col>
+            <v-col cols="12" md="4" sm="12">
+                <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.personalNationality"
+                    :error_messages="globalStore.nameRules?.personalNationality" label="Nationality"
+                    :items="nationality" :isRequired="true" />
+            </v-col>
 
-                <v-col cols="12" md="4" sm="12" xs="12">
-                    <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.personalStateofOrigin"
-                        :error_messages="globalStore.nameRules?.personalStateofOrigin" label="State of Origin"
-                        :items="states" :isRequired="true" />
-                </v-col>
+            <v-col cols="12" md="4" sm="12">
+                <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.personalStateofOrigin"
+                    :error_messages="globalStore.nameRules?.personalStateofOrigin" label="State of Origin"
+                    :items="states" :isRequired="true" />
+            </v-col>
 
-                <v-col cols="12" md="4" sm="12" xs="12">
-                    <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.personalLga"
-                        :error_messages="globalStore.nameRules?.personalLga" label="L.G.A" :items="lgas"
-                        :isRequired="true" />
-                </v-col>
-            </v-row>
-        </v-container>
-    </div>
+            <v-col cols="12" md="4" sm="12">
+                <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.personalLga"
+                    :error_messages="globalStore.nameRules?.personalLga" label="L.G.A" :items="lgas"
+                    :isRequired="true" />
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
@@ -158,10 +155,15 @@ export default {
     },
 
     methods: {
-        verifyTaxpayer() {
+        verifyTaxpayer(data) {
             // Handle verify taxpayer event
-            alert('Verify button clicked');
-        }
+            alert(`Verification Number: ${data}`);
+        },
+        handleFileSelected(fileName) {
+            this.verificationDocumentFileName = fileName; // Save the file name
+            this.individualTaxPayerStore.individualTaxPayerData.verification_document = this.verificationDocumentFileName;
+        },
+
     }
 }
 </script>

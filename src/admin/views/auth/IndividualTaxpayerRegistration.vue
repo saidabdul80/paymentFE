@@ -6,7 +6,6 @@
             <div :class="`tw-text-[${$constants.dark}] ${$constants.text_size.s2}`" class="">Follow the steps to
                 register a new individual taxpayer.</div>
         </div>
-        <!-- <v-form ref="form"> -->
         <Tab :tabs="tabs" :saveData="saveData" :showBottomNavigations="true">
             <template v-slot:Personal>
                 <IndividualTaxpayerRegistrationPersonal />
@@ -18,8 +17,6 @@
                 <IndividualTaxpayerRegistrationBusiness />
             </template>
         </Tab>
-
-        <!-- </v-form> -->
     </div>
 </template>
 
@@ -54,13 +51,12 @@ export default {
     methods: {
         async saveData() {
             this.isLoading = true;
-            // console.log(this.individualTaxPayerStore)
             await this.individualTaxPayerStore.createIndividualTaxPayer(this.individualTaxPayerStore.individualTaxPayerData)
-                // const notificationStore = useNotificationStore();
-                // notificationStore.showNotification({
-                //     type: 'success',
-                //     message: 'Registration Successfully.',
-                // });
+            // const notificationStore = useNotificationStore();
+            // notificationStore.showNotification({
+            //     type: 'success',
+            //     message: 'Registration Successfully.',
+            // });
             //     this.$router.push('/admin/dashboard');
             // this.$refs.form.validate(true);
             // this.isLoading = false;
