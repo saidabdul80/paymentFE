@@ -1,133 +1,164 @@
 <template>
-    <div class="tw-px-20">
-        <v-row class="tw-p-14">
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="RC Number" placeholder="" id="rcNumber" name="rcNumber" :isRequired="true" />
-            </v-col>
+    <!-- Corporate register Component -->
+    <div class="tw-min-h-[240px] border tw-rounded-lg"
+        :class="`tw-text-[${$constants.dark}] tw-bg-[${$constants.light}]`">
+        <h4 class="text-center mt-10">ENTER YOUR RC NUMBER FOR VERIFICATION</h4>
+        <h4 class="text-center text-dark">
+            <v-icon icon="mdi-reload"></v-icon>
+            VERIFYING RC NUMBER
+        </h4>
+        <h4 class="text-center text-green">
+            <v-icon icon="mdi-check-decagram-outline"></v-icon>
+            RC NUMBER VERIFICATION SUCCESSFUL
+        </h4>
+        <h4 class="text-center text-red">
+            <v-icon icon="mdi-close-box-outline"></v-icon>
+            RC NUMBER VERIFICATION FAILED.
+        </h4>
+        <div class="tw-px-20">
+            <v-row class="tw-p-14">
+                <v-col cols="4" md="4" sm="12">
+                    <TextField v-model="corporateTaxPayerStore.corporateTaxPayerData.rcNumber"
+                        :error_messages="globalStore.nameRules?.rcNumber" label="RC Number" placeholder="Eg. RC123456"
+                        :isRequired="true" />
+                </v-col>
 
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="Business Name" placeholder="" id="businessName" name="businessName"
-                    :isRequired="true" />
-            </v-col>
+                <v-col cols="4" md="4" sm="12">
+                    <TextField v-model="corporateTaxPayerStore.corporateTaxPayerData.businessName"
+                        :error_messages="globalStore.nameRules?.businessName" label="Business Name"
+                        placeholder="Business legal name" :isRequired="true" />
+                </v-col>
 
-            <v-col cols="4" md="4" sm="12">
-                <SelectField label="Sector" name="sector" id="sector" :items="[
-                    'Agriculture and Agribusiness', 'Mining and Quarrying', 'Construction', 'Manufacturing', 'Energy and Utilities'
-                    , 'Financial Services', 'Healthcare', 'Information and Communication Technology (ICT)'
-                    , 'Tourism and Hospitality', 'Transportation and Logistics', 'Real Estate', 'Education'
-                    , 'Non-profit and Social Services', 'Government and Public Administration'
-                    , 'Media and Entertainment', 'Retail and Wholesale Trade', 'Food and Beverage'
-                    , 'Sports and Recreation', 'Arts and Culture', 'Environmental Services']" :isRequired="true" />
-            </v-col>
+                <v-col cols="4" md="4" sm="12">
+                    <SelectField v-model="corporateTaxPayerStore.corporateTaxPayerData.sector"
+                        :error_messages="globalStore.nameRules?.sector" label="Sector" :items="sector"
+                        :isRequired="true" />
+                </v-col>
 
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="Company Phone Number" placeholder="" id="companyPhoneNumber" name="companyPhoneNumber"
-                    :isRequired="true" />
-            </v-col>
+                <v-col cols="4" md="4" sm="12">
+                    <TextField v-model="corporateTaxPayerStore.corporateTaxPayerData.companyPhoneNumber"
+                        :error_messages="globalStore.nameRules?.companyPhoneNumber" label="Company Phone Number"
+                        placeholder="11-digit business phone number" :isRequired="true" />
+                </v-col>
 
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="Company Email" placeholder="" id="companyEmail" name="companyEmail" />
-            </v-col>
+                <v-col cols="4" md="4" sm="12">
+                    <TextField v-model="corporateTaxPayerStore.corporateTaxPayerData.companyEmail"
+                        :error_messages="globalStore.nameRules?.companyEmail" label="Company Email"
+                        placeholder="name@example.com" />
+                </v-col>
 
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="Number of staff" placeholder="" type="number" id="numberOfstaff" name="numberOfstaff"
-                    :isRequired="true" />
-            </v-col>
+                <v-col cols="4" md="4" sm="12">
+                    <TextField v-model="corporateTaxPayerStore.corporateTaxPayerData.numberOfstaff"
+                        :error_messages="globalStore.nameRules?.numberOfstaff" label="Number of staff" placeholder="1"
+                        type="number" :isRequired="true" />
+                </v-col>
 
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="Office Number" placeholder="No. 124" id="officeNumber" name="officeNumber" />
-            </v-col>
+                <v-col cols="4" md="6" sm="12">
+                    <TextField v-model="corporateTaxPayerStore.corporateTaxPayerData.address_line_one"
+                        :error_messages="globalStore.nameRules?.address_line_one" label="Address Line 1"
+                        placeholder="House number, street name" />
+                </v-col>
 
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="Street Name" placeholder="Yaman Street ..." id="officeNumber" name="officeNumber" />
-            </v-col>
+                <v-col cols="4" md="6" sm="12">
+                    <TextField v-model="corporateTaxPayerStore.corporateTaxPayerData.address_line_two"
+                        :error_messages="globalStore.nameRules?.address_line_two" label="Address Line 2"
+                        placeholder="Area / Landmark" />
+                </v-col>
 
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="Area / Landmark" placeholder="Name of estate or community or description"
-                    id="areaLandmark" name="areaLandmark" />
-            </v-col>
+                <v-col cols="4" md="4" sm="12">
+                    <TextField v-model="corporateTaxPayerStore.corporateTaxPayerData.townDistrict"
+                        :error_messages="globalStore.nameRules?.townDistrict" label="Town / District"
+                        placeholder="Town of business" :isRequired="true" />
+                </v-col>
 
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="Town / District" placeholder="Garin Nupawa" id="townDistrict" name="townDistrict"
-                    :isRequired="true" />
-            </v-col>
+                <v-col cols="4" md="4" sm="12">
+                    <SelectField v-model="corporateTaxPayerStore.corporateTaxPayerData.lga"
+                        :error_messages="globalStore.nameRules?.lga" label="L.G.A" id="lga" :items="lga"
+                        :isRequired="true" />
+                </v-col>
 
-            <v-col cols="4" md="4" sm="12">
-                <SelectField label="L.G.A" name="lga" id="lga" :items="['Gombe', 'Akko']" :isRequired="true" />
-            </v-col>
+                <v-col cols="4" md="4" sm="12">
+                    <TextField v-model="corporateTaxPayerStore.corporateTaxPayerData.zipCode"
+                        :error_messages="globalStore.nameRules?.zipCode" label="ZIP Code"
+                        placeholder="Zip code of business location" />
+                </v-col>
 
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="ZIP Code" placeholder="102554" id="zipCode" name="zipCode" />
-            </v-col>
+                <v-col md="12" sm="12">
+                    <FileInput v-model="corporateTaxPayerStore.corporateTaxPayerData.cac_certificate"
+                        :error_messages="globalStore.nameRules?.cac_certificate" outerLabel="CAC Certificate"
+                        placeholder="Business CAC certificate" title="Upload Image"
+                        @file-selected="handleFileSelected" />
+                </v-col>
 
-            <v-container class="tw-mt-2">
-                <v-row align="center" justify="center" class="tw-mt-5">
-                    <v-col cols="auto">
-                        <v-btn type="submit" size="large" class="tw-bg-green-100 tw-px-20">
-                            Cancel
-                        </v-btn>
-                    </v-col>
+                <v-row justify="center" class="tw-my-6">
+                    <Button title="Cancel" variant="outlined" :class="`tw-text-[${$constants.primary}]`"
+                        @click="goBack" />
 
-                    <v-col cols="auto">
-                        <v-btn type="submit" size="large" class="tw-bg-green-700 tw-text-white">
-                            Proceed to Verification
-                        </v-btn>
-                    </v-col>
+                    <Button title="Finish" :class="`tw-text-[${$constants.light}] tw-bg-[${$constants.primary}]`"
+                        @click.prevent="saveData" />
                 </v-row>
-            </v-container>
-        </v-row>
+            </v-row>
+        </div>
     </div>
+    <v-spacer class="tw-my-10">&nbsp;</v-spacer>
 </template>
 
 <script>
-// import { useUserStore } from '@/admin/stores/user';
+
+import { useGlobalsStore } from '@/stores/globals';
+import { useCorporateTaxPayerStore } from '@/admin/stores/corporateTaxPayerStore';
+import { useNotificationStore } from "@/stores/notification";
+
 import TextField from '@/components/TextField.vue';
 import SelectField from '@/components/SelectField.vue';
+import FileInput from '@/components/FileInput.vue';
+import Button from '@/components/button/Button.vue';
 
 export default {
     data() {
         return {
-            // isLoading: false,
-            // notificationStore: useNotificationStore(),
-            // userStore: useUserStore(),
-
+            isLoading: false,
+            corporateTaxPayerStore: useCorporateTaxPayerStore(),
+            globalStore: useGlobalsStore(),
             tab: 'Identification Details',
-            items: [
-                'Identification Details', 'Personal Details', 'Contact Information', 'Business / Employer Details',
-            ],
-            name: '',
-            nameRules: [
-                v => !!v || 'Name is required',
-                v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-            ],
-            countries: [
-                { text: 'United States', value: 'us' },
-                { text: 'Canada', value: 'ca' },
-                { text: 'United Kingdom', value: 'uk' },
-                { text: 'Australia', value: 'au' },
-            ],
+            sector: [
+                'Agriculture and Agribusiness', 'Mining and Quarrying', 'Construction', 'Manufacturing', 'Energy and Utilities'
+                , 'Financial Services', 'Healthcare', 'Information and Communication Technology (ICT)'
+                , 'Tourism and Hospitality', 'Transportation and Logistics', 'Real Estate', 'Education'
+                , 'Non-profit and Social Services', 'Government and Public Administration'
+                , 'Media and Entertainment', 'Retail and Wholesale Trade', 'Food and Beverage'
+                , 'Sports and Recreation', 'Arts and Culture', 'Environmental Services'],
+            lga: ['Gombe', 'Akko'],
         }
-    },
-
-    methods: {
-        async validate() {
-            const { valid } = await this.$refs.form.validate()
-
-            if (valid) alert('Form is valid')
-        },
-        reset() {
-            this.$refs.form.reset()
-        },
-        resetValidation() {
-            this.$refs.form.resetValidation()
-        },
     },
     name: "CorporateTaxpayerRegistration",
     components: {
         TextField,
         SelectField,
-    }
-    // data: () => ({ review: '30%' }),
+        FileInput,
+        Button,
+    },
+    methods: {
+        handleFileSelected(fileName) {
+            this.verificationDocumentFileName = fileName; // Save the file name
+        },
+        async saveData() {
+            this.isLoading = true;
+            this.corporateTaxPayerStore.corporateTaxPayerData.cac_certificate = this.verificationDocumentFileName;
+            await this.corporateTaxPayerStore.createCorporateTaxPayer(this.corporateTaxPayerStore.corporateTaxPayerData)
+            // const notificationStore = useNotificationStore();
+            // notificationStore.showNotification({
+            //     type: 'success',
+            //     message: 'Registration Successfully.',
+            // });
+            //     this.$router.push('/admin/dashboard');
+            // this.$refs.form.validate(true);
+            // this.isLoading = false;
+        },
+        goBack() {
+            this.$router.go(-1);
+        },
+    },
 }
 </script>
 

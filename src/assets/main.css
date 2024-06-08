@@ -70,3 +70,19 @@
         transform: rotate(360deg);
     }
 }
+
+
+@font-face {
+    font-family: 'VisbyRoundCF';
+    src: url('/Webfont/VisbyRoundCF-Bold.eot');
+    src: url('/Webfont/VisbyRoundCF-Bold.eot?#iefix') format('embedded-opentype'),
+         url('/Webfont/VisbyRoundCF-Bold.woff2') format('woff2'),
+         url('/Webfont/VisbyRoundCF-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+body * { 
+    font-family: 'VisbyRoundCF', 
+    sans-serif!important; 
+}

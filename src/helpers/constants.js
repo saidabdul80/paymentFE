@@ -17,7 +17,7 @@ export const constants = {
   light: "#fff",
   dark: "#222",
   layout_background: "#FDFCFC",
+  input_background: "#F5F6FA",
   transparent_level: "15",
   mode: "LIGHT",
 };
- 

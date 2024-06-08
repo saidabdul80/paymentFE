@@ -1,155 +1,115 @@
 <template>
-    <div>
-        <v-row class="tw-p-14">
+    <v-container>
+        <v-row class="tw-py-14">
             <v-col cols="6" md="6" sm="12">
-                <TextField label="Occupation" placeholder="" id="occupation" name="occupation" :isRequired="true" />
+                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.businessOccupation"
+                    :error_messages="globalStore.nameRules?.businessOccupation" label="Occupation" placeholder=""
+                    id="occupation" name="occupation" :isRequired="true" />
             </v-col>
 
             <v-col cols="6" md="6" sm="12">
-                <SelectField label="Employment Status" name="lga" id="lga"
-                    :items="['Employee', 'Worker', 'Independent contractor', 'Part time', 'Apprenticeship']"
-                    :isRequired="true" />
+                <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.businessEmploymentStatus"
+                    :error_messages="globalStore.nameRules?.businessEmploymentStatus" label="Employment Status"
+                    name="employmentStatus" id="employmentStatus" :items="employmentStatus" :isRequired="true" />
+            </v-col>
+
+            <v-col cols="12" md="12" sm="12">
+                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.businessEmployerName"
+                    :error_messages="globalStore.nameRules?.businessEmployerName" label="Business / Employer Name"
+                    placeholder="" id="businessEmployerName" name="businessEmployerName" :isRequired="true" />
+            </v-col>
+
+            <v-col cols="4" md="6" sm="12">
+                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.business_address_line_one"
+                    :error_messages="globalStore.nameRules?.business_address_line_one" label="Address Line 1"
+                    placeholder="House number, street name" id="houseNumber" name="houseNumber" />
+            </v-col>
+
+            <v-col cols="4" md="6" sm="12">
+                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.business_address_line_two"
+                    :error_messages="globalStore.nameRules?.business_address_line_two" label="Address Line 2"
+                    placeholder="Area / landmark" id="streetName" name="streetName" />
             </v-col>
 
             <v-col cols="4" md="4" sm="12">
-                <TextField label="Business / Ennployer Nanne" placeholder="" id="businessEnnployerName"
-                    name="businessEnnployerName" :isRequired="true" />
+                <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.businessCountry"
+                    :error_messages="globalStore.nameRules?.businessCountry" label="Country" name="country" id="country"
+                    :items="['Nigeria']" :isRequired="true" />
             </v-col>
 
             <v-col cols="4" md="4" sm="12">
-                <TextField label="Office Nurnbet" placeholder="" id="officeNurnbet" name="officeNurnbet"
-                    :isRequired="true" />
+                <SelectField v-model="individualTaxPayerStore.individualTaxPayerData.businessState"
+                    :error_messages="globalStore.nameRules?.businessState" label="State" name="state" id="state"
+                    :items="states" :isRequired="true" />
             </v-col>
 
             <v-col cols="4" md="4" sm="12">
-                <TextField label="Street Name" placeholder="" id="streetName" name="streetName" />
+                <TextField v-model="individualTaxPayerStore.individualTaxPayerData.businessZipCode"
+                    :error_messages="globalStore.nameRules?.businessZipCode" label="ZIP Code" placeholder=""
+                    id="zipCode" name="zipCode" />
             </v-col>
-
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="Area / Landmark" placeholder="" id="areaLandmark" name="areaLandmark"
-                    :isRequired="true" />
-            </v-col>
-
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="Town / District" placeholder="" id="townDistrict" name="townDistrict"
-                    :isRequired="true" />
-            </v-col>
-
-            <v-col cols="4" md="4" sm="12">
-                <SelectField label="State" name="state" id="state" :items="states = [
-                    'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue',
-                    'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu',
-                    'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi',
-                    'Kwara', 'Lagos', 'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo',
-                    'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara']" :isRequired="true" />
-            </v-col>
-
-            <v-col cols="4" md="4" sm="12">
-                <SelectField label="L.G.A" name="lga" id="lga" :items="['Gombe', 'Akko']" :isRequired="true" />
-            </v-col>
-
-            <v-col cols="4" md="4" sm="12">
-                <SelectField label="Country" name="country" id="country" :items="['Nigeria']" :isRequired="true" />
-            </v-col>
-
-            <v-col cols="4" md="4" sm="12">
-                <TextField label="ZIP Code" placeholder="" id="zipCode" name="zipCode" />
-            </v-col>
-
-            <v-container class="tw-mt-5">
-                <v-row align="center" justify="center" class="tw-mt-5">
-                    <v-col cols="auto">
-                        <v-btn type="submit" size="large" class="tw-bg-green-100 tw-px-20">
-                            Cancel
-                        </v-btn>
-                    </v-col>
-
-                    <v-col cols="auto">
-                        <!-- <v-btn type="submit" size="large" class="tw-bg-green-700 tw-text-white">
-                            Proceed to Verification
-                        </v-btn> -->
-                        <v-dialog max-width="500">
-                            <template v-slot:activator="{ props: activatorProps }">
-                                <v-btn v-bind="activatorProps" type="submit" size="large"
-                                    class="tw-bg-green-700 tw-text-white">
-                                    Proceed to Verification
-                                </v-btn>
-                            </template>
-
-                            <template v-slot:default="{ isActive }">
-                                <v-card>
-                                    <v-card-text class=" text-center tw-p-5 mb-10">
-                                        <img class="mx-auto mt-5 mb-5" src="../../assets/user-plus.png" width="150"
-                                            alt="" />
-                                        <h3 class="text-h5">
-                                            Enrolment Complete
-                                        </h3>
-                                        <b>Mrs. Amina Ahmad Musa</b> has now been added as an individual
-                                        taxpayer with <b>G-TIN34322211</b>. A confirmation SMS would be sent
-                                        to her<br /><br />
-                                        <v-btn type="submit" size="large" class="tw-bg-green-700 tw-text-white">
-                                            Return to Users
-                                        </v-btn>
-                                    </v-card-text>
-                                </v-card>
-                            </template>
-                        </v-dialog>
-                    </v-col>
-                </v-row>
-            </v-container>
         </v-row>
-    </div>
+    </v-container>
 </template>
 
 <script>
-// import { useUserStore } from '@/admin/stores/user';
+import { useGlobalsStore } from '@/stores/globals';
+import { useIndividualTaxPayerStore } from '@/admin/stores/individualTaxPayer';
 import TextField from '@/components/TextField.vue';
 import SelectField from '@/components/SelectField.vue';
 
 export default {
     data() {
         return {
-            // isLoading: false,
-            // notificationStore: useNotificationStore(),
-            // userStore: useUserStore(),
-
-            tab: 'Identification Details',
-            items: [
-                'Identification Details', 'Personal Details', 'Contact Information', 'Business / Employer Details',
-            ],
-            name: '',
-            nameRules: [
-                v => !!v || 'Name is required',
-                v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-            ],
-            countries: [
-                { text: 'United States', value: 'us' },
-                { text: 'Canada', value: 'ca' },
-                { text: 'United Kingdom', value: 'uk' },
-                { text: 'Australia', value: 'au' },
+            individualTaxPayerStore: useIndividualTaxPayerStore(),
+            globalStore: useGlobalsStore(),
+            employmentStatus: ['Employee', 'Worker', 'Independent contractor', 'Part time', 'Apprenticeship'],
+            states: [
+                "Abia",
+                "Adamawa",
+                "Akwa Ibom",
+                "Anambra",
+                "Bauchi",
+                "Bayelsa",
+                "Benue",
+                "Borno",
+                "Cross River",
+                "Delta",
+                "Ebonyi",
+                "Edo",
+                "Ekiti",
+                "Enugu",
+                "Gombe",
+                "Imo",
+                "Jigawa",
+                "Kaduna",
+                "Kano",
+                "Katsina",
+                "Kebbi",
+                "Kogi",
+                "Kwara",
+                "Lagos",
+                "Nasarawa",
+                "Niger",
+                "Ogun",
+                "Ondo",
+                "Osun",
+                "Oyo",
+                "Plateau",
+                "Rivers",
+                "Sokoto",
+                "Taraba",
+                "Yobe",
+                "Zamfara",
+                "Federal Capital Territory (FCT)"
             ],
         }
-    },
-
-    methods: {
-        async validate() {
-            const { valid } = await this.$refs.form.validate()
-
-            if (valid) alert('Form is valid')
-        },
-        reset() {
-            this.$refs.form.reset()
-        },
-        resetValidation() {
-            this.$refs.form.resetValidation()
-        },
     },
     name: "IndividualTaxpayerRegistrationContact",
     components: {
         TextField,
         SelectField,
-    }
-    // data: () => ({ review: '30%' }),
+    },
 }
 </script>
 
