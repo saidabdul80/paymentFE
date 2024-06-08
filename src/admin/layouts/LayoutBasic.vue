@@ -18,7 +18,7 @@
                 </template>
                 <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
             </v-app-bar>
-            <v-main style="height:100vh;">
+            <v-main style="min-height:100vh;">
                 <BreadCrumbs />
             
                 <RouterView v-slot="{ Component }">

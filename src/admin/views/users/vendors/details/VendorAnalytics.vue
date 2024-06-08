@@ -7,97 +7,89 @@
                         <v-container>
                             <v-icon color="yellow" icon="mdi-wallet-bifold" size="large"
                                 class="tw-bg-yellow-100 tw-p-6 rounded-lg tw-mr-2"></v-icon>
-                            <span class="font-weight-bold tw-text-gray-500">REVENUE ANALYSIS</span>
+                            <span class="font-weight-bold" :class="`tw-text-[${$constants.secondary}]`">REVENUE ANALYSIS</span>
                         </v-container>
                         <v-divider class="my-3"></v-divider>
                         <v-row>
                             <v-col cols="6">
-                                <p class="tw-text-green-800 font-weight-bold">Monthly Revenue</p>
-                                <h6 class="text-h6 tw-text-gray-500">₦ 3,456,890.00</h6>
+                                <p :class="`tw-text-[${$constants.primary}]`" class="font-weight-bold">Monthly Revenue</p>
+                                <h6 class="text-h6" :class="`tw-text-[${$constants.secondary}]`">₦ 3,456,890.00</h6>
                             </v-col>
                             <v-col cols="6">
-                                <TextField prepend-inner-icon="mdi-calendar-blank-outline"
+                                <v-col prepend-inner-icon="mdi-calendar-blank-outline"
                                     placeholder="G-TIN or phone number" variant="outlined" density="compact" type="date"
                                     dense :density="compact" />
-                                <p class="text-caption tw-text-gray-500">128,4400 in annual commission
+                                    <DatePicker v-model="monthly_date" clearable />                                
+                                    <p class="text-caption" :class="`tw-text-[${$constants.secondary}]`">128,4400 in annual commission
                                 </p>
                             </v-col>
                         </v-row>
-                        <hr class="tw-mx-2 tw-my-3" />
+                        
+                        <v-divider class="tw-mx-2 tw-my-3"></v-divider>
                         <v-row>
                             <v-col cols="6">
-                                <p class="tw-text-green-800 font-weight-bold">Annual Revenue</p>
-                                <h6 class="text-h6 tw-text-gray-500">₦ 69,456,080.00</h6>
+                                <p :class="`tw-text-[${$constants.primary}]`" class="font-weight-bold">Annual Revenue</p>
+                                <h6 class="text-h6" :class="`tw-text-[${$constants.secondary}]`">₦ 69,456,080.00</h6>
                             </v-col>
                             <v-col cols="6">
-                                <TextField prepend-inner-icon="mdi-calendar-blank-outline"
-                                    placeholder="G-TIN or phone number" variant="outlined" density="compact" type="date"
-                                    dense />
-                                <p class="text-caption tw-text-gray-500">1,456,000 in annual commission
+                                <DatePicker v-model="annual_date" clearable />                               
+                                <p class="text-caption" :class="`tw-text-[${$constants.secondary}]`">1,456,000 in annual commission
                                 </p>
                             </v-col>
                         </v-row>
-                        <hr class="tw-mx-2 tw-my-3" />
+                        <v-divider class="tw-mx-2 tw-my-3"></v-divider>
                         <v-row>
                             <v-col cols="6">
-                                <p class="tw-text-green-800 font-weight-bold">Total Revenue (for all
+                                <p :class="`tw-text-[${$constants.primary}]`" class="font-weight-bold">Total Revenue (for all
                                     time)</p>
-                                <h6 class="text-h6 tw-text-gray-500">₦ 909,456,080.00</h6>
+                                <h6 class="text-h6" :class="`tw-text-[${$constants.secondary}]`">₦ 909,456,080.00</h6>
                             </v-col>
                             <v-col cols="6">
                                 <h6 class="text-subtitle-1 tw-text-green-700">Total Commission</h6>
-                                <p class="text-caption tw-text-gray-500">₦ 5,095,320
+                                <p class="text-caption" :class="`tw-text-[${$constants.secondary}]`">₦ 5,095,320
                                 </p>
                             </v-col>
                         </v-row>
                     </v-col>
                     <v-col cols="12" md="4">
-                        <v-card class="pa-5 rounded-xl">
-                            <v-row>
-                                <v-col cols="8">
-                                    <h5>Taxpayers Enrolled</h5>
-                                    <h6>53</h6>
-                                </v-col>
-                                <v-col cols="4">
+                        <div class="pa-5 tw-shadow-lg rounded-xl tw-grid tw-grid-cols-3">                            
+                                <div class="tw-col-span-2">
+                                    <h5 :class="`tw-text-[${$constants.dark}]`">Taxpayers Enrolled</h5>
+                                    <b :class="`tw-text-[${$constants.dark}]`">53</b>
+                                </div>
+                                <div class="tw-place-self-end">
                                     <v-icon color="blue" icon="mdi-account-multiple" size="x-large"
-                                        class="tw-bg-blue-100 tw-p-8 rounded-xl tw-mr-2 tw-mx-auto tw-d-block"></v-icon>
-                                </v-col>
-                            </v-row>
-                        </v-card>
-                        <v-card class="pa-5 mt-5 rounded-xl">
-                            <v-row>
-                                <v-col cols="8">
-                                    <h5>Compliance Rate</h5>
-                                    <h6>53</h6>
-                                </v-col>
-                                <v-col cols="4">
+                                        class="tw-bg-blue-100 tw-p-8 rounded-xl  tw-mx-auto tw-d-block"></v-icon>
+                                </div>                            
+                        </div>
+                        <div class="pa-5 tw-shadow-lg mt-5 rounded-xl tw-grid tw-grid-cols-3">                            
+                                <div class="tw-col-span-2">
+                                    <h5 :class="`tw-text-[${$constants.dark}]`">Compliance Rate</h5>
+                                    <b :class="`tw-text-[${$constants.dark}]`">53</b>
+                                </div>
+                                <div class="tw-place-self-end">
                                     <v-icon color="blue" icon="mdi-account-multiple" size="x-large"
-                                        class="tw-bg-blue-100 tw-p-8 rounded-xl tw-mr-2 tw-mx-auto tw-d-block"></v-icon>
-                                </v-col>
-                            </v-row>
-                        </v-card>
-                        <v-container>
-                            <v-row>
-                                <v-col cols="7">
-                                    <h4 class="font-weight-bold tw-text-gray-500">VENDOR AGENTS</h4>
-                                </v-col>
-                                <v-col cols="5" class="d-flex justify-end">
-                                    <v-btn outlined color="success" class="ml-2" variant="outlined">See
-                                        More</v-btn>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-avatar-group>
-                                    <v-avatar v-for="(agent, index) in agents" :key="index" :color="agent.color"
-                                        size="48" class="v-avatar">
-                                        <v-img :src="agent.img" />
-                                    </v-avatar>
-                                    <v-avatar size="48" class="v-avatar" color="blue">
-                                        <span>324</span>
-                                    </v-avatar>
-                                </v-avatar-group>
-                            </v-row>
-                        </v-container>
+                                        class="tw-bg-blue-100 tw-p-8 rounded-xl  tw-mx-auto tw-d-block"></v-icon>
+                                </div>                            
+                        </div>                        
+                        <div class="tw-flex mt-10 tw-items-center tw-justify-between">                                                            
+                            <h4 class="font-weight-bold" :class="`tw-text-[${$constants.secondary}]`">VENDOR AGENTS</h4>                                
+                            <div cols="5" class="d-flex justify-end">
+                                <v-btn outlined color="success" class="ml-2" variant="outlined">See
+                                    More</v-btn>
+                                </div>
+                        </div>
+                        <div class="pa-5 mt-5 rounded-xl tw-grid tw-grid-cols-1">
+                            <v-avatar-group>
+                                <v-avatar v-for="(agent, index) in agents" :key="index" :color="agent.color"
+                                    size="48" class="v-avatar">
+                                    <v-img :src="agent.img" />
+                                </v-avatar>
+                                <v-avatar size="48" class="v-avatar" color="blue">
+                                    <span>324</span>
+                                </v-avatar>
+                            </v-avatar-group>
+                        </div>                        
                     </v-col>
                 </v-row>
             </v-col>
@@ -106,10 +98,12 @@
 </template>
 
 <script>
-import TextField from '@/components/TextField.vue'
+import DatePicker  from '@/components/DatePicker.vue'
 
 export default {
     data: () => ({
+        monthly_date:null,
+        annual_date:null,
         name: 'VendorAnalytics',
         months: [
             'January, 2024',
@@ -184,7 +178,7 @@ export default {
         },
     }),
     components: {
-        TextField
+        DatePicker
     }
 }
 </script>

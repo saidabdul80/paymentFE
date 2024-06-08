@@ -14,12 +14,15 @@ import './assets/tailwind.css';
 import App from "./App.vue";
 import router from "./router";
 import ls from "./services/ls";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+
 window.pinia = pinia
 const app = createApp(App);
 
 const { createPinia } = window.pinia
 
-
+app.component('VueDatePicker', VueDatePicker);
 app.use(createPinia());
 app.use(router);
 const vuetify = createVuetify({

@@ -1,16 +1,16 @@
 <template>
     <div class="tw-px-5">
-        <v-row>
-            <v-col cols="12" md="4" sm="12">
+        <div class="tw-grid tw-grid-cols-7 tw-gap-4">
+            <div class="tw-col-span-2">
                 <VendorDetails />
-                <div class="tw-text-dark-800 text-center my-4">Last edited 9 minutes ogo</div>
-            </v-col>
-            <v-col cols="12" md="8" sm="12">
-                <v-row>
-                    <v-col cols="6">
+                <div :class="`tw-text-[${$constants.dark}]`" class=" text-center my-4">Last edited 9 minutes ogo</div>
+            </div>
+            <div class="tw-col-span-5">
+                <div>
+                    <div cols="6">
                         <h4 class="font-weight-bold tw-text-gray-500">VENDOR ANALYTICS</h4>
-                    </v-col>
-                    <v-col cols="6" class="d-flex justify-end">
+                    </div>
+                    <div cols="6" class="d-flex justify-end">
                         <v-icon color="error" icon="mdi-delete-outline" size="small"
                             class="tw-rounded tw-bg-red-200 tw-p-4 mr-2 tw-border tw-border-red-800"></v-icon>
 
@@ -23,14 +23,14 @@
                             :class="`tw-bg-${$constants.primary}-900 text-capitalize`">
                             Print Vendor Profile
                         </v-btn>
-                    </v-col>
-                </v-row>
-                <v-card class="mt-3 tw-px-4 tw-py-4">
+                    </div>
+                </div>
+                <div class="mt-3 tw-px-4 tw-py-4 tw-border tw-rounded-md">
                     <VendorAnalytics />
-                </v-card>
+                </div>
                 <RecentCollections />
-            </v-col>
-        </v-row>
+            </div>
+        </div>
     </div>
 </template>
 

@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 import { defineStore } from 'pinia';
 import { useNotificationStore } from '@/stores/notification';
 
@@ -7,9 +7,21 @@ const useVendorStore = (useWindow = false) => {
     const defineStoreFunc = useWindow ? window.pinia.defineStore : defineStore;
     return defineStoreFunc({
         id: 'vendor',
-
         state: () => ({
             formData: {},
+            currentVendor:{
+                g_tin:'G-TI772388',
+                nin:'4457899003323',
+                bvn:'45875687899',
+                phone_number:'08198456789',
+                email:'saninsonslll@gmail.com',
+                address:'NO. 32 B, Alkali Road, Sabo, Kumbiya',
+                contact:'Dauda Umar Isah',
+                account_name:'Dauda Umar Isah',
+                account_number:'3444578934',
+                bank_name:'Stanbic Bank',
+                status:'Activ',
+            }
         }),
 
         getters: {
