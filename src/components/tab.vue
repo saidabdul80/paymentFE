@@ -6,15 +6,13 @@
       </v-tab>
     </v-tabs>
 
-    <div class="lg:tw-flex lg:tw-w-[640px] lg:tw-gap-3 lg:tw-justify-between lg:tw-items-end"
-      v-if="Object.keys(configData || {}).length > 0">
-      <Search class="tw-my-4 md:tw-my-0" v-if="configData?.search" v-model="searchData"
-        @change="$emit('change', searchData)" />
-      <div class="tw-my-4 md:tw-my-0" v-if="configData?.sideButton">
-        <v-tooltip v-if="configData?.toolTipText != ''" activator="parent" class="tw-border" location="top">{{
-          configData?.toolTipText }}</v-tooltip>
+    <div class="lg:tw-flex lg:tw-w-[640px] lg:tw-gap-3 lg:tw-justify-between lg:tw-items-end " v-if="Object.keys(configData||{}).length>0">
+      <Search class="tw-my-4 lg:tw-my-0" v-if="configData?.search" v-model="searchData" @change="$emit('change', searchData)" />
+      <div class="tw-my-4 lg:tw-my-0" v-if="configData?.sideButton">
+        <v-tooltip v-if="configData?.toolTipText != ''" activator="parent" class="tw-border" location="top">{{ configData?.toolTipText }}</v-tooltip>
         <DropdownButton @click="handleDropdownButton" :title="configData?.dropDownLabel" prepend-icon="mdi-plus"
-          header="CHOOSE TAXPAYER TYPE" :items="configData?.dropdownItem" />
+          :header="configData?.header" :items="configData?.dropdownItem" width="100px" />
+
       </div>
     </div>
   </div>
@@ -26,7 +24,7 @@
         <v-container fluid>
           <slot :name="tab?.key"></slot>
 
-          <!-- Buuttons to navigate through the provided tabs -->
+          <!-- Buttons to navigate through the provided tabs -->
           <v-row justify="center" class="tw-mb-10" v-if="showBottomNavigations">
             <Button v-if="n === 0" title="Cancel" variant="outlined" :class="`tw-text-[${$constants.primary}]`"
               @click="goBack" />
@@ -57,10 +55,11 @@ export default {
   props: {
     config: {
       type: Object,
-      default: {
+      default:{ 
         key: {
           search: true,
           sideButton: true,
+          header:'',
           toolTipText: '',
           dropDownLabel: '',
           dropdownItem: {}
@@ -70,12 +69,6 @@ export default {
     title: {
       type: String,
       required: true // title is a required prop
-    },
-    dropDownLabel: {
-      default: 'Add New Taxpayer'
-    },
-    dropdownTooltipText: {
-      default: 'Add New Vendor'
     },
     tabs: {
       default: [
@@ -144,5 +137,5 @@ export default {
       this.$router.go(-1);
     },
   }
-};
+ };
 </script>

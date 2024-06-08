@@ -65,7 +65,7 @@
         required: true,
       },
       width:{
-        default:'240px'
+        default:'160px !important'
       }
     },
     setup() {

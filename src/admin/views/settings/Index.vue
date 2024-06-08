@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import DropdownButton from '@/components/DropdownButton.vue';
 import FormsHeader from '@/components/FormsHeader.vue';
 import PermissionCard from '@/admin/views/settings/role/components/PermissionCard.vue';
 import search from '@/components/Search.vue'
@@ -83,7 +82,6 @@ export default {
     components: {
         FormsHeader,
         search,
-        DropdownButton,
         PermissionCard
     },
     computed: {
