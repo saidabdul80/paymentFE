@@ -7,8 +7,8 @@
                         <img class="tw-h-12 tw-w-auto tw-mt-2" src="@/assets/logo.png" alt="logo" />
                         <div>
                             <transition name="slide-fade">
-                                <div class="tw-ms-2 tw-mt-1 text-truncate uppercase">
-                                    <span :class="`${$constants.text_size.s3} tw-text-${$constants.primary}`"
+                                <div class="tw-ms-2 tw-mt-1 text-truncate tw-font-visby uppercase">
+                                    <span :class="`${$constants.text_size.s3} tw-text-[${$constants.primary}]`"
                                         class="tw-font-bold">GOMBE STATE</span>
                                     <p :class="[$constants.text_size.s1,isHovered?'marquee':'']"  class="tw-text-xs tw-text-gray-500 tw-mt-[-3px]">
                                         INTERNAL REVENUE SERVICE</p>
@@ -44,9 +44,9 @@
                 <template v-slot:default>
                     <div class="tw-ms-2 tw-ml-7 tw-mt-1 text-truncate">
                         <span :class="`tw-text-${$constants.text_size.s1} tw-text-[${$constants.primary}]`"
-                            class="tw-font-bold">AMINU MUDI</span>
+                            class="tw-font-bold tw-text-base tw-font-visby">AMINU MUDI</span>
                         <p :class="`tw-text-${$constants.text_size.s1} tw-text-[${$constants.dark}]`"
-                            class="tw-mt-[-3px]">SUB - ADMIN</p>
+                            class="tw-mt-[-3px] tw-font-visby tw-text-xs tw-font-bold tw-text-[#626260]">SUB - ADMIN</p>
                     </div>
 
                 </template>

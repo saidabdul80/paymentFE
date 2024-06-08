@@ -9,17 +9,39 @@ const useVendorStore = (useWindow = false) => {
         id: 'vendor',
 
         state: () => ({
-            currentvendor: null,
-            currentAbilities: [],
-
-            vendorForm: {},
+            formData: {},
         }),
 
         getters: {
-            currentAbilitiesCount: (state) => state.currentAbilities.length,
+          
         },
 
         actions: {
+            async createVendors(data) {
+                const response = await useClient().http({ method: 'post', path: '/vendors', data })
+                if(response) {
+                    Ls.set('auth.token', response.token)
+                        // this.formData.rc_number = ''
+                        // this.formData.business_name = ''
+                        // this.formData.jtbIn = ''
+                        // this.formData.address_line1 = ''
+                        // this.formData.address_line2 = ''
+                        // this.formData.lga = ''
+                        // this.formData.contactFirst_name = ''
+                        // this.formData.contact_middle_name = ''
+                        // this.formData.contact_last_name = ''
+                        // this.formData.bank_name = ''
+                        // this.formData.account_name = ''
+                        // this.formData.account_number = ''
+                    const notificationStore = useNotificationStore();
+                    notificationStore.showNotification({
+                        type: 'success',
+                        message: 'Vendor created successfully.',
+                    })
+                    router.push('/admin/dashboard')
+                }
+            },
+            
             async updateCurrentvendor(data) {
                 const response = await useClient().http({ method: 'put', path: '/vendors', data })
                 this.currentvendor = response.data;
@@ -53,28 +75,8 @@ const useVendorStore = (useWindow = false) => {
                 });
             },
 
-            async fetchvendorPermissions() {
-                const response = await useClient().http({ method: 'get', path: '/staffs/permissions', data })
-                this.currentAbilities = response.data.data;
-            },
-
-            hasAbilities(abilities) {
-                return !!this.currentAbilities.find((ab) => {
-                    if (ab.name === '*') return true;
-                    if (typeof abilities === 'string') {
-                        return ab.name === abilities;
-                    }
-                    return !!abilities.find((p) => ab.name === p);
-                });
-            },
-
-            hasAllAbilities(abilities) {
-                return abilities.every((ability) =>
-                    this.currentAbilities.some((ab) => ab.name === ability || ab.name === '*')
-                );
-            },
         },
     })();
 };
 
-export default usevendorStore;
+export default useVendorStore;

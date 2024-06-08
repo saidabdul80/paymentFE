@@ -1,7 +1,19 @@
 <template>
-  <div>
+  <label :class="`tw-text-[${$constants.dark}]`">
+    {{ outerLabel }}
+  </label>
+  <v-file-input v-model="file" @change="handleFileChange" :placeholder="placeholder" variant="outlined" prepend-icon=""
+    :bg-color="$constants.input_background" show-size>
+    <template v-slot:append>
+      <span class="tw-p-4 tw-rounded-r-md tw-border tw-border-gray-400 tw-ml-[-18px] tw-bg-[#CCDFD6] tw-text-green-900"
+        variant="outlined">
+        {{ title }}
+      </span>
+    </template>
+  </v-file-input>
+  <!-- <div>
     <label :for="id" class="tw-block tw-text-sm tw-font-medium tw-leading-6"
-        :class="`tw-text-[${$constants.danger}] tw-bg-[${$constants.danger}]/20`">
+        :class="`tw-text-[${$constants.secondary}] tw-bg-[${$constants.danger}]/20`">
         {{ label }}
         <span v-if="isRequired" :class="`tw-text-red-600`">*</span>
     </label>
@@ -16,82 +28,41 @@
         type="file"
         accept="image/*"
         @change="onFileChanged">
-    </div>
-    
+  </div> -->
+
 </template>
 
 <script>
 export default {
-    name: 'TextField',
-    emits: ['update:modelValue'],
-    props: {
-        multiple: {
-            type: Boolean,
-            default: false,
-        },
-        id: {
-            type: String,
-            required: true,
-        },
-        name: {
-            type: String,
-            required: true,
-        },
-        label: {
-            type: String,
-            required: true,
-        },
-        autoComplete: {
-            type: String,
-            default: 'off',
-        },
-        placeholder: {
-            type: String,
-            default: '',
-        },
-        isRequired: {
-            type: Boolean,
-            default: false,
-        },
-        value: {
-            type: String,
-            default: '',
-        },
-        error_messages: {
-            type: String,
-        },
-        type: {
-            type: String,
-            default: 'file',
-        }
+  name: "FileInput",
+
+  props: {
+    outerLabel: {
+      type: String,
+      default: '',
     },
-    data: () => ({
-    selectedFile: null,
-    isSelecting: false
-  }),
-  computed: {
-    buttonText() {
-      return this.selectedFile ? this.selectedFile.name : this.defaultButtonText
+    placeholder: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
     }
   },
-  methods: {
-    onButtonClick() {
-      this.isSelecting = true
-      window.addEventListener('focus', () => {
-        this.isSelecting = false
-      }, { once: true })
+  data() {
+    return {
+      file: null
+    }
+  },
 
-      this.$refs.uploader.click()
-    },
-    onFileChanged(e) {
-      this.selectedFile = e.target.files[0]
-      
-      // do something
+  methods: {
+    handleFileChange() {
+      if (this.file) {
+        const fileName = this.file.name;
+        this.$emit('file-selected', fileName);
+      }
     }
   }
-};
+}
 </script>
-
-<style scoped>
-/* Add any component-specific styles here */
-</style>

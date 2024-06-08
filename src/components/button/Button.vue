@@ -1,12 +1,6 @@
 <template>
-  <v-btn 
-    :variant="variant" 
-    elevation="2"
-    rounded="lg"
-    size="large"
-    :to="to"
-    class="tw-px-6 tw-mx-2"
-  >
+  <v-btn :variant="variant" elevation="1" :disabled="disabled" rounded="lg" size="large" :to="to"
+    class="md:tw-px-20 tw-mx-2" height="45px" :style="{ width: width }">
     {{ title }}
   </v-btn>
 </template>
@@ -18,14 +12,21 @@ export default {
       type: String,
       required: true // title is a required prop
     },
-    style:{
-      default:{}
+    style: {
+      default: {}
     },
     variant: {
       type: String,
-      default: '' // 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
+      default: 'text' // 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
     },
-    to:''
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    width: {
+      default: ''
+    },
+    to: ''
   }
 }
 </script>

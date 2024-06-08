@@ -48,13 +48,13 @@ export default [
                 path: "users/add-vendor",
                 name: "Add Vendor",
                 meta: { breadcrumb: "Add Vendor", parent: "Users", ability: abilities.USER_CREATE },
-                component: () => import("@/admin/views/users/vendors/AddVendor.vue"),
+                component: () => import("@/admin/views/users/vendors/Addvendor.vue"),
             },
             {
                 path: "users/view-vendor",
                 name: "View Vendor",
                 meta: { breadcrumb: "View Vendor", parent: "Users", ability: abilities.USER_CREATE },
-                component: () => import("@/admin/views/users/vendors/VeiwVendor.vue"),
+                component: () => import("@/admin/views/users/vendors/ViewVendor.vue"),
             },
             {
                 path: "users/add-admin",
@@ -67,6 +67,12 @@ export default [
                 name: "Payments",
                 meta: { breadcrumb: "Payments", ability: abilities.PAYMENT },
                 component: () => import("@/admin/views/payments/Index.vue"),
+            },
+            {
+                path: "settings",
+                name: "Settings",
+                meta: { breadcrumb: "Settings", ability: abilities.SETTING },
+                component: () => import("@/admin/views/settings/Index.vue"),
             },
             {
                 path: "invoices",
