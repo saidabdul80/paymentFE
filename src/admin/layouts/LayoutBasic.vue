@@ -33,7 +33,7 @@
 
 <script>
 import { RouterLink, RouterView } from "vue-router";
-import useUserStore from '@/admin/stores/user';
+import useUserStore from '@/admin/stores/admin';
 import SideBar from "@/components/sidebar/sidebar.vue"
 import { useNotificationStore } from '@/stores/notification';
 import { useGlobalsStore } from "@/stores/globals";

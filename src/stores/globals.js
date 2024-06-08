@@ -1,6 +1,6 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-import useUserStore from "@/admin/stores/user";
+import useUserStore from "@/admin/stores/admin";
 import { useClient } from "./client";
 
 export const useGlobalsStore = defineStore('globals', {
@@ -9,6 +9,10 @@ export const useGlobalsStore = defineStore('globals', {
     subPageName: null,
     nameRules:ref(),
     currentPageName:{},
+    filters:{
+      search:null,
+      paginate:null,
+    }
   }),
   actions: {
     /* async bootstrap() {

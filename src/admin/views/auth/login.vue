@@ -34,17 +34,12 @@
                                             <TextField v-model="authStore.loginData.username" label="ID Number"
                                                 :error_messages="globalStore.nameRules?.username"
                                                 placeholder="G-TIN or phone number" />
-
-                                            <label :for="id"
-                                                class="tw-block tw-text-sm tw-font-medium tw-leading-6 tw-text-gray-900">
-                                                Password
-                                            </label>
-
+                                
                                             <TextField label="Password" variant="outlined"
                                                 :type="showPassword ? 'text' : 'password'"
                                                 v-model="authStore.loginData.password"
                                                 @click:append-inner="showPassword = !showPassword"
-                                                :append_inner_icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                                :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                                                 placeholder="**********"
                                                 :error_messages="globalStore.nameRules?.password" />
                                         </v-col>
@@ -110,13 +105,7 @@ export default {
     methods: {
         async login() {
             this.isLoading = true
-            //await this.authStore.login(this.authStore.loginData)
-            const notificationStore = useNotificationStore();
-                    notificationStore.showNotification({
-                        type: 'success',
-                        message: 'Logged in successfully.',
-                    })
-                    this.$router.push('/admin/dashboard')
+           const res = await this.authStore.login(this.authStore.loginData)         
             this.$refs.form.validate(true)
             this.isLoading = false
         }

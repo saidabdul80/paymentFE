@@ -7,21 +7,21 @@
     </v-tabs>
 
     <div class="lg:tw-flex lg:tw-w-[640px] lg:tw-gap-3 lg:tw-justify-between lg:tw-items-end " v-if="Object.keys(configData||{}).length>0">
-      <Search class="tw-my-4 lg:tw-my-0" v-if="configData?.search" v-model="searchData" @change="$emit('change', searchData)" />
+      <Search class="tw-my-4 lg:tw-my-0" v-if="configData?.search" v-model="searchData" @update:filters="handleSearch" />
       <div class="tw-my-4 lg:tw-my-0" v-if="configData?.sideButton">
         <v-tooltip v-if="configData?.toolTipText != ''" activator="parent" class="tw-border" location="top">{{ configData?.toolTipText }}</v-tooltip>
         <DropdownButton @click="handleDropdownButton" :title="configData?.dropDownLabel" prepend-icon="mdi-plus"
-          :header="configData?.header" :items="configData?.dropdownItem" width="100px" />
+          :header="configData?.header" :items="configData?.dropdownItem" />
 
       </div>
     </div>
   </div>
 
-  <div class="tw-min-h-[240px] border tw-rounded-lg"
+  <div class="tw-min-h-[240px] tw-rounded-lg"
     :class="`tw-text-[${$constants.dark}] tw-bg-[${$constants.light}]`">
     <v-tabs-window v-model="tab">
       <v-tabs-window-item v-for="(tab, n) in tabs" :key="n" :value="n">
-        <v-container fluid>
+        <div>
           <slot :name="tab?.key"></slot>
 
           <!-- Buttons to navigate through the provided tabs -->
@@ -37,7 +37,7 @@
               @click.prevent="saveData" />
           </v-row>
 
-        </v-container>
+        </div>
       </v-tabs-window-item>
     </v-tabs-window>
   </div>
@@ -91,13 +91,15 @@ export default {
       default: ''
     },
   },
-  data: () => ({
+  data: () => ({    
     searchData: {
       search: '',
       filter: null
     },
     globals: useGlobalsStore(),
-    tab: 0, // Set the initial tab to 0
+    tab: 0, 
+    typingTimer: null,
+    doneTypingInterval: 2000 
   }),
   computed: {
     mode() {
@@ -113,6 +115,13 @@ export default {
     Button
   },
   methods: {
+    handleSearch(data) {
+      clearTimeout(this.typingTimer);
+      this.typingTimer = setTimeout(() => {        
+        this.$emit('change', data);        
+        this.globals.filters.search = data.search;        
+      }, this.doneTypingInterval);      
+    },
     handleDropdownButton(data) {
       this.$emit('change', data);
     },

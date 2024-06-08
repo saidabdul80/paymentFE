@@ -34,5 +34,5 @@ app.use(vuetify)
 app.mount("#main");
 const constantsStore = useConstantsStore();
 app.config.globalProperties.$constants = constantsStore.values;
-window.baseUrl = 'http://localhost:8000/api'
+window.baseUrl = 'http://localhost:8001/api'
 

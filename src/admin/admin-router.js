@@ -110,7 +110,7 @@ export default [
         path: "/admin/login",
         name: "Login",
         component: () => Login,
-        meta: { breadcrumb: "Login", requiresAuth: true },
+        meta: { breadcrumb: "Login", requiresAuth: false },
     },
     {
         path: "/admin/forgot-password",

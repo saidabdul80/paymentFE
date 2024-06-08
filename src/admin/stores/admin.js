@@ -3,8 +3,7 @@ import { defineStore } from 'pinia';
 import { useNotificationStore } from '@/stores/notification';
 
 import { useClient } from '@/stores/client';
-import { computed } from 'vue';
-const useUserStore = (useWindow = false) => {
+const useAdminStore = (useWindow = false) => {
     const defineStoreFunc = useWindow ? window.pinia.defineStore : defineStore;
     return defineStoreFunc({
         id: 'user',
@@ -13,6 +12,10 @@ const useUserStore = (useWindow = false) => {
             currentUser: null,
             currentAbilities: [],
             userForm: {},
+            usersDashboardData:[],
+            dashboardLoading:true,
+            staffs:{},
+            staffsLoading:true,
         }),
 
         getters: {
@@ -41,6 +44,22 @@ const useUserStore = (useWindow = false) => {
                     message: '',
                 });
             },
+            async fetchUsersDashboard(params) {
+                const response = await useClient().http({ method: 'get', path: '/users/dashboard_counts' })
+                this.usersDashboardData = response
+                this.dashboardLoading = false
+            },
+
+            async fetchStaffs(params=null,path=null) {
+                this.staffsLoading = true
+                const response = await useClient().http({ method: 'get', path:path || '/staffs',data:params||{},fullPath: path?true:false })
+                this.staffsLoading = false                
+                if(response){
+                    this.staffs = response;
+                }
+            },
+            
+            
 
             async uploadAvatar(data) {
                 const response = await useClient().http({ method: 'get', path: '/staffs/upload-avatar', data })
@@ -76,4 +95,4 @@ const useUserStore = (useWindow = false) => {
     })();
 };
 
-export default useUserStore;
+export default useAdminStore;

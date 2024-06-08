@@ -5,9 +5,12 @@
     </label>
     <v-text-field 
         v-model="inputValue" 
+        :type="type"
         @click:append-inner="$emit('click:append-inner')"
         :placeholder="placeholder"
         :bg-color="$constants.input_background"
+        :append-inner-icon="appendInnerIcon"
+        :error-messages="error_messages"
         variant="outlined"
     ></v-text-field>
 </template>
@@ -33,6 +36,15 @@ export default {
             type: Boolean,
             default: false,
         },
+        appendInnerIcon:{
+            default:''
+        },
+        type:{
+            default:'text'
+        },
+        error_messages:{
+            default:''
+        }
     },
     computed: {
         inputValue: {
