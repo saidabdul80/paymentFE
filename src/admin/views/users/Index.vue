@@ -12,14 +12,14 @@
                 <v-icon size="56px" class="tw-w-[56px] tw-h-[56px]" :color="cards[key].iconColor">{{ cards[key].icon }}</v-icon>
               </span>
             </div>
-            <div class="tw-ml-4">
+            <div class="tw-ml-4 ">
               <span class="tw-font-bold leading-none"
                 :class="`${$constants.text_size.s4} tw-text-[${$constants.primary}]`">{{
                   globals.toCurrency(cards[key].total, false) }}</span>
               <p :class="`${$constants.text_size.s2} tw-text-[${$constants.dark}]`"
-                class="tw-font-thin tw-mb-[6px] tw-mt-[-3px]">{{ cards[key].title }}</p>
+                class=" tw-mb-[6px] tw-mt-[-3px] tw-font-[500]">{{ cards[key].title }}</p>
               <div>
-                <v-chip class="tw-font-[100] tw-mr-2 rounded-md" :class="`${$constants.text_size.s1}`" rounded="sm"
+                <v-chip class="tw-font-[500] tw-mr-2 rounded-md " :class="`${$constants.text_size.s1}`" rounded="sm"
                   v-for="label in cards[key].labels" size="x-small" :color="getColor(label.type)"
                   :text="`${globals.toCurrency(label.total, false)} ${label.type}`"></v-chip>
               </div>

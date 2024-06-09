@@ -18,6 +18,13 @@
                     <template v-slot:td-photo="{ row }">
                         <img :src="row.photo" alt="Image" class="tw-w-10 tw-h-10 tw-rounded-full">
                     </template>
+                    <template v-slot:td-status="{ row }">
+                        <span class="tw-rounded-[33px] tw-bg-white tw-block ">
+                            <v-chip size="small" :color="row.status?.toLowerCase()=='active'?'#065F46':'#991B1B'"  class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
+                                {{ row.status.toLowerCase() }}
+                            </v-chip>
+                        </span>
+                    </template>
                 </DataTable>             
             </swiper-slide>
             <swiper-slide> 
@@ -35,6 +42,13 @@
                     @page-change="handlePageChange">       
                     <template v-slot:td-photo="{ row }">
                         <img :src="row.photo" alt="Image" class="tw-w-10 tw-h-10 tw-rounded-full">
+                    </template>
+                    <template v-slot:td-status="{ row }">
+                        <span class="tw-rounded-[33px] tw-bg-white tw-block ">
+                            <v-chip size="small" :color="row.status?.toLowerCase()=='active'?'#065F46':'#991B1B'"  class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
+                                {{ row.status.toLowerCase() }}
+                            </v-chip>
+                        </span>
                     </template>
                 </DataTable>  
             </swiper-slide>
@@ -64,7 +78,7 @@ export default {
             searchInput: '',
             swiper:null,
             headers: [
-                { title: 'S/N', key: 'serialNo' },
+                { title: 'S/N', key: 'sn' },
                 { title: 'Image', key: 'image' },
                 { title: 'Full Name', key: 'name' },
                 { title: 'G-TIN', key: 'gtin' },
@@ -72,19 +86,20 @@ export default {
                 { title: 'Taxpayer Type', key: 'taxpayerType' },
                 { title: 'Phone Number', key: 'phoneNumber' },
                 { title: 'Email', key: 'email' },
+                { title: 'Status', key: 'status' },
             ],
             items: taxpayers,
         }
     },    
     watch:{
         'globals.filters': {
-            handler: function(newFilters) {
-                if(this.globals.activeTab =="Taxpayers"){
+            handler: function(newFilters) {                
+                if(this.globals.activeTab == "Taxpayers"){
                     if(this.currentSlideKey ===0){
-                        this.individualTaxPayerStore.fetchTaxPayers(path);
+                        this.individualTaxPayerStore.fetchTaxPayers(newFilters);
                     }
                     if(this.currentSlideKey ===1){
-                        this.corporateTaxPayerStore.fetchTaxPayers(path);    
+                        this.corporateTaxPayerStore.fetchTaxPayers(newFilters);    
                     }
                 }
             },
@@ -139,3 +154,4 @@ export default {
     background-color: #f0f0f0;
 }
 </style>
+

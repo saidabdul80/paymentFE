@@ -9,6 +9,8 @@ const useVendorStore = (useWindow = false) => {
         id: 'vendor',
         state: () => ({
             formData: {},
+            vendors:{},
+            vendorsLoading:true,
             currentVendor:{
                 g_tin:'G-TI772388',
                 nin:'4457899003323',
@@ -29,6 +31,14 @@ const useVendorStore = (useWindow = false) => {
         },
 
         actions: {
+            async fetchVendors(params=null,path=null) {            
+                this.vendorsLoading = true
+                const response = await useClient().http({ method: 'get', path:path || '/vendors',data:params||{},fullPath: path?true:false })
+                this.vendorsLoading = false                
+                if(response){
+                    this.vendors = response;
+                }
+            },    
             async createVendors(data) {
                 const response = await useClient().http({ method: 'post', path: '/vendors', data })
                 if(response) {

@@ -10,6 +10,13 @@
           <template v-slot:td-photo="{ row }">
             <img :src="row.photo" alt="Image" class="tw-w-10 tw-h-10 tw-rounded-full">
           </template>
+          <template v-slot:td-status="{ row }">
+                <span class="tw-rounded-[33px] tw-bg-white tw-block ">
+                    <v-chip size="small" :color="row.status?.toLowerCase()=='active'?'#065F46':'#991B1B'"  class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
+                        {{ row.status.toLowerCase() }}
+                    </v-chip>
+                </span>
+            </template>
         </DataTable>
     </div>
 </template>
@@ -29,14 +36,13 @@ export default {
             staffs:{},            
             searchInput: '',
             headers: [
-                { title: 'S/N', key: 'serialNo' },
+                { title: 'S/N', key: 'sn' },
                 { title: 'Staff Number', key: 'staff_number' },
                 { title: 'Image', key: 'image' },
-                { title: 'Full Name', key: 'name' },
-                { title: 'Gender', key: 'gender' },
-                { title: 'Taxpayer Type', key: 'taxpayerType' },
+                { title: 'Full Name', key: 'full_name' },                                
                 { title: 'Phone Number', key: 'phone_number' },
-                { title: 'Email', key: 'email' },
+                { title: 'Email', key: 'email' },                
+                { title: 'Status', key: 'status' },
             ],
           
         }
@@ -50,8 +56,8 @@ export default {
     },
     watch:{
         'globals.filters': {
-            handler: function(newFilters) {
-                if(this.globals.activeTab =="Admins"){
+            handler: function(newFilters) {                
+                if(this.globals.activeTab =="Admins" || this.globals.activeTab == null){                    
                     this.adminStore.fetchStaffs(newFilters);
                 }
             },
@@ -64,7 +70,7 @@ export default {
         handleRowClick(row) {
         console.log('Row clicked:', row);
         },
-        handlePageChange(path) {                    
+        handlePageChange(path) {                                
             this.adminStore.fetchStaffs(this.globals.filters, path)        
         },      
         navigateToNewAdmin() {

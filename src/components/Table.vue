@@ -1,12 +1,13 @@
 <template>
     <div class="tw-overflow-x-auto tw-p-1 sm:tw-rounded-md">
-      <table v-if="!loading" class="tw-shadow-md tw-min-w-full tw-bg-white tw-rounded-lg tw-overflow-hidden tw-text-md">
-        <thead class="tw-bg-[#F9FAFB]">
+    <div v-if="!loading" class="table-shadow tw-border-[2px] tw-border-gray-200 tw-rounded-lg">
+      <table  class=" tw-min-w-full tw-bg-white  tw-overflow-hidden tw-rounded-lg tw-text-md">
+        <thead class="">
           <tr>
-            <th class="tw-px-6 tw-py-3 tw-text-left">
+            <th class="tw-px-6 tw-py-3 tw-text-left tw-font-bold tw-bg-[#F9FAFB] tw-border-b-[2px] tw-border-gray-200">
               <input type="checkbox" @change="toggleAll" :checked="selectAll" />
             </th>
-            <th v-for="header in headers" :key="header.key" class="tw-px-6 tw-py-3 tw-text-left tw-font-medium tw-text-gray-500 tw-uppercase tw-tracking-wider">
+            <th v-for="header in headers" :key="header.key" class="tw-bg-[#F9FAFB] tw-font-bold tw-px-6 tw-py-3 tw-text-left  tw-text-gray-400 tw-uppercase tw-tracking-wider tw-border-b-[2px] tw-border-gray-200">
               {{ header.title }}
             </th>
           </tr>
@@ -23,18 +24,24 @@
               <input type="checkbox" v-model="selectedRows" :value="row" />
             </td>
             <td v-for="header in headers" :key="header.key" class="tw-px-6 tw-py-1">
-              <span v-if="$slots[`td-${header.key}`]">
-                <slot :name="`td-${header.key}`" :row="row"></slot>
-              </span>
-              <span v-else>
-                {{ row[header.key] }}
-              </span>
+                <span v-if="header.key =='sn'">
+                    {{ index +paginationData?.meta?.from  }}
+                </span>
+                <span v-else>
+                    <span v-if="$slots[`td-${header.key}`]">
+                        <slot :name="`td-${header.key}`" :row="row"></slot>
+                    </span>
+                    <span v-else>
+                        {{ row[header.key] }}
+                    </span>
+                </span>
             </td>
           </tr>
         </tbody>
       </table>
+    </div>
       <div v-else>
-        <TableLoader :count="5" :columns="headers.length + 1" />
+        <TableLoader :count="rows" :columns="headers.length + 1" />
       </div>
       <div class="tw-mt-5">
         <Pagination
@@ -72,6 +79,7 @@
     },
     data() {
       return {
+        rows:10,
         selectAll: false,
         selectedRows: [],
       };
@@ -110,14 +118,20 @@
       changePage(path) {
         this.$emit('page-change', path);
       },
-      changeRowsPerPage(data) {
-        this.$emit('page-change', data);
+      changeRowsPerPage(data) {             
+        this.rows = data           
+        this.$emit('page-length', data);
       },
     },
   };
   </script>
   
   <style scoped>
-  /* Scoped styles if needed */
+  .table-shadow{
+      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.06);
+      box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  }
+
+
   </style>
   
