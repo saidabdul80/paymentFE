@@ -3,7 +3,7 @@
       <div class="tw-flex tw-items-center">
         <span class="tw-text-sm tw-text-gray-700">Rows per page:</span>
         <select v-model="rowsPerPageX" @change="changeRowsPerPage" class="tw-ml-2 tw-block tw-px-3 tw-mt-1 tw-text-base tw-text-gray-700 tw-bg-white tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-indigo-500 tw-focus:border-indigo-500 sm:tw-text-sm">
-          <option v-for="option in rowsPerPageOptions" :key="option" :value="option">{{ option }}</option>
+          <option v-for="(option,i) in rowsPerPageOptions" :key="i" :value="option">{{ option }}</option>
         </select>
       </div>
       <div class="tw-flex tw-items-center">
@@ -12,6 +12,7 @@
         <span class="tw-text-sm tw-text-gray-700">
           {{ currentPage }} of {{ totalPages }}
         </span>
+        
         <v-btn :disabled="links?.next === null" @click="changePage(links?.next)" :class="`tw-text-gray-600`" icon="mdi-chevron-right" size="small" class="tw-rounded-md tw-p-0" variant="none" flat>          
         </v-btn>
       </div>

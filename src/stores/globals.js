@@ -9,6 +9,7 @@ export const useGlobalsStore = defineStore('globals', {
     subPageName: null,
     nameRules:ref(),
     currentPageName:{},
+    activeTab:null,
     filters:{
       search:null,
       paginate:null,

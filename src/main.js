@@ -16,7 +16,7 @@ import router from "./router";
 import ls from "./services/ls";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-
+import DataTable from '@/components/Table.vue';
 window.pinia = pinia
 const app = createApp(App);
 

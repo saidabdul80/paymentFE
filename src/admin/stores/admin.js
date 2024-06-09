@@ -57,10 +57,7 @@ const useAdminStore = (useWindow = false) => {
                 if(response){
                     this.staffs = response;
                 }
-            },
-            
-            
-
+            },        
             async uploadAvatar(data) {
                 const response = await useClient().http({ method: 'get', path: '/staffs/upload-avatar', data })
                 this.currentUser.avatar = response.data.avatar;

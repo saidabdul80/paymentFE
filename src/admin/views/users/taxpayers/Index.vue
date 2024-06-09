@@ -1,5 +1,6 @@
 <template>
-    <div class="tw-px-5">
+    
+    <div class="tw-px-5">        
         <swiper :slides-per-view="1" :space-between="50" @swiper="onSwiper" @slideChange="onSlideChange">
             <swiper-slide>
                 <div class="tw-flex tw-items-center tw-justify-between" title="goto corporate tax payer">
@@ -8,14 +9,16 @@
                             <v-icon class="tw-text-sm">mdi-arrow-right</v-icon>
                     </v-btn>
                 </div>
-                <v-data-table @click:row="handleClick" :headers="headers" :items="filteredItems" :loading="loading">
-                    <template v-slot:loading>
-                        <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+                <DataTable
+                    :loading="individualTaxPayerStore.taxpayersLoading"
+                    :headers="headers"
+                    :paginationData="individualTaxPayerStore.taxpayers"
+                    @row-click="handleRowClick"
+                    @page-change="handlePageChange">       
+                    <template v-slot:td-photo="{ row }">
+                        <img :src="row.photo" alt="Image" class="tw-w-10 tw-h-10 tw-rounded-full">
                     </template>
-                    <template v-slot:item.image="{ item }">
-                        <img :src="item.image" alt="User Image" style="width: 30px; height: auto;" />
-                    </template>
-                </v-data-table>
+                </DataTable>             
             </swiper-slide>
             <swiper-slide> 
                 <div class="tw-flex tw-items-center tw-justify-between" title="goto Individual Tax Payer">
@@ -24,33 +27,40 @@
                             <v-icon class="tw-text-sm">mdi-arrow-left</v-icon>
                     </v-btn>
                 </div>
-                <v-data-table @click:row="handleClick" :headers="headers" :items="filteredItems"
-                    :loading="loading">
-                    <template v-slot:loading>
-                        <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+                <DataTable
+                    :loading="corporateTaxPayerStore.taxpayersLoading"
+                    :headers="headers"
+                    :paginationData="corporateTaxPayerStore.taxpayers"
+                    @row-click="handleRowClick"
+                    @page-change="handlePageChange">       
+                    <template v-slot:td-photo="{ row }">
+                        <img :src="row.photo" alt="Image" class="tw-w-10 tw-h-10 tw-rounded-full">
                     </template>
-                    <template v-slot:item.image="{ item }">
-                        <img :src="item.image" alt="User Image" style="width: 30px; height: auto;" />
-                    </template>
-                </v-data-table>
+                </DataTable>  
             </swiper-slide>
         </swiper>
     </div>
 </template>
 
 <script>
-import { shallowRef, computed } from 'vue'
 import { useGlobalsStore } from '@/stores/globals';
-import TextField from '@/components/TextField.vue';
 import { taxpayers } from '@/services/taxpayers';
 import { Swiper, SwiperSlide } from 'swiper/vue';
+
 import 'swiper/css';
+
+import { useCorporateTaxPayerStore } from '@/admin/stores/corporateTaxPayerStore';
+import { useIndividualTaxPayerStore } from '@/admin/stores/individualTaxPayer';
+
+import DataTable from '@/components/Table.vue';
 export default {
     data() {
         return {
             name: "TaxPayers",
             globals: useGlobalsStore(),
-            loading: false,
+            individualTaxPayerStore:useIndividualTaxPayerStore(),
+            corporateTaxPayerStore :useCorporateTaxPayerStore(),     
+            currentSlideKey:0,       
             searchInput: '',
             swiper:null,
             headers: [
@@ -65,44 +75,50 @@ export default {
             ],
             items: taxpayers,
         }
-    },
-
-    components: {
-        TextField,
-        Swiper,
-        SwiperSlide,
-
-    },
-
-    computed: {
-        filteredItems() {
-            return this.items.filter(item => {
-                const searchLower = this.searchInput.toLowerCase();
-                return Object.values(item).some(value =>
-                    String(value).toLowerCase().includes(searchLower)
-                );
-            });
+    },    
+    watch:{
+        'globals.filters': {
+            handler: function(newFilters) {
+                if(this.globals.activeTab =="Taxpayers"){
+                    if(this.currentSlideKey ===0){
+                        this.individualTaxPayerStore.fetchTaxPayers(path);
+                    }
+                    if(this.currentSlideKey ===1){
+                        this.corporateTaxPayerStore.fetchTaxPayers(path);    
+                    }
+                }
+            },
+            deep: true
         }
     },
+    components: {        
+        Swiper,
+        SwiperSlide,
+        DataTable
 
+    },
+    created(){    
+        this.individualTaxPayerStore.fetchTaxPayers();
+        this.corporateTaxPayerStore.fetchTaxPayers();
+    },
     methods: {
+        onSlideChange(data) {
+            this.currentSlideKey =this.swiper.activeIndex
+        },
         onSwiper(swiper) {
             this.swiper = swiper            
+        },         
+        handleRowClick(row) {
+        console.log('Row clicked:', row);
         },
-        onSlideChange() {
-            console.log('slide change');
-        },
-        handleClick: function (item, row) {
-            const rowData = row.item;
-            console.log('Row clicked:', rowData);
-            this.$router.push('/admin/users/view-taxpayer');
-        },
-        onClick() {
-            this.loading = true
-            setTimeout(() => {
-                this.loading = false
-            }, 2000)
-        },
+        handlePageChange(path) {               
+            if(this.currentSlideKey ===0){
+                this.individualTaxPayerStore.fetchTaxPayers(this.globals.filters,path);
+            }
+            if(this.currentSlideKey ===1){
+                this.corporateTaxPayerStore.fetchTaxPayers(this.globals.filters,path);    
+            }
+        },      
     },
 }
 </script>

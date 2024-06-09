@@ -13,6 +13,8 @@ export const useIndividualTaxPayerStore = (useWindow = false) => {
     id: "individual",
     state: () => ({
       status: "",
+      taxpayersLoading:true,
+      taxpayers:{},
       individualTaxPayerData: {
         means_of_verification: "",
         verification_number: "",
@@ -47,6 +49,14 @@ export const useIndividualTaxPayerStore = (useWindow = false) => {
     }),
 
     actions: {
+      async fetchTaxPayers(params=null,path=null) {
+        this.taxpayersLoading = true
+        const response = await useClient().http({ method: 'get', path:path || '/individual_tax_payers',data:params||{},fullPath: path?true:false })
+        this.taxpayersLoading = false                
+        if(response){
+          this.taxpayers = response;
+        }
+      },
       async createIndividualTaxPayer(data) {
         console.log(data);
         // const response = await useClient().http({ method: 'post', path: '/staffs/login', data })

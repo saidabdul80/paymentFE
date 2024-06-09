@@ -13,6 +13,8 @@ export const useCorporateTaxPayerStore = (useWindow = false) => {
     id: "corporate",
     state: () => ({
       status: "",
+      taxpayersLoading:true,
+      taxpayers:{},
       corporateTaxPayerData: {
         rcNumber: "",
         businessName: "",
@@ -29,6 +31,14 @@ export const useCorporateTaxPayerStore = (useWindow = false) => {
     }),
 
     actions: {
+      async fetchTaxPayers(params=null,path=null) {
+          this.taxpayersLoading = true
+          const response = await useClient().http({ method: 'get', path:path || '/corporate_tax_payers',data:params||{},fullPath: path?true:false })
+          this.taxpayersLoading = false                
+          if(response){
+            this.taxpayers = response;
+          }
+      },
       async createCorporateTaxPayer(data) {
         console.log(data);
         // const response = await useClient().http({ method: 'post', path: '/staffs/login', data })

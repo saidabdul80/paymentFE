@@ -114,6 +114,11 @@ export default {
     Search,
     Button
   },
+  watch:{
+    tab:function(newKey){
+      this.globals.activeTab = this.tabs[newKey||0]?.key
+    }
+  },
   methods: {
     handleSearch(data) {
       clearTimeout(this.typingTimer);
