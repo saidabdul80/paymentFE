@@ -51,7 +51,7 @@ export default [
                 component: () => import("@/admin/views/users/vendors/Addvendor.vue"),
             },
             {
-                path: "users/view-vendor",
+                path: "users/view-vendor/:id",
                 name: "View Vendor",
                 meta: { breadcrumb: "View Vendor", parent: "Users", ability: abilities.USER_CREATE },
                 component: () => import("@/admin/views/users/vendors/ViewVendor.vue"),

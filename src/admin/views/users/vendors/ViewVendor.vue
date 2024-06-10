@@ -39,19 +39,20 @@ import { useGlobalsStore } from '@/stores/globals';
 import VendorDetails from './details/VendorDetails.vue'
 import VendorAnalytics from './details/VendorAnalytics.vue'
 import RecentCollections from './details/RecentCollections.vue'
-
+import useVendorStore from '@/admin/stores/vendor';
 export default {
     data: () => ({
-
+        vendorSore:useVendorStore(),
     }),
-    created() {
-        useGlobalsStore().updateSubPageName("Veiw Vendor")
+    created() {            
+        this.vendorSore.fetchCurrentvendor(this.$route.params.id)
     },
     components: {
         VendorDetails,
         VendorAnalytics,
         RecentCollections
     },
+
 }
 </script>
 

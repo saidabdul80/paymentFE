@@ -76,15 +76,11 @@ const useVendorStore = (useWindow = false) => {
 
             },
 
-            async fetchCurrentvendor(params) {
-                const response = await useClient().http({ method: 'get', path: '/vendors/me', data })
-                this.currentvendor = response.data;
-                this.vendorForm = response.data;
-                const notificationStore = useNotificationStore();
-                notificationStore.showNotification({
-                    type: 'success',
-                    message: '',
-                });
+            async fetchCurrentvendor(id) {
+                this.vendorsLoading = true
+                const response = await useClient().http({ method: 'get', path: '/vendors/'+id })
+                this.vendorsLoading = false
+                this.currentVendor = response.data;                
             },
 
             async uploadAvatar(data) {

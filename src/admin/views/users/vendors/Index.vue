@@ -12,8 +12,8 @@
             </template>
             <template v-slot:td-status="{ row }">
                 <span class="tw-rounded-[33px] tw-bg-white tw-block">
-                    <v-chip size="small" :color="row.status?.toLowerCase() == 'active' ? '#065F46' : '#991B1B'" class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
-                        {{ row.status.toLowerCase() }}
+                    <v-chip size="small" :color="row?.status?.toLowerCase() == 'active' ? '#065F46' : '#991B1B'" class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
+                        {{ row?.status?.toLowerCase() }}
                     </v-chip>
                 </span>
             </template>
@@ -63,14 +63,12 @@ export default {
     },
     methods: {
         handleRowClick(row) {
-            console.log('Row clicked:', row);
+            this.vendorStore.currentVendor = row
+            this.$router.push('/admin/users/view-vendor/'+row.id);
         },
         handlePageChange(path) {
             this.vendorStore.fetchVendors(this.globals.filters, path);
-        },
-        navigateToNewAdmin() {
-            this.$router.push('/admin/users/add-corporate-taxpayer');
-        }
+        },     
     },
 }
 </script>
