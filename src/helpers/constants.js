@@ -7,7 +7,7 @@ export const constants = {
     s5: "tw-text-2xl",
     s6: "tw-text-4xl",
   },
-  primary: "#006033",
+  primary: "#222",
   primary_light: "#CCDFD6",
   secondary: "#3D434A",
   secondary_light: "#F3F4F6",

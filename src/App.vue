@@ -21,7 +21,7 @@ watch(() => globals.pageLoading, (newVal) => {
   isLoading.value = newVal;
 });
 async function loadBoot(){
-  await globals.bootstrap()
+  //await globals.bootstrap()
 }
 
 loadBoot()

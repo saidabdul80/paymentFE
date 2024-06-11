@@ -9,9 +9,7 @@
                             <transition name="slide-fade">
                                 <div class="tw-ms-2 tw-mt-1 text-truncate tw-font-visby uppercase">
                                     <span :class="`${$constants.text_size.s3} tw-text-[${$constants.primary}]`"
-                                        class="tw-font-bold">GOMBE STATE</span>
-                                    <p :class="[$constants.text_size.s1,isHovered?'marquee':'']"  class="tw-text-xs tw-text-gray-500 tw-mt-[-3px]">
-                                        INTERNAL REVENUE SERVICE</p>
+                                        class="tw-font-bold">COWRIS ERP</span>                                 
                                 </div>
                             </transition>
                         </div>
@@ -111,11 +109,9 @@ export default {
             items: [
                 { name: 'Dashboard', href: '/admin/dashboard', icon: 'mdi-view-dashboard', current: true },
                 { name: 'Users', href: '/admin/users', icon: 'mdi-account-group', current: false },
-                { name: 'Payments', href: '/admin/payments', icon: 'mdi-credit-card', current: false },
-                { name: 'Invoices', href: '/admin/invoices', icon: 'mdi-file-document-multiple', current: false },
-                { name: 'Businesses', href: '/admin/businesses', icon: 'mdi-store', current: false },
-                { name: 'Categories', href: '/admin/categories', icon: 'mdi-chart-pie', current: false },
-                { name: 'Messages', href: '/admin/messages', icon: 'mdi-message-processing', current: false },
+                { name: 'Received Trasactions', href: '/admin/receive', icon: 'mdi-credit-card', current: false },
+                { name: 'Sent Transactions', href: '/admin/sent', icon: 'mdi-file-document-multiple', current: false },                
+                { name: 'Send Money', href: '/admin/send', icon: 'mdi-file-document-multiple', current: false },                
             ],
             subItems: [
                 { name: 'Settings', href: '/admin/settings', icon: 'mdi-cog-outline', current: true },

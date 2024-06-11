@@ -4,6 +4,7 @@
         <span v-if="isRequired" :class="`tw-text-red-600`">*</span>
     </label>
     <v-text-field 
+        height="10px"
         v-model="inputValue" 
         :type="type"
         @click:append-inner="$emit('click:append-inner')"

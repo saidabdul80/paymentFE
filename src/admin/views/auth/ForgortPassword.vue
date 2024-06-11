@@ -17,7 +17,7 @@
                             </div>
                             <p
                                 class="tw-mt-10 tw-text-sm tw-leading-6 tw-text-green-900 tw-text-center tw-text tw-font-semibold">
-                                Enter your details to access your GIRS account.
+                                Enter your details to access your COWRIS ERP account.
                             </p>
                         </div>
                         <div class="tw-mt-10">

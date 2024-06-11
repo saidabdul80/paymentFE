@@ -14,8 +14,10 @@ const useAdminStore = (useWindow = false) => {
             userForm: {},
             usersDashboardData:[],
             dashboardLoading:true,
-            staffs:{},
-            staffsLoading:true,
+            sents:{},
+            sentsLoading:true,
+            receives:{},
+            receivesLoading:true,
         }),
 
         getters: {
@@ -23,7 +25,7 @@ const useAdminStore = (useWindow = false) => {
         },        
         actions: {
             async updateCurrentUser(data) {
-                const response = await useClient().http({ method: 'put', path: '/staffs', data })
+                const response = await useClient().http({ method: 'put', path: '/sents', data })
                 this.currentUser = response.data;
                 Object.assign(this.userForm, response.data.data);
                 const notificationStore = useNotificationStore();
@@ -35,7 +37,7 @@ const useAdminStore = (useWindow = false) => {
             },
 
             async fetchCurrentUser(params) {
-                const response = await useClient().http({ method: 'get', path: '/staffs/me', data })
+                const response = await useClient().http({ method: 'get', path: '/sents/me', data })
                 this.currentUser = response.data;
                 this.userForm = response.data;
                 const notificationStore = useNotificationStore();
@@ -50,17 +52,24 @@ const useAdminStore = (useWindow = false) => {
                 this.dashboardLoading = false
             },
 
-            async fetchStaffs(params=null,path=null) {
-                this.staffsLoading = true
-                const response = await useClient().http({ method: 'get', path:path || '/staffs',data:params||{},fullPath: path?true:false })
-                this.staffsLoading = false                
+            async fetchSent(params=null,path=null) {
+                this.sentsLoading = true
+                const response = await useClient().http({ method: 'get', path:path || '/transaction/sent',data:params||{},fullPath: path?true:false })
+                this.sentsLoading = false                
                 if(response){
-                    this.staffs = response;
+                    this.sents = response;
+                }
+            },    
+            async fetchReceive(params=null,path=null) {
+                this.receivesLoading = true
+                const response = await useClient().http({ method: 'get', path:path || '/transaction/receive',data:params||{},fullPath: path?true:false })
+                this.receivesLoading = false                
+                if(response){
+                    this.receives = response;
                 }
             },        
-            async uploadAvatar(data) {
-                const response = await useClient().http({ method: 'get', path: '/staffs/upload-avatar', data })
-                this.currentUser.avatar = response.data.avatar;
+            async sendMoney(data) {
+                const response = await useClient().http({ method: 'post', path: '/transaction/apaylo-send', data })                
                 const notificationStore = useNotificationStore();
                 notificationStore.showNotification({
                     type: 'success',
@@ -69,7 +78,7 @@ const useAdminStore = (useWindow = false) => {
             },
 
             async fetchUserPermissions() {
-                const response = await useClient().http({ method: 'get', path: '/staffs/permissions', data })
+                const response = await useClient().http({ method: 'get', path: '/sents/permissions', data })
                 this.currentAbilities = response.data.data;
             },
 

@@ -10,7 +10,7 @@ export const useClient = defineStore("client", () => {
 
   async function http(config={method:'get',path:'',data: {},fullPath :false})  {
     const token = ls.get("auth.token");
-    let url = window.baseUrl + config?.path;
+    let url =window.baseUrl+ config?.path;
 
     if (config?.fullPath) {
       url = config?.path;
@@ -26,6 +26,7 @@ export const useClient = defineStore("client", () => {
     
     const headers = {
         Authorization: token ? `Bearer ${token}` : "",
+        "ngrok-skip-browser-warning":true,
     };
 
     if (config?.data instanceof FormData) {
@@ -39,7 +40,8 @@ export const useClient = defineStore("client", () => {
         data:config?.data,
         headers:headers,
       });
-      return response.data;
+      
+      return response.data.data;
     } catch (error) {
       const errors = error?.response?.data?.errors;
       if(errors){

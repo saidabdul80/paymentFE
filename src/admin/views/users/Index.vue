@@ -73,8 +73,6 @@
         globals:useGlobalsStore(),
         tabs: [
           { name: 'Admins', key: 'Admins' },
-          { name: 'Vendors', key: 'Vendors' },
-          { name: 'Taxpayers', key: 'Taxpayers' },
         ],
         tabConfig:{
           'Admins':{
@@ -127,32 +125,6 @@
               { total: 90, type:'Sub-Admins'},
               { total: 90, type:'Others'}
             ]
-          },
-          vendors:{
-            border: this.$constants.secondary_dark,
-            icon: 'mdi-headset',
-            iconSize: '48px',
-            iconColor: this.$constants.danger,
-            iconBgClass: this.getBgClass(this.$constants.danger, this.$constants.transparent_level),
-            total: 5689,
-            title: 'Vendors',
-            labels: [
-              { total: 4676, type:'Active'},
-              { total: 897,type:'Inactive'}
-            ]
-          },
-          taxpayers: {
-            border: this.$constants.secondary_dark,
-            icon: 'mdi-account-multiple',
-            iconSize: '48px',
-            iconColor: this.$constants.warning,
-            iconBgClass:  this.getBgClass(this.$constants.warning, this.$constants.transparent_level),
-            total: 3456890,
-            title: 'Taxpayers',
-            labels: [
-              { total: 985345,type: 'Corporate'},
-              { total: 2050400, type: 'Individual'}
-            ]
           }
         },
         headers: [
@@ -163,143 +135,6 @@
             { key: 'phone', title: 'PHONE NUMBER' },
             { key: 'email', title: 'EMAIL' },
             { key: 'status', title: 'STATUS' },
-        ],
-        users: [
-            {
-                id: 1,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 1',
-                gtin: 'GIRS1234',
-                phone: '08012345678',
-                email: 'muhammadadam1@mai.com',
-                status: 'Active',
-            },
-            {
-                id: 2,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 2',
-                gtin: 'GIRS1235',
-                phone: '08012345679',
-                email: 'muhammadadam2@mai.com',
-                status: 'Pending',
-            },
-            {
-                id: 3,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 3',
-                gtin: 'GIRS1236',
-                phone: '08012345670',
-                email: 'muhammadadam3@mai.com',
-                status: 'Inactive',
-            },
-            {
-                id: 4,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 4',
-                gtin: 'GIRS1237',
-                phone: '08012345671',
-                email: 'muhammadadam4@mai.com',
-                status: 'Active',
-            },
-            {
-                id: 5,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 5',
-                gtin: 'GIRS1238',
-                phone: '08012345672',
-                email: 'muhammadadam5@mai.com',
-                status: 'Active',
-            },
-            {
-                id: 6,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 6',
-                gtin: 'GIRS1239',
-                phone: '08012345673',
-                email: 'muhammadadam6@mai.com',
-                status: 'Pending',
-            },
-            {
-                id: 7,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 7',
-                gtin: 'GIRS1240',
-                phone: '08012345674',
-                email: 'muhammadadam7@mai.com',
-                status: 'Inactive',
-            },
-            {
-                id: 8,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 8',
-                gtin: 'GIRS1241',
-                phone: '08012345675',
-                email: 'muhammadadam8@mai.com',
-                status: 'Active',
-            },
-            {
-                id: 9,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 9',
-                gtin: 'GIRS1242',
-                phone: '08012345676',
-                email: 'muhammadadam9@mai.com',
-                status: 'Active',
-            },
-            {
-                id: 10,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 10',
-                gtin: 'GIRS1243',
-                phone: '08012345677',
-                email: 'muhammadadam10@mai.com',
-                status: 'Pending',
-            },
-            {
-                id: 11,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 11',
-                gtin: 'GIRS1244',
-                phone: '08012345678',
-                email: 'muhammadadam11@mai.com',
-                status: 'Inactive',
-            },
-            {
-                id: 12,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 12',
-                gtin: 'GIRS1245',
-                phone: '08012345679',
-                email: 'muhammadadam12@mai.com',
-                status: 'Active',
-            },
-            {
-                id: 13,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 12',
-                gtin: 'GIRS1245',
-                phone: '08012345679',
-                email: 'muhammadadam12@mai.com',
-                status: 'Active',
-            },
-            {
-                id: 14,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 12',
-                gtin: 'GIRS1245',
-                phone: '08012345679',
-                email: 'muhammadadam12@mai.com',
-                status: 'Active',
-            },
-            {
-                id: 15,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s',
-                name: 'Muhammad Adam 12',
-                gtin: 'GIRS1245',
-                phone: '08012345679',
-                email: 'muhammadadam12@mai.com',
-                status: 'Active',
-            },
         ],
         taxpayers: [
             {
@@ -320,31 +155,9 @@
         this.cards.administrators.labels[1].total = data?.administrators?.subAdmins ?? 0;
         this.cards.administrators.labels[2].total = data?.administrators?.others ?? 0;
         this.cards.administrators.total = data?.administrators?.total ?? 0;
-
-        this.cards.vendors.labels[0].total = data?.vendors?.active ?? 0;
-        this.cards.vendors.labels[1].total = data?.vendors?.inactive ?? 0;
-        this.cards.vendors.total = data?.vendors?.total ?? 0;
-
-        this.cards.taxpayers.labels[0].total = data?.taxpayers?.corporate ?? 0;
-        this.cards.taxpayers.labels[1].total = data?.taxpayers?.individual ?? 0;
-        this.cards.taxpayers.total = data?.taxpayers?.total ?? 0;
     });
     },
-    methods: {
-      /* generateSampleData(page, perPage) {
-      const data = [];
-      const startId = (page - 1) * perPage + 1;
-      for (let i = startId; i < startId + perPage; i++) {
-        data.push({
-          id: i,
-          photo: 'https://via.placeholder.com/40',
-          name: `User ${i}`,
-          email: `user${i}@example.com`,
-          status: ['Active', 'Inactive', 'Pending'][Math.floor(Math.random() * 3)],
-        });
-      }
-      return data;
-    }, */    
+    methods: {    
         getColor(type){
             if(type.toLowerCase() != 'inactive' ){
                 return this.$constants.primary

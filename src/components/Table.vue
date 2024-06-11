@@ -1,6 +1,6 @@
 <template>
     <div class="tw-overflow-x-auto tw-p-1 sm:tw-rounded-md">
-    <div v-if="!loading" class="table-shadow tw-border-[2px] tw-border-gray-200 tw-rounded-lg">
+    <div v-if="!loading" class="table-shadow-sm tw-border-[2px] tw-border-gray-200 tw-rounded-lg">
       <table  class=" tw-min-w-full tw-bg-white  tw-overflow-hidden tw-rounded-lg tw-text-md">
         <thead class="">
           <tr>
@@ -14,7 +14,7 @@
         </thead>
         <tbody class="tw-divide-y tw-divide-gray-200 tw-text-[14px]">
           <tr
-            v-for="(row, index) in paginationData.data"
+            v-for="(row, index) in paginationData?.data"
             :key="index"
             @click="handleRowClick(row)"
             :class="index % 2 === 0 ? 'tw-bg-white' : 'tw-bg-gray-100'"

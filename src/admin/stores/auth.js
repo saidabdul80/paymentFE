@@ -24,9 +24,10 @@ export const useAuthStore = (useWindow = false) => {
 
         actions: {
             async login(data) {
-                const response = await useClient().http({ method: 'post', path: '/staffs/login', data })
+                const response = await useClient().http({ method: 'post', path: '/auth/login', data })
                 if (response) {
                     Ls.set('auth.token', response.token)
+                    Ls.set('auth.user', response.user)
                     this.loginData.username = ''
                     this.loginData.password = ''
                     const notificationStore = useNotificationStore();

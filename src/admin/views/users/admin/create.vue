@@ -2,7 +2,7 @@
   <div class="tw-px-5">
     <div class="text-caption pa-2 mb-8">
             <h4 :class="`tw-text-[${$constants.primary}] ${$constants.text_size.s5}`" class="font-weight-bold">Administrator Registration</h4>
-            <div :class="`tw-text-[${$constants.dark}] ${$constants.text_size.s2}`" class="">Follow the steps to register a new GIRS administrator.</div>
+            <div :class="`tw-text-[${$constants.dark}] ${$constants.text_size.s2}`" class="">Follow the steps to register a new COWRIS ERP administrator.</div>
         </div>
        <Tab :tabs="tabs" :config="tabConfig">
         <template v-slot:PersonalDetails>

@@ -3,8 +3,8 @@
         <v-row align="start" no-gutters>
             <v-col cols="12" md="6">
                 <div class="tw-relative tw-hidden tw-flex-1 lg:tw-block mx-4 my-4 mt-2">
-                    <img class="tw-absolute tw-w-full tw-rounded-3xl"
-                        src="@/assets/login-image.png" style="height: 98vh;" alt="" />
+                    <!-- <img class="tw-absolute tw-w-full tw-rounded-3xl"
+                        src="@/assets/login-image.png" style="height: 98vh;" alt="" /> -->
                 </div>
             </v-col>
             <v-col md="6" sm="12">
@@ -18,7 +18,7 @@
                             </div>
                             <p
                                 class="tw-mt-10 tw-text-sm tw-leading-6 tw-text-green-900 tw-text-center tw-text tw-font-semibold">
-                                Enter your details to access your GIRS account.
+                                Enter your details to access your COWRIS ERP account.
                             </p>
                         </div>
                         <div class="tw-mt-10">
@@ -26,15 +26,10 @@
 
                                 <v-form ref="form">
                                     <v-row>
-                                        <v-col cols="12" md="12" sm="12">
-
-                                            <!-- <v-text-field variant="solo" v-model="authStore.loginData.username"
-                                                :rules="usernameRules" required placeholder="G-TIN or phone number"
-                                                label="ID Number" color="green"></v-text-field> -->
+                                        <v-col cols="12" md="12" sm="12">                                    
                                             <TextField v-model="authStore.loginData.username" label="ID Number"
                                                 :error_messages="globalStore.nameRules?.username"
-                                                placeholder="G-TIN or phone number" />
-                                
+                                                placeholder="Email " />                                
                                             <TextField label="Password" variant="outlined"
                                                 :type="showPassword ? 'text' : 'password'"
                                                 v-model="authStore.loginData.password"
@@ -54,14 +49,14 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <v-btn @click.prevent="login()" type="submit" block color="green" size="large"
+                                        <v-btn @click.prevent="login()" type="submit" block :color="$constants.primary" size="large"
                                             :class="`tw-bg-${$constants.primary}-900 tw-w-full`">
                                             <span v-if="isLoading" class="loader tw-h-5 tw-w-5"></span>
                                             Login
                                         </v-btn>
                                     </div>
                                     <p class="tw-mt-2 tw-text-sm tw-leading-6 tw-text-gray-500">
-                                        Don't have a GIRS account? Click here to
+                                        Don't have a COWRIS ERP account? Click here to
                                         {{ ' ' }}
                                         <a href="#" class="tw-font-semibold tw-text-green-900 hover:tw-text-green-700">
                                             enrol yourself.
