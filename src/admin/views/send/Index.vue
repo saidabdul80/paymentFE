@@ -19,7 +19,7 @@
         <v-col cols="12" md="6">
           <TextField v-model="customerDetail.email" label="Customer Email" required />
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="6">          
           <CurrencySelect v-model="currency" label="Currency" required />
         </v-col>
         <v-col cols="12" md="6">
@@ -37,7 +37,7 @@
       </v-row>
       <v-row>
         <v-col cols="12">
-          <v-btn @click="sendMoney" color="primary">Send Money</v-btn>
+          <v-btn @click="sendMoney" :loading="isLoading" color="primary">Send Money</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -46,9 +46,10 @@
 
 <script>
 import { useGlobalsStore } from '@/stores/globals';
+import useAdminStore from '@/admin/stores/admin';
 import TextField from '@/components/TextField.vue'; // Adjust the path as per Customer project structure
 import CurrencySelect from '@/components/CurrencySelect.vue'; // Adjust the path as per Customer project structure
-
+import Ls from '@/services/ls.js'
 export default {
   name: 'SendMoneyForm',
   components: {
@@ -57,6 +58,8 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
+      adminStore:useAdminStore(),
       globals:useGlobalsStore(),
       recipientDetail: {
         full_name: '',
@@ -74,7 +77,7 @@ export default {
     };
   },
   methods: {
-    sendMoney() {
+   async sendMoney() {
       
       const payload = {
         currency_symbol: this.currency,
@@ -83,9 +86,12 @@ export default {
         amount: this.amount,
         security_question: this.securityQuestion,
         security_answer: this.securityAnswer,
-        description: this.description
+        description: this.description,
+        api_key: JSON.parse(Ls.get('auth.client')||"{}")?.api_key                    
       };
-      this.adminStore.sendMoney(payload);
+      this.isLoading = true
+      await this.adminStore.sendMoney(payload);
+      this.isLoading = false
       console.log('Sending money with payload:', payload);
       // Call Customer API endpoint to send money with the payload
     }

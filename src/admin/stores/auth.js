@@ -27,7 +27,8 @@ export const useAuthStore = (useWindow = false) => {
                 const response = await useClient().http({ method: 'post', path: '/auth/login', data })
                 if (response) {
                     Ls.set('auth.token', response.token)
-                    Ls.set('auth.user', response.user)
+                    Ls.set('auth.user', JSON.stringify(response.user))
+                    Ls.set('auth.client', JSON.stringify(response.client))                
                     this.loginData.username = ''
                     this.loginData.password = ''
                     const notificationStore = useNotificationStore();
