@@ -1,9 +1,9 @@
 <template>
     <div class="tw-px-4">
 
-        <div class="tw-p-5">
+        <div class="md:tw-p-5">
             <div
-                class="tw-flex tw-justify-between tw-bg-white tw-p-3 tw-rounded tw-font-bold tw-mb-8 tw-text-gray-500/80 tw-text-[25px]">
+                class="md:tw-flex tw-justify-between tw-bg-white tw-p-3 tw-rounded tw-font-bold tw-mb-8 tw-text-gray-500/80 tw-text-[25px]">
                 <div>
                     Received Stats
                 </div>
@@ -12,22 +12,22 @@
                         height="20px" width="200px" class="tw-mb-0"></v-select>
                 </div>
             </div>
-            <div class="tw-grid tw-grid-cols-5 tw-gap-4 tw-mb-4" v-if="loading">
+            <div class="tw-grid md:tw-grid-cols-2 tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-5 tw-gap-4 tw-mb-4" v-if="loading">
                 <v-skeleton-loader type="card" v-for="x in 5" ></v-skeleton-loader>                
             </div>
-            <div v-else class="tw-grid tw-grid-cols-5 tw-gap-4 tw-mb-4">
+            <div v-else class="tw-grid md:tw-grid-cols-2 tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-5 tw-gap-4 tw-mb-4">
                 <statistic-card v-for="card in receivedCards" :key="card.label" :icon="card.icon"
                     icon-color="#444" :value="card.value" :label="card.label" :percentage="card.percentage"
                     :percentage-icon="card.percentageIcon" :button-color="card.buttonColor" />
             </div>
         </div>
-        <div class="tw-p-5">
+        <div class="md:tw-p-5">
             <p class="tw-bg-white tw-p-3 tw-rounded tw-font-bold tw-mb-8 tw-text-gray-500/80 tw-text-[25px]">Sent Stats
             </p>
-            <div class="tw-grid tw-grid-cols-5 tw-gap-4 tw-mb-4" v-if="loading">
+            <div class="tw-grid md:tw-grid-cols-2 tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-5 tw-gap-4 tw-mb-4" v-if="loading">
                 <v-skeleton-loader type="card" v-for="x in 5" ></v-skeleton-loader>                
             </div>
-            <div v-else class="tw-grid tw-grid-cols-5 tw-gap-4">
+            <div v-else class="tw-grid md:tw-grid-cols-2 tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-5 tw-gap-4">
                 <statistic-card v-for="card in sentCards" :key="card.label" :icon="card.icon"
                     icon-color="#444" :value="card.value" :label="card.label" :percentage="card.percentage"
                     :percentage-icon="card.percentageIcon" :button-color="card.buttonColor" />
