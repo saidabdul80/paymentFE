@@ -7,7 +7,7 @@
     >
     <template v-slot:media>
         <center>
-            <img class="" src="@/assets/logo.png"/>
+            <img class="tw-w-[150px] tw-mt-5" src="@/assets/logo.png"/>
         </center>
     </template>
 </v-empty-state>

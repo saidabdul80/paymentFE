@@ -1,9 +1,9 @@
 <template>
-  <div class="send-money-form">
-    <v-container>
+  <div class="send-money-form tw-w-[70%] tw-mx-auto ">
+    <v-card class="tw-p-5">
       <v-row>
         <v-col cols="12">
-          <h2>Send Money</h2>
+          <h2 class="tw-font-bold">Send Money</h2>
         </v-col>
       </v-row>
       <v-row>
@@ -40,7 +40,7 @@
           <v-btn @click="sendMoney" :loading="isLoading" color="primary">Send Money</v-btn>
         </v-col>
       </v-row>
-    </v-container>
+    </v-card>
   </div>
 </template>
 

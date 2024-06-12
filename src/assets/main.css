@@ -77,3 +77,13 @@
     font-family: 'VisbyRoundCF', 
     sans-serif!important; 
 }
+
+.v-text-field .v-input__control .v-input__slot {
+    
+  }
+
+  .v-input--density-default .v-field__input{
+    
+    height: 35px  !important;
+    padding: 35px 15px !important;
+  }

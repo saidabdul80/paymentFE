@@ -1,18 +1,18 @@
 <template>
-    <label :class="`tw-text-[${$constants.dark}]`" v-if="label !== ''">
+    <!-- <label :class="`tw-text-[${$constants.dark}] tw-pb-[10px] font-bold`" v-if="label !== ''">
         {{ label }}
         <span v-if="isRequired" :class="`tw-text-red-600`">*</span>
-    </label>
+    </label> -->
     <v-text-field 
-        height="10px"
+        class="tw-h-[64px]"
         v-model="inputValue" 
+        :label="label"
         :type="type"
         @click:append-inner="$emit('click:append-inner')"
-        :placeholder="placeholder"
-        :bg-color="$constants.input_background"
+        :placeholder="placeholder"        
         :append-inner-icon="appendInnerIcon"
         :error-messages="error_messages"
-        variant="outlined"
+        
     ></v-text-field>
 </template>
 

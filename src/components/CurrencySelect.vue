@@ -1,15 +1,13 @@
 <template>
     <div>
-      <label :class="`tw-text-[${$constants.dark}]`" v-if="label !== ''">
-        Currency
-        <span v-if="isRequired" :class="`tw-text-red-600`">*</span>
-      </label>
+      
       <v-select
         v-model="selectedCurrency"
         :items="currencies"
         label="Currency"
         outlined
         required
+        variant="solo"
       ></v-select>
     </div>
   </template>

@@ -9,7 +9,7 @@
                             <transition name="slide-fade">
                                 <div class="tw-ms-2 tw-mt-1 text-truncate tw-font-visby uppercase">
                                     <span :class="`${$constants.text_size.s3} tw-text-[${$constants.primary}]`"
-                                        class="tw-font-bold">COWRIS ERP</span>                                 
+                                        class="tw-font-bold">COWRIS ERP</span>
                                 </div>
                             </transition>
                         </div>
@@ -29,11 +29,12 @@
         <div class="tw-py-[6px] tw-fixed tw-bottom-0 tw-w-full">
             <v-divider class="border-opacity-100 tw-mx-4" :class="`tw-bg[${$constants.primary}]`"></v-divider>
             <v-list density="compact" nav class="py-1">
-                <SideBarItem v-for="item in subItems" :item="item" />            
+                <SideBarItem v-for="item in subItems" :item="item" />
             </v-list>
             <v-divider class="border-opacity-100 tw-mx-4 tw-mb-2" :class="`tw-bg-[${$constants.primary}]`"></v-divider>
-            <v-list-item nav class="tw-pb-[26px] tw-px-[8px] " :class="`${$constants.text_size.s1}`"
-                :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.mode =='light'? $constants.primary:''">
+            <v-list-item nav class="tw-pb-[26px] tw-px-[8px] " :class="`${$constants.text_size.s2}`"
+                :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`"
+                :base-color="$constants.mode == 'light' ? $constants.primary : ''">
                 <template v-slot:prepend>
                     <img class="tw-h-8  tw-rounded-full tw-ml-1"
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s"
@@ -109,9 +110,9 @@ export default {
             items: [
                 { name: 'Dashboard', href: '/admin/dashboard', icon: 'mdi-view-dashboard', current: true },
                 { name: 'Users', href: '/admin/users', icon: 'mdi-account-group', current: false },
-                { name: 'Received Trasactions', href: '/admin/receive', icon: 'mdi-credit-card', current: false },
-                { name: 'Sent Transactions', href: '/admin/sent', icon: 'mdi-file-document-multiple', current: false },                
-                { name: 'Send Money', href: '/admin/send', icon: 'mdi-file-document-multiple', current: false },                
+                { name: 'Received Transactions', href: '/admin/receive', icon: 'mdi-login', current: false },
+                { name: 'Sent Transactions', href: '/admin/sent', icon: 'mdi-logout', current: false },
+                { name: 'Send Money', href: '/admin/send', icon: 'mdi-file-document-multiple', current: false },
             ],
             subItems: [
                 { name: 'Settings', href: '/admin/settings', icon: 'mdi-cog-outline', current: true },
@@ -145,13 +146,19 @@ export default {
 .theme--light.v-application {
     background: #011627;
 }
+
 .marquee {
-        overflow: visible;
-        animation: marquee 5s linear infinite;
-      }
-      
-      @keyframes marquee {
-        0% { transform: translateX(0%); }
-        100% { transform: translateX(-100%); }
-      }
+    overflow: visible;
+    animation: marquee 5s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
 </style>
