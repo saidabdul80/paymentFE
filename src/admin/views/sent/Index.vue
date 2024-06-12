@@ -31,8 +31,8 @@
             {{ row.status.toLowerCase() }}
           </v-chip>
         </template>
-        <template v-slot:td-photo="{ row }">
-          <img :src="row.photo" alt="Image" class="tw-w-10 tw-h-10 tw-rounded-full">
+        <template v-slot:td-action="{ row }">          
+          <v-btn @click="$route.push('/admin/send')" :loading="isLoading" color="primary">Re-Send</v-btn>
         </template>
       </DataTable>
     </div>

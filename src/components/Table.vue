@@ -1,6 +1,6 @@
 <template>
     <div class="tw-overflow-x-auto tw-p-1 sm:tw-rounded-md">
-    <div v-if="!loading" class="table-shadow-sm tw-border-[2px] tw-border-gray-200 tw-rounded-lg">
+    <div v-if="!loading" class="table-shadow-sm tw-border-[2px] tw-border-gray-200 tw-rounded-lg tw-overflow-auto">
       <table  class=" tw-min-w-full tw-bg-white  tw-overflow-hidden tw-rounded-lg tw-text-md">
         <thead class="">
           <tr>

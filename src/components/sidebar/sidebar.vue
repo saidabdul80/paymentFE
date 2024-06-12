@@ -43,7 +43,7 @@
                 <template v-slot:default>
                     <div class="tw-ms-2 tw-ml-7 tw-mt-1 text-truncate">
                         <span :class="`tw-text-${$constants.text_size.s1} tw-text-[${$constants.primary}]`"
-                            class="tw-font-bold tw-text-base tw-font-visby">AMINU MUDI</span>
+                            class="tw-font-bold tw-text-base tw-font-visby">{{ user?.company_name }}</span>
                         <p :class="`tw-text-${$constants.text_size.s1} tw-text-[${$constants.dark}]`"
                             class="tw-mt-[-3px] tw-font-visby tw-text-xs tw-font-bold tw-text-[#626260]">SUB - ADMIN</p>
                     </div>
@@ -57,6 +57,7 @@
 <script>
 import SideBarItem from "./SideBarItem.vue"
 import { useGlobalsStore } from "@/stores/globals";
+import Ls from '@/services/ls'
 import {
     PhSquaresFour,
     PhUsersThree,
@@ -104,12 +105,13 @@ export default {
     },
     data() {
         return {
+            user: JSON.parse(Ls.get('auth.client')||"{}"),
             globals: useGlobalsStore(),
             isHovered: false,
             pdrawer: true,
             items: [
                 { name: 'Dashboard', href: '/admin/dashboard', icon: 'mdi-view-dashboard', current: true },
-                { name: 'Users', href: '/admin/users', icon: 'mdi-account-group', current: false },
+              /*   { name: 'Users', href: '/admin/users', icon: 'mdi-account-group', current: false }, */
                 { name: 'Received Transactions', href: '/admin/receive', icon: 'mdi-login', current: false },
                 { name: 'Sent Transactions', href: '/admin/sent', icon: 'mdi-logout', current: false },
                 { name: 'Send Money', href: '/admin/send', icon: 'mdi-file-document-multiple', current: false },

@@ -18,6 +18,7 @@ const useAdminStore = (useWindow = false) => {
             sentsLoading:true,
             receives:{},
             receivesLoading:true,
+            providers:[]
         }),
 
         getters: {
@@ -81,7 +82,10 @@ const useAdminStore = (useWindow = false) => {
                 const response = await useClient().http({ method: 'get', path: '/sents/permissions', data })
                 this.currentAbilities = response.data.data;
             },
-
+            async dashboard(type='receive'){
+                const response = await useClient().http({ method: 'get', path: '/transaction/stat?type='+type })
+                return response
+            },
             hasAbilities(abilities) {
                 return !!this.currentAbilities.find((ab) => {
                     if (ab.name === '*') return true;
@@ -91,7 +95,14 @@ const useAdminStore = (useWindow = false) => {
                     return !!abilities.find((p) => ab.name === p);
                 });
             },
-
+            async fullfil(data){
+                const response = await useClient().http({ method: 'post', path: '/transaction/fulfilment  ',data })
+                return response
+            },
+            async fetchProviders(){
+                const response = await useClient().http({ method: 'get', path: '/provider' })
+                this.providers = response;
+            },
             hasAllAbilities(abilities) {
                 return abilities.every((ability) =>
                     this.currentAbilities.some((ab) => ab.name === ability || ab.name === '*')

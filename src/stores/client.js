@@ -42,12 +42,7 @@ export const useClient = defineStore("client", () => {
       });
       
       return response.data.data;
-    } catch (error) {
-      const errors = error?.response?.data?.errors;
-      if(errors){
-        useGlobalsStore().updateNameRules(errors);
-        return false
-      }
+    } catch (error) {      
       handleError(error);
       return false
     }

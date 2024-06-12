@@ -36,6 +36,7 @@ export const handleError = (err) => {
       if (typeof err.response.data.error == 'boolean') showError(err.response.data?.message)
       else showError(err.response.data.error)
     } else {
+      console.log(err.response)
       showError(err.response.data.message)
     }
   }

@@ -27,10 +27,11 @@
                                 <v-form ref="form">
                                     <v-row>
                                         <v-col cols="12" md="12" sm="12">                                    
-                                            <TextField v-model="authStore.loginData.username" label="ID Number"
+                                            <TextField v-model="authStore.loginData.username" label="Username"
                                                 :error_messages="globalStore.nameRules?.username"
-                                                placeholder="Email " />                                
-                                            <TextField label="Password" variant="outlined"
+                                                placeholder="Email " />      
+                                                <br>                          
+                                            <TextField label="Password" 
                                                 :type="showPassword ? 'text' : 'password'"
                                                 v-model="authStore.loginData.password"
                                                 @click:append-inner="showPassword = !showPassword"
