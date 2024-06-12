@@ -17,7 +17,7 @@
             </div>
             <div v-else class="tw-grid tw-grid-cols-5 tw-gap-4 tw-mb-4">
                 <statistic-card v-for="card in receivedCards" :key="card.label" :icon="card.icon"
-                    :icon-color="card.iconColor" :value="card.value" :label="card.label" :percentage="card.percentage"
+                    icon-color="#444" :value="card.value" :label="card.label" :percentage="card.percentage"
                     :percentage-icon="card.percentageIcon" :button-color="card.buttonColor" />
             </div>
         </div>
@@ -29,7 +29,7 @@
             </div>
             <div v-else class="tw-grid tw-grid-cols-5 tw-gap-4">
                 <statistic-card v-for="card in sentCards" :key="card.label" :icon="card.icon"
-                    :icon-color="card.iconColor" :value="card.value" :label="card.label" :percentage="card.percentage"
+                    icon-color="#444" :value="card.value" :label="card.label" :percentage="card.percentage"
                     :percentage-icon="card.percentageIcon" :button-color="card.buttonColor" />
             </div>
         </div>

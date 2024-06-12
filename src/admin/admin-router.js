@@ -32,12 +32,7 @@ export default [
                 meta: { breadcrumb: "Users", ability: abilities.USER },
                 component: () => import("@/admin/views/users/Index.vue"),
             },            
-            {
-                path: "users/add-admin",
-                name: "Add Admin",
-                meta: { breadcrumb: "Add Admin", parent: "Users", ability: abilities.USER_CREATE },
-                component: () => import("@/admin/views/users/admin/create.vue"),
-            },
+        
             {
                 path: "receive",
                 name: "Received Transactions",
