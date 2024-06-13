@@ -4,7 +4,6 @@ import Dashboard from '@/admin/views/dashboard/Dashboard.vue';
 // Auth
 import Login from '@/admin/views/auth/login.vue';
 import ForgotPassword from '@/admin/views/auth/ForgortPassword.vue';
-import RComponent from '@/admin/views/reusable_components/Reusable_components.vue';
 
 import abilities from './stubs/abilities';
 
@@ -56,13 +55,7 @@ export default [
                 name: "Settings",
                 meta: { breadcrumb: "Settings", ability: abilities.SETTING },
                 component: () => import("@/admin/views/settings/Index.vue"),
-            },
-            {
-                path: "reusable_components",
-                name: "ReusableComponents",
-                component: () => RComponent,
-                meta: { breadcrumb: "Reusable Components", requiresAuth: true },
-            },
+            },          
         ],
     },
     {
