@@ -1,7 +1,7 @@
 import LayoutBasic from '@/admin/layouts/LayoutBasic.vue';
 import Dashboard from '@/admin/views/dashboard/Dashboard.vue';
 import Login from '@/admin/views/auth/Login.vue'; // Corrected import
-import ForgotPassword from '@/admin/views/auth/ForgotPassword.vue'; // Corrected import
+import ForgotPassword from '@/admin/views/auth/ForgortPassword.vue'; // Corrected import
 import abilities from './stubs/abilities';
 
 import HomeIndex from '@/admin/views/home/Index.vue'; // Corrected import
