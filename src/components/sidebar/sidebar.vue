@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import SideBarItem from "./SideBarItem.vue"
+import SideBarItem from "@/components/sidebar/SideBarItem.vue"
 import { useGlobalsStore } from "@/stores/globals";
 import Ls from '@/services/ls'
 import {

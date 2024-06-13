@@ -1,6 +1,6 @@
 import "./assets/main.css";
 
-import { createApp, reactive } from "vue";
+import { createApp } from "vue";
 //import { createPinia } from "pinia";
 import * as pinia from 'pinia'
 import '@mdi/font/css/materialdesignicons.css'
@@ -13,10 +13,8 @@ import './assets/tailwind.css';
 
 import App from "./App.vue";
 import router from "./router";
-import ls from "./services/ls";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-import DataTable from '@/components/Table.vue';
 window.pinia = pinia
 const app = createApp(App);
 
