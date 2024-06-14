@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div class="tw-flex tw-place-content-end" @click="adminStore.fetchSent()">
+            <v-btn class="tw-self-end" icon="mdi-reload" flat></v-btn>
+        </div>
       <DataTable
         :loading="adminStore.sentsLoading"
         :headers="headers"
@@ -8,24 +11,24 @@
         @page-change="handlePageChange"
       >
         <template v-slot:td-cemail="{ row }">
-          {{ row.customer_detail.email }}
+          {{ row?.customer_detail?.email }}
         </template>
         <template v-slot:td-cfull_name="{ row }">
-          {{ row.customer_detail.full_name }}
+          {{ row?.customer_detail?.full_name }}
         </template>
         <template v-slot:td-recipient_email="{ row }">
-          {{ row.recipient_detail?.email }}
+          {{ row?.recipient_detail?.email }}
         </template>
-        <template v-slot:td-recipient_full_name="{ row }">
-          {{ row.recipient_detail?.full_name }}
+        <template v-slot:td-rfull_name="{ row }">
+          {{ row?.recipient_detail?.full_name }}
         </template>
         <template v-slot:td-description="{ row }">
-          {{ row.description }}
+          {{ row?.description }}
         </template>
         <template v-slot:td-status="{ row }">
           <v-chip
             size="small"
-            :color="row.status?.toLowerCase() === 'completed' ? '#065F46' : '#991B1B'"
+            :color="row?.status?.toLowerCase() === 'completed' ? '#065F46' : '#991B1B'"
             class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize"
           >
             {{ row.status.toLowerCase() }}
@@ -59,7 +62,7 @@ export default {
                 { title: 'Customer Email', key: 'cemail' },                            
                 { title: 'Customer Full Name', key: 'cfull_name' },                                
                 { title: 'Recipient Email', key: 'cemail' },                            
-                { title: 'Recipient Full_name', key: 'cfull_name' },                            
+                { title: 'Recipient Full_name', key: 'rfull_name' },                            
                 { title: 'Description', key: 'notes' },                
                 { title: 'Status', key: 'status' },
             ],

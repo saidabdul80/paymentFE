@@ -1,12 +1,16 @@
 import LayoutBasic from '@/admin/layouts/LayoutBasic.vue';
 import Dashboard from '@/admin/views/dashboard/Dashboard.vue';
-
-// Auth
-import Login from '@/admin/views/auth/login.vue';
-import ForgotPassword from '@/admin/views/auth/ForgortPassword.vue';
-import RComponent from '@/admin/views/reusable_components/Reusable_components.vue';
-
+import Login from '@/admin/views/auth/Index.vue'; // Corrected import
+import ForgotPassword from '@/admin/views/auth/ForgortPassword.vue'; // Corrected import
 import abilities from './stubs/abilities';
+
+import HomeIndex from '@/admin/views/home/Index.vue'; // Corrected import
+import UsersIndex from '@/admin/views/users/Index.vue'; // Corrected import
+import ReceiveIndex from '@/admin/views/receive/Index.vue'; // Corrected import
+import SentIndex from '@/admin/views/sent/Index.vue'; // Corrected import
+import SendIndex from '@/admin/views/send/Index.vue'; // Corrected import
+import SettingsIndex from '@/admin/views/settings/Index.vue'; // Corrected import
+import ErrorView from '@/components/Error.vue'; // Corrected import
 
 export default [
     {
@@ -18,68 +22,62 @@ export default [
                 path: "home",
                 name: "Home",
                 meta: { breadcrumb: "Dashboard", ability: '', requiresAuth: false },
-                component: () => import("@/admin/views/home/Index.vue"),
+                component: HomeIndex,
             },
             {
                 path: "dashboard",
                 name: "Dashboard",
-                component: () => Dashboard,
+                component: Dashboard,
                 meta: { breadcrumb: "Dashboard", ability: abilities.DASHBOARD },
             },
             {
                 path: "users",
                 name: "Users",
                 meta: { breadcrumb: "Users", ability: abilities.USER },
-                component: () => import("@/admin/views/users/Index.vue"),
+                component: UsersIndex,
             },            
         
             {
                 path: "receive",
                 name: "Received Transactions",
                 meta: { breadcrumb: "receive", ability: abilities.PAYMENT },
-                component: () => import("@/admin/views/receive/Index.vue"),
+                component: ReceiveIndex,
             },
             {
                 path: "sent",
                 name: "Sent Transactions",
                 meta: { breadcrumb: "sent", ability: abilities.INVOICE },
-                component: () => import("@/admin/views/sent/Index.vue"),
+                component: SentIndex,
             },      
             {
                 path: "send",
                 name: "Send",
                 meta: { breadcrumb: "send", ability: abilities.INVOICE },
-                component: () => import("@/admin/views/send/Index.vue"),
+                component: SendIndex,
             },            
             {
                 path: "settings",
                 name: "Settings",
                 meta: { breadcrumb: "Settings", ability: abilities.SETTING },
-                component: () => import("@/admin/views/settings/Index.vue"),
-            },
-            {
-                path: "reusable_components",
-                name: "ReusableComponents",
-                component: () => RComponent,
-                meta: { breadcrumb: "Reusable Components", requiresAuth: true },
-            },
+                component: SettingsIndex,
+            },          
         ],
     },
     {
         path: "/",
         name: "Login",
-        component: () => Login,
+        component: Login,
         meta: { breadcrumb: "Login", requiresAuth: false },
     },
     {
         path: "/admin/forgot-password",
         name: "ForgotPassword",
-        component: () => ForgotPassword,
+        component: ForgotPassword,
         meta: { requiresAuth: false },
     },
     {
         path: "/:pathMatch(.*)*",
         name: 'ErrorView',
-        component: () => import('@/components/Error.vue'),
+        component: ErrorView,
     },
 ];

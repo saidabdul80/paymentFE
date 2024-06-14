@@ -5,7 +5,7 @@
                 <div class="tw-relative tw-hidden tw-flex-1 lg:tw-block mx-4 my-4 mt-2">
                     <!-- <img class="tw-absolute tw-w-full tw-rounded-3xl"
                         src="@/assets/login-image.png" style="height: 98vh;" alt="" /> -->
-                </div>
+                </div>  
             </v-col>
             <v-col md="6" sm="12">
                 <div

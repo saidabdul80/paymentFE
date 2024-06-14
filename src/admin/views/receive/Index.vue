@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div class="tw-flex tw-place-content-end" @click="adminStore.fetchReceive()">
+            <v-btn class="tw-self-end" icon="mdi-reload" flat></v-btn>
+        </div>
+
       <DataTable
         :loading="adminStore.receivesLoading"
         :headers="headers"
@@ -8,33 +12,33 @@
         @page-change="handlePageChange"
       >
         <template v-slot:td-sender_amount="{ row }">
-          {{row.sender_currency.currency_symbol}} <span class="tw-font-bold" > {{ row.sender_amount }}</span>
+          {{row.sender_currency?.currency_symbol}} <span class="tw-font-bold" > {{ row?.sender_amount }}</span>
         </template>
         <template v-slot:td-receiver_amount="{ row }">
-            {{row.receiver_currency.currency_symbol}} <span class="tw-font-bold" >{{ row.receiver_amount }}</span>
+            {{row.receiver_currency?.currency_symbol}} <span class="tw-font-bold" >{{ row?.receiver_amount }}</span>
         </template>
         <template v-slot:td-exchange_rate="{ row }">
-          {{ parseFloat( row.exchange_rate).toFixed(2) }}
+          {{ parseFloat( row?.exchange_rate).toFixed(2) }}
         </template>
         <template v-slot:td-recipient_email="{ row }">
-          {{ row.recipient_detail.email }}
+          {{ row.recipient_detail?.email }}
         </template>
         <template v-slot:td-recipient_full_name="{ row }">
-          {{ row.recipient_detail.full_name }}
+          {{ row.recipient_detail?.full_name }}
         </template>
         <template v-slot:td-customer_email="{ row }">
             <div class="tw-overflow-x-auto">
-                {{ row.customer_detail.email }}
+                {{ row.customer_detail?.email }}
             </div>
         </template>
         <template v-slot:td-customer_full_name="{ row }">
             <div class="tw-overflow-x-auto">
-                {{ row.customer_detail.full_name }}
+                {{ row.customer_detail?.full_name }}
             </div>
         </template>
         <template v-slot:td-description="{ row }">
             <div class="tw-overflow-x-auto">
-                {{ row.notes }}
+                {{ row?.notes }}
             </div>
         </template>
         <template v-slot:td-status="{ row }">
@@ -42,21 +46,21 @@
             size="small"
             :color="row.status === 'completed' ? '#065F46' : '#991B1B'"
             class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
-            {{ row.status }}
+            {{ row?.status }}
           </v-chip>
         </template>
         <template v-slot:td-transaction_ref="{ row }">
             <div class="tw-overflow-x-auto">
-                {{ row.transaction_ref }}
+                {{ row?.transaction_ref }}
             </div>
         </template>
         <template v-slot:td-transaction_number="{ row }">
             <div class="tw-overflow-x-auto">
-                {{ row.transaction_number }}
+                {{ row?.transaction_number }}
             </div>
         </template>
         <template v-slot:td-action="{ row }">          
-          <v-btn @click="confirmSendMoney(row)" v-if="row.status.toLowerCase() =='completed' && !row.fulfilled" :loading="isLoading" color="primary">Fulfil</v-btn>
+          <v-btn @click="confirmSendMoney(row)" v-if="row?.status?.toLowerCase() =='completed' && !row?.fulfilled" :loading="isLoading" color="primary">Fulfil</v-btn>
         </template>
       </DataTable>
     </div>
