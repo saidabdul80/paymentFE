@@ -1,7 +1,10 @@
 <template>
     <div>
-        <div class="tw-flex tw-place-content-end" @click="adminStore.fetchReceive()">
-            <v-btn class="tw-self-end" icon="mdi-reload" flat></v-btn>
+        <div class="tw-flex tw-justify-between" >
+          <div class="tw-min-w-[300px]">
+            <Search class="tw-my-4 lg:tw-my-0 "  v-model="searchData" @update:filters="handleSearch" />
+          </div>
+            <v-btn @click="adminStore.fetchReceive()" class="tw-self-end" icon="mdi-reload" flat></v-btn>
         </div>
 
       <DataTable
@@ -11,36 +14,50 @@
         @row-click="handleRowClick"
         @page-change="handlePageChange"
       >
-        <template v-slot:td-sender_amount="{ row }">
-          {{row.sender_currency?.currency_symbol}} <span class="tw-font-bold" > {{ row?.sender_amount }}</span>
+        <template v-slot:td-checkbox="{ row }">
+          
         </template>
-        <template v-slot:td-receiver_amount="{ row }">
-            {{row.receiver_currency?.currency_symbol}} <span class="tw-font-bold" >{{ row?.receiver_amount }}</span>
+        <template v-slot:td-sender_amount="{ row }">
+          <span class="tw-text-nowrap tw-font-bold tw-text-[15px]" ><span class="tw-text-[10px]"> {{row.sender_currency?.currency_symbol}}</span>  {{ row?.sender_amount }}</span>
+        </template>
+        <template v-slot:td-receiver_amount="{ row }">          
+            {{row.receiver_currency?.currency_symbol}} <span class="tw-font-bold" >{{ row?.receiver_amount ||'-' }}</span>
         </template>
         <template v-slot:td-exchange_rate="{ row }">
           {{ parseFloat( row?.exchange_rate).toFixed(2) }}
         </template>
         <template v-slot:td-recipient_email="{ row }">
+          <div :class="!isDescriptionVisible[row.id]?truncateClasses:''"
+          @click.stop="isDescriptionVisible[row.id] = !isDescriptionVisible[row.id]">
           {{ row.recipient_detail?.email }}
+          </div>
         </template>
         <template v-slot:td-recipient_full_name="{ row }">
+          <div :class="!isDescriptionVisible[row.id]?truncateClasses:''"
+          @click.stop="isDescriptionVisible[row.id] = !isDescriptionVisible[row.id]">
           {{ row.recipient_detail?.full_name }}
+          </div>
         </template>
         <template v-slot:td-customer_email="{ row }">
-            <div class="tw-overflow-x-auto">
+          <div :class="!isDescriptionVisible[row.id]?truncateClasses:''"
+          @click.stop="isDescriptionVisible[row.id] = !isDescriptionVisible[row.id]">
                 {{ row.customer_detail?.email }}
             </div>
         </template>
         <template v-slot:td-customer_full_name="{ row }">
-            <div class="tw-overflow-x-auto">
+          <div :class="!isDescriptionVisible[row.id]?truncateClasses:''"
+          @click.stop="isDescriptionVisible[row.id] = !isDescriptionVisible[row.id]">
                 {{ row.customer_detail?.full_name }}
             </div>
         </template>
-        <template v-slot:td-description="{ row }">
-            <div class="tw-overflow-x-auto">
-                {{ row?.notes }}
-            </div>
-        </template>
+        <template v-slot:td-notes="{ row }">
+        <div
+          :class="!isDescriptionVisible[row.id]?truncateClasses:''"
+          @click.stop="isDescriptionVisible[row.id] = !isDescriptionVisible[row.id]"
+        >
+          {{ row?.notes }}
+        </div>
+      </template>
         <template v-slot:td-status="{ row }">
           <v-chip
             size="small"
@@ -60,7 +77,8 @@
             </div>
         </template>
         <template v-slot:td-action="{ row }">          
-          <v-btn @click="confirmSendMoney(row)" v-if="row?.status?.toLowerCase() =='completed' && !row?.fulfilled" :loading="isLoading" color="primary">Fulfil</v-btn>
+          <v-btn  @click="updateRecord(row)" v-if="row?.status?.toLowerCase() !== 'completed' " size="small" icon="mdi-redo" :loading="row?.loading" color="warning" title="Re Try Transaction" ></v-btn>
+          <v-btn @click="confirmSendMoney(row)" v-if="row?.status?.toLowerCase() =='completed' && !row?.fulfilled" size="small"  icon="mdi-check"  :loading="isLoading" color="primary" title="Fulfil"></v-btn>
         </template>
       </DataTable>
     </div>
@@ -82,6 +100,26 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    
+    <v-dialog v-model="confirmDialog2" max-width="400">
+      <v-card>
+        <v-card-title>Re-Verify Transaction</v-card-title>        
+        <div class="tw-px-4">          
+          <v-text-field variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.answer" label="Security Answer"></v-text-field>          
+         <!--  
+            <div><span class="tw-font-bold">Transaction Ref:</span> {{ receive.transaction_ref }}</div>
+            <v-text-field variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.exchange_rate" label="Exchange Rate" type="number"></v-text-field>
+            <v-text-field variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.receiver_amount" label="Receiver Amount" type="number"></v-text-field>
+            <v-text-field variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.recipient_email" label="Recipient Email" type="email"></v-text-field>
+          -->
+        </div>
+        <v-card-actions>
+          <v-btn color="error" text @click="confirmDialog2 = false">Cancel</v-btn>
+          <v-btn color="primary" @click="verify(receive)" :loading="isLoading">Verify</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </template>
 <script>
 import { useGlobalsStore } from '@/stores/globals';
@@ -89,6 +127,7 @@ import TextField from '@/components/TextField.vue';
 import useAdminStore from '@/admin/stores/admin';
 import DataTable from '@/components/Table.vue';
 import Ls from '@/services/ls';
+import Search from '@/components/Search.vue';
 export default {
   data() {
     return {
@@ -97,12 +136,18 @@ export default {
       user: JSON.parse(Ls.get('auth.client')||"{}"),
       globals: useGlobalsStore(),
       receives: {},
+      confirmDialog2:false,
       searchInput: '',
       isLoading: false, // to indicate if the request is loading
       confirmDialog: false, // confirmation dialog flag
       rowToSend: null,
       selectedProviderError:false,
       selectedProvider:null,
+      isDescriptionVisible:{},
+      receive:{
+        answer:'',
+      },
+      truncateClasses:'tw-truncate tw-overflow-hidden tw-w-[70px] tw-whitespace-nowrap tw-text-overflow-ellipsis',
       headers: [
         { title: 'S/N', key: 'sn' },
         { title: 'Sender Amount', key: 'sender_amount' },
@@ -123,6 +168,7 @@ export default {
   },
   components: {
     TextField,
+    Search,
     DataTable
   },
   watch: {
@@ -135,14 +181,41 @@ export default {
       deep: true
     }
   },
-  created(){
+  created() {
     this.adminStore.fetchReceive();
     this.adminStore.fetchProviders()
+    document.addEventListener('click', this.closeDescription);
+  },
+  beforeDestroy() {
+    document.removeEventListener('click', this.closeDescription);
   },
   methods: {
+    async verify(data){
+      this.rowToSend.loading = true
+      await this.adminStore.verifyApaylo(data);
+      this.adminStore.fetchReceive();
+      this.rowToSend.loading = false
+      this.confirmDialog2 = false;
+    },
+    toggleDescription(index) {      
+      this.isDescriptionVisible[index]= !this.isDescriptionVisible[index]      
+    },
+    closeDescription() {
+      this.isDescriptionVisible = {};
+    },
     confirmSendMoney(rowData) {
       this.rowToSend = rowData; // store the selected row data
       this.confirmDialog = true; // open the confirmation dialog
+    },
+    updateRecord(rowData) {
+      this.confirmDialog2 = true;
+      this.rowToSend = rowData
+      this.receive.replyTo = rowData.customer_detail; // store the selected row data
+      this.receive.ReferenceNumber = rowData.transaction_ref
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+      this.receive.date = currentDate;
+      this.receive.answer = ''
     },
     handleRowClick(row) {
       console.log('Row clicked:', row);

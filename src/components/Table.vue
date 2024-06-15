@@ -1,6 +1,6 @@
 <template>
     <div class="tw-overflow-x-auto tw-p-1 sm:tw-rounded-md">
-    <div v-if="!loading" class="table-shadow-sm tw-border-[2px] tw-border-gray-200 tw-rounded-lg tw-overflow-auto">
+    <div v-if="!loading" class="table-shadow-sm tw-border-[2px] tw-border-gray-200 tw-rounded-lg tw-overflow-auto tw-max-h-[67vh]">
       <table  class=" tw-min-w-full tw-bg-white  tw-overflow-hidden tw-rounded-lg tw-text-md">
         <thead class="">
           <tr>
@@ -21,11 +21,21 @@
             class="tw-cursor-pointer hover:tw-bg-gray-50"
           >
             <td class="tw-px-6 tw-py-1">
-              <input type="checkbox" v-model="selectedRows" :value="row" />
+              <span v-if="$slots['td-checkbox']">
+                <slot name="td-checkbox" :row="row"></slot>      
+              </span>
+              <span v-else>
+                <input type="checkbox" v-model="selectedRows" :value="row" />
+              </span>
             </td>
             <td v-for="header in headers" :key="header.key" class="tw-px-6 tw-py-1">
                 <span v-if="header.key =='sn'">
+                  <span v-if="$slots[`td-${header.key}`]">
+                    <slot :name="`td-${header.key}`" :row="row"></slot>                    
+                  </span>
+                  <span v-else>
                     {{ index +paginationData?.meta?.from  }}
+                  </span>
                 </span>
                 <span v-else>
                     <span v-if="$slots[`td-${header.key}`]">

@@ -32,5 +32,5 @@ app.use(vuetify)
 app.mount("#main");
 const constantsStore = useConstantsStore();
 app.config.globalProperties.$constants = constantsStore.values;
-window.baseUrl = 'https://optimum-fun-bobcat.ngrok-free.app/api'
+window.baseUrl = 'https://pay.kudeeexpress.com/api'
 

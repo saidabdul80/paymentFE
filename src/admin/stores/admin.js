@@ -99,6 +99,10 @@ const useAdminStore = (useWindow = false) => {
                 const response = await useClient().http({ method: 'post', path: '/transaction/fulfilment  ',data })
                 return response
             },
+            async verifyApaylo(data){
+                const response = await useClient().http({ method: 'post', path: '/transaction/apaylo-receive  ',data })
+                return response
+            },
             async fetchProviders(){
                 const response = await useClient().http({ method: 'get', path: '/provider' })
                 this.providers = response;

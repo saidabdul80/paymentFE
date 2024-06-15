@@ -8,7 +8,7 @@
         v-model="inputValue" 
         :label="label"
         :type="type"
-        @click:append-inner="$emit('click:append-inner')"
+        @click:append-inner="$emit('click-append-inner')"
         :placeholder="placeholder"        
         :append-inner-icon="appendInnerIcon"
         :error-messages="error_messages"
