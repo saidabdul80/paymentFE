@@ -4,11 +4,12 @@
         <v-icon :color="iconColor" size="x-large" :icon="icon"></v-icon>
       </div>
       <div>
+        {{  }}
         <div class="tw-text-gray-500 tw-mb-2">{{ label }}</div>
-        <div class="tw-text-4xl tw-font-bold tw-mb-1" ref="valueRef">{{ animatedValue }}</div>
+        <div class="tw-text-4xl tw-font-bold tw-mb-1" ref="valueRef">{{helpers.formatMoney(animatedValue) }}</div>
         <div class="tw-flex tw-items-center">
           <v-icon small class="tw-mr-1" color="blue">{{ percentageIcon }}</v-icon>
-          <div :class="percentageColorClass">{{ percentage }}% from previous</div>
+          <div :class="percentageColorClass">{{ percentage.toFixed(2) }}% from previous</div>
         </div>
       </div>
       <!-- <v-btn icon class="tw-absolute tw-text-xl tw-top-2 tw-right-2" :color="buttonColor">
@@ -19,7 +20,7 @@
   
   <script>
   import { CountUp } from 'countup.js';
-  
+  import {helpers} from '@/helpers/utilities'
   export default {
     name: 'StatisticCard',
     props: {
@@ -54,12 +55,13 @@
     },
     data() {
       return {
+        helpers:helpers,
         animatedValue: '0.00'
       };
     },
     computed: {
       percentageColorClass() {
-        return this.percentage > 0 ? 'tw-text-green-500' : 'tw-text-red-500';
+        return this.percentage > 0 ? 'tw-text-green-700' : 'tw-text-red-500';
       }
     },
     watch: {

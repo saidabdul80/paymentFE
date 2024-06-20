@@ -1,9 +1,5 @@
-import i18n from '../plugins/i18n'
-const { global } = i18n
-import { useNotificationStore } from '@/scripts/stores/notification'
-import { isArray } from 'lodash'
 
-export default {
+export const helpers = {
   isImageFile(fileType) {
     const validImageTypes = ['image/gif', 'image/jpeg', 'image/png']
 
@@ -30,9 +26,7 @@ export default {
         symbol: '$',
       }
     }
-
-    amount = amount / 100
-
+       
     let {
       precision,
       decimal_separator,
@@ -231,39 +225,12 @@ export default {
         }
     }
   },
-  getStatusTranslation(status) {
-    switch (status) {
-      case 'DRAFT':
-        return global.t('general.draft')
-      case 'PAID':
-        return global.t('invoices.paid')
-      case 'UNPAID':
-        return global.t('invoices.unpaid')
-      case 'SENT':
-        return global.t('general.sent')
-      case 'REJECTED':
-        return global.t('estimates.rejected')
-      case 'ACCEPTED':
-        return global.t('estimates.accepted')
-      case 'VIEWED':
-        return global.t('invoices.viewed')
-      case 'EXPIRED':
-        return global.t('estimates.expired')
-      case 'PARTIALLY PAID':
-        return global.t('estimates.partially_paid')
-      case 'COMPLETED':
-        return global.t('invoices.completed')
-      case 'DUE':
-        return global.t('general.due')
-      default:
-        return status
-    }
-  },
+
   toFormData(object) {
     const formData = new FormData()
 
     Object.keys(object).forEach((key) => {
-      if (isArray(object[key])) {
+      if (Array.isArray(object[key])) {
         formData.append(key, JSON.stringify(object[key]))
       } else {
         // Convert null to empty strings (because formData does not support null values and converts it to string)
