@@ -1,8 +1,8 @@
 <template>
-  <div class="tw-p-6 tw-bg-white tw-mx-1 tw-border tw-rounded-2xl ">
+  <div class="tw-p-6 tw-bg-white tw-mx-1 tw-border tw-rounded-2xl">
                  <div class="tw-flex tw-justify-between tw-items-center">
                      <h3 :class="`tw-text-[${$constants.secondary}]`" class="tw-font-visby tw-capitalize tw-text-2xl tw-font-bold">{{ title }}</h3>
-                     <v-btn variant="outlined" class="tw-text-gray-700 tw-bg-[#CCDFD6] tw-text-xs tw-normal-case"
+                     <v-btn variant="outlined" class="tw-text-green-700 tw-bg-[#CCDFD6] tw-text-xs tw-normal-case"
                      @click="$emit('EditPermissions')">
                          <v-icon class="tw-mr-1 " size="large" left>mdi-pencil-outline</v-icon> Edit Permissions
                      </v-btn>

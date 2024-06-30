@@ -11,14 +11,13 @@
       </div>
 
       <div class="tw-container tw-mx-auto tw-p-6">
-        
           <permission-card v-for="(card, index) in paginatedCards" :key="index" :title="card.title"
               :permissions="card.actions" class="tw-my-4" @edit-permissions="openModal(card.title, card.actions)" />
          
          
          
               <div
-              class="tw-flex tw-justify-between tw-items-center tw-text-[#374151] tw-text-sm tw-rounded-sm tw-p-2  tw-mt-2 tw-mx-1 tw-font-sans tw-font-medium" :class="`tw-bg-[${$constants.primary}]`">
+              class="tw-flex tw-justify-between tw-items-center tw-text-[#374151] tw-text-sm tw-rounded-sm tw-p-2 tw-bg-[#F3F4F6] tw-mt-2 tw-mx-1 tw-font-sans tw-font-medium">
               <div>Rows per page: {{ rowsPerPage }}</div>
 
               <div class=" tw-flex tw-items-center">
@@ -51,37 +50,37 @@ export default {
     data() {
         return {
             currentPage: 1,
-            rowsPerPage: 3,
-            totalItems: 9, 
-            cards: [
-                { title: 'PAYE Head', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
-                        'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
-                        'Manage admins'] },
-                { title: 'PAYE Staff', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
-                        'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
-                        'Manage admins'] },
-                { title: 'Collections Head', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
-                        'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
-                        'Manage admins'] },
-                { title: 'PAYE Head 2', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
-                        'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
-                        'Manage admins'] },
-                { title: 'PAYE Staff 2', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
-                        'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
-                        'Manage admins'] },
-                { title: 'Collections Head 2', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
-                        'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
-                        'Manage admins'] },
-                { title: 'PAYE Head 3', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
-                        'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
-                        'Manage admins'] },
-                { title: 'PAYE Staff 3', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
-                        'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
-                        'Manage admins'] },
-                { title: 'Collections Head 3', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
-                        'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
-                        'Manage admins'] }
-            ]
+      rowsPerPage: 3,
+      totalItems: 9, 
+      cards: [
+        { title: 'PAYE Head', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
+                'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
+                'Manage admins'] },
+        { title: 'PAYE Staff', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
+                'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
+                'Manage admins'] },
+        { title: 'Collections Head', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
+                'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
+                'Manage admins'] },
+        { title: 'PAYE Head 2', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
+                'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
+                'Manage admins'] },
+        { title: 'PAYE Staff 2', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
+                'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
+                'Manage admins'] },
+        { title: 'Collections Head 2', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
+                'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
+                'Manage admins'] },
+        { title: 'PAYE Head 3', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
+                'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
+                'Manage admins'] },
+        { title: 'PAYE Staff 3', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
+                'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
+                'Manage admins'] },
+        { title: 'Collections Head 3', actions: ['Manage admins', 'Assign target', 'Approve requests', 'Collect taxes', 'Vet tax declaration',
+                'Approve requests', 'Collect taxes', 'Assign target', 'Vet tax declaration', 'Assign target', 
+                'Manage admins'] }
+      ]
         }
     },
     components: {

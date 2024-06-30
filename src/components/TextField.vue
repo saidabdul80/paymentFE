@@ -1,18 +1,22 @@
 <template>
-    <!-- <label :class="`tw-text-[${$constants.dark}] tw-pb-[10px] font-bold`" v-if="label !== ''">
+    <label :class="`tw-text-[${$constants.neutral}] tw-font-semibold`" v-if="label !== ''">
         {{ label }}
         <span v-if="isRequired" :class="`tw-text-red-600`">*</span>
-    </label> -->
+    </label>
     <v-text-field 
-        class="tw-h-[64px]"
         v-model="inputValue" 
-        :label="label"
         :type="type"
-        @click:append-inner="$emit('click-append-inner')"
-        :placeholder="placeholder"        
+        @click:append-inner="$emit('click:append-inner')"
+        :placeholder="placeholder"
+        :bg-color="$constants.input_background"
         :append-inner-icon="appendInnerIcon"
         :error-messages="error_messages"
-        
+        variant="outlined"
+        flat
+        class="gTextField"
+        :color="`tw-border-[${$constants.secondary_light}]`"
+        :rules="rules"
+        :disabled="disabled"
     ></v-text-field>
 </template>
 
@@ -21,17 +25,23 @@ export default {
     name: 'TextField',
     props: {
         modelValue: {
-            type: String,
-            required: true,
+            type: String,            
         },
         label: {
-            type: String,
-            required: false,
+            type: String,            
             default: ''
+        },
+        rules: {
+            type: Array,
+            default: []
         },
         placeholder: {
             type: String,
             default: '',
+        },
+        disabled: {
+            type: Boolean,
+            default: false,
         },
         isRequired: {
             type: Boolean,
@@ -60,5 +70,6 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+
 </style>

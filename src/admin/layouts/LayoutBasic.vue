@@ -1,32 +1,34 @@
 <template>
     <div class="`tw-flex  tw-p-0 tw-w-full`" :class="`tw-bg-[${$constants.light}]`">
-        <v-layout class="rounded rounded-md" :color="`${$constants.light}`">
-            <SideBar :drawer="drawer" :rail="drawer" />
-            <v-app-bar flat :color="$constants.light" class="tw-shadow-md">
-                <v-app-bar-nav-icon variant="text" @click="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-layout class="rounded rounded-md" :color="`${$constants.light}`"  >
+            <SideBar v-model="drawer" />
+            <v-app-bar flat :color="$constants.light" class="tw-shadow-md">                                            
+                <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
                 <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
+                
                 <v-spacer></v-spacer>
                 <template v-if="$vuetify.display.mdAndUp">
                     <v-switch v-model="mode" @change="toggleMode" class="tw-text-sm tw-w-[150px]"
                         :class="mode === 'LIGHT' ? 'tw-text-green-900' : 'tw-text-gray-500'"
-                        :color="mode === 'LIGHT' ? $constants.success : 'gray-500'" :label="`${constantsStore.mode}`"
+                        :color="mode === 'LIGHT' ? $constants.success : 'gray-500'" :label="`${constants?.mode}`"
                         false-value="DARK" true-value="LIGHT" hide-details>
                         <template v-slot:prepend>
                             <v-icon icon="mdi-white-balance-sunny"></v-icon>
                         </template>
                     </v-switch>
                 </template>
+                
                 <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
-            </v-app-bar>
-            <v-main style="min-height:100vh;" class="tw-bg-gray-100/20 ">
+            </v-app-bar>            
+            <v-main style="min-height:100vh;" :class="`tw-bg-[${$constants.layout_background}]`">
                 <BreadCrumbs />
-                <div class="tw-px-3">
-                    <RouterView v-slot="{ Component }">
-                        <transition name="scale">
-                            <component :is="Component" />
-                        </transition>
-                    </RouterView>
-                </div>
+            <div class="tw-p-[16px]">
+                <RouterView v-slot="{ Component }">
+                    <transition name="scale">
+                        <component :is="Component" />
+                    </transition>
+                </RouterView>
+            </div>
             </v-main>
         </v-layout>
     </div>
@@ -55,7 +57,7 @@ export default {
                 { name: 'Your profile', href: '#' },
                 { name: 'Sign out', href: '#' },
             ],
-            drawer: true,
+            drawer: false,
             userStore: useUserStore(),
             constantsStore: useConstantsStore()
 

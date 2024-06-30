@@ -10,4 +10,11 @@ export default {
   remove(key) {
     localStorage.removeItem(key)
   },
+  permissions(){
+    const userPermissions = JSON.parse(this.get('permissions') || "[]");
+    return userPermissions;
+  },
+  hasPermission(permission){
+    return this.permissions().includes(permission)
+  }
 }

@@ -108,3 +108,21 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+
+  
+.v-input__append {
+    width: 100%;
+}
+.gTextField .v-field__input, .v-field__input2{
+    border: 1px solid #D5D5D5;
+    border-radius: 5px;
+}
+.v-input--density-default .v-field__input {
+    padding: 0px 10px !important;
+
+}
+
+.gTextFieldSelect .v-input__control .v-field{
+    border: 1px solid #D5D5D5;
+    border-radius: 5px;    
+}

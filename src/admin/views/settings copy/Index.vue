@@ -75,7 +75,7 @@ export default {
         paginatedCards() {
             const start = (this.currentPage - 1) * this.rowsPerPage;
             const end = start + this.rowsPerPage;
-            return this.role?.slice(start, end);
+            return this.role.slice(start, end);
         }
     },
     async created() {
@@ -85,7 +85,7 @@ export default {
             this.rollStore.fetchPermission()
         ]);
         this.role = roles;
-        this.permission = permissions||[];
+        this.permission = permissions;
         this.roleLoading = false;
     },
     methods: {
@@ -103,7 +103,6 @@ export default {
             this.showModals = true;
             this.selectedRoleName = roleName;
             this.selectedRoleId = roleId;
-//            console.log(this.permission)
             this.selectedActions = this.permission.map(perm => ({
                 name: perm.name,
                 selected: actions.some(action => action.name === perm.name)

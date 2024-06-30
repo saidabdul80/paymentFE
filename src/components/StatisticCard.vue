@@ -1,21 +1,30 @@
 <template>
-    <v-card class="tw-flex tw-items-center tw-p-4 tw-shadow-lg">
-      <div class="tw-flex tw-justify-center tw-items-center tw-bg-gray-100 tw-rounded-full tw-p-2 tw-mb-2 tw-mr-4">
-        <v-icon :color="iconColor" size="x-large" :icon="icon"></v-icon>
-      </div>
-      <div>
-        {{  }}
-        <div class="tw-text-gray-500 tw-mb-2">{{ label }}</div>
-        <div class="tw-text-4xl tw-font-bold tw-mb-1" ref="valueRef">{{helpers.formatMoney(animatedValue) }}</div>
-        <div class="tw-flex tw-items-center">
-          <v-icon small class="tw-mr-1" color="blue">{{ percentageIcon }}</v-icon>
-          <div :class="percentageColorClass">{{ percentage.toFixed(2) }}% from previous</div>
+<div class="tw-border tw-rounded tw-p-3">
+    <div class="tw-text-gray-500 tw-font-bold tw-mb-2">{{ label }}</div>
+      <v-card class="tw-flex tw-items-center tw-p-4 tw-shadow-lg tw-min-h-[160px]">
+        <div class="tw-flex tw-justify-center tw-items-center tw-bg-gray-100 tw-rounded-full tw-p-2 tw-mb-2 tw-mr-4">
+          <v-icon :color="iconColor" size="x-large" :icon="icon"></v-icon>
         </div>
+        <div>        
+          <div class="tw-text-2xl tw-font-bold tw-mb-1" ref="valueRef">{{helpers.formatMoney(animatedValue) }}</div>
+          <div class="tw-flex tw-items-center">
+            <v-icon small class="tw-mr-1" color="blue">{{ percentageIcon }}</v-icon>
+            <div :class="percentageColorClass" class="tw-text-sm">{{ percentage.toFixed(1) }}% from previous</div>
+          </div>
+        </div>
+        <!-- <v-btn icon class="tw-absolute tw-text-xl tw-top-2 tw-right-2" :color="buttonColor">
+          <v-icon icon="mdi-plus"></v-icon>
+        </v-btn> -->
+      </v-card>
+      <div class="">        
+        <div class="tw-shadow-xl tw-p-2 tw-rounded tw-bg-white tw-my-3">
+          <span> Completed Transactions:</span> <span class="tw-font-bold">{{ card?.completedTransactions }} </span></div>
+        <div class="tw-shadow-xl tw-p-2 tw-rounded tw-bg-white tw-my-3">
+          <span> Failed Transactions:</span> <span class="tw-font-bold">{{ card?.failedTransactions }} </span></div>
+        <div class="tw-shadow-xl tw-p-2 tw-rounded tw-bg-white tw-my-3">
+          <span> Total Transactions:</span> <span class="tw-font-bold">{{ card?.totalTransactions }} </span></div>
       </div>
-      <!-- <v-btn icon class="tw-absolute tw-text-xl tw-top-2 tw-right-2" :color="buttonColor">
-        <v-icon icon="mdi-plus"></v-icon>
-      </v-btn> -->
-    </v-card>
+</div>
   </template>
   
   <script>
@@ -51,6 +60,10 @@
       buttonColor: {
         type: String,
         default: 'primary'
+      },
+      card:{
+        type:Object,
+        default:{}
       }
     },
     data() {

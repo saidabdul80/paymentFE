@@ -26,6 +26,20 @@ export const useAuthStore = (useWindow = false) => {
             async login(data) {
                 const response = await useClient().http({ method: 'post', path: '/auth/login', data })
                 if (response) {
+
+                    const allPermissions = []; // Extract permissions from roles
+                    
+                    response.user.roles.forEach(role => {
+                        role.permissions.forEach(permission => {
+                            allPermissions.push(permission.name);
+                        });
+                    }); // Extract root permissions
+
+                    response.user.permissions.forEach(permission => {
+                        allPermissions.push(permission.name);
+                    });
+
+                    Ls.set('permissions', JSON.stringify(allPermissions));
                     Ls.set('auth.token', response.token)
                     Ls.set('auth.user', JSON.stringify(response.user))
                     Ls.set('auth.client', JSON.stringify(response.client))                
@@ -36,35 +50,44 @@ export const useAuthStore = (useWindow = false) => {
                         type: 'success',
                         message: 'Logged in successfully.',
                     })
-                    router.push('/admin/dashboard')
+                    router.push('/admin/home')
                 }
             },
-
-            logout() {
-                return new Promise((resolve, reject) => {
-                    axios.post('/auth/logout', null, {
-                        headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('auth.token')}`
-                        }
-                    }).then((response) => {
-                        const notificationStore = useNotificationStore()
+            async logout() {
+                try {  
+                    const token = Ls.get('auth.user');
+                    if (token) {                    
+                        //useClient().http({method:'post',path:'/auth/logout',data:{},fullPath:false});
+                        Ls.remove('auth.user');
+                        Ls.remove('permissions');
+                        Ls.remove('auth.client');
+                        const notificationStore = useNotificationStore();
                         notificationStore.showNotification({
                             type: 'success',
                             message: 'Logged out successfully.',
-                        })
-
-                        window.router.push('/login')
-                        // resetStore.clearPinia()
-                        resolve(response)
-                    })
-                        .catch((err) => {
-                            handleError(err)
-                            window.router.push('/')
-                            reject(err)
-                        })
-                })
+                        });
+                        setTimeout(()=>{
+                            router.push('/');
+                        },500)
+                    }else{
+                        // const notificationStore = useNotificationStore();
+                        // notificationStore.showNotification({
+                        //     type: 'error',
+                        //     message: 'Already logout.',
+                        // });
+                        setTimeout(()=>{
+                            router.push('/');
+                        },500)
+                    }
+                   
+                } catch (err) {
+                    const notificationStore = useNotificationStore();
+                    notificationStore.showNotification({
+                        type: 'error',
+                        message: 'An error occurred while logging out.',
+                    });
+                }
             },
-
             async forgotPassword(data) {
                 console.log(data)
                 const notificationStore = useNotificationStore();

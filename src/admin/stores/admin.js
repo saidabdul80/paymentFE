@@ -6,27 +6,46 @@ import { useClient } from '@/stores/client';
 const useAdminStore = (useWindow = false) => {
     const defineStoreFunc = useWindow ? window.pinia.defineStore : defineStore;
     return defineStoreFunc({
-        id: 'user',
-
+        id: 'admin',
         state: () => ({
-            currentUser: null,
+            currentUser: {
+                password:'password',
+                email:''
+            },            
             currentAbilities: [],
             userForm: {},
+            creating:false,
             usersDashboardData:[],
             dashboardLoading:true,
             sents:{},
             sentsLoading:true,
             receives:{},
             receivesLoading:true,
-            providers:[]
+            providers:[],
+            users: {},
+            usersLoading: false,
         }),
 
         getters: {
             currentAbilitiesCount: (state) => state.currentAbilities.length,
         },        
         actions: {
+            async createAdmin(data) {     
+                this.creating = true;           
+                const response = await useClient().http({ method: 'post', path: '/admin', data })
+                Object.keys(this.currentUser).forEach(key => {
+                    this.currentUser[key]=  ''
+                });
+                this.creating = false;
+                const notificationStore = useNotificationStore();
+                notificationStore.showNotification({
+                    type: 'success',
+                    message: '',
+                });
+
+            },
             async updateCurrentUser(data) {
-                const response = await useClient().http({ method: 'put', path: '/sents', data })
+                const response = await useClient().http({ method: 'put', path: '/admin', data })
                 this.currentUser = response.data;
                 Object.assign(this.userForm, response.data.data);
                 const notificationStore = useNotificationStore();
@@ -38,7 +57,7 @@ const useAdminStore = (useWindow = false) => {
             },
 
             async fetchCurrentUser(params) {
-                const response = await useClient().http({ method: 'get', path: '/sents/me', data })
+                const response = await useClient().http({ method: 'get', path: '/admin/me', data })
                 this.currentUser = response.data;
                 this.userForm = response.data;
                 const notificationStore = useNotificationStore();
@@ -47,10 +66,27 @@ const useAdminStore = (useWindow = false) => {
                     message: '',
                 });
             },
+            async fetchUsersById(id) {
+                this.usersLoading = true                
+                const response = await useClient().http({ method: 'get', path: '/admin/' + id })                
+                //this.currentUser2 = response.data.admin;                                                 
+                this.usersLoading = false
+                if(response){
+                    this.currentUser = response.admin;
+                }
+            },
             async fetchUsersDashboard(params) {
                 const response = await useClient().http({ method: 'get', path: '/users/dashboard_counts' })
                 this.usersDashboardData = response
                 this.dashboardLoading = false
+            },
+            async fetchUsers(params = null, path = null) {
+                this.usersLoading = true
+                const response = await useClient().http({ method: 'get', path: path || '/admin', data: params || {}, fullPath: path ? true : false })
+                this.usersLoading = false
+                if (response) {
+                    this.users = response;
+                }                
             },
 
             async fetchSent(params=null,path=null) {
@@ -82,10 +118,12 @@ const useAdminStore = (useWindow = false) => {
                 const response = await useClient().http({ method: 'get', path: '/sents/permissions', data })
                 this.currentAbilities = response.data.data;
             },
+
             async dashboard(type='receive'){
                 const response = await useClient().http({ method: 'get', path: '/transaction/stat?type='+type })
                 return response
             },
+
             hasAbilities(abilities) {
                 return !!this.currentAbilities.find((ab) => {
                     if (ab.name === '*') return true;
@@ -99,10 +137,12 @@ const useAdminStore = (useWindow = false) => {
                 const response = await useClient().http({ method: 'post', path: '/transaction/fulfilment  ',data })
                 return response
             },
+
             async verifyApaylo(data){
                 const response = await useClient().http({ method: 'post', path: '/transaction/apaylo-receive  ',data })
                 return response
             },
+
             async fetchProviders(){
                 const response = await useClient().http({ method: 'get', path: '/provider' })
                 this.providers = response;

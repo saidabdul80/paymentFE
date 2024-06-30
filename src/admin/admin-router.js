@@ -9,6 +9,8 @@ import UsersIndex from '@/admin/views/users/Index.vue'; // Corrected import
 import ReceiveIndex from '@/admin/views/receive/Index.vue'; // Corrected import
 import SentIndex from '@/admin/views/sent/Index.vue'; // Corrected import
 import SendIndex from '@/admin/views/send/Index.vue'; // Corrected import
+import PayBill from '@/admin/views/bills/Index.vue'; // Corrected import
+
 import SettingsIndex from '@/admin/views/settings/Index.vue'; // Corrected import
 import ErrorView from '@/components/Error.vue'; // Corrected import
 
@@ -33,32 +35,49 @@ export default [
             {
                 path: "users",
                 name: "Users",
-                meta: { breadcrumb: "Users", ability: abilities.USER },
+                meta: { breadcrumb: "Users", ability: abilities.VIEW_ADMINS },
                 component: UsersIndex,
-            },            
-        
+            },               
+            {
+                path: "users/view-admin/:id",
+                name: "View Admin",
+                meta: { breadcrumb: "View Admin", parent: "Users", ability: abilities.VIEW_ADMINS, requiresAuth: true },
+                component: () => import("@/admin/views/users/ViewAdmin.vue"),
+            },
+            {
+                path: "users/add-admin/:id?",
+                name: "Add Admin",
+                meta: { breadcrumb: "Add Admin", parent: "Users", ability: abilities.ADD_ADMINS, requiresAuth: true  },
+                component: () => import("@/admin/views/users/create.vue"),
+            },                
             {
                 path: "receive",
                 name: "Received Transactions",
-                meta: { breadcrumb: "receive", ability: abilities.PAYMENT },
+                meta: { breadcrumb: "receive", ability: abilities.VIEW_RECEIVE },
                 component: ReceiveIndex,
             },
             {
                 path: "sent",
                 name: "Sent Transactions",
-                meta: { breadcrumb: "sent", ability: abilities.INVOICE },
+                meta: { breadcrumb: "sent", ability: abilities.VIEW_SENTS },
                 component: SentIndex,
             },      
             {
                 path: "send",
                 name: "Send",
-                meta: { breadcrumb: "send", ability: abilities.INVOICE },
+                meta: { breadcrumb: "send", ability: abilities.SEND_MONEY },
                 component: SendIndex,
+            },        
+            {
+                path: "paybill",
+                name: "Paybill",
+                meta: { breadcrumb: "Paybill", ability: abilities.VIEW_PAY_BILLS },
+                component: PayBill,
             },            
             {
                 path: "settings",
                 name: "Settings",
-                meta: { breadcrumb: "Settings", ability: abilities.SETTING },
+                meta: { breadcrumb: "Settings", ability: abilities.VIEW_ROLES },
                 component: SettingsIndex,
             },          
         ],

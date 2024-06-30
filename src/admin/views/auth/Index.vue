@@ -27,7 +27,7 @@
                                 <v-form ref="form">
                                     <v-row>
                                         <v-col cols="12" md="12" sm="12">                                    
-                                            <TextField v-model="authStore.loginData.username" label="Username"
+                                            <TextField v-model="authStore.loginData.email" label="Username"
                                                 :error_messages="globalStore.nameRules?.username"
                                                 placeholder="Email " />      
                                                 <br>                          
