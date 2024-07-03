@@ -19,38 +19,96 @@ export const useAuthStore = (useWindow = false) => {
             },
             forgotPasswordData: {
                 idNumber: ''
-            }
+            },
+            loadingMFA: false,
+            qrcode:null,
         }),
 
         actions: {
             async login(data) {
-                const response = await useClient().http({ method: 'post', path: '/auth/login', data })
+                const response = await useClient().http({ method: 'post', path: '/auth/login', data })                
                 if (response) {
-
-                    const allPermissions = []; // Extract permissions from roles
                     
-                    response.user.roles.forEach(role => {
-                        role.permissions.forEach(permission => {
-                            allPermissions.push(permission.name);
-                        });
-                    }); // Extract root permissions
+                    this.handlePassed(response);
+                    if(response.user.is_default_password){
+                        router.push('/admin/change-password')        
+                        return false;                
+                    }
 
-                    response.user.permissions.forEach(permission => {
+                    if(this.requireMFA()){                        
+                        const user =  JSON.parse(Ls.get('auth.user')||"{}");
+                        if(!user.is_mfa_setup){
+                            this.setUpMFA()
+                            router.push('/admin/setup-mfa')                            
+                            return false;
+                        }
+
+                        router.push('/admin/verification')
+                        return false;
+                    }else{
+                        const notificationStore = useNotificationStore();
+                        notificationStore.showNotification({
+                            type: 'success',
+                            message: 'Logged in successfully.',
+                        })
+                    }
+                    router.push('/admin/home')
+                }
+            },
+            requireMFA(){
+                let is_mfa = false                
+                
+                JSON.parse(Ls.get('permissions')||"{}").forEach(role => {
+                    if(role == 'require-mfa'){
+                        is_mfa = true;                        
+                    }
+                }); 
+                return is_mfa;
+            },
+            handlePassed(response){
+                
+                const allPermissions = []; // Extract permissions from roles
+                
+                response.user.roles.forEach(role => {
+                    role.permissions.forEach(permission => {
                         allPermissions.push(permission.name);
                     });
+                }); // Extract root permissions
 
-                    Ls.set('permissions', JSON.stringify(allPermissions));
-                    Ls.set('auth.token', response.token)
-                    Ls.set('auth.user', JSON.stringify(response.user))
-                    Ls.set('auth.client', JSON.stringify(response.client))                
-                    this.loginData.username = ''
-                    this.loginData.password = ''
+                response.user.permissions.forEach(permission => {
+                    allPermissions.push(permission.name);
+                });
+
+                Ls.set('permissions', JSON.stringify(allPermissions));
+                Ls.set('auth.token', response.token)
+                Ls.set('auth.user', JSON.stringify(response.user))
+                Ls.set('auth.client', JSON.stringify(response.client))                
+                this.loginData.username = ''
+                this.loginData.password = ''                               
+            },
+            async verifyMfaCode(data){
+                const response = await useClient().http({ method: 'post', path: '/auth/verify-mfa',data })
+                if(response){
+                    router.push('/admin/home')
+                }
+            },
+            async changePassword(data){                
+                const response = await useClient().http({ method: 'post', path: '/auth/change-password',data })
+                if(response){     
                     const notificationStore = useNotificationStore();
                     notificationStore.showNotification({
                         type: 'success',
-                        message: 'Logged in successfully.',
-                    })
-                    router.push('/admin/home')
+                        message: 'Password changed successfully.',
+                    })               
+                    this.logout()
+                }
+            },
+            async setUpMFA(data){    
+                this.loadingMFA = true;            
+                const response = await useClient().http({ method: 'get', path: '/auth/setup-mfa',data })
+                this.loadingMFA = false
+                if(response){     
+                    Ls.set('mfa.qrcode',response.qrCodeDataUrl);                       
                 }
             },
             async logout() {
@@ -88,8 +146,7 @@ export const useAuthStore = (useWindow = false) => {
                     });
                 }
             },
-            async forgotPassword(data) {
-                console.log(data)
+            async forgotPassword(data) {                
                 const notificationStore = useNotificationStore();
                 notificationStore.showNotification({
                     type: 'success',

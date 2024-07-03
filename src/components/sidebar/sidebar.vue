@@ -42,9 +42,9 @@
                 <template v-slot:default>
                     <div class="tw-ms-2 tw-ml-7 tw-mt-1 text-truncate">
                         <span :class="`tw-text-${$constants.text_size.s1} tw-text-[${$constants.primary}]`"
-                            class="tw-font-bold tw-text-base tw-font-visby">AMINU MUDI</span>
+                            class="tw-font-bold tw-text-base tw-font-visby tw-truncate">{{person?.email}}</span>
                         <p :class="`tw-text-${$constants.text_size.s1} tw-text-[${$constants.dark}]`"
-                            class="tw-mt-[-3px] tw-font-visby tw-text-xs tw-font-bold tw-text-[#626260]">SUB - ADMIN</p>
+                            class="tw-mt-[-3px] tw-font-visby tw-text-xs tw-font-bold tw-text-[#626260] tw-truncate">{{user?.company_name}}</p>
                     </div>
                 </template>
             </v-list-item>
@@ -87,6 +87,7 @@ export default {
         return {
             authStore:useAuthStore(),
             user: JSON.parse(Ls.get('auth.client')||"{}"),
+            person: JSON.parse(Ls.get('auth.user')||"{}"),
             globals: useGlobalsStore(),
             isHovered: false,
             pdrawer: true,

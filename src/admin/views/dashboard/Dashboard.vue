@@ -190,9 +190,9 @@ export default {
                     percentage: this.weekSentData ? this.weekSentData.increase : 0,
                     percentageIcon: this.weekSentData && this.weekSentData.increase > 0 ? 'mdi-arrow-up' : 'mdi-arrow-down',
                     buttonColor: 'success',
-                    completedTransactions:this.weekRSentata? this.weekSentData?.completed_transactions:0,
-                    failedTransactions:this.weekRSentata? this.weekSentData?.failed_transactions:0,
-                    totalTransactions:this.weekRSentata? this.weekSentData?.total_transactions:0,
+                    completedTransactions:this.weekSentData? this.weekSentData?.completed_transactions:0,
+                    failedTransactions:this.weekSentData? this.weekSentData?.failed_transactions:0,
+                    totalTransactions:this.weekSentData? this.weekSentData?.total_transactions:0,
                 },
                 {
                     icon: 'mdi-calendar-month',

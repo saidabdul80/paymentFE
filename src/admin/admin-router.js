@@ -13,6 +13,9 @@ import PayBill from '@/admin/views/bills/Index.vue'; // Corrected import
 
 import SettingsIndex from '@/admin/views/settings/Index.vue'; // Corrected import
 import ErrorView from '@/components/Error.vue'; // Corrected import
+import MFA from './views/auth/MFA.vue';
+import ChangePassword from './views/auth/changePassword.vue';
+import Setup_MFA from './views/auth/Setup_MFA.vue';
 
 export default [
     {
@@ -94,6 +97,24 @@ export default [
         component: ForgotPassword,
         meta: { requiresAuth: false },
     },
+    {
+        path: "/admin/verification",
+        name: "MFA",
+        component: MFA,
+        meta: { requiresAuth: false },
+    },
+    {
+        path: "/admin/setup-mfa",
+        name: "MFA-Setup",
+        component: Setup_MFA,
+        meta: { requiresAuth: false },
+    },
+    {
+        path: "/admin/change-password",
+        name: "CP",
+        component: ChangePassword,
+        meta: { requiresAuth: false },
+    },    
     {
         path: "/:pathMatch(.*)*",
         name: 'ErrorView',
