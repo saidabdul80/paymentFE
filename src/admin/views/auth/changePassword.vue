@@ -52,6 +52,7 @@
 import { useAuthStore } from '@/admin/stores/auth';
 import { useNotificationStore } from '@/stores/notification';
 import TextField from '@/components/TextField.vue';
+import ls from '@/services/ls';
 
 export default {
     name: "MFA Verification",
@@ -61,6 +62,7 @@ export default {
     data() {
         return {
             isLoading: false,
+
             details: {
                 new_password: '',
                 confirm_password: ''
@@ -82,6 +84,9 @@ export default {
             ]
         }
     },
+    created(){
+        this.details.old_password = ls.get('oldpassword');
+    }, 
     methods: {
         async changePassword() {                        
             const valid = await this.$refs.form.validate();            

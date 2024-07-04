@@ -24,7 +24,7 @@
                                     <v-col cols="12" md="12" sm="12">
                                         <TextField v-model="verificationCode" :rules="verificationCodeRules"
                                             label="MFA Code" placeholder="Enter code" id="verificationCode"
-                                            name="verificationCode" :isRequired="true" />
+                                            name="verificationCode" :isRequired="true" />                                            
                                     </v-col>
                                 </v-row>
                                 <div>
@@ -47,6 +47,7 @@
 import { useAuthStore } from '@/admin/stores/auth';
 import { useNotificationStore } from '@/stores/notification';
 import TextField from '@/components/TextField.vue';
+import ls from '@/services/ls';
 
 export default {
     name: "MFA Verification",
@@ -72,6 +73,7 @@ export default {
             this.isLoading = true;
             try {
                 await this.authStore.verifyMfaCode({token:this.verificationCode});
+                ls.remove('mfa.qrcode')
             } catch (error) {
                 this.notificationStore.notifyError('Verification failed. Please try again.');
             } finally {

@@ -28,9 +28,10 @@ export const useAuthStore = (useWindow = false) => {
             async login(data) {
                 const response = await useClient().http({ method: 'post', path: '/auth/login', data })                
                 if (response) {
-                    
+                    const password = data.password;
                     this.handlePassed(response);
                     if(response.user.is_default_password){
+                        Ls.set('oldpassword',password)
                         router.push('/admin/change-password')        
                         return false;                
                     }
@@ -87,7 +88,7 @@ export const useAuthStore = (useWindow = false) => {
                 this.loginData.password = ''                               
             },
             async verifyMfaCode(data){
-                const response = await useClient().http({ method: 'post', path: '/auth/verify-mfa',data })
+                const response = await useClient().http({ method: 'post', path: '/auth/verify-mfa',data })          
                 if(response){
                     router.push('/admin/home')
                 }
@@ -95,6 +96,7 @@ export const useAuthStore = (useWindow = false) => {
             async changePassword(data){                
                 const response = await useClient().http({ method: 'post', path: '/auth/change-password',data })
                 if(response){     
+                    Ls.remove('oldpassword');
                     const notificationStore = useNotificationStore();
                     notificationStore.showNotification({
                         type: 'success',
@@ -108,6 +110,7 @@ export const useAuthStore = (useWindow = false) => {
                 const response = await useClient().http({ method: 'get', path: '/auth/setup-mfa',data })
                 this.loadingMFA = false
                 if(response){     
+                    this.qrcode = response.qrCodeDataUrl;
                     Ls.set('mfa.qrcode',response.qrCodeDataUrl);                       
                 }
             },

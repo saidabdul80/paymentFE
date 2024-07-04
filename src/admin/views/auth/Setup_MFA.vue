@@ -21,8 +21,8 @@
                         <div class="tw-mt-10">
                             <v-form>                                
                                     <div class="tw-flex tw-justify-center">
-
-                                        <img :src="qrcode" class="tw-w-15 tw-h-15 tw-text-center"/>                                
+                                        <v-skeleton-loader v-if="authStore.loadingMFA" type="card" v-for="x in 5" ></v-skeleton-loader>                
+                                        <img :src="authStore.qrcode" v-else class="tw-w-15 tw-h-15 tw-text-center"/>                                
                                     </div>
                                 <div>
                                     <v-btn @click.prevent="finish" type="submit" block color="green" size="large"
@@ -52,8 +52,7 @@ export default {
         TextField
     },
     data() {
-        return {
-            qrcode:ls.get('mfa.qrcode'),
+        return {            
             isLoading: false,
             verificationCode: '',
             notificationStore: useNotificationStore(),
@@ -69,12 +68,7 @@ export default {
     methods: {
         async finish() {
             this.$router.push('/admin/verification');            
-        },
-        watch:{
-            'authStore.loadingMFA':function(n,o){
-                this.qrcode = ls.get('mfa.qrcode')
-            }
-        },
+        },     
         async resendCode() {
             try {
                 await this.authStore.resendMfaCode();
@@ -83,6 +77,9 @@ export default {
                 this.notificationStore.notifyError('Failed to resend verification code. Please try again.');
             }
         }
+    },
+    created(){
+        this.authStore.qrcode = ls.get('mfa.qrcode');
     }
 };
 </script>
