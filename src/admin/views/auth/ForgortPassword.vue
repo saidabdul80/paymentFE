@@ -4,7 +4,7 @@
             <v-col cols="12" md="6">
                 <div class="tw-relative tw-hidden tw-flex-1 lg:tw-block mx-4 my-4 mt-2">
                     <img class="tw-absolute tw-inset-0 tw-h-full tw-w-full tw-object-cover tw-rounded-3xl"
-                        src="./../../../assets/login-image.png" style="height: 98vh;" alt="" />
+                        src="@/assets/login-image.png" style="height: 98vh;" alt="" />
                 </div>
             </v-col>
             <v-col md="6" sm="12">
