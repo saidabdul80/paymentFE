@@ -1,13 +1,17 @@
 <template>
     <div>
-      
+      <label :class="`tw-text-[${$constants.neutral}] tw-font-semibold`">        
+        Currency
+        <span class="tw-text-red-600 "></span>
+    </label>
       <v-select
         v-model="selectedCurrency"
         :items="currencies"
-        label="Currency"
+        
         outlined
-        required
-        variant="solo"
+        required 
+        :bg-color="$constants.input_background"       
+        variant="outlined"
       ></v-select>
     </div>
   </template>

@@ -10,7 +10,7 @@
         :placeholder="placeholder"
         :bg-color="$constants.input_background"
         :append-inner-icon="appendInnerIcon"
-        :error-messages="error_messages"
+        
         variant="outlined"
         flat
         class="gTextField"
@@ -71,5 +71,7 @@ export default {
 </script>
 
 <style>
-
+.v-input__details{
+    display: none;
+}
 </style>

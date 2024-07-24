@@ -19,7 +19,7 @@
         <v-col cols="12" md="6">
           <TextField v-model="customerDetail.email" label="Customer Email" required />
         </v-col>
-        <v-col cols="12" md="6">          
+        <v-col cols="12" md="6">
           <CurrencySelect v-model="currency" label="Currency" required />
         </v-col>
         <v-col cols="12" md="6">
@@ -37,11 +37,51 @@
       </v-row>
       <v-row>
         <v-col cols="12">
-          <v-btn @click="sendMoney" :loading="isLoading" color="primary">Send Money</v-btn>
+          <v-btn ref="btnRef" @click="sendMoney" :loading="isLoading" color="primary">Send Money</v-btn>
         </v-col>
       </v-row>
     </v-card>
   </div>
+
+  <v-dialog v-model="dialog" activator="btnRef" max-width="340">
+    <template v-slot:default="{ isActive }">
+      <v-card >
+        <v-card-title  class="tw-flex tw-justify-center tw-py-3 tw-items-center  tw-font-bold text-success">
+         Money Sent Successfuly
+          <v-icon class="tw-mt-1 tw-ml-2" color="success">mdi-check-circle</v-icon>
+        </v-card-title>
+        <v-card-text>
+          <div class="tw-mb-2">
+            <span class="tw-font-semibold">Recipient Full Name:</span> {{ recipientDetail.full_name }}
+          </div>
+          <div class="tw-mb-2">
+            <span class="tw-font-semibold">Recipient Email:</span> {{ recipientDetail.email }}
+          </div>
+          <div class="tw-mb-2">
+            <span class="tw-font-semibold">Customer Full Name:</span> {{ customerDetail.full_name }}
+          </div>
+          <div class="tw-mb-2">
+            <span class="tw-font-semibold">Customer Email:</span> {{ customerDetail.email }}
+          </div>          
+          <div class="tw-mb-2 tw-text-lg tw-font-bold tw-text-[green]">
+            <span >Amount:  {{ amount }}{{ currency }} </span>
+          </div>
+          <div class="tw-mb-2">
+            <span class="tw-font-semibold">Security Question:</span> {{ securityQuestion }}
+          </div>
+          <div class="tw-mb-2">
+            <span class="tw-font-semibold">Security Answer:</span> {{ securityAnswer }}
+          </div>
+          <div class="tw-mb-2">
+            <span class="tw-font-semibold">Description:</span> {{ description }}
+          </div> 
+        </v-card-text>
+        <template v-slot:actions>
+          <v-btn class="ml-auto"   color="surface-variant" variant="flat" text="Ok" @click="isActive.value = false"></v-btn>
+        </template>
+      </v-card>
+    </template>
+  </v-dialog>
 </template>
 
 <script>
@@ -58,9 +98,10 @@ export default {
   },
   data() {
     return {
+      dialog: false,
       isLoading: false,
-      adminStore:useAdminStore(),
-      globals:useGlobalsStore(),
+      adminStore: useAdminStore(),
+      globals: useGlobalsStore(),
       recipientDetail: {
         full_name: '',
         email: ''
@@ -69,16 +110,16 @@ export default {
         full_name: '',
         email: ''
       },
-      currency: '',
+      currency: 'CAD',
       amount: '',
-      securityQuestion: '',
-      securityAnswer: '',
+      securityQuestion: 'Company',
+      securityAnswer: 'Cowris',
       description: ''
     };
   },
   methods: {
-   async sendMoney() {
-      
+    async sendMoney() {
+
       const payload = {
         currency_symbol: this.currency,
         recipient_detail: this.recipientDetail,
@@ -87,10 +128,13 @@ export default {
         security_question: this.securityQuestion,
         security_answer: this.securityAnswer,
         description: this.description,
-        api_key: JSON.parse(Ls.get('auth.client')||"{}")?.api_key                    
+        api_key: JSON.parse(Ls.get('auth.client') || "{}")?.api_key
       };
       this.isLoading = true
-      await this.adminStore.sendMoney(payload);
+      const res = await this.adminStore.sendMoney(payload);
+      if(res){
+        this.dialog = true;
+      }
       this.isLoading = false
       console.log('Sending money with payload:', payload);
       // Call Customer API endpoint to send money with the payload

@@ -107,11 +107,15 @@ const useAdminStore = (useWindow = false) => {
             },        
             async sendMoney(data) {
                 const response = await useClient().http({ method: 'post', path: '/transaction/apaylo-send', data })                
-                const notificationStore = useNotificationStore();
-                notificationStore.showNotification({
-                    type: 'success',
-                    message: '',
-                });
+                if(response){
+                    const notificationStore = useNotificationStore();
+                    notificationStore.showNotification({
+                        type: 'success',
+                        message: '',
+                    });
+                    return true;
+                }
+                return false
             },
 
             async fetchUserPermissions() {
