@@ -14,6 +14,7 @@ export default {
   EDIT_ROLE:"can-edit-role",
   DELETE_ROLE:"can-delete-role",
   ASSIGN_ROLE:"can-assign-role",
+  MANAGE_ROLE:"can-manage-role",
   FULFIL_TRANSACTION:"can-full-transactions",
   REQUERY_TRANSACTION:"can-retry-transactions"
 

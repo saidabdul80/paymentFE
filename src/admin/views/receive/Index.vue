@@ -4,7 +4,8 @@
           <div class="tw-min-w-[300px]">
             <Search class="tw-my-4 lg:tw-my-0 "  v-model="searchData" @update:filters="handleSearch" />
           </div>
-            <v-btn @click="adminStore.fetchReceive()" class="tw-self-end" icon="mdi-reload" flat></v-btn>
+          <v-btn @click="adminStore.fetchReceive()" class="tw-self-end" icon="mdi-reload" flat>New Received</v-btn>
+          <v-btn @click="newRecord()" class="tw-self-end" icon="mdi-reload" flat></v-btn>
         </div>
 
       <DataTable
@@ -105,11 +106,12 @@
     <v-dialog v-model="confirmDialog2" max-width="400">
       <v-card>
         <v-card-title>Re-Verify Transaction</v-card-title>        
-        <div class="tw-px-4">          
+        <div class="tw-px-4">    
+
+          <v-text-field variant="solo" v-if="!receive?.sender_amount"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.transaction_ref" label="Trx Ref" type="text"></v-text-field>
           <v-text-field variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.answer" label="Security Answer"></v-text-field>          
          <!--  
             <div><span class="tw-font-bold">Transaction Ref:</span> {{ receive.transaction_ref }}</div>
-            <v-text-field variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.exchange_rate" label="Exchange Rate" type="number"></v-text-field>
             <v-text-field variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.receiver_amount" label="Receiver Amount" type="number"></v-text-field>
             <v-text-field variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.recipient_email" label="Recipient Email" type="email"></v-text-field>
           -->
@@ -205,6 +207,10 @@ export default {
     confirmSendMoney(rowData) {
       this.rowToSend = rowData; // store the selected row data
       this.confirmDialog = true; // open the confirmation dialog
+    },
+    newRecord(){
+      this.receive = {}
+      this.confirmDialog2 = true;
     },
     updateRecord(rowData) {
       this.confirmDialog2 = true;

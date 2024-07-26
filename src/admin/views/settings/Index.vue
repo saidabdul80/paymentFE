@@ -1,12 +1,13 @@
 <template>
     <div>
-        <div class="tw-flex">
+        <div class="tw-flex" v-if="ls.hasPermission(abilities.MANAGE_ROLE)">
             <FormsHeader header="Role Management" title="Showing all administrator roles and assigned permissions."
                 :showControls="true" buttonText="Add New Role" :buttonAction="addNewRole" />
         </div>
         <div class="tw-container tw-mx-auto tw-p-6"  v-if="!roleLoading">
             <permission-card v-if="!roleLoading" v-for="(card, index) in paginatedCards" :key="index" :title="card.name"
                 :permissions="card.permissions" class="tw-my-4"
+                :show-edit="ls.hasPermission(abilities.MANAGE_ROLE)"
                 @edit-permissions="openModal(card.id, card.name, card.permissions)" />
             <div v-if="!roleLoading"
                 class="tw-flex tw-justify-between tw-items-center tw-text-[#374151] tw-text-sm tw-rounded-sm tw-p-2 tw-bg-[#F3F4F6] tw-mt-2 tw-mx-1 tw-font-sans tw-font-medium">
@@ -45,6 +46,8 @@ import PermissionCard from '@/admin/views/settings/role/components/PermissionCar
 import RoleManagementModal from '@/admin/views/settings/role/components/RoleManagementModal.vue';
 import useRoleStore from '@/admin/stores/role';
 import CustomSkeletonLoader from '@/components/CustomSkeletonLoader.vue';
+import abilities from '@/admin/stubs/abilities';
+import ls from '@/services/ls';
 
 export default {
     data() {
@@ -60,6 +63,8 @@ export default {
             totalItems: 9,
             role: [],
             permission: [],
+            ls:ls,
+            abilities:abilities,
         }
     },
     computed: {

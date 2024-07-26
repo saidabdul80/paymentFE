@@ -77,7 +77,7 @@
           </div> 
         </v-card-text>
         <template v-slot:actions>
-          <v-btn class="ml-auto"   color="surface-variant" variant="flat" text="Ok" @click="isActive.value = false"></v-btn>
+          <v-btn class="ml-auto"   color="surface-variant" variant="flat" text="Ok" @click="closeDialog()"></v-btn>
         </template>
       </v-card>
     </template>
@@ -118,6 +118,19 @@ export default {
     };
   },
   methods: {
+    closeDialog(){      
+      this.recipientDetail =  {
+        full_name: '',
+        email: ''
+      };
+      this.customerDetail = {
+        full_name: '',
+        email: ''
+      };
+      this.amount = '';
+      this.description = '' ;
+      this.dialog = false;
+    },
     async sendMoney() {
 
       const payload = {
