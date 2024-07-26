@@ -148,8 +148,7 @@ export default {
         answer:'',
       },
       truncateClasses:'tw-truncate tw-overflow-hidden tw-w-[70px] tw-whitespace-nowrap tw-text-overflow-ellipsis',
-      headers: [
-        { title: 'S/N', key: 'sn' },
+      headers: [      
         { title: 'Sender Amount', key: 'sender_amount' },
         { title: 'Receiver Amount', key: 'receiver_amount' },
         { title: 'Ex. Rate', key: 'exchange_rate' },

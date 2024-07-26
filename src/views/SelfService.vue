@@ -3,7 +3,7 @@
     <h4 class="text-h5 font-weight-bold" :class="`tw-text-[${$constants.primary}]`">SELF - ENROLMENT</h4>
     <p>Click the options that best describes you as a taxpayer.</p>
     <div class="tw-mt-4">
-      <SelfServiceCard v-for="(card, index) in cards" :key="index" :card="card" :loading="card.loading"   @selectCard="selectCard" />    
+      <SelfServiceCard class="tw-mb-[16px]" v-for="(card, index) in cards" :key="index" :card="card" :loading="card.loading"   @selectCard="selectCard" />    
     </div>
   </div>
 </template>

@@ -58,7 +58,7 @@
             <p>Choose the option that best describes you as a taxpayer.</p>
           </div>
 
-          <SelfServiceCard v-for="(card, index) in cards" :key="index" :card="card" :loading="card.loading"
+          <SelfServiceCard class="tw-mb-[16px]" v-for="(card, index) in cards" :key="index" :card="card" :loading="card.loading"
             @selectCard="selectCard" />
         </div>
       </template>
