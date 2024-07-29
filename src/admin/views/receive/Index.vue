@@ -4,8 +4,8 @@
           <div class="tw-min-w-[300px]">
             <Search class="tw-my-4 lg:tw-my-0 "  v-model="searchData" @update:filters="handleSearch" />
           </div>
-          <v-btn @click="adminStore.fetchReceive()" class="tw-self-end" icon="mdi-reload" flat>New Received</v-btn>
-          <v-btn @click="newRecord()" class="tw-self-end" icon="mdi-reload" flat></v-btn>
+          <v-btn @click="newRecord()" class="tw-self-end" flat>New Received</v-btn>
+          <v-btn @click="adminStore.fetchReceive()" class="tw-self-end" icon="mdi-reload" flat></v-btn>
         </div>
 
       <DataTable
@@ -192,10 +192,10 @@ export default {
   },
   methods: {
     async verify(data){
-      this.rowToSend.loading = true
+      this.isLoading = true
       await this.adminStore.verifyApaylo(data);
       this.adminStore.fetchReceive();
-      this.rowToSend.loading = false
+      this.isLoading = false
       this.confirmDialog2 = false;
     },
     toggleDescription(index) {      
