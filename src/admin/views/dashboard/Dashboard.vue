@@ -104,29 +104,6 @@ export default {
                     { name: 'Failed Transactions', data: [] },
                     { name: 'Average Transaction Value', data: [] }
                 ]
-            },
-            chartOptions2: {
-                chart: {
-                    type: "column"
-                },
-                title: {
-                    text: 'Sent Stats'
-                },
-                xAxis: {
-                    categories: []
-                },
-                yAxis: {
-                    title: {
-                        text: 'Amount'
-                    }
-                },
-                series: [
-                    { name: 'Total Sent', data: [] },
-                    { name: 'Total Transactions', data: [] },
-                    { name: 'Completed Transactions', data: [] },
-                    { name: 'Failed Transactions', data: [] },
-                    { name: 'Average Transaction Value', data: [] }
-                ]
             }
         };
     },
@@ -176,6 +153,7 @@ export default {
             this.chartOptions.title.text = this.type == 'receive'?'Received Stats':'Sent Stats'
             this.chartOptions.xAxis.categories = labels;
             this.chartOptions.series[0].data = totalReceived;
+            this.chartOptions.series[0].name =  this.type == 'receive'?'Total Received':'Total Sent'            
             this.chartOptions.series[1].data = totalTransactions;
             this.chartOptions.series[2].data = completedTransactions;
             this.chartOptions.series[3].data = failedTransactions;
