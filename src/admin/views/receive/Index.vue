@@ -4,8 +4,10 @@
           <div class="tw-min-w-[300px]">
             <Search class="tw-my-4 lg:tw-my-0 "  v-model="searchData" @update:filters="handleSearch" />
           </div>
-          <v-btn @click="newRecord()" class="tw-self-end" flat>New Received</v-btn>
-          <v-btn @click="adminStore.fetchReceive()" class="tw-self-end" icon="mdi-reload" flat></v-btn>
+          <div class="tw-self-end">
+            <v-btn @click="newRecord()" color="black"  flat>New Received</v-btn>
+            <v-btn @click="adminStore.fetchReceive()"  icon="mdi-reload" flat></v-btn>
+          </div>
         </div>
 
       <DataTable
@@ -105,20 +107,22 @@
     
     <v-dialog v-model="confirmDialog2" max-width="400">
       <v-card>
-        <v-card-title>Re-Verify Transaction</v-card-title>        
+        <v-card-title v-if="receive?.sender_amount" >Re-Verify Transaction</v-card-title>        
+        <v-card-title v-else >New Transaction</v-card-title>        
         <div class="tw-px-4">    
 
-          <v-text-field variant="solo" v-if="!receive?.sender_amount"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.transaction_ref" label="Trx Ref" type="text"></v-text-field>
+          <v-text-field variant="solo" v-if="!receive?.sender_amount"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.email" label="Sender Email" type="text"></v-text-field>
+          <v-text-field variant="solo" v-if="!receive?.sender_amount"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.ReferenceNumber" label="Trx Ref" type="text"></v-text-field>
           <v-text-field variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.answer" label="Security Answer"></v-text-field>          
          <!--  
             <div><span class="tw-font-bold">Transaction Ref:</span> {{ receive.transaction_ref }}</div>
-            <v-text-field variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.receiver_amount" label="Receiver Amount" type="number"></v-text-field>
             <v-text-field variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.recipient_email" label="Recipient Email" type="email"></v-text-field>
           -->
         </div>
         <v-card-actions>
-          <v-btn color="error" text @click="confirmDialog2 = false">Cancel</v-btn>
-          <v-btn color="primary" @click="verify(receive)" :loading="isLoading">Verify</v-btn>
+          <v-btn color="error" text @click="confirmDialog2 = false">Cancel</v-btn>          
+          <v-btn v-if="receive?.sender_amount" color="primary" @click="verify(receive)" :loading="isLoading">Verify</v-btn>
+          <v-btn v-else color="primary" @click="verify(receive)" :loading="isLoading">Receive</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -216,7 +220,7 @@ export default {
       this.confirmDialog2 = true;
       this.rowToSend = rowData
       this.receive.replyTo = rowData.customer_detail; // store the selected row data
-      this.receive.ReferenceNumber = rowData.transaction_ref
+      this.receive.ReferenceNumber = rowData.ReferenceNumber
       const currentDate = new Date();
       const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
       this.receive.date = currentDate;

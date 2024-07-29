@@ -15,8 +15,14 @@ import App from "./App.vue";
 import router from "./router";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
+import HighchartsVue from "highcharts-vue";
+import Highcharts from "highcharts";
+import ExportData from "highcharts/modules/export-data";
 window.pinia = pinia
 const app = createApp(App);
+ExportData(Highcharts);
+
+app.use(HighchartsVue);
 
 const { createPinia } = window.pinia
 
