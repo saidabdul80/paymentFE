@@ -7,16 +7,8 @@
         
         <Multiselect :class="!errorMessages || !errorMessages?.length > 0 ? '': 'tw-border-red-900 tw-border-spacing-1.5'"  :style="{ borderColor: borderColor, '--input-background': $constants.input_background}" 
             v-model="internalValue" :loading="loading" :options="options" :placeholder="placeholder"
-            :track-by="optionValue" :label="optionLabel" :searchable="filterable"
-            @update:modelValue="$emit('change', true)" :taggable="true">
-            <template #singleLabel="props">
-                <span class="option__desc" :style="{ background: $constants.input_background }"><span
-                        class="option__title">{{ props.option[optionLabel].slice(0, 20) }}...
-                        <span v-if="optionText" class="tw-font-semibold" >({{ props.option[optionText] }})
-
-                        </span>
-                    </span></span>
-            </template>
+              :searchable="filterable"
+            @update:modelValue="$emit('change', true)" :taggable="true">         
         </Multiselect>
         <div class="v-input__details" v-if="errorMessages || errorMessages?.length > 0">
             <p class="tw-text-red-900 tw-mt-0" style="color: #c00000 !important;font-weight: 400;">{{
@@ -40,14 +32,6 @@ export default {
         modelValue: {
             type: [Object, String, Number],
             default: null
-        },
-        optionLabel: {
-            type: String,
-            default: 'name'
-        },
-        optionValue: {
-            type: String,
-            default: 'id',
         },
         placeholder: {
             type: String,
@@ -114,18 +98,8 @@ export default {
         Multiselect,
     },
     watch: {
-        /*  error_messages: function (newVal, oldVal) {
-             try {
-                 const elt = document.querySelector(`#${this.id} .vs__dropdown-toggle`);
-                 if (elt) {
-                     elt.style.borderColor = this.error_messages ? 'rgb(176, 0, 32)' : '#8d8d8d';
-                 } else {
-                     console.warn('.vs__dropdown-menu element not found within the specified ID');
-                 }
-             } catch (e) {
-                 console.error(e);
-             }
-         } */
+        
+        
     },
     computed: {
         border() {
@@ -144,18 +118,11 @@ export default {
             return color;
         },
         internalValue: {
-            get() {
-                if (this.optionValue) {
-                    return this.options?.find(option => option[this.optionValue] === this.modelValue);
-                }
+            get() {           
                 return  this.modelValue;
             },
             set(val) {
-                if (this.optionValue) {
-                    this.$emit('update:modelValue', val ? val[this.optionValue] : null);
-                } else {
-                    this.$emit('update:modelValue', val);
-                }
+                this.$emit('update:modelValue', val);
             }
         },
         formattedErrorMessages() {

@@ -8,12 +8,15 @@
       </v-row>
       <v-row>
         <v-col cols="12" md="6">
-          <TextField v-model="amount" label="Amount" type="number" required />
+          <Payee v-model="payeeName" label="Payee Name" required />            
         </v-col>
         <v-col cols="12" md="6">
-          <v-select v-model="paymentType" :items="paymentTypes" label="Payment Type" required />
+          <TextField v-model="amount" label="Amount" type="number" required />
         </v-col>
-        <v-col cols="12">
+        <v-col cols="12" md="6">          
+          <SelectFilterArray v-model="paymentType" :options="paymentTypes" label="Payment Type" required />
+        </v-col>
+        <v-col cols="12" md="6">
           <TextField v-model="description" label="Description" required />
         </v-col>
         <v-col cols="12" md="6">
@@ -24,9 +27,6 @@
         </v-col>
         <v-col cols="12" md="6">
           <TextField v-model="payer.email" label="Email" required />
-        </v-col>
-        <v-col cols="12" md="6">
-          <TextField v-model="payeeName" label="Payee Name" required />
         </v-col>
       </v-row>
       <v-row>
@@ -39,7 +39,11 @@
 </template>
 
 <script>
+import Payee from '@/components/Payee.vue';
+import SelectFilter from '@/components/SelectFilter.vue';
+import SelectFilterArray from '@/components/SelectFilterArray.vue';
 import TextField from '@/components/TextField.vue';
+
 export default {
   name: 'PayBill',
   data() {
@@ -54,10 +58,13 @@ export default {
         email: '',
       },
       payeeName: '',
+      paymentType:''
     };
   },
   components:{
-    TextField
+    TextField,
+    Payee,
+    SelectFilterArray
   },
   methods: {
     payBill() {
