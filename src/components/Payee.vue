@@ -11,24 +11,19 @@
              @update:modelValue="$emit('change', true)" @search-change="asyncFind" :max-height="maxHeight">            
             <template #singleLabel="props" >
                 <div class="option__desc tw-flex tw-flex-col tw-uppercase tw-font-semibold  ">
-                    <span class="option__title">{{props.option.name }}</span>
+                    <span class="option__title">{{props.option.PayeeName }}</span>
                 </div>
             </template>
             <template #option="props">
-                <div class="tw-flex tw-items-center">
-                    <span class=" tw-block">
-                        <img @error="imageError"
-                            class="option__image tw-w-10 tw-h-10 tw-mr-2 tw-rounded-[50%] tw-bg-gray-300"
-                            :src="props.option.picture_url" />
-                    </span>
+                <div class="tw-flex tw-items-center">                    
                     <div class="option__desc tw-flex tw-flex-col tw-uppercase tw-font-semibold  ">
-                        <span class="option__title">{{props.option.name }}</span>
+                        <span class="option__title">{{props.option.PayeeName }}</span>
                     </div>
                 </div>
             </template>
             <template #tag="{ option, remove }">
                 <span class="custom__tag">
-                    <span>{{ option.name }}</span>
+                    <span>{{ option.PayeeName }}</span>
                     <span class="custom__remove" @click="remove(option)">❌</span>
                 </span>
             </template>
