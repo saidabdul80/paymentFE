@@ -156,6 +156,19 @@ const useAdminStore = (useWindow = false) => {
                     this.currentAbilities.some((ab) => ab.name === ability || ab.name === '*')
                 );
             },
+            async payBill(data) {
+                const response = await useClient().http({ method: 'post', path: '/transaction/apaylo-paybill', data })                
+                if(response){
+                    const notificationStore = useNotificationStore();
+                    notificationStore.showNotification({
+                        type: 'success',
+                        message: '',
+                    });
+                    return true;
+                }
+                return false
+            },
+
         },
     })();
 };

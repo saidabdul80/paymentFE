@@ -8,25 +8,25 @@
       </v-row>
       <v-row>
         <v-col cols="12" md="6">
-          <Payee v-model="payeeName" label="Payee Name" required />            
-        </v-col>
-        <v-col cols="12" md="6">
-          <TextField v-model="amount" label="Amount" type="number" required />
+          <Payee v-model="bill.payee" label="Payee Name" required />            
         </v-col>
         <v-col cols="12" md="6">          
-          <SelectFilterArray v-model="paymentType" :options="paymentTypes" label="Payment Type" required />
+          <TextField v-model="bill.payee_account_number" label="Payee Account Number" type="number" required />
         </v-col>
         <v-col cols="12" md="6">
-          <TextField v-model="description" label="Description" required />
+          <TextField v-model="bill.amount" label="Amount" type="number" required />
         </v-col>
         <v-col cols="12" md="6">
-          <TextField v-model="payer.firstName" label="First Name" required />
+          <TextField v-model="bill.description" label="Description" required />
         </v-col>
         <v-col cols="12" md="6">
-          <TextField v-model="payer.lastName" label="Last Name" required />
+          <TextField v-model="bill.first_name" label="First Name" required />
         </v-col>
         <v-col cols="12" md="6">
-          <TextField v-model="payer.email" label="Email" required />
+          <TextField v-model="bill.last_name" label="Last Name" required />
+        </v-col>
+        <v-col cols="12" md="6">
+          <TextField v-model="bill.email" label="Email" required />
         </v-col>
       </v-row>
       <v-row>
@@ -39,16 +39,26 @@
 </template>
 
 <script>
+import useAdminStore from '@/admin/stores/admin';
 import Payee from '@/components/Payee.vue';
-import SelectFilter from '@/components/SelectFilter.vue';
 import SelectFilterArray from '@/components/SelectFilterArray.vue';
 import TextField from '@/components/TextField.vue';
-
 export default {
   name: 'PayBill',
   data() {
     return {
       isLoading: false,
+      bill:{
+        payee:{},        
+        payee_account_number:"",
+        payee_code:"",
+        payee_name:"",
+        amount:"",
+        description: "",
+        email:"",
+        first_name:"",
+        last_name:"",
+      },
       amount: '',
       paymentTypes: ['bill', 'tuition'],
       description: '',
@@ -67,20 +77,18 @@ export default {
     SelectFilterArray
   },
   methods: {
-    payBill() {
-      const payload = {
-        amount: this.amount,
-        paymentType: this.paymentType,
-        description: this.description,
-        payer: this.payer,
-        payeeName: this.payeeName,        
-      };
+    async payBill() {
+      const payload = {...this.bill}
+      delete payload.payee
+      payload.payee_code = this.bill.payee.PayeeCode
+      payload.payee_name = this.bill.payee.PayeeName
       this.isLoading = true;
-      // Simulate API call
-      setTimeout(() => {
-        this.isLoading = false;
-        console.log('Payment initiated with payload:', payload);
-      }, 1000);
+      const store = useAdminStore();
+      await store.payBill(payload)      
+      this.isLoading = false
+      if (response) {
+        
+      }   
     },
   },
 };
