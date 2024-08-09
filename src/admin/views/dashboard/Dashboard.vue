@@ -148,7 +148,7 @@ export default {
                     completedTransactions.push(parseInt(data[date][this.selectedCurrency].completed_transactions));
                     failedTransactions.push(parseInt(data[date][this.selectedCurrency].failed_transactions));
                     averageTransactionValue.push(parseFloat(data[date][this.selectedCurrency].average_transaction_value));
-                }d
+                }
             });
             this.chartOptions.title.text = this.type == 'receive'?'Received Stats':'Sent Stats'
             this.chartOptions.xAxis.categories = labels;
