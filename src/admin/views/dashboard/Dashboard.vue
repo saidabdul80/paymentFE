@@ -6,7 +6,7 @@
                     height="20px" width="200px" class="tw-mb-0"></v-select>
                 <v-select v-model="type" :items="['receive','sent']" label="Dashboard Type" variant="solo"
                     height="20px" width="200px" class="tw-mb-0"></v-select>
-                <v-select v-model="period" :items="['days','month', 'year']" label="Period" variant="solo"
+                <v-select v-model="period" :items="['days','week','month', 'year']" label="Period" variant="solo"
                     height="20px" width="200px" class="tw-mb-0"></v-select>
                 <v-select v-model="year" :items="years" label="Year" variant="solo"
                 height="20px" width="200px" class="tw-mb-0"></v-select>
@@ -148,7 +148,7 @@ export default {
                     completedTransactions.push(parseInt(data[date][this.selectedCurrency].completed_transactions));
                     failedTransactions.push(parseInt(data[date][this.selectedCurrency].failed_transactions));
                     averageTransactionValue.push(parseFloat(data[date][this.selectedCurrency].average_transaction_value));
-                }
+                }d
             });
             this.chartOptions.title.text = this.type == 'receive'?'Received Stats':'Sent Stats'
             this.chartOptions.xAxis.categories = labels;
