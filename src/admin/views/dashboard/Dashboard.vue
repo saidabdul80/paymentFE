@@ -110,7 +110,7 @@ export default {
             },
             chartOptionsComparison: {
                 chart: {
-                    type: "column",
+                    type: "spline",
                 },
                 title: {
                     text: 'Comparison of Total Received vs Total Sent'
