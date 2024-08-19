@@ -47,7 +47,7 @@
     <template v-slot:default="{ isActive }">
       <v-card >
         <v-card-title  class="tw-flex tw-justify-center tw-py-3 tw-items-center  tw-font-bold text-success">
-         Money Sent Successfuly
+         Money Sent Successfully
           <v-icon class="tw-mt-1 tw-ml-2" color="success">mdi-check-circle</v-icon>
         </v-card-title>
         <v-card-text>
