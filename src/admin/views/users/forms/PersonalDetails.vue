@@ -137,8 +137,8 @@ export default {
     methods: {
         submitForm() {
             this.$refs.form.validate()
+            this.$emit('submit', true);
             if(this.valid){
-                this.$emit('submit', true);
             }
         }
     },

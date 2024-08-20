@@ -58,7 +58,7 @@ export default {
     if (this.isEdit) {
      
       //await this.adminStore?.fetchDepartment();
-      await this.adminStore.fetchStaffsById(this.$route.params.id)
+      await this.adminStore.fetchUsersById(this.$route.params.id)
     }else{
       this.adminStore.currentUser = {
         password:'password',
@@ -76,7 +76,7 @@ export default {
         'phone_number', 'last_name',
       ];
       return allowedFields.reduce((filteredData, key) => {
-        if (data.hasOwnProperty(key)) {
+        if (data?.hasOwnProperty(key)) {
           filteredData[key] = data[key];
         }
         return filteredData;
@@ -87,9 +87,8 @@ export default {
       this.isLoading = true;
       const filteredData = this.filterFormData(this.adminStore.currentUser);
       if (this.isEdit) {
-        await this.adminStore.updateCurrentUser(filteredData)        
+        await this.adminStore.updateCurrentUser(filteredData,this.$route.params.id)        
       } else {
-       
         await this.adminStore.createAdmin(this.adminStore.currentUser)
       }
       this.isLoading = false;

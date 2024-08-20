@@ -18,6 +18,7 @@
                         @click="EditAdmin">
                         Edit Administrative Details
                     </v-btn>
+                    <v-btn color="red" @click="deleteUser()">Delete User</v-btn>
 
                 </div>
                 <hr class="tw-my-4 tw-w-[90%] tw-self-center" />
@@ -267,6 +268,27 @@ export default {
         }
     },
     methods: {
+       async deleteUser(){
+         
+                this.isLoading = true;
+                try {
+                    await this.adminStore.showAlert({
+                        text: "You are about to Delete User",
+                        title: "Continue Action?",
+                        cancelBtnText: "No",
+                        confirmBtnText: "Yes",
+                        loading: false,
+                        callback: async () => {
+                        await this.adminStore.deleteUser(this.adminStore.currentUser?.id);
+                        },
+                    })
+                } catch (error) {
+                    console.error("Error in ticket generation", error);
+                } finally {
+                    this.isLoading = false;
+                }
+        
+        },
         EditAdmin() {
             this.$router.push({ name: 'Add Admin', params: { id: this.adminStore.currentUser?.id } });
         },
@@ -293,7 +315,7 @@ export default {
         },
         resetRole(){
             this.roleStore.allRoles.forEach(role => {
-                role.selected = this.adminStore.currentUser?.roles.some(element => element.id === role.id);
+                role.selected = this.adminStore.currentUser?.roles?.some(element => element.id === role.id);
             });
         }
 
@@ -311,7 +333,7 @@ export default {
         //console.log(this.roleStore.allRoles,2323)
         
         this.permission = permissions;
-        this.totalItems = this.roles.length
+        this.totalItems = this.roles?.length
         this.roleLoading = false;
     },
 }

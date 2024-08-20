@@ -6,6 +6,8 @@
     </div>
   </div> -->
   <NotificationRoot />
+  <Alert :text="globals.alert?.text" :title="globals.alert?.title" :confirmBtnText="globals.alert?.confirmBtnText"
+  :cancelBtnText="globals.alert?.cancelBtnText" v-model="globals.alert.show" @confirm="handleAlert" :loading="globals.alert.loading" :img-path="globals.alert.imgpath" />
   <RouterView/>
 </template>
 <script setup>
@@ -15,7 +17,9 @@ import { useGlobalsStore } from '@/stores/globals';
 import { RouterLink, RouterView } from "vue-router";
 import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue';
-
+import useAdminStore from '@/admin/stores/admin';
+import Alert from '@/components/Alert.vue';
+const globals = useAdminStore()
 </script>
 
 <style>

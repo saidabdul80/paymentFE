@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 import { useNotificationStore } from '@/stores/notification';
 
 import { useClient } from '@/stores/client';
+import router from '@/router';
 const useAdminStore = (useWindow = false) => {
     const defineStoreFunc = useWindow ? window.pinia.defineStore : defineStore;
     return defineStoreFunc({
@@ -24,6 +25,16 @@ const useAdminStore = (useWindow = false) => {
             providers:[],
             users: {},
             usersLoading: false,
+            alert: {
+                show: false,
+                text: '',
+                title: '',
+                imgpath:null,
+                cancelBtnText: '',
+                confirmBtnText: '',
+                loading: false,
+            },
+            alertPromiseResolve: null,
         }),
 
         getters: {
@@ -42,12 +53,13 @@ const useAdminStore = (useWindow = false) => {
                     type: 'success',
                     message: '',
                 });
-
             },
-            async updateCurrentUser(data) {
-                const response = await useClient().http({ method: 'put', path: '/admin', data })
-                this.currentUser = response.data;
-                Object.assign(this.userForm, response.data.data);
+            async updateCurrentUser(data,id) {
+                this.creating = true;     
+                const response = await useClient().http({ method: 'put', path: '/admin/'+id, data })
+                this.currentUser = response;
+                this.creating = false;
+                Object.assign(this.userForm, response);
                 const notificationStore = useNotificationStore();
                 notificationStore.showNotification({
                     type: 'success',
@@ -55,7 +67,16 @@ const useAdminStore = (useWindow = false) => {
                 });
 
             },
-
+            async deleteUser(id){
+                const response = await useClient().http({ method: 'delete', path: '/admin/'+id })
+                this.currentUser = {};
+                const notificationStore = useNotificationStore();
+                notificationStore.showNotification({
+                    type: 'success',
+                    message: '',
+                });
+                router.push('/admin/users')
+            },
             async fetchCurrentUser(params) {
                 const response = await useClient().http({ method: 'get', path: '/admin/me', data })
                 this.currentUser = response.data;
@@ -168,7 +189,36 @@ const useAdminStore = (useWindow = false) => {
                 }
                 return false
             },
-
+            showAlert({ text, title, cancelBtnText, confirmBtnText, loading = false, callback = ()=>{}, imgpath=null }) {
+                return new Promise((resolve) => {
+                  this.alert = {
+                    show: true,
+                    text,
+                    title,
+                    imgpath,
+                    cancelBtnText,
+                    confirmBtnText,
+                    callback,
+                    loading,
+                  };
+                
+                  this.alertPromiseResolve = {callback,resolve};
+                });
+              },
+              async handleAlertResponse(response) {
+                if (this.alertPromiseResolve) {
+                  if(response){
+                    this.alert.loading = true;
+                    await this.alertPromiseResolve.callback()
+                    this.alert.loading = false;
+                  }
+                  setTimeout(()=>{
+                    this.alertPromiseResolve.resolve(response);
+                    this.alertPromiseResolve = null;  
+                    this.alert.show = false; 
+                  },200)
+                }
+              },
         },
     })();
 };
