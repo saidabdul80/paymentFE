@@ -8,11 +8,12 @@
       </v-row>
       <v-row>
         <v-col cols="12" md="6">
-          <TextField v-model="recipientDetail.full_name" label="Recipient Full Name" required />
+          <Contacts v-model="recipient" />
+          <!-- <TextField v-model="recipientDetail.full_name" label="Recipient Full Name" required /> -->
         </v-col>
-        <v-col cols="12" md="6">
+        <!-- <v-col cols="12" md="6">
           <TextField v-model="recipientDetail.email" label="Recipient Email" required />
-        </v-col>
+        </v-col> -->
         <v-col cols="12" md="6">
           <TextField v-model="customerDetail.full_name" label="Customer Full Name" required />
         </v-col>
@@ -90,11 +91,15 @@ import useAdminStore from '@/admin/stores/admin';
 import TextField from '@/components/TextField.vue'; // Adjust the path as per Customer project structure
 import CurrencySelect from '@/components/CurrencySelect.vue'; // Adjust the path as per Customer project structure
 import Ls from '@/services/ls.js'
+import { useClient } from '@/stores/client';
+import { useZohoStore } from '@/stores/zohoStore';
+import Contacts from '@/components/Contacts.vue';
 export default {
   name: 'SendMoneyForm',
   components: {
     TextField,
-    CurrencySelect
+    CurrencySelect,
+    Contacts
   },
   data() {
     return {
@@ -106,6 +111,7 @@ export default {
         full_name: '',
         email: ''
       },
+      recipient:{},
       customerDetail: {
         full_name: '',
         email: ''
@@ -114,9 +120,23 @@ export default {
       amount: '',
       securityQuestion: 'Company',
       securityAnswer: 'Cowris',
-      description: ''
+      description: '',
+      zohoStore: useZohoStore()
     };
   },
+  async mounted(){
+    await this.zohoStore.fetchContact();
+  },
+  watch: {
+        'recipient': {
+            handler(newContacts) {
+                this.recipientDetail.email = newContacts.Email;
+                this.recipientDetail.full_name = newContacts.Full_Name;
+            },
+            deep: true,
+            immediate: true
+        }
+    },
   methods: {
     closeDialog(){      
       this.recipientDetail =  {
@@ -152,7 +172,8 @@ export default {
       console.log('Sending money with payload:', payload);
       // Call Customer API endpoint to send money with the payload
     }
-  }
+  },
+
 };
 </script>
 

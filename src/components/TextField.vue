@@ -1,60 +1,62 @@
 <template>
-    <label :class="`tw-text-[${$constants.neutral}] tw-font-semibold`" v-if="label !== ''">
-        {{ label }}
-        <span v-if="isRequired" :class="`tw-text-red-600`">*</span>
-    </label>
-    <v-text-field 
-        v-model="inputValue" 
-        :type="type"
-        @click:append-inner="$emit('click:append-inner')"
-        :placeholder="placeholder"
-        :bg-color="$constants.input_background"
-        :append-inner-icon="appendInnerIcon"
-        
-        variant="outlined"
-        flat
-        class="gTextField"
-        :color="`tw-border-[${$constants.secondary_light}]`"
-        :rules="rules"
-        :disabled="disabled"
-    ></v-text-field>
+    <div class="tw-relative tw-w-full">
+        <label :class="`tw-text-[${$constants.neutral}] tw-font-semibold`" v-if="label !== ''">
+            {{ label }}
+            <span v-if="isRequired" class="tw-text-red-600">*</span>
+        </label>
+        <InputText
+            v-model="inputValue"
+            :type="type"
+            :placeholder="placeholder"
+            :disabled="disabled"
+            :class="`tw-w-full tw-border tw-h-[56px]`"
+            :style="{ 'padding-right': appendInnerIcon ? '2.5rem' : '' }"
+        />
+        <i v-if="appendInnerIcon" :class="`pi ${appendInnerIcon} tw-absolute tw-right-3 tw-top-1/2 tw-transform tw--translate-y-1/2`" @click="$emit('click:append-inner')"></i>
+        <small v-if="error_messages" class="tw-text-red-600">{{ error_messages }}</small>
+    </div>
 </template>
 
 <script>
+import InputText from 'primevue/inputtext';
+
 export default {
     name: 'TextField',
+    components: {
+        InputText
+    },
     props: {
         modelValue: {
-            type: String,            
-        },
-        label: {
-            type: String,            
+            type: String,
             default: ''
         },
-        rules: {
-            type: Array,
-            default: []
+        label: {
+            type: String,
+            default: ''
         },
         placeholder: {
             type: String,
-            default: '',
+            default: ''
         },
         disabled: {
             type: Boolean,
-            default: false,
+            default: false
         },
         isRequired: {
             type: Boolean,
-            default: false,
+            default: false
         },
-        appendInnerIcon:{
-            default:''
+        appendInnerIcon: {
+            type: String,
+            default: ''
         },
-        type:{
-            default:'text'
+        type: {
+            type: String,
+            default: 'text'
         },
-        error_messages:{
-            default:''
+        error_messages: {
+            type: String,
+            default: ''
         }
     },
     computed: {
@@ -69,9 +71,3 @@ export default {
     }
 };
 </script>
-
-<style>
-.v-input__details{
-    display: none;
-}
-</style>

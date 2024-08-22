@@ -18,6 +18,10 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import HighchartsVue from "highcharts-vue";
 import Highcharts from "highcharts";
 import ExportData from "highcharts/modules/export-data";
+
+import PrimeVue from 'primevue/config';
+import Aura from '@primevue/themes/aura';
+
 window.pinia = pinia
 const app = createApp(App);
 ExportData(Highcharts);
@@ -25,7 +29,16 @@ ExportData(Highcharts);
 app.use(HighchartsVue);
 
 const { createPinia } = window.pinia
-
+app.use(PrimeVue, { 
+  theme: {
+    preset: Aura,
+    options: {
+        prefix: 'prime',
+        darkModeSelector: 'none',
+        cssLayer: false
+    }
+}
+});
 app.component('VueDatePicker', VueDatePicker);
 app.use(createPinia());
 app.use(router);

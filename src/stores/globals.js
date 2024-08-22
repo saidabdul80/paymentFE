@@ -13,7 +13,8 @@ export const useGlobalsStore = defineStore('globals', {
     filters: reactive({
       search:null,
       paginate:null,
-    })
+    }),
+    acess_token:null,
   }),
   actions: {
     /* async bootstrap() {
@@ -27,6 +28,24 @@ export const useGlobalsStore = defineStore('globals', {
         }
      
       }, */
+      getZohoToken(){
+        const response = useClient().http({method:'post',path:'https://accounts.zoho.com/oauth/v2/token',fullPath:true,data:{
+          grant_type: 'client_credentials',
+          client_id: import.meta.env.VITE_CLIENT_ID,
+          client_secret:import.meta.env.VITE_SECRETE_ID,
+          scope: 'ZohoCRM.modules.ALL'
+        },headers:{}})
+        this.acess_token = response.data.access_token;
+      },
+      getContacts(){
+        const response = useClient().http({method:'get',path: 'https://www.zohoapis.com/crm/v2/Contacts',fullPath:true,
+          headers: {
+            'Authorization': `Bearer ${this.access_token}`
+          }
+        })
+        console.log(response,28830000000);
+       
+      },
       async bootstrap(background_process = false) {
         const handleResponse = (response) => {
           if (response) {

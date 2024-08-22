@@ -8,7 +8,7 @@ import { useGlobalsStore } from "./globals";
 export const useClient = defineStore("client", () => {
 
 
-  async function http(config={method:'get',path:'',data: {},fullPath :false})  {
+  async function http(config={method:'get',path:'',data: {},fullPath :false, headers:false})  {
     const token = ls.get("auth.token");
     let url =window.baseUrl+ config?.path;
 
@@ -28,6 +28,7 @@ export const useClient = defineStore("client", () => {
         Authorization: token ? `Bearer ${token}` : "",
         "ngrok-skip-browser-warning":true,
     };
+    
 
     if (config?.data instanceof FormData) {
         headers['Content-Type'] = 'multipart/form-data';
@@ -38,7 +39,7 @@ export const useClient = defineStore("client", () => {
         method: config?.method,
         url: url,
         data:config?.data,
-        headers:headers,
+        headers:config?.headers?config?.headers : headers,
       });
       
       return response.data.data;
