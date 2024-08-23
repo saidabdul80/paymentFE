@@ -8,12 +8,12 @@
       </v-row>
       <v-row>
         <v-col cols="12" md="6">
-          <Contacts v-model="recipient" />
-          <!-- <TextField v-model="recipientDetail.full_name" label="Recipient Full Name" required /> -->
+          <!-- <Contacts v-model="recipient" /> -->
+          <TextField v-model="recipientDetail.full_name" label="Recipient Full Name" required />
         </v-col>
-        <!-- <v-col cols="12" md="6">
+        <v-col cols="12" md="6">
           <TextField v-model="recipientDetail.email" label="Recipient Email" required />
-        </v-col> -->
+        </v-col>
         <v-col cols="12" md="6">
           <TextField v-model="customerDetail.full_name" label="Customer Full Name" required />
         </v-col>
@@ -91,15 +91,15 @@ import useAdminStore from '@/admin/stores/admin';
 import TextField from '@/components/TextField.vue'; // Adjust the path as per Customer project structure
 import CurrencySelect from '@/components/CurrencySelect.vue'; // Adjust the path as per Customer project structure
 import Ls from '@/services/ls.js'
-import { useClient } from '@/stores/client';
+//import { useClient } from '@/stores/client';
 import { useZohoStore } from '@/stores/zohoStore';
-import Contacts from '@/components/Contacts.vue';
+//import Contacts from '@/components/Contacts.vue';
 export default {
   name: 'SendMoneyForm',
   components: {
     TextField,
     CurrencySelect,
-    Contacts
+   // Contacts
   },
   data() {
     return {
