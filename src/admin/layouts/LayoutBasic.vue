@@ -4,7 +4,7 @@
             <SideBar v-model="drawer" />
             <v-app-bar flat :color="$constants.light" class="tw-shadow-md">                                            
                 <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-                <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
+                <v-toolbar-title class="tw-text-xs tw-font-bold">Allocated Balance: {{ adminStore.account.currency }} {{ adminStore.account.balance }}</v-toolbar-title>
                 
                 <v-spacer></v-spacer>
                 <template v-if="$vuetify.display.mdAndUp">
@@ -43,6 +43,7 @@ import { useGlobalsStore } from "@/stores/globals";
 import ls from "@/services/ls";
 import { useConstantsStore } from '@/stores/constants';
 import BreadCrumbs  from '@/components/BreadCrumbs.vue' 
+import useAdminStore from "@/admin/stores/admin";
 export default {
     components: {
         RouterView,
@@ -59,8 +60,8 @@ export default {
             ],
             drawer: false,
             userStore: useUserStore(),
-            constantsStore: useConstantsStore()
-
+            constantsStore: useConstantsStore(),
+            adminStore: useAdminStore()
         }
     },
     watch: {
@@ -90,10 +91,10 @@ export default {
     },
     created() {
         const savedMode = ls.get('mode');
-         if (savedMode) {
-              this.constantsStore.setMode(savedMode);
-          } 
-
+        if (savedMode) {
+            this.constantsStore.setMode(savedMode);
+        }
+        
     },
     computed: {
      

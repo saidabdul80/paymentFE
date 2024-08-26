@@ -18,8 +18,15 @@
                         @click="EditAdmin">
                         Edit Administrative Details
                     </v-btn>
-                    <v-btn color="red" @click="deleteUser()">Delete User</v-btn>
-
+                    <v-row>
+                        <v-col cols="12" md="6">
+                        </v-col>
+                      
+                       
+                    </v-row>
+                  
+                  
+                   
                 </div>
                 <hr class="tw-my-4 tw-w-[90%] tw-self-center" />
 
@@ -89,6 +96,15 @@
 
         </div>
         <div class="tw-h-[100%] md:tw-col-span-2">
+            <v-row class="tw-mb-2">
+            <v-col cols="12" md="6">
+                <v-btn :class="`tw-bg-orange-500 tw-text-white tw-borde`"
+                    @click="enableSendMoneyDialog = true">Enable Send Money</v-btn>
+                </v-col>
+                <v-col>
+                    <v-btn color="red" @click="deleteUser()">Delete User</v-btn>
+                </v-col>
+            </v-row>
             <div class="rounded-lg tw-p-0 tw-bg-white tw-border tw-mb-4 md:tw-h-[45%] tw-flex tw-flex-col">
                 <!-- Contact Information -->
                 <p :class="`tw-text-[${$constants.primary}]`"
@@ -228,7 +244,15 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-
+        <Dialog v-model:visible="enableSendMoneyDialog" modal style="min-width: 300px;" header="Enable or Disable User from Send money">
+            <SelectField :items="['CAD','NGN']" label="Select Currency" v-model="sendmoneyCurrency" />
+            <div class="tw-w-full tw-flex tw-justify-center tw-items-center">
+                <Checkbox v-model="sendmoneyStatus" :binary="true" />
+                <label>Enable</label>
+            </div>
+            <v-btn :loading="loadingsendmoney" :class="`tw-bg-green-800 tw-text-white tw-borde`"
+                    @click="enableSendMoney()">Proceed</v-btn>
+        </Dialog>
     </div>
 </template>
 
@@ -240,6 +264,11 @@ import useRoleStore from '@/admin/stores/role';
 import SelectFilter from '@/components/SelectFilter.vue';
 import ls from '@/services/ls';
 import abilities from '@/admin/stubs/abilities';
+import Dialog from 'primevue/dialog';
+import Select from 'primevue/select';
+import SelectField from '@/components/SelectField.vue';
+import Checkbox from 'primevue/checkbox';
+import { useClient } from '@/stores/client';
 
 export default {
     data: () => ({
@@ -254,11 +283,17 @@ export default {
         permission: [],
         Ls:ls,
         Abilities:abilities,
+        enableSendMoneyDialog:false,
+        sendmoneyCurrency:'CAD',
+        sendmoneyStatus:false,
     }),
     components: {
         TextField,
         CopyButton,
-        SelectFilter
+        SelectFilter,
+        Dialog,
+        SelectField,
+        Checkbox
     },
     computed: {
         allPermissions() {
@@ -268,6 +303,16 @@ export default {
         }
     },
     methods: {
+        async enableSendMoney(){
+            this.loadingsendmoney = true
+            await this.adminStore.allowSendMoney({
+                user_id:this.$route.params.id,
+                currency_symbol: this.sendmoneyCurrency,
+                enable: this.sendmoneyStatus
+          });
+          this.loadingsendmoney = false
+          this.enableSendMoneyDialog= false
+        },
        async deleteUser(){
          
                 this.isLoading = true;

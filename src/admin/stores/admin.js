@@ -35,6 +35,8 @@ const useAdminStore = (useWindow = false) => {
                 loading: false,
             },
             alertPromiseResolve: null,
+            accounts:[],
+            account:{balance:'0.00',currency:'CAD'}
         }),
 
         getters: {
@@ -188,6 +190,26 @@ const useAdminStore = (useWindow = false) => {
                     return true;
                 }
                 return false
+            },
+            async allowSendMoney(data) {
+                const response = await useClient().http({ method: 'post', path: '/account/enable-allocatable-account', data })                
+                if(response){
+                    const notificationStore = useNotificationStore();
+                    notificationStore.showNotification({
+                        type: 'success',
+                        message: '',
+                    });
+                    return true;
+                }
+                return false
+            },
+            async bootstrap(data) {
+                this.accounts = 0;
+                const response = await useClient().http({ method: 'get', path: '/account/allocatable-accounts/user', data })                
+                if(response){
+                    this.accounts = response.data.data
+                    this.account = this.accounts?.find(item=>item.currency == 'CAD')
+                }
             },
             showAlert({ text, title, cancelBtnText, confirmBtnText, loading = false, callback = ()=>{}, imgpath=null }) {
                 return new Promise((resolve) => {
