@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import AdminRoutes from '@/admin/admin-router'
 import ls from "@/services/ls";
+import useAdminStore from "@/admin/stores/admin";
 let routes = []
 routes = routes.concat(AdminRoutes)
 
@@ -24,10 +25,9 @@ router.beforeEach(async (to, from, next) => {
     next({ path: correctedPath, replace: true });
     return;
   }
-  
 
   if (to.meta.requiresAuth) {
-    
+
     let userRootPath = to.matched[0]?.path?.replace('/', '') || '';
     if(!ls.hasPermission(to.meta.ability)){
       if(userRootPath.includes('admin')){
@@ -36,8 +36,10 @@ router.beforeEach(async (to, from, next) => {
     }
 
     try {
-      const globalStore = useGlobalsStore();
-      globalStore.bootstrap();
+     // const globalStore = useGlobalsStore();
+      const adminStore = useAdminStore()
+      adminStore.bootstrap()
+      //globalStore.bootstrap();
     } catch (error) { }
 
     if (ls.get('auth.token')) {

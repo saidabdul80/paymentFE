@@ -4,7 +4,18 @@
             <SideBar v-model="drawer" />
             <v-app-bar flat :color="$constants.light" class="tw-shadow-md">                                            
                 <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-                <v-toolbar-title class="tw-text-xs tw-font-bold">Allocated Balance: {{ adminStore.account.currency }} {{ adminStore.account.balance }}</v-toolbar-title>
+                <v-toolbar-title class="tw-text-xs tw-font-bold">
+               
+                    <div>
+                        Allocated Balance: <Select :pt="{root:{class:' tw-pl-2 tw-shadow-none tw-border-transparent tw-py-0'},label:{class:'tw-p-0'}, overlay:{class:'tw-z-[90000]'}}" 
+                        :options="adminStore.accounts"
+                        option-label="currency.currency_symbol"
+                        v-model="cs"  />
+                        <!-- :options="['CAD','USD','NGN']" -->
+                        {{ cs?.balance || '0.00' }}
+                    </div>
+                    <v-btn :loading="loading" size="small" @click="makeRequest()" flat class="tw-capitalize tw-px-0 tw-underline ">Request Top Up</v-btn>
+                </v-toolbar-title>
                 
                 <v-spacer></v-spacer>
                 <template v-if="$vuetify.display.mdAndUp">
@@ -44,14 +55,18 @@ import ls from "@/services/ls";
 import { useConstantsStore } from '@/stores/constants';
 import BreadCrumbs  from '@/components/BreadCrumbs.vue' 
 import useAdminStore from "@/admin/stores/admin";
+import Select from "primevue/select";
+import { root } from "postcss";
 export default {
     components: {
         RouterView,
         SideBar,
-        BreadCrumbs
+        BreadCrumbs,
+        Select,
     },
     data() {
         return {
+            cs:{},
             items: [],
             globals: useGlobalsStore(),
             userNavigation: [
@@ -61,10 +76,18 @@ export default {
             drawer: false,
             userStore: useUserStore(),
             constantsStore: useConstantsStore(),
-            adminStore: useAdminStore()
+            adminStore: useAdminStore(),
+            loading:false
         }
     },
     watch: {
+        'adminStore.account.currency':{
+            handler(newValue){
+               
+                this.cs = this.adminStore.account
+            },
+            deep:true
+        },
         'globals.subPageName': function (n, o) {
             /*   this.items[1] =
               {
@@ -100,6 +123,20 @@ export default {
      
     },
     methods: {
+        makeRequest(){
+          
+            this.adminStore.showAlert({
+                title:'Top Up Request',
+                text: 'You are about to request for top up on '+ this.cs,
+                cancelBtnText:'Cancel',
+                confirmBtnText:'Proceed',
+                callback: async()=>{
+                    this.loading = true;
+                    this.adminStore.requestTopUp(this.cs.id)
+                    this.loading = false;
+                }
+            })
+        },
         toggleMode() {
             this.constantsStore.toggleMode();
             ls.set('mode', this.constantsStore.mode);

@@ -204,11 +204,18 @@ const useAdminStore = (useWindow = false) => {
                 return false
             },
             async bootstrap(data) {
-                this.accounts = 0;
+                this.accounts = [];
                 const response = await useClient().http({ method: 'get', path: '/account/allocatable-accounts/user', data })                
                 if(response){
-                    this.accounts = response.data.data
-                    this.account = this.accounts?.find(item=>item.currency == 'CAD')
+                
+                    this.accounts = response
+                    this.account = this.accounts?.find(item=>item.currency.currency_symbol == 'CAD')
+                }
+            },
+            async requestTopUp(id){
+                const response = await useClient().http({ method: 'get', path: '/account/request-topup/'+id })                
+                if(response){
+                    return true;
                 }
             },
             showAlert({ text, title, cancelBtnText, confirmBtnText, loading = false, callback = ()=>{}, imgpath=null }) {
