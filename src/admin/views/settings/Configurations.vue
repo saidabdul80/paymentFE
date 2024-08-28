@@ -58,7 +58,7 @@
                 </div>
                 
                 <v-btn 
-                    class="tw-rounded tw-h-[40px] tw-max-w-[65px]  -tw-ml-[1px]"
+                    class="tw-rounded tw-h-[56px] tw-max-w-[65px]  -tw-ml-[1px]"
                      variant="outlined"
                       :class="` tw-border-l-0 tw-rounded-l-none tw-text-[${$constants.primary}] tw-bg-[${$constants.primary}]/${$constants.transparent_level}`"
                     flat
