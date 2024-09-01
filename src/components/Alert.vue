@@ -1,10 +1,7 @@
 <template>
     <div class="text-center pa-4">
       <v-dialog v-model="internalModel" max-width="579px" persistent>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" v-on="on">Open Dialog</v-btn>
-        </template>
-  
+      
         <v-card>
           <v-card-title
             class="tw-px-5"
