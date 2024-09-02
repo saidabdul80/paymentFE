@@ -161,7 +161,7 @@ export default {
         security_question: this.securityQuestion,
         security_answer: this.securityAnswer,
         description: this.description,
-        api_key: JSON.parse(Ls.get('auth.client') || "{}")?.api_key
+        api_key: ''
       };
       this.isLoading = true
       const res = await this.adminStore.sendMoney(payload);
