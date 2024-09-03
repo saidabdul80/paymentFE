@@ -139,7 +139,7 @@ export default {
     return {
       name: "Admins",
       adminStore: useAdminStore(),
-      user: JSON.parse(Ls.get('auth.client')||"{}"),
+      user: JSON.parse(Ls.get('auth.user')||"{}"),
       globals: useGlobalsStore(),
       receives: {},
       confirmDialog2:false,
