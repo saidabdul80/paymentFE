@@ -342,7 +342,7 @@ export default {
             this.selectedRoleName = '';
             this.selectedRoleId = null;
             this.roleStore.allRoles.forEach(role => {
-                role.selected = this.adminStore.currentUser.roles.some(userRole => userRole.id === role.id);
+                role.selected = this.adminStore.currentUser?.roles?.some(userRole => userRole.id === role.id);
             });
         },
         cancel() {

@@ -38,7 +38,7 @@
       </v-row>
       <v-row>
         <v-col cols="12">
-          <v-btn ref="btnRef" @click="sendMoney" :loading="isLoading" color="primary">Send Money</v-btn>
+          <v-btn ref="btnRef" @click="mfaCodeDialog = true" :loading="isLoading" color="primary">Send Money</v-btn>
         </v-col>
       </v-row>
     </v-card>
@@ -83,6 +83,25 @@
       </v-card>
     </template>
   </v-dialog>
+
+  <v-dialog v-model="mfaCodeDialog" activator="btnRef" max-width="340">
+    <template v-slot:default="{ isActive }">
+      <v-card >
+        <v-card-title  class="tw-flex tw-justify-center tw-py-3 tw-items-center  tw-font-bold text-success">
+         Enter MFA code and continue
+          <v-icon class="tw-mt-1 tw-ml-2" color="success">mdi-keys-</v-icon>
+        </v-card-title>
+        <v-card-text>
+          <div class="tw-mb-2">
+            <TextField v-model="mfaCode" label="" required />
+          </div>
+        </v-card-text>
+        <template v-slot:actions>
+          <v-btn class="ml-auto"   color="surface-variant" variant="flat" text="Continue" @click="sendMoney()"></v-btn>
+        </template>
+      </v-card>
+    </template>
+  </v-dialog>
 </template>
 
 <script>
@@ -121,7 +140,9 @@ export default {
       securityQuestion: 'Company',
       securityAnswer: 'Cowris',
       description: '',
-      zohoStore: useZohoStore()
+      zohoStore: useZohoStore(),
+      mfaCodeDialog:false,
+      mfaCode:null
     };
   },
   async mounted(){
@@ -152,7 +173,6 @@ export default {
       this.dialog = false;
     },
     async sendMoney() {
-
       const payload = {
         currency_symbol: this.currency,
         recipient_detail: this.recipientDetail,
@@ -161,12 +181,16 @@ export default {
         security_question: this.securityQuestion,
         security_answer: this.securityAnswer,
         description: this.description,
-        api_key: ''
+        api_key: '',
+        mfa_token:this.mfaCode
       };
       this.isLoading = true
+      this.mfaCodeDialog = false;
+      
       const res = await this.adminStore.sendMoney(payload);
       if(res){
         this.dialog = true;
+       
       }
       this.isLoading = false
       console.log('Sending money with payload:', payload);

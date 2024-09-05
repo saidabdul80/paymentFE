@@ -14,7 +14,14 @@ export default {
     const userPermissions = JSON.parse(this.get('permissions') || "[]");
     return userPermissions;
   },
+  account_type(){
+   return JSON.parse(this.get('auth.user') || "[]")?.account_type;
+  },
   hasPermission(permission){
+    if(this.account_type() == 'super_admin'){
+      return true;
+    }
+
     return this.permissions().includes(permission)
   }
 }
