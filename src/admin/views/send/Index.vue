@@ -137,7 +137,7 @@ export default {
       },
       currency: 'CAD',
       amount: '',
-      securityQuestion: 'Company',
+      securityQuestion: 'Company Name',
       securityAnswer: 'Cowris',
       description: '',
       zohoStore: useZohoStore(),
