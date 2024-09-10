@@ -110,14 +110,14 @@
         <v-card-title v-if="receive?.sender_amount" >Re-Verify Transaction</v-card-title>        
         <v-card-title v-else >New Transaction</v-card-title>        
         <div class="tw-px-4">    
-<!-- 
+
           <v-text-field variant="solo" v-if="!receive?.sender_amount"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.email" label="Sender Email" type="text"></v-text-field>
-          <v-text-field variant="solo" v-if="!receive?.sender_amount"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.ReferenceNumber" label="Trx Ref" type="text"></v-text-field> -->
+          <v-text-field variant="solo" v-if="!receive?.sender_amount"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.ReferenceNumber" label="Trx Ref" type="text"></v-text-field> 
           <v-text-field variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.answer" label="Security Answer"></v-text-field>          
-         <!--  
-            <div><span class="tw-font-bold">Transaction Ref:</span> {{ receive.transaction_ref }}</div>
-            <v-text-field variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.recipient_email" label="Recipient Email" type="email"></v-text-field>
-          -->
+       
+          <!-- <div  v-if="receive?.sender_amount" ><span class="tw-font-bold">Transaction Ref:</span> {{ receive.transaction_ref }}</div> -->
+          <v-text-field  v-if="!receive?.sender_amount"  variant="solo"  class="tw-border rounded tw-mb-4 tw-p-0 tw-h-[64px]" v-model="receive.recipient_email" label="Recipient Email" type="email"></v-text-field>
+      
         </div>
         <v-card-actions>
           <v-btn color="error" text @click="confirmDialog2 = false">Cancel</v-btn>          
@@ -126,6 +126,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    
   </template>
 <script>
 import { useGlobalsStore } from '@/stores/globals';
