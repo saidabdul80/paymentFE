@@ -24,7 +24,7 @@
           <CurrencySelect v-model="currency" label="Currency" required />
         </v-col>
         <v-col cols="12" md="6">
-          <TextField v-model="amount" label="Amount" type="number" required />
+          <TextField v-model="amount" label="Amount" required />
         </v-col>
         <v-col cols="12" md="6">
           <TextField v-model="securityQuestion" label="Security Question" required />
@@ -177,7 +177,7 @@ export default {
         currency_symbol: this.currency,
         recipient_detail: this.recipientDetail,
         customer_detail: this.customerDetail,
-        amount: this.amount,
+        amount: Number(this.amount),
         security_question: this.securityQuestion,
         security_answer: this.securityAnswer,
         description: this.description,
@@ -190,11 +190,9 @@ export default {
       const res = await this.adminStore.sendMoney(payload);
       if(res){
         this.dialog = true;
-       
       }
       this.isLoading = false
       console.log('Sending money with payload:', payload);
-      // Call Customer API endpoint to send money with the payload
     }
   },
 
