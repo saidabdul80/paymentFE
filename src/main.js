@@ -4,6 +4,8 @@ import { createApp } from "vue";
 //import { createPinia } from "pinia";
 import * as pinia from 'pinia'
 import '@mdi/font/css/materialdesignicons.css'
+//import 'primeicons/primeicons.css'
+
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
@@ -18,6 +20,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import HighchartsVue from "highcharts-vue";
 import Highcharts from "highcharts";
 import ExportData from "highcharts/modules/export-data";
+import 'primeicons/primeicons.css'
 
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
@@ -51,5 +54,5 @@ app.use(vuetify)
 app.mount("#main");
 const constantsStore = useConstantsStore();
 app.config.globalProperties.$constants = constantsStore.values;
-window.baseUrl = 'https://pay.cowris.com/api'
+window.baseUrl = import.meta.env.VITE_API_URL
 //window.baseUrl = 'https://optimum-fun-bobcat.ngrok-free.app/api'

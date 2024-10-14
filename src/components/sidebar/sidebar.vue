@@ -1,17 +1,37 @@
+
 <template>    
-    <v-navigation-drawer v-model="pdrawer" :rail="computedRail" :temporary="temporary" :color="$constants.light">
-        <div class="tw-h-[calc(100vh-160px)] tw-overflow-y-auto tw-font-[300]">
+    <v-navigation-drawer v-model="pdrawer" :rail="computedRail" :temporary="temporary" :color="$constants.light" :width="280">
+        <div class="tw-h-[calc(100vh-200px)] tw-overflow-y-auto tw-font-[300]">
             <v-list-item nav class="tw-py-[6px] tw-px-[6px]" @mouseenter="startMarquee" @mouseleave="stopMarquee">
                 <template v-slot:default>
-                    <div class="tw-flex tw-py-1 tw-items-center">
-                        <img class="tw-h-12 tw-w-auto tw-mt-2" src="@/assets/logo.png" alt="logo" />
+                    <div class="tw-flex tw-py-2 tw-items-center">
+                        <img class=" tw-w-auto" src="@/assets/logo-plain.svg" alt="logo" />
                         <div>
                             <transition name="slide-fade">
-                                <div class="tw-ms-2 tw-mt-1 text-truncate tw-font-visby uppercase">
-                                    <span :class="`${$constants.text_size.s3} tw-text-[${$constants.primary}]`"
-                                        class="tw-font-bold">COWRIS</span>                                    
+                                <div class="tw-ms-2 tw text-truncate tw-font-visby uppercase">
+                                    <span class="tw-text-black tw-text-2xl tw-font-bold">COWRIS</span>                                    
                                 </div>
                             </transition>
+                        </div>
+                    </div>
+
+                    <div class="tw-flex  tw-py-2 tw-items-center" :class="!modelValue?'tw-px-4':'tw-px-0 tw-w-[90px]'">
+                        
+                    <Badge v-if="!user?.picture_url || user?.imageError" class="tw-mt-[18px]" :style="{
+                        backgroundColor: getColorFromWord(getInitials('Interswitch Group')), 
+                        borderRadius: '50%', 
+                        width:!modelValue? '50px' :'40px', 
+                        marginBottom: '20px', 
+                        height: !modelValue? '50px' :'40px', 
+                        marginTop: '10px'
+                    }" severity="contrast">
+                    <span class="tw-text-[16px] tw-font-[500]">{{ getInitials('Interswitch Group') }}</span>
+                    </Badge>
+                 
+                    <img v-else :src="user?.picture_url" @error="handleImageError(user)" alt="Interswitch Group" class="tw-h-[40px] tw-w-[40px] tw-rounded-full" />
+                        <div v-if="!modelValue" class="tw-ms-3">
+                            <p class="tw-text-xl tw-font-[400] tw-truncate tw-w-[159px]">Interswitch Group</p>
+                            <p class="tw-font-[300]">Derick Loona</p>
                         </div>
                     </div>
                 </template>
@@ -20,34 +40,18 @@
             <v-divider class="border-opacity-100" :class="`tw-bg-[${$constants.primary}]`"></v-divider>
 
             <v-list density="compact" nav class="py-8">
-                <SideBarItem v-for="item in filteredItems" :key="item.name" :item="item" />
+                <SideBarItem :state="modelValue" v-for="item in filteredItems" :key="item.name" :item="item" />
             </v-list>
         </div>
 
-        <v-list density="compact" nav slot="append"></v-list>
+        <!-- <v-list density="compact" nav slot="append"></v-list> -->
 
-        <div class="tw-py-[6px] tw-fixed tw-bottom-0 tw-w-full tw-bg-white">
+        <div class="tw-py-[6px] tw-bottom-0 tw-w-full tw-bg-white">
             <v-divider class="border-opacity-100 tw-mx-4" :class="`tw-bg[${$constants.primary}]`"></v-divider>
             <v-list density="compact" nav class="py-1">
-                <SideBarItem v-for="item in filteredSubItems" :key="item.name" :item="item" @click="handleItemClick(item)" />            
+                <SideBarItem :state="modelValue" v-for="item in filteredSubItems" :key="item.name" :item="item" @click="handleItemClick(item)" />            
             </v-list>
-            <v-divider class="border-opacity-100 tw-mx-4 tw-mb-2" :class="`tw-bg-[${$constants.primary}]`"></v-divider>
-            <v-list-item nav class="tw-pb-[26px] tw-px-[8px] " :class="`${$constants.text_size.s1}`"
-                :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.mode =='light'? $constants.primary:''">
-                <template v-slot:prepend>
-                    <img class="tw-h-8  tw-rounded-full tw-ml-1"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhtMRbtowke9ZnnGtyYJmIuJaB2Q1y5I-3IA&s"
-                        alt="logo" />
-                </template>
-                <template v-slot:default>
-                    <div class="tw-ms-2 tw-ml-7 tw-mt-1 text-truncate">
-                        <span :class="`tw-text-${$constants.text_size.s1} tw-text-[${$constants.primary}]`"
-                            class="tw-font-bold tw-text-base tw-font-visby tw-truncate">{{person?.email}}</span>
-                        <!-- <p :class="`tw-text-${$constants.text_size.s1} tw-text-[${$constants.dark}]`"
-                            class="tw-mt-[-3px] tw-font-visby tw-text-xs tw-font-bold tw-text-[#626260] tw-truncate">{{user?.company_name}}</p> -->
-                    </div>
-                </template>
-            </v-list-item>
+          
         </div>
     </v-navigation-drawer>
 </template>
@@ -58,6 +62,7 @@ import { useGlobalsStore } from "@/stores/globals";
 import Ls from '@/services/ls'
 import { useAuthStore } from "@/admin/stores/auth";
 import abilities from "@/admin/stubs/abilities"
+import Badge from 'primevue/badge';
 import {
     PhSquaresFour,
     PhUsersThree,
@@ -68,6 +73,10 @@ import {
     PhChatDots,
     PhGear,
     PhSignOut,
+    PhScroll,
+    PhWallet,
+    PhBell,
+    PhQuestion,
 } from "@phosphor-icons/vue";
 
 export default {
@@ -82,26 +91,29 @@ export default {
         PhChatDots,
         PhGear,
         PhSignOut,
+        Badge,
+        
     },
     data() {
         return {
             authStore:useAuthStore(),
             // user: JSON.parse(Ls.get('auth.client')||"{}"),
-            person: JSON.parse(Ls.get('auth.user')||"{}"),
+            user: JSON.parse(Ls.get('auth.user')||"{}"),
             globals: useGlobalsStore(),
             isHovered: false,
             pdrawer: true,
             items: [
-                { name: 'Dashboard', href: '/admin/dashboard', icon: 'mdi-view-dashboard', permission:abilities.DASHBOARD, current: true },
-                { name: 'Users', href: '/admin/users', icon: 'mdi-account-group', permission: abilities.VIEW_ADMINS, current: false },
-                { name: 'Pay Bills', href: '/admin/paybill', icon: 'mdi-numeric-0-box-multiple-outline', permission:abilities.VIEW_PAY_BILLS, current: false }, 
-                { name: 'Received Transactions', href: '/admin/receive', icon: 'mdi-login', permission:abilities.VIEW_RECEIVE, current: false },
-                { name: 'Sent Transactions', href: '/admin/sent', icon: 'mdi-logout', permission:abilities.VIEW_SENTS, current: false },
-                { name: 'Send Money', href: '/admin/send', icon: 'mdi-file-document-multiple', permission:abilities.SEND_MONEY, current: false },
+                { name: 'Dashboard', href: '/admin/dashboard', icon: PhSquaresFour, permission:'', current: true },
+                { name: 'Wallet', href: '/admin/users', icon: PhWallet, permission:'' , current: false },
+                { name: 'Transactions', href: '/admin/transactions', icon: PhScroll, permission:'', current: false }, 
+                { name: 'Customers', href: '/admin/receive', icon: PhUsersThree, permission:'', current: false },
+                { name: 'Notifications', href: '/admin/sent', icon: PhBell, permission:'', current: false },
+        
             ],
             subItems: [
-                { name: 'Settings', href: '/admin/settings', icon: 'mdi-cog-outline', permission:abilities.VIEW_ROLES, current: true },
-                { name: 'Logout', href: '', icon: 'mdi-logout', current: false }
+                { name: 'Settings', href: '/admin/settings', icon:PhGear, permission:'', current: true },
+                { name: 'Supports', href: '/admin/settings', icon: PhQuestion, permission:'', current: true },
+                { name: 'Logout', href: '', icon: PhSignOut, current: false }
             ]
         }
     },
@@ -158,6 +170,41 @@ export default {
                 this.$router.push(item.href);
             }
         },
+      getInitials(fullName) {
+        if (!fullName) return '';
+        const nameParts = fullName.trim().split(' ');
+        const firstName = nameParts[0].charAt(0).toUpperCase();
+        const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1].charAt(0).toUpperCase() : '';
+        return firstName + lastName;
+      },
+  
+      // Convert word to ASCII sum
+      getAsciiSum(word) {
+        return word
+          .split('')
+          .reduce((sum, char) => sum + char.charCodeAt(0), 0);
+      },
+  
+      // Generate HSL color from the initials
+      getColorFromWord(word) {
+        const asciiSum = this.getAsciiSum(word);
+
+        // Use a base color hue and adjust for more variation
+        const hue = (asciiSum * 137) % 360; // 137 is a prime number to spread out hues
+
+        // Use a higher saturation and varied lightness for deeper colors
+        const saturation = 70; // Increase saturation for vibrant colors
+        const lightness = 45 + (asciiSum % 20); // Vary lightness to add more depth
+
+        return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        },
+
+  
+      // Handle image error and show initials
+      handleImageError(user) {
+        user.imageError = true; // Vue 3 automatically tracks this
+      },
+
     },
     watch: {
         group() {

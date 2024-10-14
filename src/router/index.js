@@ -3,8 +3,10 @@ import { createRouter, createWebHistory } from "vue-router";
 import AdminRoutes from '@/admin/admin-router'
 import ls from "@/services/ls";
 import useAdminStore from "@/admin/stores/admin";
+import appRouter from "./app-router";
 let routes = []
-routes = routes.concat(AdminRoutes)
+let routes1 = routes.concat(AdminRoutes)
+routes = routes1.concat(appRouter)
 
 const router = createRouter({
   history: createWebHistory(),

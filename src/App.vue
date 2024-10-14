@@ -6,7 +6,7 @@
     </div>
   </div> -->
   <NotificationRoot />
-  <Alert :text="globals.alert?.text" :title="globals.alert?.title" :confirmBtnText="globals.alert?.confirmBtnText"
+  <Alert v-show="globals.alert.show" :text="globals.alert?.text" :title="globals.alert?.title" :confirmBtnText="globals.alert?.confirmBtnText"
   :cancelBtnText="globals.alert?.cancelBtnText" v-model="globals.alert.show" @confirm="handleAlert" :loading="globals.alert.loading" :img-path="globals.alert.imgpath" />
   <RouterView/>
 </template>

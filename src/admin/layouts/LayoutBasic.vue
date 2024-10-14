@@ -2,23 +2,19 @@
     <div class="`tw-flex  tw-p-0 tw-w-full`" :class="`tw-bg-[${$constants.light}]`">
         <v-layout class="rounded rounded-md" :color="`${$constants.light}`"  >
             <SideBar v-model="drawer" />
-            <v-app-bar flat :color="$constants.light" class="tw-shadow-md">                                            
+            <v-app-bar flat :color="$constants.light" class="tw-shadow-none tw-border-b tw-py-4">                                            
                 <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-                <v-toolbar-title class="tw-text-xs tw-font-bold">
-               
+                <v-toolbar-title class="">
                     <div>
-                        Allocated Balance: <Select :pt="{root:{class:' tw-pl-2 tw-shadow-none tw-border-transparent tw-py-0'},label:{class:'tw-p-0'}, overlay:{class:'tw-z-[90000]'}}" 
-                        :options="adminStore.accounts"
-                        option-label="currency.currency_symbol"
-                        v-model="cs"  />
-                        <!-- :options="['CAD','USD','NGN']" -->
-                        {{ cs?.balance || '0.00' }}
+                        <p class="tw-text-xl tw-mb-2">
+                            Welcome Derick 👋
+                        </p>
+                        <p class="tw-flex tw-text-sm tw-mb-3"><img src="@/assets/exclamation.svg" class="tw-me-2 tw-block " /> Activate your business profile by filling in details for business verification.</p>
                     </div>
-                    <v-btn :loading="loading" size="small" @click="makeRequest()" flat class="tw-capitalize tw-px-0 tw-underline ">Request Top Up</v-btn>
                 </v-toolbar-title>
                 
                 <v-spacer></v-spacer>
-                <template v-if="$vuetify.display.mdAndUp">
+                <!-- <template v-if="$vuetify.display.mdAndUp">
                     <v-switch v-model="mode" @change="toggleMode" class="tw-text-sm tw-w-[150px]"
                         :class="mode === 'LIGHT' ? 'tw-text-green-900' : 'tw-text-gray-500'"
                         :color="mode === 'LIGHT' ? $constants.success : 'gray-500'" :label="`${constants?.mode}`"
@@ -27,13 +23,13 @@
                             <v-icon icon="mdi-white-balance-sunny"></v-icon>
                         </template>
                     </v-switch>
-                </template>
-                
-                <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
+                </template> -->
+                <div id="topbar-right"></div>
+                <!-- <v-btn icon="mdi-dots-vertical" variant="text"></v-btn> -->
             </v-app-bar>            
             <v-main style="min-height:100vh;" :class="`tw-bg-[${$constants.layout_background}]`">
                 <BreadCrumbs />
-            <div class="tw-p-[16px]">
+            <div class="tw-p-[36px]">
                 <RouterView v-slot="{ Component }">
                     <transition name="scale">
                         <component :is="Component" />

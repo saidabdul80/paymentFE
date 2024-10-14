@@ -1,8 +1,4 @@
 import LayoutBasic from '@/admin/layouts/LayoutBasic.vue';
-import ErrorView from '@/components/Error.vue'; // Corrected import
-import MFA from './views/auth/MFA.vue';
-import ChangePassword from './views/auth/changePassword.vue';
-import Setup_MFA from './views/auth/Setup_MFA.vue';
 import HomeView from '@/views/HomeView.vue';
 import Join from '@/views/Join.vue';
 import Login from '@/views/Login.vue';
@@ -14,70 +10,65 @@ import HomeLayout from '@/views/HomeLayout.vue';
 
 export default [
     {
-        path: '/admin',
+        path: '/app',
         component: LayoutBasic,
         meta: { breadcrumb: "Home", requiresAuth: false },
         children: [       
             {
                 path: "dashboard",
-                name: "Admin-Dashbaord",
+                name: "App-Dashbaord",
                 component: Dashbaord,
                 meta: { breadcrumb: "", requiresAuth: false },
             },
             {
                 path: "",
-                name: "Admin-Home",
+                name: "App-Home",
                 component: Dashbaord,
                 meta: { breadcrumb: "", requiresAuth: false },
             },
             {
                 path: "transactions",
-                name: "Admin-Transactions",
+                name: "App-Transactions",
                 component: Transactions,
                 meta: { breadcrumb: "", requiresAuth: false },
             },
         ],
     },
-   { 
-        path: '/admin',
+    { 
+        path: '/',
         component: HomeLayout,
         meta: { breadcrumb: "Home", requiresAuth: false },
         children: [      
             {
                 path: "/",
-                name: "AdHome",
+                name: "Home",
                 component: HomeView,
                 meta: { breadcrumb: "Login", requiresAuth: false },
             },
             {
                 path: "/register",
-                name: "AdRegister",
+                name: "Register",
                 component: Join,
                 meta: { requiresAuth: false },
             },
             {
                 path: "/login",
-                name: "AdLogin",
+                name: "Login",
                 component: Login,
                 meta: { requiresAuth: false },
             },
             {
                 path: "/otp",
-                name: "AdOtp",
+                name: "Otp",
                 component: Otp,
                 meta: { requiresAuth: false },
             },
             {
                 path: "/verified",
-                name: "Adverified",
+                name: "verified",
                 component: Verified,
                 meta: { requiresAuth: false },
             },   
         ]
-    }, 
-    {
-        path: "/:pathMatch(.*)*",
-        name: 'ErrorView',
-        component: ErrorView,
-    },
+    }
 ];

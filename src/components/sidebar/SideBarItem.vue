@@ -1,13 +1,13 @@
 <template>
-      <v-list-item rounded="lg" class="tw-p-[12px] tw-m-0"
-        :class="`${$constants.text_size.s2} tw-font-bold`"
-        :active-class="`tw-bg-[${$constants.primary}] tw-text-[white]`" :base-color="$constants.mode =='light'? $constants.primary:''"
+      <v-list-item rounded="lg" class="tw-py-[12px]  tw-font-[400]"  :class="!state?'tw-px-6 tw-mx-5':''"
+       
+        active-class="tw-bg-black tw-text-white" :base-color="$constants.mode =='light'? $constants.primary:''"
         :to="item.href" :value="item.title">
         <template v-slot:prepend>
-            <v-icon  :icon="item.icon"></v-icon>
+            <component size="22px"  :is="item.icon"></component>
         </template>
         <template v-slot:default>
-            <span class="text-truncate">{{ item.name }}</span>
+            <span class="text-truncate " :class="state?'tw-ms-2':''">{{ item.name }}</span>
         </template>
     </v-list-item>
 </template>
@@ -23,6 +23,10 @@ export default {
                 name:'',
                 title:'',
             }
+        },
+        state:{
+            type:Boolean,
+            default:true,
         }
     }
 }

@@ -4,8 +4,7 @@
         <!-- Sidebar component, swap this element with another sidebar if you like -->
         <div class="tw-flex tw-grow tw-flex-col tw-gap-y-5 tw-overflow-y-auto tw-bg-indigo-600 tw-px-6 tw-pb-4">
             <div class="tw-flex tw-h-16 tw-shrink-0 tw-items-center">
-                <img class="tw-h-8 tw-w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=white"
-                    alt="Your Company" />
+                
             </div>
             <nav class="tw-flex tw-flex-1 tw-flex-col">
                 <ul role="list" class="tw-flex tw-flex-1 tw-flex-col tw-gap-y-7">

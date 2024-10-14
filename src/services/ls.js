@@ -2,7 +2,9 @@ export default {
   get(key) {
     return localStorage.getItem(key) ? localStorage.getItem(key) : null
   },
-
+  isLoggedIn(){
+    return this.get('auth.token')?true:false
+  },
   set(key, val) {
     localStorage.setItem(key, val)
   },

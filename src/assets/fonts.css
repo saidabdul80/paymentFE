@@ -1,161 +1,27 @@
 /* src/assets/fonts.css */
 
 @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-Bold.eot');
-    src: url('/Webfont/VisbyRoundCF-Bold.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-Bold.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-Bold.woff') format('woff');
-    font-weight: bold;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-BoldOblique.eot');
-    src: url('/Webfont/VisbyRoundCF-BoldOblique.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-BoldOblique.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-BoldOblique.woff') format('woff');
-    font-weight: bold;
-    font-style: oblique;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-DemiBold.eot');
-    src: url('/Webfont/VisbyRoundCF-DemiBold.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-DemiBold.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-DemiBold.woff') format('woff');
-    font-weight: 600;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-DemiBoldOblique.eot');
-    src: url('/Webfont/VisbyRoundCF-DemiBoldOblique.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-DemiBoldOblique.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-DemiBoldOblique.woff') format('woff');
-    font-weight: 600;
-    font-style: oblique;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-ExtraBold.eot');
-    src: url('/Webfont/VisbyRoundCF-ExtraBold.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-ExtraBold.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-ExtraBold.woff') format('woff');
-    font-weight: 800;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-ExtraBoldOblique.eot');
-    src: url('/Webfont/VisbyRoundCF-ExtraBoldOblique.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-ExtraBoldOblique.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-ExtraBoldOblique.woff') format('woff');
-    font-weight: 800;
-    font-style: oblique;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-ExtraLight.eot');
-    src: url('/Webfont/VisbyRoundCF-ExtraLight.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-ExtraLight.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-ExtraLight.woff') format('woff');
-    font-weight: 200;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-ExtraLightOblique.eot');
-    src: url('/Webfont/VisbyRoundCF-ExtraLightOblique.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-ExtraLightOblique.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-ExtraLightOblique.woff') format('woff');
-    font-weight: 200;
-    font-style: oblique;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-Heavy.eot');
-    src: url('/Webfont/VisbyRoundCF-Heavy.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-Heavy.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-Heavy.woff') format('woff');
-    font-weight: 900;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-HeavyOblique.eot');
-    src: url('/Webfont/VisbyRoundCF-HeavyOblique.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-HeavyOblique.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-HeavyOblique.woff') format('woff');
-    font-weight: 900;
-    font-style: oblique;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-Light.eot');
-    src: url('/Webfont/VisbyRoundCF-Light.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-Light.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-Light.woff') format('woff');
-    font-weight: 300;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-LightOblique.eot');
-    src: url('/Webfont/VisbyRoundCF-LightOblique.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-LightOblique.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-LightOblique.woff') format('woff');
-    font-weight: 300;
-    font-style: oblique;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-Medium.eot');
-    src: url('/Webfont/VisbyRoundCF-Medium.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-Medium.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-Medium.woff') format('woff');
-    font-weight: 500;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-MediumOblique.eot');
-    src: url('/Webfont/VisbyRoundCF-MediumOblique.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-MediumOblique.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-MediumOblique.woff') format('woff');
-    font-weight: 500;
-    font-style: oblique;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-Regular.eot');
-    src: url('/Webfont/VisbyRoundCF-Regular.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-Regular.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'VisbyRoundCF';
-    src: url('/Webfont/VisbyRoundCF-RegularOblique.eot');
-    src: url('/Webfont/VisbyRoundCF-RegularOblique.eot?#iefix') format('embedded-opentype'),
-         url('/Webfont/VisbyRoundCF-RegularOblique.woff2') format('woff2'),
-         url('/Webfont/VisbyRoundCF-RegularOblique.woff') format('woff');
-    font-weight: normal;
-    font-style: oblique;
-  }
-  
+     font-family: "Aeonik";
+     src: url("/Aeonik/AeonikTRIAL-Regular.otf") format("opentype"),
+       url("/Aeonik/AeonikTRIAL-RegularItalic.otf") format("opentype"),
+       url("/Aeonik/AeonikTRIAL-Bold.otf") format("opentype"),
+       url("/Aeonik/AeonikTRIAL-BoldItalic.otf") format("opentype"),
+       url("/Aeonik/AeonikTRIAL-Light.otf") format("opentype"),
+       url("/Aeonik/AeonikTRIAL-LightItalic.otf") format("opentype");
+     font-weight: normal; /* Default weight */
+     font-style: normal; /* Default style */
+   }
+   
+   @font-face {
+     font-family: "Aeonik";
+     src: url("/Aeonik/AeonikTRIAL-Bold.otf") format("opentype");
+     font-weight: bold; /* Bold weight */
+     font-style: normal; /* Regular style */
+   }
+   
+   @font-face {
+     font-family: "Aeonik";
+     src: url("/Aeonik/AeonikTRIAL-Light.otf") format("opentype");
+     font-weight: 300; /* Light weight */
+     font-style: normal; /* Regular style */
+   }
