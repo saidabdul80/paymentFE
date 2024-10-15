@@ -1,20 +1,28 @@
 <template>
   <div
-    class="tw-bg-white tw-overflow-x-auto  tw-border-[#e6eaee] tw-rounded-[5px]">
+    class="tw-bg-white tw-overflow-x-auto tw-rounded-[2px] tw-border-gray-200 tw-border">
     <div
-      v-if="!loading"
-      class="table-shadow-sm tw-rounded-[5px] tw-overflow-auto">
-      <div
-        class="tw-border-b-[1px] tw-border-gray-200 tw-text-md md:tw-text-lg tw-font-bold tw-flex tw-flex-col md:tw-flex-row tw-justify-between tw-p-5">
-        <div class="tw-font-bold tw-mb-3 md:tw-mb-0">{{pageTitle}}</div>
+      
+      class="table-shadow-sm  tw-overflow-auto ">
+      <div class="tw-border-b-[1px] tw-border-gray-200 tw-text-md md:tw-text-lg tw-font-bold tw-flex tw-flex-col md:tw-flex-row tw-justify-between tw-p-5">
+        <div class="tw-font-bold tw-mb-3 md:tw-mb-0">
+          <IconField>
+              <InputIcon >
+                <template #default>
+                    <PhMagnifyingGlass/>
+                  </template>
+              </InputIcon>
+              <InputText v-model="search" @input="asyncFind"   placeholder="Search transactions" class="tw-bg-[#e8ecf0]" />
+          </IconField>
+        </div>
         
         <div class="tw-flex tw-flex-row">
        
-          <div
+          <div v-if="statuses.length >0"
             class="tw-flex tw-flex-row tw-items-center tw-justify-between tw-gap-1 tw-border tw-border-gray-200 md:tw-border-none tw-p-2 tw-rounded-md">
             <div class="tw-font-bold tw-text-sm">Status:</div>
             <select
-              v-model="status"
+              v-model="globals.filters.status"
               class="tw-text-sm focus:tw-ring-0 focus:tw-outline-none">
               <option v-for="status in statuses" :key="status" :value="status">{{status}}</option>
             </select>
@@ -24,16 +32,16 @@
             <button
               class="tw-px-4 tw-py-2 tw-border  
                tw-text-sm tw-rounded-l-md"
-                 @click="changeSorting('newest')"
-                 :class="sortOrder=='newest' ? 'tw-bg-black tw-text-white' : 'tw-bg-gray-200 tw-text-black'"
+                 @click="changeSorting('desc')"
+                 :class="sortOrder=='desc' ? 'tw-bg-black tw-text-white' : 'tw-bg-gray-200 tw-text-black'"
                 >
               Newest
             </button>
             <button
               class="tw-px-4 tw-py-2 tw-border tw-border-gray-300  tw-text-black tw-text-sm
                 tw-rounded-r-md"
-                @click="changeSorting('oldest')"
-                :class="sortOrder=='oldest' ? 'tw-bg-black tw-text-white' : 'tw-bg-gray-200 tw-text-black'"
+                @click="changeSorting('asc')"
+                :class="sortOrder=='asc' ? 'tw-bg-black tw-text-white' : 'tw-bg-gray-200 tw-text-black'"
                 >
               Oldest
             </button>
@@ -41,24 +49,7 @@
         </div>
       </div>
 
-      <v-container class="tw-py-4 tw-block md:tw-hidden">
-        <v-row class="tw-justify-center">
-          <v-col cols="12" md="8">
-            <v-text-field
-              v-model="search"
-              variant="plain"
-              bg-color="#e8ecf0"
-              rounded="lg"
-              placeholder="Search transactions"
-              class="tw-rounded-full tw-border-0 tw-px-4">
-              <template v-slot:prepend-inner>
-                <v-icon class="tw-ml-4 tw-mt-[-4px]">mdi-magnify</v-icon>
-              </template>
-            </v-text-field>
-          </v-col>
-        </v-row>
-      </v-container>
-
+    <div v-if="!loading">
       <div v-if="paginationData?.data?.length > 0">
         <table
           class="tw-min-w-full tw-bg-white tw-overflow-hidden tw-rounded-lg tw-text-md">
@@ -99,10 +90,30 @@
                   {{ index + paginationData?.meta?.from }}
                 </span>
                 <span v-else>
-                  <slot :name="`td-${header.key}`" :row="row">
-                    {{ row[header.key] }}
-                  </slot>
-                </span>
+                  <span v-if="$slots[`td-${header.key}`]">
+                    <slot :name="`td-${header.key}`" :row="row"></slot>
+                  </span>
+                  <span v-else class="tw-flex tw-items-center">
+                    <span v-if="header?.formatNumber">
+                      <span v-if="header?.currency || header?.currency == ''">
+                        {{ 
+                        parseInt(helpers.formatMoney(parseFloat(getNestedValue(row, header.key)),header?.currency))
+                        }}
+                      </span>
+                      <span v-else>
+                        {{ helpers.formatMoney(parseFloat(getNestedValue(row, header.key))) }}
+                      </span>
+                    </span>
+                    <span v-else-if="header?.formatDate">
+                      {{ formatDate(getNestedValue(row, header.key)) }}
+                    </span>
+                      <span v-else>
+                        {{ getNestedValue(row, header.key) }}
+                      </span>
+                      
+                      <CopyButton @click.prevent="" v-if="header?.copy" :text="getNestedValue(row, header.key)" />
+                    </span>
+                  </span>
               </td>
             </tr>
           </tbody>
@@ -116,9 +127,11 @@
           alt="no transactions" />
       </div>
     </div>
-    <div v-else>
+      <div v-else>
       <TableLoader :count="rows" :columns="headers.length + 1" />
     </div>
+    </div>
+    
     <div class="tw-mt-5">
       <Pagination
       
@@ -137,7 +150,11 @@
 import TableLoader from "./TableLoader.vue";
 import Pagination from "./Pagination.vue";
 import { useGlobalsStore } from "../../stores/globals";
-
+import InputText from "primevue/inputtext";
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
+import { PhMagnifyingGlass } from "@phosphor-icons/vue";
+import CopyButton from '@/components/CopyButton.vue';
 export default {
   props: {
     pageTitle:{
@@ -146,7 +163,7 @@ export default {
     },
     statuses:{
       type: Array,
-      default: () => (['All', 'Pending', 'Successful']),
+      default: () => (['All', 'Pending', 'Completed','Rejected','Processing','Cancel']),
     },
     headers: {
       type: Array,
@@ -176,13 +193,19 @@ export default {
       rows: 10,
       selectAll: false,
       selectedRows: [],
-      sortOrder: "newest",
-      globals:useGlobalsStore()
+      sortOrder: "desc",
+      globals:useGlobalsStore(),
+      typingTimer:null,
     };
   },
   components: {
     TableLoader,
     Pagination,
+    IconField,
+    InputText,
+    InputIcon,
+    CopyButton,
+    PhMagnifyingGlass
   },
   watch:{
     status(newVal){
@@ -210,6 +233,14 @@ export default {
     },
   },
   methods: {
+    async asyncFind(query) {
+            clearTimeout(this.typingTimer);
+            if (query == '') { return false; }
+            this.typingTimer = setTimeout(async () => {
+             this.globals.filters.search = query.data
+            
+            }, 2000)
+   },
     handleRowClick(row) {
       this.$emit("row-click", row);
     },
@@ -229,8 +260,37 @@ export default {
       this.$emit("page-length", data);
     },
     changeSorting(order) {  
+      this.globals.filters.sort = order
       this.sortOrder = order;
     },
+    getNestedValue(obj, key) {
+      return key.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : null), obj);
+    },
+    handleError(event) {
+      event.target.src = "/assets/user.png"
+    },
+    formatDate(date) {
+      const dateObj = new Date(date);
+      const day = dateObj.getDate();
+      const month = dateObj.toLocaleString('en-US', { month: 'short' });
+      const year = dateObj.getFullYear();
+
+      return `${day} ${month} ${year}`;
+    },
+    toggleColumn(header, headers){
+      
+      if(this.currentSortKey == header.key){
+        header.sortUp = !header.sortUp
+        this.globals.filters['sort_column'] = [header.key,header.sortUp? 'asc':'desc']
+        return;
+      }
+      headers.map(header=>{
+          header.sortUp = null
+      })
+      header.sortUp = true;
+      this.globals.filters['sort_column'] = [header.key, header.sortUp? 'asc':'desc']
+      this.currentSortKey = header.key
+    }
   },
 };
 </script>

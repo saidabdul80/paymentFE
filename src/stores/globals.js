@@ -15,6 +15,18 @@ export const useGlobalsStore = defineStore('globals', {
       paginate:null,
     }),
     acess_token:null,
+    alert: {
+      show: false,
+      text: '',
+      title: '',
+      imgpath: null,
+      cancelBtnText: '',
+      confirmBtnText: '',
+      loading: false,
+    },
+    alertPromiseResolve: null,
+    transactions:[],
+    loadingTransactions:false
   }),
   actions: {
     /* async bootstrap() {
@@ -106,7 +118,62 @@ export const useGlobalsStore = defineStore('globals', {
       }
     
       return formattedAmount;
-    }
+    },
+    palert({ text, title, cancelBtnText, confirmBtnText,icon=null, loading = false, callback = () => { }, imgpath = null }) {
+      return new Promise((resolve) => {
+        this.alert = {
+          show: true,
+          text,
+          title,
+          imgpath,
+          icon,
+          cancelBtnText,
+          confirmBtnText,
+          callback,
+          loading,
+        };
+
+        this.alertPromiseResolve = { callback, resolve };
+      });
+    },
+    async handleAlertResponse(response) {
+      if (this.alertPromiseResolve) {
+        if (response) {
+          this.alert.loading = true;
+          await this.alertPromiseResolve.callback(response)
+          this.alert.loading = false;
+        }
+        setTimeout(() => {
+          this.alertPromiseResolve?.resolve(response);
+          this.alertPromiseResolve = null;
+          this.alert.show = false;
+        }, 200)
+      }
+    },
+    objectToFormData(obj, form = new FormData(), namespace = '') {
+      for (let property in obj) {
+          if (!obj.hasOwnProperty(property) || obj[property] === undefined) continue;
+          const formKey = namespace ? `${namespace}[${property}]` : property;
+          
+          if (obj[property] instanceof Date) {
+              form.append(formKey, obj[property].toISOString());
+          } else if (typeof obj[property] === 'object' && !(obj[property] instanceof File)) {
+              this.objectToFormData(obj[property], form, formKey);
+          } else {
+              form.append(formKey, obj[property]);
+          }
+      }
+      return form;
+    },
+    async getTrasactions(data = null){
+      this.loadingTransactions = true
+      console.log(data)
+      const response = await useClient().http({ method: 'get', path: '/transactions/history', data })                
+      this.loadingTransactions =false
+      if(response){
+        this.transactions = response
+      }
+    },
     
     
   }

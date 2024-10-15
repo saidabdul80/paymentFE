@@ -15,8 +15,13 @@ export const useClient = defineStore("client", () => {
     if (config?.fullPath) {
       url = config?.path;
     }
-    if (config.method.toLowerCase() === 'get' && Object.keys(config.data|| {}).length > 1) {
-      const urlParams = new URLSearchParams(config.data).toString();
+
+    if (config.method.toLowerCase() === 'get' && Object.keys(config.data|| {}).length > 0) {
+      const cleanedData = Object.fromEntries(
+        Object.entries(config.data).filter(([key, value]) => value !== null && value !== undefined && value !== '')
+      );
+      
+      const urlParams = new URLSearchParams(cleanedData).toString();
       if(config.fullPath){
         url += '&' + urlParams;
       }else{

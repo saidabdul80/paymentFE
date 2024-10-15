@@ -1,5 +1,5 @@
 <template>
-    <span @click="show = !show" class="tw-relative">
+    <span @click="show = !show" class="tw-relative tw-flex tw-items-center">
     <Badge v-if="!user?.picture_url || user?.imageError" class="tw-mt-[18px]" :style="{
         backgroundColor: getColorFromWord(getInitials('Interswitch Group')),
         borderRadius: '50%',

@@ -1,6 +1,6 @@
 <template>
   <v-btn :variant="variant" elevation="1" :disabled="disabled" rounded="lg" size="large" :to="to"
-    class="md:tw-px-20 tw-mx-2" height="45px" :style="{ width: width }">
+    class="" height="40px" :style="{ width: width }">
     {{ title }}
   </v-btn>
 </template>

@@ -17,9 +17,8 @@ import { useGlobalsStore } from '@/stores/globals';
 import { RouterLink, RouterView } from "vue-router";
 import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue';
-import useAdminStore from '@/admin/stores/admin';
 import Alert from '@/components/Alert.vue';
-const globals = useAdminStore()
+const globals = useGlobalsStore()
 </script>
 
 <style>

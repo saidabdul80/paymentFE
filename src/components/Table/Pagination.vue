@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-flex tw-items-center tw-justify-between tw-bg-gray-50 tw-px-4 tw-py-1 sm:tw-rounded-lg" >
+  <div class="tw-flex tw-items-center tw-justify-between tw-px-4 tw-py-4 sm:tw-rounded-lg" >
     <!-- <div class="tw-flex tw-items-center">
       <span class="tw-text-sm tw-text-gray-700">Rows per page:</span>
       <select v-model="rowsPerPageX" @change="changeRowsPerPage" class="tw-ml-2 tw-block tw-px-3 tw-mt-1 tw-text-base tw-text-gray-700 tw-bg-white tw-border tw-border-gray-300 tw-rounded-md tw-shadow-sm tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-indigo-500 tw-focus:border-indigo-500 sm:tw-text-sm">

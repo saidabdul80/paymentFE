@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-border tw-border-gray-200 tw-rounded-lg">
+  <div class="tw-border tw-border-transparent tw-rounded-lg">
     <div v-for="i in count" :key="i" class="tw-p-2 tw-border-b tw-border-gray-200">
       <div class="tw-flex">
         <div v-for="j in columns" :key="j" class="tw-flex-1 tw-p-0">

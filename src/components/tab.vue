@@ -7,6 +7,7 @@
     </v-tabs>
 
     <div class="lg:tw-flex lg:tw-w-[640px] lg:tw-gap-3 lg:tw-justify-between lg:tw-items-end " v-if="Object.keys(configData||{}).length>0">
+      <v-spacer></v-spacer>
       <Search class="tw-my-4 lg:tw-my-0" v-if="configData?.search" v-model="searchData" @update:filters="handleSearch" />
       <div class="tw-my-4 lg:tw-my-0" v-if="configData?.sideButton">
         <v-tooltip v-if="configData?.toolTipText != ''" activator="parent" class="tw-border" location="top">{{ configData?.toolTipText }}</v-tooltip>
@@ -53,6 +54,10 @@ import Button from '@/components/button/Button.vue';
 
 export default {
   props: {
+    modelValue:{
+        type:Number,
+        default:0
+    },
     config: {
       type: Object,
       default:{ 
@@ -116,6 +121,7 @@ export default {
   },
   watch:{
     tab:function(newKey){
+      this.$emit('update:modelValue',newKey)
       this.globals.activeTab = this.tabs[newKey||0]?.key
     }
   },

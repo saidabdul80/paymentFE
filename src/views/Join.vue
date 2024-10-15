@@ -42,7 +42,7 @@
               <router-link to="/data-processing" class="tw-text-blue-600 tw-underline">Data Processing Policy</router-link>
             </label>
           </div>
-          <Button type="submit" class="tw-w-full tw-bg-black tw-text-white tw-font-bold tw-px-4 tw-py-2 tw-rounded-lg">Create my account</Button>
+          <v-btn type="submit" class="tw-w-full tw-bg-black tw-text-white tw-font-bold tw-px-4 tw-py-2 tw-rounded-lg">Create my account</v-btn>
         </form>
       </div>
   </Special>
@@ -56,6 +56,8 @@
   import InputText from 'primevue/inputtext';
   import Checkbox from 'primevue/checkbox';
   import Special from "@/components/Special.vue"
+import { useClient } from '@/stores/client';
+import { useGlobalsStore } from '@/stores/globals';
 
 
 
@@ -69,25 +71,26 @@
     },
     data() {
       return {
+        global:useGlobalsStore(),
         form: {
-          businessName: '',
-          location: '',
-          firstName: '',
-          lastName: '',
-          businessEmail: '',
-          phoneNumber: '',
-          password: '',
-          confirmPassword: '',
           acceptTerms: false,
         },
       };
     },
     methods: {
-      createAccount() {
-        if (this.form.password !== this.form.confirmPassword) {
-          alert('Passwords do not match');
-          return;
+      async createAccount() {
+        this.loading = true
+        const res = useClient().http({method:'post',path:'/auth/register', data:this.form})
+        if(res){
+          this.global.palert({
+            title: 'Thank you for Joining CowrisPay',
+            text: 'We have sent you an email',
+            callback: async () => {
+            
+            },
+          });
         }
+        this.loading = false
         // Perform account creation logic here
       },
     },

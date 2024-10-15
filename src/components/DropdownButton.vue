@@ -1,11 +1,11 @@
 <template>
     <div>
       <Button
-          v-if="items.length>1"
+          v-if="items?.length>1"
         :title="title"
         :prepend-icon="prependIcon"
         rounded="lg"
-        size="large"
+        size="small"
         :class="buttonClasses"
         :style="{width:width}"
         id="menu-activator"
@@ -16,12 +16,12 @@
         :prepend-icon="prependIcon"
         rounded="lg"
         :to="items[0]?.link"
-        size="large"
+        size="small"
         :class="buttonClasses"
         :style="{width:width}"
         id="menu-activator"
       />
-      <v-menu activator="#menu-activator" v-if="items.length>1">
+      <v-menu activator="#menu-activator" v-if="items?.length>1">
         <v-list>
           <v-list-item class="tw-ml-3 tw-text-sm">{{ header }}</v-list-item>
           <v-list-item
@@ -62,7 +62,7 @@
       },
       items: {
         type: Array,
-        required: true,
+        default: [],
       },
       width:{
         default:'160px !important'
