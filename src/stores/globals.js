@@ -167,7 +167,6 @@ export const useGlobalsStore = defineStore('globals', {
     },
     async getTrasactions(data = null){
       this.loadingTransactions = true
-      console.log(data)
       const response = await useClient().http({ method: 'get', path: '/transactions/history', data })                
       this.loadingTransactions =false
       if(response){

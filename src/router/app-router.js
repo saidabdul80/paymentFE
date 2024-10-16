@@ -7,30 +7,49 @@ import Verified from '@/views/Verified.vue';
 import Dashbaord from '@/views/Dashbaord.vue';
 import Transactions from '@/views/Transactions.vue';
 import HomeLayout from '@/views/HomeLayout.vue';
+import Settings from '@/views/Settings.vue';
 
 export default [
     {
         path: '/app',
         component: LayoutBasic,
-        meta: { breadcrumb: "Home", requiresAuth: false },
+        meta: { breadcrumb: "Home", requiresAuth: true },
         children: [       
             {
                 path: "dashboard",
                 name: "App-Dashbaord",
                 component: Dashbaord,
-                meta: { breadcrumb: "", requiresAuth: false },
+                meta: { breadcrumb: "", requiresAuth: true, ability:[] },
             },
             {
                 path: "",
                 name: "App-Home",
                 component: Dashbaord,
-                meta: { breadcrumb: "", requiresAuth: false },
+                meta: { breadcrumb: "", requiresAuth: true, ability:[] },
             },
             {
                 path: "transactions",
                 name: "App-Transactions",
                 component: Transactions,
-                meta: { breadcrumb: "", requiresAuth: false },
+                meta: { breadcrumb: "", requiresAuth: true, ability:[] },
+            }, 
+            {
+                path: "customers",
+                name: "App-customers",
+                component: Transactions,
+                meta: { breadcrumb: "", requiresAuth: true, ability:[] },
+            }, 
+            {
+                path: "notifications",
+                name: "App-notifications",
+                component: Transactions,
+                meta: { breadcrumb: "", requiresAuth: true, ability:[] },
+            }, 
+            {
+                path: "settings",
+                name: "App-Setting",
+                component: Settings,
+                meta: { breadcrumb: "", requiresAuth: true, ability:[] },
             },
         ],
     },

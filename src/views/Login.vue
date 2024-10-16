@@ -31,6 +31,7 @@ import Button from 'primevue/Button';
 import Special from "@/components/Special.vue"
 import TextField from "@/components/TextField.vue"
 import { useAuthStore } from '@/admin/stores/auth';
+import { useAppAuthStore } from '@/stores/auth';
 
     export default {
         components: {
@@ -51,7 +52,7 @@ import { useAuthStore } from '@/admin/stores/auth';
         methods:{
             async login(){
                 this.loading = true
-                await useAuthStore().login({
+                await useAppAuthStore().login({
                     password: this.form.password,
                     email: this.form.username,
                 })

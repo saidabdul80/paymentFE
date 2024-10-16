@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-bg-white tw-rounded-lg tw-p-4 tw-shadow-md tw-flex tw-items-center tw-justify-between">
+    <div class="tw-bg-white md:tw-border-l-4 tw-border-b-4 md:tw-border-b-0 tw-p-4  tw-flex tw-items-center tw-justify-between">
       <!-- Wallet Info -->
       <div>
         <p class="tw-text-gray-500">Wallet balance</p>

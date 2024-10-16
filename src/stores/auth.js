@@ -5,11 +5,11 @@ import { handleError } from '@/helpers/error-handling'
 import Ls from '@/services/ls.js'
 import { useClient } from '@/stores/client'
 import router from '@/router'
-export const useAuthStore = (useWindow = false) => {
+export const useAppAuthStore = (useWindow = false) => {
     const defineStoreFunc = useWindow ? window.pinia.defineStore : defineStore
 
     return defineStoreFunc({
-        id: 'auth',
+        id: 'app-auth',
         state: () => ({
             status: '',
             loginData: {
@@ -30,30 +30,6 @@ export const useAuthStore = (useWindow = false) => {
                 if (response) {
                     const password = data.password;
                     this.handlePassed(response);
-                    // if(response.user.is_default_password){
-                    //     Ls.set('oldpassword',password)
-                    //     router.push('/admin/change-password')        
-                    //     return false;                
-                    // }
-
-                    // if(this.requireMFA()){                        
-                    //     const user =  JSON.parse(Ls.get('auth.user')||"{}");
-                    //     if(!user.is_mfa_setup){
-                    //         this.setUpMFA()
-                    //         router.push('/admin/setup-mfa')                            
-                    //         return false;
-                    //     }
-
-                    //     router.push('/admin/verification')
-                    //     return false;
-                    // }else{
-                    //     const notificationStore = useNotificationStore();
-                    //     notificationStore.showNotification({
-                    //         type: 'success',
-                    //         message: 'Logged in successfully.',
-                    //     })
-                    // }
-                    // router.push('/admin/home')
                 }
             },
             requireMFA(){
@@ -84,6 +60,7 @@ export const useAuthStore = (useWindow = false) => {
                 if(response){
 
                     Ls.set('auth.token', response.token)
+                    Ls.set('auth.user_type', 'app')
                     Ls.set('auth.user', JSON.stringify(response.user))              
                     this.loginData.username = ''
                     this.loginData.password = ''                               
@@ -92,7 +69,7 @@ export const useAuthStore = (useWindow = false) => {
                         type: 'success',
                         message: 'Logged in successfully.',
                     })
-                    router.push('/admin/dashboard')
+                    router.push('/app/dashboard')
                 }
             },
             async verifyMfaCode(data){
@@ -130,6 +107,7 @@ export const useAuthStore = (useWindow = false) => {
                         Ls.remove('auth.user');
                         Ls.remove('permissions');
                         Ls.remove('auth.token');
+                        localStorage.clear();
                         const notificationStore = useNotificationStore();
                         notificationStore.showNotification({
                             type: 'success',

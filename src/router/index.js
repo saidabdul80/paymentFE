@@ -31,16 +31,16 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth) {
 
     let userRootPath = to.matched[0]?.path?.replace('/', '') || '';
-    if(!ls.hasPermission(to.meta.ability)){
-      if(userRootPath.includes('admin')){
-        next({ path: `/` }); // Redirect to login or home page
-      }
+    ///alert(ls.hasPermission(to.meta.ability))
+    if (!ls.hasPermission(to.meta.ability)) {
+      //const rootPath = userRootPath.includes(userType);
+      next({ path: '/' }); 
     }
-
+    
     try {
      // const globalStore = useGlobalsStore();
-      const adminStore = useAdminStore()
-      adminStore.bootstrap()
+      //const adminStore = useAdminStore()
+      //adminStore.bootstrap()
       //globalStore.bootstrap();
     } catch (error) { }
 
@@ -49,7 +49,9 @@ router.beforeEach(async (to, from, next) => {
     } else {
       if(userRootPath.includes('admin')){
         next({ path: `/` }); // Redirect to login or home page
-      }      
+      }else if(userRootPath.includes('app')){
+        next({ path: `/` }); 
+      }
     }
 
   } else {

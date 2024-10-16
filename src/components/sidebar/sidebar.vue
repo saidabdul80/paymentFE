@@ -103,16 +103,16 @@ export default {
             isHovered: false,
             pdrawer: true,
             items: [
-                { name: 'Dashboard', href: '/admin/dashboard', icon: PhSquaresFour, permission:'', current: true },
-                { name: 'Wallet', href: '/admin/users', icon: PhWallet, permission:'' , current: false },
-                { name: 'Transactions', href: '/admin/transactions', icon: PhScroll, permission:'', current: false }, 
-                { name: 'Customers', href: '/admin/receive', icon: PhUsersThree, permission:'', current: false },
-                { name: 'Notifications', href: '/admin/sent', icon: PhBell, permission:'', current: false },
+                { name: 'Dashboard', href: '/app/dashboard', icon: PhSquaresFour, permission:'', current: true },
+                // { name: 'Wallet', href: '/app/wallet', icon: PhWallet, permission:'' , current: false },
+                { name: 'Transactions', href: '/app/transactions', icon: PhScroll, permission:'', current: false }, 
+                { name: 'Customers', href: '/app/customers', icon: PhUsersThree, permission:'', current: false },
+                // { name: 'Notifications', href: '/app/notifications', icon: PhBell, permission:'', current: false },
         
             ],
             subItems: [
-                { name: 'Settings', href: '/admin/settings', icon:PhGear, permission:'', current: true },
-                { name: 'Supports', href: '/admin/settings', icon: PhQuestion, permission:'', current: true },
+                { name: 'Settings', href: '/app/settings', icon:PhGear, permission:'', current: true },
+                // { name: 'Supports', href: '/app/supports', icon: PhQuestion, permission:'', current: true },
                 { name: 'Logout', href: '', icon: PhSignOut, current: false }
             ]
         }
