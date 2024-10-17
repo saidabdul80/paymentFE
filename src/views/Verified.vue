@@ -17,14 +17,14 @@
 import InputOtp from 'primevue/inputotp';
 import InputText from 'primevue/inputtext';
 import Card from 'primevue/card';
-import Button from 'primevue/Button';
+//import Button from 'primevue/Button';
 import Special from "@/components/Special.vue"
     export default {
         components: {
             Special,
             Card,
             InputOtp,
-            Button,
+          //  Button,
             InputText
         },
         data() {

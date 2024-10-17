@@ -14,7 +14,7 @@
                 </div>
                 <p class="tw-text-sm tw-text-center tw-mb-5">Didn’t receive the email yet? <span class="tw-text-[#6D8FFF]"> Resend</span></p>
                 <div class="tw-flex tw-justify-center">
-                    <Button severity="contrast" label="Verify" class="tw-w-[60%]" />
+                    <v-btn  type="Verify" color="black"class="tw-w-[60%]" severity="contrast">Verify</v-btn>
                 </div>
             </template>
         </Card>
@@ -26,14 +26,14 @@
 import InputOtp from 'primevue/inputotp';
 import InputText from 'primevue/inputtext';
 import Card from 'primevue/card';
-import Button from 'primevue/Button';
+
 import Special from "@/components/Special.vue"
     export default {
         components: {
             Special,
             Card,
             InputOtp,
-            Button,
+          
             InputText
         },
         data() {

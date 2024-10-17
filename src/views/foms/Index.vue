@@ -65,7 +65,7 @@
           <p class="tw-text-gray-600 tw-text-sm tw-mt-2">All details and documents have been successfully submitted. We will review and give you a feedback <strong>within 24 hours.</strong></p>
         </div>
         <div class="tw-px-6 tw-py-4 tw-text-center">
-          <Button severity="contrast"@click="showmodal=false" class="tw-w-full">
+          <Button severity="contrast" @click="showmodal=false" class="tw-w-full">
             Alright!
           </Button>
         </div>
