@@ -69,6 +69,7 @@ export const useAppAuthStore = (useWindow = false) => {
                         type: 'success',
                         message: 'Logged in successfully.',
                     })
+                   
                     router.push('/app/dashboard')
                 }
             },

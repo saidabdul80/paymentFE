@@ -80,13 +80,13 @@ import { useGlobalsStore } from '@/stores/globals';
     methods: {
       async createAccount() {
         this.loading = true
-        const res = useClient().http({method:'post',path:'/auth/register', data:this.form})
+        const res = await useClient().http({method:'post',path:'/auth/register', data:this.form})
         if(res){
           this.global.palert({
             title: 'Thank you for Joining CowrisPay',
             text: 'We have sent you an email',
             callback: async () => {
-            
+              this.$router.push('/login')
             },
           });
         }

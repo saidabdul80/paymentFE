@@ -98,7 +98,7 @@ export default {
           });
           this.fetchApiKeys(); // Refresh the API keys list
         }
-     
+        this.isGenerating = false
     },
     async fetchApiKeys() {
         const res = await useClient().http({
@@ -106,7 +106,7 @@ export default {
           path: '/clients/keys',
         });
         if (res) {
-          this.apiKeys = res.keys.key; // Assuming the API returns a list of keys in `data`
+          this.apiKeys = res.keys?.key; // Assuming the API returns a list of keys in `data`
         }
     
     },

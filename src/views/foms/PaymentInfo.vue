@@ -29,6 +29,7 @@
   
   <script>
   import TextField from '@/components/TextField.vue';
+import { useClient } from '@/stores/client';
   
   export default {
     components: {

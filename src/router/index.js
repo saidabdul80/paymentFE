@@ -4,6 +4,7 @@ import AdminRoutes from '@/admin/admin-router'
 import ls from "@/services/ls";
 import useAdminStore from "@/admin/stores/admin";
 import appRouter from "./app-router";
+import { useGlobalsStore } from "@/stores/globals";
 let routes = []
 let routes1 = routes.concat(AdminRoutes)
 routes = routes1.concat(appRouter)
@@ -37,15 +38,27 @@ router.beforeEach(async (to, from, next) => {
       next({ path: '/' }); 
     }
     
+   
     try {
-     // const globalStore = useGlobalsStore();
       //const adminStore = useAdminStore()
       //adminStore.bootstrap()
       //globalStore.bootstrap();
     } catch (error) { }
 
     if (ls.get('auth.token')) {
-      next();
+
+      if(userRootPath.includes('admin')){
+        next();
+      }else if(userRootPath.includes('app')){
+        if(ls.get('auth.user')?.kyc_documentation_status !== 'completed' && to.fullPath !=='/app/settings'){
+          const globalStore = useGlobalsStore();
+          globalStore.palert({title:'Please complete business verification',icon:'mdi-lightbulb-on-outline'})
+          next({path:'/app/settings'})
+        }
+        next();
+      }
+
+     
     } else {
       if(userRootPath.includes('admin')){
         next({ path: `/` }); // Redirect to login or home page

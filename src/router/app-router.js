@@ -8,6 +8,7 @@ import Dashbaord from '@/views/Dashbaord.vue';
 import Transactions from '@/views/Transactions.vue';
 import HomeLayout from '@/views/HomeLayout.vue';
 import Settings from '@/views/Settings.vue';
+import Customers from '@/views/Customers.vue';
 
 export default [
     {
@@ -36,7 +37,7 @@ export default [
             {
                 path: "customers",
                 name: "App-customers",
-                component: Transactions,
+                component: Customers,
                 meta: { breadcrumb: "", requiresAuth: true, ability:[] },
             }, 
             {

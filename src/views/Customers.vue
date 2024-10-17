@@ -1,32 +1,12 @@
 <template>
   <div class="tw-h-full tw-w-full" color="light">
-    <Tab :tabs="tabs" v-model="tabIndex" :withBorder="true" :config="tabConfig" refresh  @change="handleTabDrupdwonButton">
-      <template v-slot:Sent>
-        <DataTable
+    <DataTable
           :loading="global.loadingTransactions"
           :paginationData="global.transactions"
           :headers="headers"
           @row-click="handleRowClick"
           @page-change="handlePageChange"
-        >
-    </DataTable>
-      </template>
-      <template v-slot:Received>
-        <DataTable
-          :loading="global.loadingTransactions"
-          :paginationData="global.transactions"
-          :headers="headers"
-          @row-click="handleRowClick"
-          @page-change="handlePageChange"
-        >
-            <template v-slot:td-action="{ row}" >
-                <v-btn  @click.stop="getTransaction(row)"  icon="mdi-arrow-down-bold" size="small"> 
-                </v-btn>
-            </template>
-        </DataTable>
-
-      </template>
-    </Tab>
+        />
   </div>
 
   <Dialog v-model:visible="showmodal" :header="type=='debit'?'Send Money':'Receive Transaction'" modal class="tw-min-[300px] md:tw-w-[450px]">
@@ -190,14 +170,11 @@ export default {
       filters: {},
       showmodal:false,
       headers: [
-        { key: "customer_detail.full_name", title: "Customer name" },
-        { key: "transaction_number", title: "Trx Number",copy:true },
-        { key: "type", title: "Trx type" },
-        { key: "date", title: "Date" },
-        { key: "amount", title: "Amount" },
-        { key: "status", title: "Status" },
-        { key: "action", title: "#" },
-        
+        { key: "full_name", title: "Customer name" },
+        { key: "email", title: "Email", copy:true },
+        { key: "total_received", title: "Total Received" },
+        { key: "total_sent", title: "Total Sent" },
+        { key: "last_date", title: "Last Trx Date" }
       ],
       tabConfig:{
           'Sent':{
@@ -228,7 +205,7 @@ export default {
           transaction_type: this.type||'',
         };
 
-        this.global.getTrasactions(this.filters);
+        this.global.getCustomers(this.filters);
       },
       deep: true,
     },
@@ -236,13 +213,13 @@ export default {
       if (newV == 0) {
         this.type = "credit";
         this.filters.transaction_type = this.type
-        this.global.getTrasactions({
+        this.global.getCustomers({
             transaction_type: this.type,
         });
       } else {
         this.type = "debit";
         this.filters.transaction_type = this.type
-        this.global.getTrasactions({
+        this.global.getCustomers({
             transaction_type: this.type,
         });
       }
@@ -270,9 +247,6 @@ export default {
     },
     handleTabDrupdwonButton(title){
         this.showmodal = true
-    },
-    getTransaction(row){
-
     },
     printDrawerContent() {
       const printContent = this.$refs.drawerContent.innerHTML;
@@ -358,7 +332,7 @@ export default {
   },
   created() {
     this.filters.transaction_type=this.type ;
-    this.global.getTrasactions(this.filters);
+    this.global.getCustomers(this.filters);
   },
 };
 </script>

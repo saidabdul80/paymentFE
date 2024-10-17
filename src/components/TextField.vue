@@ -1,21 +1,15 @@
 <template>
-  
-    <label class="tw-block tw-text-sm tw-font-medium tw-mb-1" for="username"
-      >{{label}}</label
-    >
+  <div>
+    <label class="tw-block tw-text-sm tw-font-medium tw-mb-1">{{ label }}</label>
     <InputText
       :disabled="disabled"
-      :invalid="error_messages != ''"
+      :invalid="errorMessages !== ''"
       v-model="inputValue"
       :placeholder="placeholder"
       class="tw-block tw-w-full tw-border tw-border-gray-300 tw-rounded-lg tw-px-3 tw-py-2"
     />
-    <small
-      v-if="error_messages != ''"
-      class="tw-text-[#d13333]"
-      id="username-help"
-      >{{ error_messages }}</small
-    >
+    <small v-if="errorMessages !== ''" class="tw-text-[#d13333]" id="username-help">{{ errorMessages }}</small>
+  </div>
 </template>
 
 <script>
@@ -43,19 +37,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    isRequired: {
-      type: Boolean,
-      default: false,
-    },
-    appendInnerIcon: {
-      type: String,
-      default: "",
-    },
-    type: {
-      type: String,
-      default: "text",
-    },
-    error_messages: {
+    errorMessages: {
       type: String,
       default: "",
     },

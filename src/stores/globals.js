@@ -26,20 +26,23 @@ export const useGlobalsStore = defineStore('globals', {
     },
     alertPromiseResolve: null,
     transactions:[],
-    loadingTransactions:false
+    loadingTransactions:false,
+    balance:0,
+    stats:[]
   }),
   actions: {
-    /* async bootstrap() {
-        this.pageLoading = true
-        const response = await useClient().http({method:'get',path:'/bootstrap'})
-        this.pageLoading =false
-        if(response){
-            const userStore = useUserStore()
-            userStore.currentUser = response
-            userStore.currentAbilities = response.abilities
-        }
+    async bootstrap() {
+        //this.pageLoading = true
+        this.getBalance()
+        // const response = await useClient().http({method:'get',path:'/bootstrap'})
+        // this.pageLoading =false
+        // if(response){
+        //     const userStore = useUserStore()
+        //     userStore.currentUser = response
+        //     userStore.currentAbilities = response.abilities
+        // }
      
-      }, */
+      },
       getZohoToken(){
         const response = useClient().http({method:'post',path:'https://accounts.zoho.com/oauth/v2/token',fullPath:true,data:{
           grant_type: 'client_credentials',
@@ -173,7 +176,29 @@ export const useGlobalsStore = defineStore('globals', {
         this.transactions = response
       }
     },
-    
+    async getCustomers(data = null){
+      this.loadingTransactions = true
+      const response = await useClient().http({ method: 'get', path: '/transactions/customers', data })                
+      this.loadingTransactions =false
+      if(response){
+        this.transactions = response
+      }
+    },
+    async getBalance(){
+      const response = await useClient().http({ method: 'get', path: '/transactions/balance' })                
+      if(response){
+        this.balance = response
+      }
+    },
+
+    async getBalance(data = null){
+      this.loadingStats = true
+      const response = await useClient().http({ method: 'get', path: '/transactions/stat', data })                
+      if(response){
+        this.stats = response
+      }
+      this.loadingStats = false
+    },
     
   }
 });

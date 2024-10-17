@@ -6,7 +6,8 @@
                 <img :src="getImageUrl()" width="148px" class="tw-mx-auto" />
             </div>
             <div class="tw-pb-3 tw-flex tw-justify-center" v-if="icon">
-                <v-icon  class="tw-text-[80px]  tw-mx-auto" :class="icon"> </v-icon>
+
+                <v-icon  class="tw-text-[80px] tw-text-[orange] tw-mx-auto">{{ icon }} </v-icon>
             </div>
             <h1 class="tw-text-[32px] tw-font-semibold tw-px-2 tw-text-center"
             :class="`tw-text-[${$constants.secondary}]`">
