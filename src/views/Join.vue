@@ -52,7 +52,7 @@
 
 
     import Password from 'primevue/password';
-    import Button from 'primevue/Button';
+    // import Button from 'primevue/Button';
   import InputText from 'primevue/inputtext';
   import Checkbox from 'primevue/checkbox';
   import Special from "@/components/Special.vue"
@@ -67,7 +67,7 @@ import { useGlobalsStore } from '@/stores/globals';
         Password,
         InputText,
         Checkbox,
-        Button
+       // Button
     },
     data() {
       return {
