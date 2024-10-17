@@ -27,7 +27,7 @@
 import InputOtp from 'primevue/inputotp';
 import Password from 'primevue/password';
 import Card from 'primevue/card';
-import Button from 'primevue/Button';
+// import Button from 'primevue/Button';
 import Special from "@/components/Special.vue"
 import TextField from "@/components/TextField.vue"
 import { useAuthStore } from '@/admin/stores/auth';
@@ -39,7 +39,7 @@ import { useAppAuthStore } from '@/stores/auth';
             Card,
             InputOtp,
             Password,
-            Button,
+            //Button,
             TextField
         },
         data() {
