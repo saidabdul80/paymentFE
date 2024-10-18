@@ -24,7 +24,8 @@
                 with a range of advanced features tailored to meet your business needs
               </p>
             </div>   
-          </div>
+          </div> 
+          
         </section>
         <section class=" md:tw-col-span-3 tw-relative tw-hidden sm:tw-block  tw-h-[60vh] md:tw-h-auto tw-mt-10">
          <img src="@/assets/p1.svg" class=" tw-block tw-right-0 md:tw-absolute" />
