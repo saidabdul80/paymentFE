@@ -6,7 +6,7 @@
         <section class="md:tw-col-span-2">
           <div class="tw-flex tw-flex-col tw-items-start tw-self-stretch tw-my-auto tw-w-full tw-font-bold tw-max-md:tw-mt-10 tw-max-md:tw-max-w-full">
             <h1 class="tw-self-stretch tw-text-3xl tw-mt-20 tw-text-white tw-max-md:tw-max-w-full">
-              Simply Payments With CowrisPay
+              Simplify Payments With CowrisPay
             </h1>
             <div v-if="!ls.isLoggedIn()" class="tw-flex tw-gap-5 tw-justify-between sm:tw-mt-20 tw-mt-2 tw-max-w-full tw-text-base tw-text-center tw-w-[411px]">
               <v-btn to="/register"   class="tw-px-5 tw-py-3 tw-capitalize tw-text-black tw-bg-white tw-rounded-xl tw-min-h-[47px]">
