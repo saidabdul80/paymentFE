@@ -1,103 +1,150 @@
 <template>
   <Special>
-      <div class="md:tw-max-w-md tw-w-[80%] tw-mx-auto tw-p-6 tw-bg-white tw-shadow-lg tw-rounded-lg">
-        <h2 class="tw-text-2xl tw-font-bold tw-mb-6 tw-text-center">Create account</h2>
-        <p class="tw-text-center tw-mb-4">
-          Already have an account?
-          <router-link to="/login" class="tw-text-blue-600 tw-underline">Login</router-link>
-        </p>
-        <form @submit.prevent="createAccount">
-          <div class="tw-mb-4">
-            <label for="businessName" class="tw-block tw-text-sm tw-font-medium tw-mb-1">Business Name</label>
-            <InputText id="businessName" v-model="form.business_name" type="text" class="tw-block tw-w-full tw-border tw-border-gray-300 tw-rounded-lg tw-px-3 tw-py-2" required />
+    <div class="md:tw-max-w-md tw-w-[80%] tw-mx-auto tw-p-6 tw-bg-white tw-shadow-lg tw-rounded-lg">
+      <h2 class="tw-text-2xl tw-font-bold tw-mb-6 tw-text-center">Create account</h2>
+      <p class="tw-text-center tw-mb-4">
+        Already have an account?
+        <router-link to="/login" class="tw-text-blue-600 tw-underline">Login</router-link>
+      </p>
+      <div>
+        <div class="tw-mb-4">
+          <TextField v-model="form.business_name" label="Business Name" :error-messages="errors.business_name" />
+        </div>
+        <div class="tw-mb-4">
+          <TextField v-model="form.email" label="Business Email Address" :error-messages="errors.email" type="email" />
+        </div>
+        <div class="tw-grid md:tw-grid-cols-2 tw-gap-4 tw-mb-4">
+          <div>
+            <TextField v-model="form.first_name" label="First Name" :error-messages="errors.first_name" />
           </div>
-          <div class="tw-mb-4">
-            <label for="location" class="tw-block tw-text-sm tw-font-medium tw-mb-1">Business Email Address</label>
-            <InputText id="location" v-model="form.email" type="email" class="tw-block tw-w-full tw-border tw-border-gray-300 tw-rounded-lg tw-px-3 tw-py-2" required />
+          <div>
+            <TextField v-model="form.last_name" label="Last Name" :error-messages="errors.last_name" />
           </div>
-          <div class="tw-grid md:tw-grid-cols-2 tw-gap-4 tw-mb-4">
-            <div class="">
-              <label for="firstName" class="tw-block tw-text-sm tw-font-medium tw-mb-1">First Name</label>
-              <InputText id="firstName" v-model="form.first_name" type="text" class="tw-block tw-w-full tw-border tw-border-gray-300 tw-rounded-lg tw-px-3 tw-py-2" required />
-            </div>
-            <div class="">
-              <label for="lastName" class="tw-block tw-text-sm tw-font-medium tw-mb-1">Last Name</label>
-              <InputText id="lastName" v-model="form.last_name" type="text" class="tw-block tw-w-full tw-border tw-border-gray-300 tw-rounded-lg tw-px-3 tw-py-2" required />
-            </div>
-          </div>
-          <div class="tw-mb-4">
-            <label for="phoneNumber" class="tw-block tw-text-sm tw-font-medium tw-mb-1">Phone Number</label>
-            <InputText id="phoneNumber" v-model="form.phone_number" type="text" class="tw-block tw-w-full tw-border tw-border-gray-300 tw-rounded-lg tw-px-3 tw-py-2" required />
-          </div>
-          <div class="tw-mb-4 tw-w-full">
-            <label for="password" class="tw-block tw-text-sm tw-font-medium tw-mb-1">Enter Password</label>
-            <Password v-model="form.password" fluid id="password" class=" tw-w-full  tw-rounded-lg" required />
-          </div>
-          <div class="tw-mb-4 tw-flex tw-items-center">
-            <Checkbox  id="terms" v-model="form.acceptTerms" :binary="true" required class="tw-mr-2"  />
-            <label for="terms" class="tw-text-sm">
-              I have read and accepted the 
-              <router-link to="/terms" class="tw-text-blue-600 tw-underline">Terms & conditions</router-link>
-              and
-              <router-link to="/data-processing" class="tw-text-blue-600 tw-underline">Data Processing Policy</router-link>
-            </label>
-          </div>
-          <v-btn type="submit" class="tw-w-full tw-bg-black tw-text-white tw-font-bold tw-px-4 tw-py-2 tw-rounded-lg">Create my account</v-btn>
-        </form>
+        </div>
+        <div class="tw-mb-4">
+          <TextField v-model="form.phone_number" label="Phone Number" :error-messages="errors.phone_number" />
+        </div>
+        <div class="tw-mb-4 tw-w-full">
+          <Password :feedback="false" toggleMask v-model="form.password" fluid id="password" class="tw-w-full tw-rounded-lg" :class="{ 'p-invalid': errors.password }" />
+          <small v-if="errors.password" class="tw-text-[#d13333]">{{ errors.password }}</small>
+        </div>
+        <div class="tw-flex tw-items-center">
+          <Checkbox id="terms" v-model="form.acceptTerms" :binary="true" required class="tw-mr-2" />
+          <label for="terms" class="tw-text-sm">
+            I have read and accepted the 
+            <router-link to="/terms" class="tw-text-blue-600 tw-underline">Terms & conditions</router-link>
+            and
+            <router-link to="/data-processing" class="tw-text-blue-600 tw-underline">Data Processing Policy</router-link>
+          </label>
+        </div>
+        <small class="tw-mb-4 tw-w-full tw-text-[#d13333]" v-if="errors.acceptTerms">{{ errors.acceptTerms }}</small>
+        <v-btn @click="createAccount" type="submit" class="tw-w-full tw-bg-black tw-text-white tw-font-bold tw-px-4 tw-py-2 tw-rounded-lg">Create my account</v-btn>
       </div>
+    </div>
   </Special>
-  </template>
-  
-  <script>
+</template>
 
-
-    import Password from 'primevue/password';
-    // import Button from 'primevue/Button';
-  import InputText from 'primevue/inputtext';
-  import Checkbox from 'primevue/checkbox';
-  import Special from "@/components/Special.vue"
+<script>
+import Password from 'primevue/password';
+import Checkbox from 'primevue/checkbox';
+import Special from "@/components/Special.vue";
+import TextField from '@/components/TextField.vue';
 import { useClient } from '@/stores/client';
 import { useGlobalsStore } from '@/stores/globals';
 
-
-
-  export default {
-    components: {
-        Special,
-        Password,
-        InputText,
-        Checkbox,
-       // Button
-    },
-    data() {
-      return {
-        global:useGlobalsStore(),
-        form: {
-          acceptTerms: false,
-        },
-      };
-    },
-    methods: {
-      async createAccount() {
-        this.loading = true
-        const res = await useClient().http({method:'post',path:'/auth/register', data:this.form})
-        if(res){
+export default {
+  components: {
+    Special,
+    Password,
+    Checkbox,
+    TextField,
+  },
+  data() {
+    return {
+      global: useGlobalsStore(),
+      form: {
+        business_name: '',
+        email: '',
+        first_name: '',
+        last_name: '',
+        phone_number: '',
+        password: '',
+        acceptTerms: false,
+      },
+      errors: {},
+      loading: false,
+    };
+  },
+  methods: {
+    async createAccount() {
+      this.errors = {}; // Reset errors
+      if (this.validateForm()) {
+        this.loading = true;
+        const res = await useClient().http({ method: 'post', path: '/auth/register', data: this.form });
+        if (res) {
           this.global.palert({
             title: 'Thank you for Joining CowrisPay',
             text: 'We have sent you an email',
             callback: async () => {
-              this.$router.push('/login')
+              this.$router.push('/login');
             },
           });
         }
-        this.loading = false
-        // Perform account creation logic here
-      },
+        this.loading = false;
+      }
     },
-  };
-  </script>
-  
-  <style scoped>
-  /* Add any additional styles if necessary */
-  </style>
-  
+    validateForm() {
+      let valid = true;
+      const publicEmailDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'];
+      
+      if (!this.form.business_name) {
+        this.errors.business_name = 'Business Name is required';
+        valid = false;
+      }
+      if (!this.form.email) {
+        this.errors.email = 'Business Email Address is required';
+        valid = false;
+      } else if (!this.validEmail(this.form.email)) {
+        this.errors.email = 'Invalid email address';
+        valid = false;
+      } else if (this.isPublicEmailDomain(this.form.email, publicEmailDomains)) {
+        this.errors.email = 'Company email address is required';
+        valid = false;
+      }
+      if (!this.form.first_name) {
+        this.errors.first_name = 'First Name is required';
+        valid = false;
+      }
+      if (!this.form.last_name) {
+        this.errors.last_name = 'Last Name is required';
+        valid = false;
+      }
+      if (!this.form.phone_number) {
+        this.errors.phone_number = 'Phone Number is required';
+        valid = false;
+      }
+      if (!this.form.password) {
+        this.errors.password = 'Password is required';
+        valid = false;
+      }
+      if (!this.form.acceptTerms) {
+        this.errors.acceptTerms = 'You must accept the terms and conditions';
+        valid = false;
+      }
+      return valid;
+    },
+    validEmail(email) {
+      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()\[\]\\.,;:\s@"]+\.)+[^<>()\[\]\\.,;:\s@"]{2,})$/i;
+      return re.test(email);
+    },
+    isPublicEmailDomain(email, publicEmailDomains) {
+      const domain = email.split('@')[1];
+      return publicEmailDomains.includes(domain);
+    },
+  },
+};
+</script>
+
+<style scoped>
+/* Add any additional styles if necessary */
+</style>

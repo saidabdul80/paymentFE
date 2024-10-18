@@ -11,31 +11,45 @@
     </div>
     <div class="tw-text-sm tw-text-gray-700">
        {{ startRow }} - {{ endRow }} of {{ totalItems }}
-      <Button severity="contrast" rounded="sm" outlined :disabled="links?.prev === null" @click="changePage(links?.prev)" icon="pi pi-chevron-left" size="small" class="!tw-rounded-md !tw-h-[30px] !tw-w-[30px] !tw-border-gray-400 tw-me-2"  >          
-        <template #icon>
-          <PhCaretLeft/>
-        </template>
-      </Button>
-     
-      <Button severity="contrast" rounded="sm" outlined :disabled="links?.next === null" @click="changePage(links?.next)"  icon="pi pi-chevron-right" size="small" class="!tw-rounded-md !tw-h-[30px] !tw-w-[30px] !tw-border-gray-400 tw-p-0"  >          
-        <template  #icon>
-        <PhCaretRight/>
-        </template>
-      </Button>
+       <v-btn 
+          :disabled="links?.prev === null" 
+          @click="changePage(links?.prev)" 
+          rounded="sm" 
+          outlined 
+          flat 
+          size="small" 
+          class="!tw-rounded-md !tw-h-[30px] !tw-w-[30px] !tw-border-gray-400 tw-me-2">
+          <template v-slot:default>
+              <PhCaretLeft/>
+          </template>
+      </v-btn>
+
+      <v-btn 
+          :disabled="links?.next === null" 
+          @click="changePage(links?.next)" 
+          rounded="sm" 
+          outlined 
+          flat 
+          size="small" 
+          class="!tw-rounded-md !tw-h-[30px] !tw-w-[30px] !tw-border-gray-400 tw-p-0">
+          <template v-slot:default>
+              <PhCaretRight/>
+          </template>
+      </v-btn>
+
     </div>
   </div> 
 </template>
 
 <script>
 import { PhCaretLeft, PhCaretRight } from '@phosphor-icons/vue';
-import Button from 'primevue/Button';
+
 
 //import {useGlobalsStore} from "@/store/globals"
 //import Button from "../Button.vue"
 
 export default {
   components: {
-   Button,
    PhCaretLeft,
    PhCaretRight
   },

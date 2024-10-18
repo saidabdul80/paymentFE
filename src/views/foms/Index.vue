@@ -65,9 +65,9 @@
           <p class="tw-text-gray-600 tw-text-sm tw-mt-2">All details and documents have been successfully submitted. We will review and give you a feedback <strong>within 24 hours.</strong></p>
         </div>
         <div class="tw-px-6 tw-py-4 tw-text-center">
-          <Button severity="contrast" @click="showmodal=false" class="tw-w-full">
+          <v-btn severity="contrast" @click="showmodal=false"  class="tw-w-full tw-bg-black tw-text-white tw-font-bold tw-px-4 tw-py-2 tw-rounded-lg">
             Alright!
-          </Button>
+          </v-btn>
         </div>
 
 </Dialog>
@@ -80,7 +80,7 @@ import Dialog from 'primevue/dialog';
 import Bussiness from './Bussiness.vue';
 import Documents from './Documents.vue';
 import Information from './Information.vue';
-import Button from 'primevue/Button';
+
 import DashboardCard from '@/components/DashboardCard.vue';
 
 export default {
@@ -89,7 +89,6 @@ export default {
     Documents,
     Bussiness,
     Dialog,
-    Button,
     DashboardCard
   },
   data() {

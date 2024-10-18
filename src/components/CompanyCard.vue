@@ -1,4 +1,5 @@
 <template>
+    
     <span @click="show = !show" class="tw-relative tw-flex tw-items-center">
     <Badge v-if="!user?.picture_url || user?.imageError" class="tw-mt-[18px]" :style="{
         backgroundColor: getColorFromWord(getInitials( user.business_name )),
@@ -43,7 +44,7 @@ export default {
     data() {
         return {
             show: false,
-            user:ls.get('auth.user')
+            user:JSON.parse (ls.get('auth.user')||"{}")
         }
     },
     components: {

@@ -50,11 +50,11 @@ router.beforeEach(async (to, from, next) => {
       if(userRootPath.includes('admin')){
         next();
       }else if(userRootPath.includes('app')){
-        if(ls.get('auth.user')?.kyc_documentation_status !== 'completed' && to.fullPath !=='/app/settings'){
-          const globalStore = useGlobalsStore();
-          globalStore.palert({title:'Please complete business verification',icon:'mdi-lightbulb-on-outline'})
-          next({path:'/app/settings'})
-        }
+        // if(ls.get('auth.user')?.kyc_documentation_status !== 'completed' && to.fullPath !=='/app/settings'){
+        //   const globalStore = useGlobalsStore();
+        //   globalStore.palert({title:'Please complete business verification',icon:'mdi-lightbulb-on-outline'})
+        //   next({path:'/app/settings'})
+        // }
         next();
       }
 
