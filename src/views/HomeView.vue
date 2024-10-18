@@ -23,7 +23,7 @@
                 your business growth - collect payments, manage transaction<br />
                 with a range of advanced features tailored to meet your business needs
               </p>
-            </div>
+            </div>   
           </div>
         </section>
         <section class=" md:tw-col-span-3 tw-relative tw-hidden sm:tw-block  tw-h-[60vh] md:tw-h-auto tw-mt-10">
