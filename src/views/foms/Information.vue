@@ -7,7 +7,7 @@
         <TextField v-model="form.company_name" disabled label="Company Name" :error-messages="errors.company_name"/>
       </div>
       <div class="tw-mb-1">
-        <TextField v-model="form.business_type" label="Business Type" :error-messages="errors.business_type"/>
+        <SelectField :options="businessTypes" v-model="form.business_type" label="Business Type" :error-messages="errors.business_type"/>
       </div>
       <div class="tw-mb-1">
         <TextField v-model="form.business_sector" label="Business Sector" :error-messages="errors.business_sector"/>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import SelectField from '@/components/SelectField.vue';
 import TextField from '@/components/TextField.vue';
 import ls from '@/services/ls';
 import { useClient } from '@/stores/client';
@@ -52,6 +53,7 @@ import { useNotificationStore } from '@/stores/notification';
 export default {
   components: {
     TextField,
+    SelectField
   },
   props: {
     modelValue: {
@@ -61,8 +63,15 @@ export default {
   },
   data() {
     return {
-      user:JSON.parse(ls.get('auth.user')||"{}"),
-      form: { ...this.modelValue, ...{company_name:JSON.parse(ls.get('auth.user')||"{}")?.business_name} }, // Initialize form with the modelValue prop
+      businessTypes :[
+          "Corporation",
+          "Sole Proprietorship",
+          " Limited",
+          "Partnership",
+          "LLC",
+        ],
+      user:ls.get('auth.user'),
+      form: { ...this.modelValue, ...{company_name:ls.get('auth.user')?.business_name} }, // Initialize form with the modelValue prop
       isSubmitting: false, 
       errors: {},
       global: useGlobalsStore()
@@ -106,7 +115,7 @@ export default {
       const res = await useClient().http({
         method: 'post',
         path: '/clients/details',
-        data: this.global.objectToFormData({...this.form, ...{company_name:this.user.business_name}})
+        data: {...this.form, ...{company_name:this.user.business_name}}
       });
       if (res) {
         const notificationStore = useNotificationStore();

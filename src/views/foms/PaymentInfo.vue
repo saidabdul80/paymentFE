@@ -64,7 +64,7 @@ import { useClient } from '@/stores/client';
      const res = await useClient().http({
         method:'post',
         path:'/clients/details/payment-info',
-        data: this.global.objectToFormData(this.form)
+        data:this.form
       })
       if(res){
         const notificationStore = useNotificationStore();

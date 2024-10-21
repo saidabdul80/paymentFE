@@ -60,6 +60,13 @@
     },
     data() {
       return {
+        businessTypes :[
+          "Corporation",
+          "Sole Proprietorship",
+          " Limited",
+          "Partnership",
+          "LLC",
+        ],
         form: {
           isPhoneValid: false,
           fullName: '',
