@@ -2,8 +2,8 @@
     <div class="tw-bg-white md:tw-border-l-4 tw-border-b-4 md:tw-border-b-0 tw-p-4  tw-flex tw-items-center tw-justify-between">
       <!-- Wallet Info -->
       <div>
-        <p class="tw-text-gray-500">Wallet balance</p>
-        <h2 class="tw-text-3xl tw-font-bold tw-text-black">{{ formattedBalance }}</h2>
+        <p class="tw-text-gray-500">{{name}}</p>
+        <h2 class="tw-text-2xl tw-font-[600] tw-text-black" style="letter-spacing: 2px;">{{ formattedBalance }}</h2>
         <p class="tw-text-sm tw-text-gray-500">
           From {{ formattedPreviousBalance }} (last month)
         </p>
@@ -30,6 +30,7 @@
   <script>
   export default {
     props: {
+      name:{},
       balance: {
         type: Number,
         required: true,
@@ -52,12 +53,22 @@
       },
     },
     methods: {
-      formatCurrency(value) {
-        return new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-        }).format(value);
-      },
+       formatCurrency(value) {
+        if (value >= 1000000) {
+          return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 1,
+          }).format(value / 1000000) + 'M';
+        } else {
+          return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+          }).format(value);
+        }
+      }
+
     },
   };
   </script>

@@ -1,6 +1,10 @@
 export default {
   get(key) {
-    return localStorage.getItem(key) ? localStorage.getItem(key) : null
+    const data = localStorage.getItem(key) ? localStorage.getItem(key) : null
+    if(data !== null && data.startsWith("{") && data.endsWith("}")){
+      return JSON.parse(data);
+    }
+    return data;
   },
   isLoggedIn(){
     return this.get('auth.token')?true:false
@@ -13,11 +17,11 @@ export default {
     localStorage.removeItem(key)
   },
   permissions(){
-    const userPermissions = JSON.parse(this.get('permissions') || "[]");
+    const userPermissions = this.get('permissions');
     return userPermissions;
   },
   account_type(){
-   return JSON.parse(this.get('auth.user') || "{}")?.account_type;
+   return this.get('auth.user')?.account_type;
   },
   hasPermission(permission){
     if(this.get('auth.user_type') != 'app'){

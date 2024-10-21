@@ -59,7 +59,7 @@ export const useAuthStore = (useWindow = false) => {
             requireMFA(){
                 let is_mfa = false                
                 
-                JSON.parse(Ls.get('permissions')||"{}").forEach(role => {
+                    Ls.get('permissions').forEach(role => {
                     if(role == 'require-mfa'){
                         is_mfa = true;                        
                     }

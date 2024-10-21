@@ -7,13 +7,13 @@
         <router-link to="/login" class="tw-text-blue-600 tw-underline">Login</router-link>
       </p>
       <div>
-        <div class="tw-mb-4">
+        <div class="tw-mb-3">
           <TextField v-model="form.business_name" label="Business Name" :error-messages="errors.business_name" />
         </div>
-        <div class="tw-mb-4">
+        <div class="tw-mb-3">
           <TextField v-model="form.email" label="Business Email Address" :error-messages="errors.email" type="email" />
         </div>
-        <div class="tw-grid md:tw-grid-cols-2 tw-gap-4 tw-mb-4">
+        <div class="tw-grid md:tw-grid-cols-2 tw-gap-4 tw-mb-3">
           <div>
             <TextField v-model="form.first_name" label="First Name" :error-messages="errors.first_name" />
           </div>
@@ -21,14 +21,34 @@
             <TextField v-model="form.last_name" label="Last Name" :error-messages="errors.last_name" />
           </div>
         </div>
-        <div class="tw-mb-4">
-          <TextField v-model="form.phone_number" label="Phone Number" :error-messages="errors.phone_number" />
+        <div class="tw-mb-3">
+          <vue-tel-input
+            :onlyCountries="['CA']"
+              :dropdownOptions="{ showSearchBox: false, showFlags: true }"
+              :inputOptions="{ showDialCode: true }"
+              v-model="form.phone_number"
+              mode="none"
+              default-country="CA"
+              ref="phoneInput"
+              @validate="validatePhone"
+               class="tw-w-full tw-border tw-border-gray-300 tw-rounded-lg tw-px-3 tw-py-1"
+              :class="{
+                'tw-border-red-500':
+                  !isPhoneValid && form?.phoneNumber?.length > 4,
+              }"></vue-tel-input>
+              <small v-if="errorMessages !== ''" class="tw-text-[#d13333]" id="username-help">{{ errorMessages }}</small>
+          <!-- <TextField v-model="form.phone_number" label="Phone Number" :error-messages="errors.phone_number" /> -->
         </div>
-        <div class="tw-mb-4 tw-w-full">
+        <div class="tw-mb-3">
+          <SelectField :options="['Canada']"   v-model="form.location" label="Location/Country" :error-messages="errors.location" />
+        </div>
+        <div class="tw-mb-2 tw-w-full">
+          <label class="tw-block tw-text-sm tw-font-medium tw-mb-1">
+            Password</label>
           <Password :feedback="false" toggleMask v-model="form.password" fluid id="password" class="tw-w-full tw-rounded-lg" :class="{ 'p-invalid': errors.password }" />
           <small v-if="errors.password" class="tw-text-[#d13333]">{{ errors.password }}</small>
         </div>
-        <div class="tw-flex tw-items-center">
+        <div class="tw-flex tw-items-center tw-mb-2">
           <Checkbox id="terms" v-model="form.acceptTerms" :binary="true" required class="tw-mr-2" />
           <label for="terms" class="tw-text-sm">
             I have read and accepted the 
@@ -51,13 +71,16 @@ import Special from "@/components/Special.vue";
 import TextField from '@/components/TextField.vue';
 import { useClient } from '@/stores/client';
 import { useGlobalsStore } from '@/stores/globals';
-
+import SelectField from '@/components/SelectField.vue';
+import { VueTelInput } from "vue-tel-input";
 export default {
   components: {
     Special,
     Password,
     Checkbox,
     TextField,
+    SelectField,
+    VueTelInput,
   },
   data() {
     return {

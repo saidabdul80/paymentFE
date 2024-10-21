@@ -1,33 +1,33 @@
 <template>
     
-    <span @click="show = !show" class="tw-relative tw-flex tw-items-center">
-    <Badge v-if="!user?.picture_url || user?.imageError" class="tw-mt-[18px]" :style="{
-        backgroundColor: getColorFromWord(getInitials( user.business_name )),
-        borderRadius: '50%',
-        width: !modelValue ? '50px' : '40px',
-        marginBottom: '20px',
-        height: !modelValue ? '50px' : '40px',
-        marginTop: '10px',
-    }" severity="contrast">
-        <span class="tw-text-[16px] tw-font-[500]">{{
-            getInitials( user.business_name )
-            }}</span>
-    </Badge>
+    <span @click="goto()" class="tw-relative tw-cursor-pointer tw-flex tw-items-center">
+        <Badge v-if="!user?.picture_url || user?.imageError" class="tw-mt-[18px]" :style="{
+            backgroundColor: getColorFromWord(getInitials( user.business_name )),
+            borderRadius: '50%',
+            width: !modelValue ? '50px' : '40px',
+            marginBottom: '20px',
+            height: !modelValue ? '50px' : '40px',
+            marginTop: '10px',
+        }" severity="contrast">
+            <span class="tw-text-[16px] tw-font-[500]">{{
+                getInitials( user.business_name )
+                }}</span>
+        </Badge>
 
-    <img v-else :src="user?.picture_url" @error="handleImageError(user)" :alt=" user.business_name "
-        class="tw-h-[40px] tw-w-[40px] tw-rounded-full" />
-    <div v-if="name" class="tw-ms-3">
-        <p class="tw-text-xl tw-font-[400] tw-capitalize tw-truncate tw-w-[159px]">
-            {{ user.business_name }}
-        </p>
-        <p class="tw-font-[300]">  {{ user?.first_name }} {{ user?.last_name  }}</p>
-    </div>
-    <Transition name="fade">
-        <div v-if="show && !name" class="tw-fixed tw-top-15 tw-z-10 tw-right-5" >
-            <v-btn class="tw-bg-white tw-text-black">Logout</v-btn>
+        <img v-else :src="user?.picture_url" @error="handleImageError(user)" :alt=" user.business_name "
+            class="tw-h-[40px] tw-w-[40px] tw-rounded-full" />
+        <div v-if="name" class="tw-ms-3">
+            <p class="tw-text-xl tw-font-[400] tw-capitalize tw-truncate tw-w-[159px]">
+                {{ user.business_name }}
+            </p>
+            <p class="tw-font-[300]">  {{ user?.first_name }} {{ user?.last_name  }}</p>
         </div>
-    </Transition>
-</span>
+        <Transition name="fade">
+            <div v-if="show && !name" class="tw-fixed tw-top-15 tw-z-10 tw-right-5" >
+                <v-btn class="tw-bg-white tw-text-black">Logout</v-btn>
+            </div>
+        </Transition>
+    </span>
 </template>
 
 <script>
@@ -44,13 +44,20 @@ export default {
     data() {
         return {
             show: false,
-            user:JSON.parse (ls.get('auth.user')||"{}")
+            user:ls.get('auth.user')
         }
     },
     components: {
         Badge,
     },
     methods:{
+        goto(){
+            if(this.name){
+                this.$router.push('/')
+            }else{
+                this.show = !this.show
+            }
+        },
         getInitials(fullName) {
         if (!fullName) return '';
         const nameParts = fullName.trim().split(' ');

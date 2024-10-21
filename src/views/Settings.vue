@@ -3,7 +3,7 @@
     <Tab :tabs="tabs" v-model="tabIndex" :withBorder="true" :config="tabConfig" refresh @change="handleTabDropdownButton">
       <template v-slot:Bussiness>
         <div class="tw-p-3">
-          <Information />
+          <Information v-model="info" />
         </div>
       </template>
       <template v-slot:Payment>
@@ -66,6 +66,7 @@ export default {
   data() {
     return {
       tabIndex: 0,
+      info:{},
       tabs: [
         { name: "Bussiness Information", key: "Bussiness" },
         { name: "Payment Information", key: "Payment" },
@@ -88,7 +89,7 @@ export default {
       this.isGenerating = true;
         const res = await useClient().http({
           method: 'get',
-          path: '/clients/generate-key',
+          path: 'clients/generate-key',
         });
         if (res) {
           const notificationStore = useNotificationStore();
@@ -103,12 +104,21 @@ export default {
     async fetchApiKeys() {
         const res = await useClient().http({
           method: 'get',
-          path: '/clients/keys',
+          path: 'clients/keys',
         });
         if (res) {
           this.apiKeys = res.keys?.key; // Assuming the API returns a list of keys in `data`
         }
-    
+    },
+    async fetchDetails() {
+        const res = await useClient().http({
+          method: 'get',
+          path: 'clients/details',
+        });
+        if (res) {
+          console.log(res,3223)
+          this.info = res; // Assuming the API returns a list of keys in `data`
+        }
     },
   },
   created() {
@@ -116,6 +126,7 @@ export default {
     if (this.tabIndex === 2) {
       this.fetchApiKeys();
     }
+    this.fetchDetails()
   },
 };
 </script>

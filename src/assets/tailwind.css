@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.v-text-field--box .v-input__slot, .v-text-field--outline .v-input__slot{
+    min-height: auto!important;
+    display: flex!important;
+    align-items: center!important
+   }
+   .v-text-field.v-text-field--solo .v-input__control{
+    min-height: 10px;
+    display: flex!important;
+    align-items: center!important
+}
