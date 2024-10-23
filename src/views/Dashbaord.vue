@@ -1,21 +1,9 @@
 <template>
     <div class="tw-px-4">
         <div class="md:tw-p-5">
-            <div class="tw-grid md:tw-grid-cols-5 tw-grid-cols-1 lg:tw-grid-cols-4 tw-gap-4 ">
-                <!-- <v-select v-model="selectedCurrency" :items="currencyOptions" label="Select Currency" variant="flat"
-                    height="20px" width="200px" class="tw-mb-0 tw-border tw-h-[50px] tw-py-0 tw-mt-0"></v-select> -->
-                <!-- <v-select  v-model="type" :items="['receive', 'sent']" label="Dashboard Type" variant="flat"
-                    height="20px" width="100%" class="tw-mb-0 tw-border  tw-h-[40px]  tw-py-0 tw-mt-0"></v-select>
-                <v-select v-model="date_type" :items="['days', 'week', 'month', 'year']" label="Date Type" variant="flat"
-                    height="20px" width="100%" class="tw-mb-0 tw-border  tw-h-[40px] tw-py-0 tw-mt-0"></v-select>
-                <v-select v-model="year" :items="years" label="Year" variant="flat" height="20px" width="100%"
-                    class="tw-mb-0 tw-border tw-h-[40px] tw-py-0 tw-mt-0"></v-select>
-                <v-select v-model="month" :items="months" label="Month" variant="flat" height="20px" width="100%"
-                    class="tw-mb-0 tw-border tw-h-[40px] tw-py-0 tw-mt-0"></v-select> -->
-            </div>
+       
             <!-- <hr class="tw-my-4 tw-border-2 tw-shadow-2xl"/> -->
-            <div class="tw-grid md:tw-grid-cols-2 tw-mb-4 tw-items-center tw-place-items-center">
-                <!-- {{ this.globals.balance }} -->
+            <div class="tw-grid md:tw-grid-cols-4 tw-mb-4 tw-items-center tw-place-items-center">                  
                 <DashboardCard 
                     v-for="key in Object.keys(globals.balance)"
                     :name="key.replace('_', ' ')"
@@ -89,7 +77,7 @@ export default {
                 thisYear: {},
                 overall: []
             },
-            type: 'receive',
+            type: 'credit',
             date_type: 'days',
             year: currentYear,
     
@@ -163,90 +151,17 @@ export default {
                     },
                 },
 
-                // series: [
-                //     { name: 'Total Received', data: [] },
-                //     { name: 'Total Transactions', data: [] },
-                //     { name: 'Completed Transactions', data: [] },
-                //     { name: 'Failed Transactions', data: [] },
-                //     { name: 'Average Transaction Value', data: [] }
-                // ]
+         
             },
-            chartOptionsComparison: {
-                chart: {
-                    type: "spline",
-                },
-                title: {
-                    text: 'Comparison of Total Received vs Total Sent'
-                },
-                xAxis: {
-                    categories: []
-                },
-                yAxis: { // Only one yAxis (left)
-                    title: {
-                        text: 'Amount',
-                    },
-                    labels: {
-                        format: '{value} ',
-                        style: {
-                            color: "#000"
-                        }
-                    },
-                    stackLabels: {
-                        enabled: true
-                    }
-                },
-                legend: {
-                    align: 'right',
-                    x: -30,
-                    verticalAlign: 'top',
-                    y: 25,
-                    floating: true,
-                    backgroundColor: 'white',
-                    borderColor: '#CCC',
-                    borderWidth: 1,
-                    shadow: false
-                },
-                plotOptions: {
-                    series: {
-                        animation: {
-                            duration: 1000
-                        },
-                        marker: {
-                            enabled: false
-                        },
-                        lineWidth: 2
-                    }
-                },
-                series: [
-                    {
-                        name: 'Total Received',
-                        data: [],
-                        yAxis: 0, // Bind this series to the left yAxis
-                        color: Highcharts.getOptions().colors[0]
-                    },
-                    {
-                        name: 'Total Sent',
-                        data: [],
-                        yAxis: 0, // Also bind this series to the left yAxis
-                        color: Highcharts.getOptions().colors[1]
-                    }
-                ]
-            },
-            balances:{
-                Ledger:{name:"Ledger Balance",balance:40000000,previousBalance:30000000,percentageChange:4},
-                Available:{name:"Available Balance",balance:40000000,previousBalance:30000000,percentageChange:4},
-                Send:{name:"Send ",balance:40000000,previousBalance:30000000,percentageChange:4},
-                Receive:{name:"Receive",balance:40000000,previousBalance:30000000,percentageChange:4},
-            }
 
         };
     },
     watch: {
-        selectedCurrency: 'fetchDashboards',
-        type: 'fetchDashboards',
-        date_type: 'fetchDashboards',
-        year: 'fetchDashboards',
-        month: 'fetchDashboards',
+        selectedCurrency: 'fetchDashboards2',
+        //type: 'fetchDashboards',
+        // date_type: 'fetchDashboards',
+        // year: 'fetchDashboards',
+        // month: 'fetchDashboards',
         all_transaction_date_type:'fetchDashboards2',
         all_transaction_year:'fetchDashboards2',
     },
@@ -288,10 +203,10 @@ export default {
                     averageTransactionValue.push(parseFloat(data[date][this.selectedCurrency].average_transaction_value));
                 }
             });
-            this.chartOptions.title.text = this.type == 'receive' ? 'Received Stats' : 'Sent Stats'
+            this.chartOptions.title.text = this.type == 'credit' ? 'Received Stats' : 'Debit Stats'
             this.chartOptions.xAxis.categories = labels;
             this.chartOptions.series[0].data = totalReceived;
-            this.chartOptions.series[0].name = this.type == 'receive' ? 'Total Received' : 'Total Sent'
+            this.chartOptions.series[0].name = this.type == 'credit' ? 'Total Received' : 'Total Debit'
             this.chartOptions.series[1].data = totalTransactions;
             this.chartOptions.series[2].data = completedTransactions;
             this.chartOptions.series[3].data = failedTransactions;
@@ -301,15 +216,17 @@ export default {
         async fetchDashboards2() {
             this.all_transaction_key = true;
             const payload = {
-                type: 'sent',
+                transaction_type: 'debit',
                 date_type: this.all_transaction_date_type,
                 year: this.all_transaction_date_type === 'year' ? null : this.all_transaction_year,
                 month: null,
                 currency: this.selectedCurrency
             };
+            //alert(this.all_transaction_date_type)
 
-            const sent = await useClient().http({ method: 'get', path: 'transactions/stats', data: payload });
-            const received = await useClient().http({ method: 'get', path: 'transactions/stats', data: { ...payload, type: 'receive' } });
+            const debit = await useClient().http({ method: 'get', path: 'transactions/stats', data: payload });
+
+            const received = await useClient().http({ method: 'get', path: 'transactions/stats', data:{...payload,transaction_type: 'credit' }});
 
             this.loading = false;
 
@@ -318,7 +235,7 @@ export default {
             const labels = [];
 
             // Combine the dates from both datasets to ensure all dates are covered
-            const allDates = Array.from(new Set([...Object.keys(received), ...Object.keys(sent)])).sort();
+            const allDates = Array.from(new Set([...Object.keys(received), ...Object.keys(debit)])).sort();
 
             allDates.forEach(date => {
                 labels.push(date);
@@ -329,8 +246,8 @@ export default {
                     totalReceived.push(0);  // Add 0 if no data for the date
                 }
 
-                if (sent[date] && sent[date][this.selectedCurrency]) {
-                    totalSent.push(parseFloat(sent[date][this.selectedCurrency].total_amount));
+                if (debit[date] && debit[date][this.selectedCurrency]) {
+                    totalSent.push(parseFloat(debit[date][this.selectedCurrency].total_amount));
                 } else {
                     totalSent.push(0);  // Add 0 if no data for the date
                 }
@@ -356,14 +273,14 @@ export default {
 
         async comparison() {
             const payload1 = {
-                type: 'receive',
+                type: 'credit',
                 date_type: this.date_type,
                 year: this.year,
                 month: this.month,
                 currency: this.selectedCurrency
             };
             const payload2 = {
-                type: 'sent',
+                type: 'debit',
                 date_type: this.date_type,
                 year: this.year,
                 month: this.month,
@@ -372,9 +289,9 @@ export default {
 
             this.loading = true;
 
-            // Fetch data for 'receive'
+            // Fetch data for 'credit'
             const response1 = await useClient().http({ method: 'get', path: 'transactions/stats', data: payload1 });
-            // Fetch data for 'sent'
+            // Fetch data for 'debit'
             const response2 = await useClient().http({ method: 'get', path: 'transactions/stats', data: payload2 });
 
             this.loading = false;
@@ -396,7 +313,7 @@ export default {
                     //totalReceived.push(0);
                 }
 
-                // Add sent data if available, else add 0
+                // Add debit data if available, else add 0
                 if (response2[date] && response2[date][this.selectedCurrency]) {
                     console.log(date,response2[date][this.selectedCurrency].total_received)
                     totalSent.push(parseFloat(response2[date][this.selectedCurrency].total_received));
@@ -415,7 +332,7 @@ export default {
 
     },
     created() {
-        this.fetchDashboards();
+        this.fetchDashboards2();
         this.globals.getBalance()
     },
    

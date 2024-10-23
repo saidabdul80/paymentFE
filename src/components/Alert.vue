@@ -14,7 +14,7 @@
             {{ title }}</h1>
         </div>
 
-        <p class="tw-text-center tw-pb-6 tw-px- 0">{{ text }}</p>
+        <p class="tw-text-center tw-pb-6 tw-px- 0" v-html="text"></p>
         <template #footer>
         <div
             class="tw-w-full tw-flex"

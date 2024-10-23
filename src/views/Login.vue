@@ -6,6 +6,7 @@
                     <div class="tw-flex tw-w-full tw-flex-col tw-justify-center tw-items-center">
                         <div class="tw-w-[80%] ">
                             <p class="tw-text-center tw-font-bold tw-text-lg">Login to your account</p>
+                            <p v-if="global.error" class="tw-text-[#d13333]" style="font-size: 15px;line-height: 15px;text-align: center;margin: 6px 0px;">{{ global.error}}</p>
                             <div class="tw-mb-4">
                                 <TextField v-model="form.username" label="Email address" :error-messages="errors.username" />
                             </div>
@@ -32,6 +33,7 @@ import Special from "@/components/Special.vue";
 import TextField from "@/components/TextField.vue";
 import { useAuthStore } from '@/admin/stores/auth';
 import { useAppAuthStore } from '@/stores/auth';
+import { useGlobalsStore } from '@/stores/globals';
 
 export default {
     components: {
@@ -42,6 +44,7 @@ export default {
     },
     data() {
         return {
+            global:useGlobalsStore(),
             form: {
                 username: '',
                 password: ''

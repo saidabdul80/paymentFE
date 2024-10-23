@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/admin/stores/auth'
 import ls from '@/services/ls'
+import { useGlobalsStore } from '@/stores/globals'
 import { useNotificationStore } from '@/stores/notification'
 
 export const handleError = (err) => {
@@ -201,7 +202,7 @@ export const showToaster = (msg, t = true) => {
  
 
   const notificationStore = useNotificationStore()
-
+  useGlobalsStore().error = msg
   notificationStore.showNotification({
     type: 'error',
     message: msg,

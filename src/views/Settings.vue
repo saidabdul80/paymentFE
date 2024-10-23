@@ -8,7 +8,7 @@
       </template>
       <template v-slot:Payment>
         <div class="tw-p-3">
-          <PaymentInfo />
+          <PaymentInfo n v-model="info.payment_info" />
         </div>
       </template>
       <template v-slot:API>
@@ -66,7 +66,9 @@ export default {
   data() {
     return {
       tabIndex: 0,
-      info:{},
+      info:{
+        payment_info:{}
+      },
       tabs: [
         { name: "Bussiness Information", key: "Bussiness" },
         { name: "Payment Information", key: "Payment" },

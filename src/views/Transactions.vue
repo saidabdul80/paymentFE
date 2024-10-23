@@ -65,18 +65,26 @@
     </div>
     <div v-else>
         <div class="tw-grid tw-grid-cols-1 tw-gap-3">
-        <div  v-if="receiveData?.reference_number" >
+        <!-- <div  v-if="receiveData?.reference_number" >
           <TextField :disabled="receiveData?.reference_number"  v-model="receiveData.reference_number" label="Reference number" required />
+         
+        </div> -->
+        <div class="tw-flex ">
+          <TextField v-model="receiveData.reference_number" label="Reference number" required class="tw-w-full tw-rounded-e-none" />
+          <v-btn :loading="loadingFetchedReceivedData" @click="fetchReceived()" class="tw-bg-black tw-text-white tw-rounded-s-none tw-h-[42px] tw-w-[100px]" style="align-self: flex-end;">Fetch</v-btn>
         </div>
-        <div  v-else >
-          <TextField   v-model="receiveData.reference_number" label="Reference number" required />
+
+        <div class="tw-my-3">
+            <p><b>Amount:</b>  {{fetchedReceivedData?.amount}}</p>
+            <p><b>Security Question:</b>  {{fetchedReceivedData?.security_question}}</p>
+            <p><b>Sender Name:</b>  {{fetchedReceivedData?.sender_name}}</p>
+            <p><b>Description:</b>  {{fetchedReceivedData?.description}}</p>
         </div>
-        <div  >
-          <TextField v-model="receiveData.answer" label="Answer" required />
-        </div>
+    
         </div>
         <div class="tw-flex tw-justify-center tw-my-4">
-          <v-btn ref="btnRef" @click="receiveMoney" :loading="loadingTx" color="black">Process Transaction</v-btn>
+            <v-btn ref="btnRef" @click="accept" :loading="loadingTx" color="black">Accept Transaction</v-btn>
+            <v-btn ref="btnRef" class="tw-ms-2" @click="reject" :loading="loadingTx" color="red">Reject Transaction</v-btn>
       </div>
     </div>
   </Dialog>
@@ -165,7 +173,9 @@ import DataTable from "@/components/Table/Table.vue";
 import TextField from "@/components/TextField.vue";
 import { useClient } from "@/stores/client";
 import { useGlobalsStore } from "@/stores/globals";
+import { useNotificationStore } from "@/stores/notification";
 import { PhCaretLeft } from "@phosphor-icons/vue";
+import Checkbox from "primevue/checkbox";
 import Dialog from "primevue/dialog";
 import Drawer from "primevue/drawer";
 export default {
@@ -176,10 +186,13 @@ export default {
     Tab,
     PhCaretLeft,
     Dialog,
-    TextField
+    TextField,
+    Checkbox
   },
   data() {
     return {
+      fetchedReceivedData:{},
+      loadingFetchedReceivedData:false,
       sendData:{},
       receiveData:{},
       type: "credit",
@@ -263,6 +276,63 @@ export default {
     }
  },
   methods: {
+    async fetchReceived(){
+        this.loadingFetchedReceivedData = true
+        const res = await useClient().http({
+                method:'post',
+                path:'transactions/incoming/details',
+                data:{reference_number:this.receiveData.reference_number}
+            })
+        if(res){
+            this.fetchedReceivedData = res
+        }
+        
+        this.loadingFetchedReceivedData = false
+    },
+    accept(){
+        this.global.palert({
+                title:'Accept?',
+                text: '<p class="tw-mb-3">Enter Security Question Answer</p> '+
+                  '<input type="text" id="answer-input" name="simple-input" placeholder="Anwser"'+
+                      'class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">',
+                cancelBtnText:'Cancel',
+                confirmBtnText:'Proceed',
+                loading:false,
+                callback: async()=>{
+                    const val = document.getElementById('answer-input').value
+                    this.loadingTx = true
+                    const res = await useClient().http({
+                            method:'post',
+                            path:'transactions/receive',
+                            data:{reference_number:this.receiveData.reference_number, answer:val}
+                        })
+                        if(res){
+                            const notificationStore = useNotificationStore();
+                            notificationStore.showNotification({
+                                type: 'success',
+                                message: 'Completed',
+                            });
+                        }
+                        this.loadingTx = false
+                }
+            })
+    },
+    async reject(){
+        this.loadingTx = true
+        const res = await useClient().http({
+                method:'post',
+                path:'transactions/decline',
+                data:{reference_number:this.receiveData.reference_number}
+            })
+            if(res){
+                const notificationStore = useNotificationStore();
+                notificationStore.showNotification({
+                    type: 'success',
+                    message: 'Declined',
+                });
+            }
+            this.loadingTx = false
+    },
     updateRecord(rowData) {
       this.showmodal = true;
       this.receiveData.replyTo = rowData.customer_detail; // store the selected row data

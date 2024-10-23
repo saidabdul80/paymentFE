@@ -172,9 +172,10 @@ export default {
       headers: [
         { key: "full_name", title: "Customer name" },
         { key: "email", title: "Email", copy:true },
-        { key: "total_received", title: "Total Received" },
-        { key: "total_sent", title: "Total Sent" },
-        { key: "last_date", title: "Last Trx Date" }
+        { key: "total_receive", title: "Total Received Amount" },
+        { key: "total_sent", title: "Total Sent Amount" },
+        { key: "transaction_count", title: "Total Trx Count" },
+        { key: "last_transaction_date", title: "Last Trx Date", formatDate: true  }
       ],
       tabConfig:{
           'Sent':{

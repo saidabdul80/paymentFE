@@ -91,5 +91,11 @@ export default [
                 meta: { requiresAuth: false },
             },   
         ]
-    }
+    },
+    {
+        path: "/verify/:name/:token?",
+        name: "Success",
+        component: () => import("@/views/Success.vue"),
+        meta: { requiresAuth: false, breadcrumb: '', parent: "" },
+    },
 ];

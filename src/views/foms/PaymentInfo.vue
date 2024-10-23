@@ -30,6 +30,7 @@
   <script>
   import TextField from '@/components/TextField.vue';
 import { useClient } from '@/stores/client';
+import { useNotificationStore } from '@/stores/notification';
   
   export default {
     components: {
@@ -66,6 +67,7 @@ import { useClient } from '@/stores/client';
         path:'/clients/details/payment-info',
         data:this.form
       })
+      console.log(res,322223)
       if(res){
         const notificationStore = useNotificationStore();
             notificationStore.showNotification({
