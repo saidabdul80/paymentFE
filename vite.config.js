@@ -12,6 +12,19 @@ export default defineConfig({
     vue(),
     VueDevTools(),
   ],
+  cacheDir: './node_modules/.vite_cache',
+  build: {
+    minify: 'esbuild', // default is 'terser', 'esbuild' is faster
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor'; // Split vendor modules
+          }
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       '@':  path.resolve(__dirname, "src"),
