@@ -92,13 +92,13 @@ export default {
       if (!this.form.company_name) errors.company_name = "Company Name is required.";
       if (!this.form.business_type) errors.business_type = "Business Type is required.";
       if (!this.form.business_sector) errors.business_sector = "Business Sector is required.";
-      if (!this.form.rc_number) errors.rc_number = "RC Number is required.";
+      //if (!this.form.rc_number) errors.rc_number = "RC Number is required.";
       if (!this.form.company_email) errors.company_email = "Company Email is required.";
       if (!this.form.business_country) errors.business_country = "Business Country is required.";
       if (!this.form.business_state) errors.business_state = "Business State is required.";
       if (!this.form.business_address) errors.business_address = "Business Address is required.";
-      if (!this.form.cac_document) errors.cac_document = "CAC Document URL is required.";
-      if (!this.form.bank_statement) errors.bank_statement = "Bank Statement URL is required.";
+      //if (!this.form.cac_document) errors.cac_document = "CAC Document URL is required.";
+      //if (!this.form.bank_statement) errors.bank_statement = "Bank Statement URL is required.";
 
       this.errors = errors;
 

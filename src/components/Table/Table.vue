@@ -275,8 +275,17 @@ export default {
       const month = dateObj.toLocaleString('en-US', { month: 'short' });
       const year = dateObj.getFullYear();
 
-      return `${day} ${month} ${year}`;
-    },
+      let hours = dateObj.getHours();
+      const minutes = dateObj.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      
+      const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+      
+      return `${day} ${month} ${year}, ${hours}:${formattedMinutes} ${ampm}`;
+  },
     toggleColumn(header, headers){
       
       if(this.currentSortKey == header.key){

@@ -26,7 +26,7 @@ export const useAuthStore = (useWindow = false) => {
 
         actions: {
             async login(data) {
-                const response = await useClient().http({ method: 'post', path: '/auth/login', data })                
+                const response = await useClient().http({ method: 'post', path: 'auth/login', data })                
                 if (response) {
                     const password = data.password;
                     this.handlePassed(response);

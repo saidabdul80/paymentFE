@@ -28,6 +28,7 @@ export const useGlobalsStore = defineStore('globals', {
     transactions:[],
     loadingTransactions:false,
     balance:0,
+    error:'',
     stats:[]
   }),
   actions: {
@@ -185,9 +186,16 @@ export const useGlobalsStore = defineStore('globals', {
       }
     },
     async getBalance(){
-      const response = await useClient().http({ method: 'get', path: 'transactions/balance' })                
+      const [response, response2] = await Promise.all([
+            useClient().http({ method: 'get', path: 'transactions/count-stats' }),
+            useClient().http({ method: 'get', path: 'transactions/balance' })                
+      ])
+
       if(response){
-        this.balance = response
+        this.balance = {...response2,
+            'Total Debit': response.debit_transactions.total_amount,
+            'Total Credit': response.credit_transactions.total_amount,
+        }
       }
     },
 

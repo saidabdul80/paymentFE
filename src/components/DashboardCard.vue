@@ -1,5 +1,5 @@
 <template>
-    <div class="md:tw-border-l-0 tw-border-b-4 md:tw-border-b-0 tw-p-4  tw-flex tw-items-center tw-justify-between">
+    <div class="md:tw-border-l-4 tw-bg-white tw-w-full  tw-border-y tw-border-gray-300  tw-border-b-4 md:tw-border-b-0 tw-p-4  tw-flex tw-items-center tw-justify-between">
       <!-- Wallet Info -->
       <div>
         <p class="tw-text-gray-500 tw-capitalize">{{name}}</p>
