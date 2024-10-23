@@ -1,16 +1,16 @@
 <template>
-    <div class="tw-bg-white md:tw-border-l-4 tw-border-b-4 md:tw-border-b-0 tw-p-4  tw-flex tw-items-center tw-justify-between">
+    <div class="md:tw-border-l-0 tw-border-b-4 md:tw-border-b-0 tw-p-4  tw-flex tw-items-center tw-justify-between">
       <!-- Wallet Info -->
       <div>
-        <p class="tw-text-gray-500">{{name}}</p>
+        <p class="tw-text-gray-500 tw-capitalize">{{name}}</p>
         <h2 class="tw-text-2xl tw-font-[600] tw-text-black" style="letter-spacing: 2px;">{{ formattedBalance }}</h2>
-        <p class="tw-text-sm tw-text-gray-500">
+        <p class="tw-text-sm tw-text-gray-500" v-if="previousBalance != '-'">
           From {{ formattedPreviousBalance }} (last month)
         </p>
       </div>
   
       <!-- Change Percentage -->
-      <div class="tw-flex tw-items-center">
+      <div class="tw-flex tw-items-center" v-if="percentageChange != '-'">
         <span
           class="tw-px-2 tw-py-1 tw-rounded-full tw-bg-green-100 tw-text-green-600"
           v-if="percentageChange >= 0"

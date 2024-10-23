@@ -20,8 +20,10 @@
           @page-change="handlePageChange"
         >
             <template v-slot:td-action="{ row}" >
-                <v-btn  @click.stop="getTransaction(row)"  icon="mdi-arrow-down-bold" size="small"> 
-                </v-btn>
+                <v-btn  @click.stop="updateRecord(row)" v-if="row?.status?.toLowerCase() !== 'completed' " size="small" icon="mdi-redo" :loading="row?.loading" color="black" title="Re Try Transaction" ></v-btn>
+                <!-- <v-btn @click="confirmSendMoney(row)" v-if="row?.status?.toLowerCase() =='completed' && !row?.fulfilled" size="small"  icon="mdi-check"  :loading="isLoading" color="primary" title="Fulfil"></v-btn> -->
+                <!-- <v-btn  @click.stop="getTransaction(row)"  icon="mdi-redo" size="small"> 
+                </v-btn> -->
             </template>
         </DataTable>
 
@@ -29,7 +31,7 @@
     </Tab>
   </div>
 
-  <Dialog v-model:visible="showmodal" :header="type=='debit'?'Send Money':'Receive Transaction'" modal class="tw-min-[300px] md:tw-w-[450px]">
+  <Dialog v-model:visible="showmodal" :header="getTitle" modal class="tw-min-[300px] md:tw-w-[450px]">
     <div v-if="type=='debit'">
       <div class="tw-grid md:tw-grid-cols-2 tw-grid-cols-1 tw-gap-3">
         <div  >
@@ -63,15 +65,18 @@
     </div>
     <div v-else>
         <div class="tw-grid tw-grid-cols-1 tw-gap-3">
-        <div  >
-          <TextField  v-model="receiveData.reference_number" label="Reference number" required />
+        <div  v-if="receiveData?.reference_number" >
+          <TextField :disabled="receiveData?.reference_number"  v-model="receiveData.reference_number" label="Reference number" required />
+        </div>
+        <div  v-else >
+          <TextField   v-model="receiveData.reference_number" label="Reference number" required />
         </div>
         <div  >
           <TextField v-model="receiveData.answer" label="Answer" required />
         </div>
         </div>
         <div class="tw-flex tw-justify-center tw-my-4">
-          <v-btn ref="btnRef" @click="receiveMoney" :loading="loadingTx" color="black">Add Transaction</v-btn>
+          <v-btn ref="btnRef" @click="receiveMoney" :loading="loadingTx" color="black">Process Transaction</v-btn>
       </div>
     </div>
   </Dialog>
@@ -248,8 +253,25 @@ export default {
       }
     },
   },
- 
+ computed:{
+ getTitle(){
+        if(this.type=='debit'){
+            return 'Send Money'
+        }else{
+            return this.receiveData?.transaction_number ?'Re-try Receive Transaction': 'New Receive Transaction'
+        }
+    }
+ },
   methods: {
+    updateRecord(rowData) {
+      this.showmodal = true;
+      this.receiveData.replyTo = rowData.customer_detail; // store the selected row data
+      this.receiveData.reference_number = rowData.transaction_ref
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+      this.receiveData.date = formattedDate;
+      this.receiveData.answer = ''
+    },
     async sendMoney(){
         this.loadingTx = true
         await useClient().http({
@@ -261,11 +283,20 @@ export default {
     },
     async receiveMoney(){
         this.loadingTx = true
-        await useClient().http({
+        if(this.receiveData?.reference_number){
+
+            await useClient().http({
                 method:'post',
                 path:'/transactions/receive',
                 data:this.receiveData
             })
+        }else{
+            await useClient().http({
+                method:'post',
+                path:'/transactions/incoming/details',
+                data:this.receiveData
+            })
+        }
         this.loadingTx = false
     },
     handleTabDrupdwonButton(title){

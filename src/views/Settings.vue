@@ -117,7 +117,7 @@ export default {
         });
         if (res) {
           console.log(res,3223)
-          this.info = res; // Assuming the API returns a list of keys in `data`
+          this.info = res.client; // Assuming the API returns a list of keys in `data`
         }
     },
   },
