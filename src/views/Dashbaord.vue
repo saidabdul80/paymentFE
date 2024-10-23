@@ -14,14 +14,14 @@
                     class="tw-mb-0 tw-border tw-h-[40px] tw-py-0 tw-mt-0"></v-select> -->
             </div>
             <!-- <hr class="tw-my-4 tw-border-2 tw-shadow-2xl"/> -->
-            <div class="tw-grid md:tw-grid-cols-4 tw-mb-4">
+            <div class="tw-grid md:tw-grid-cols-2 tw-mb-4 tw-items-center tw-place-items-center">
                 <!-- {{ this.globals.balance }} -->
                 <DashboardCard 
-                    v-for="balance in Object.values(balances)"
-                    :name="balance.name"
-                    :balance="balance.balance"
-                    :previousBalance="balance.previousBalance"
-                    :percentageChange="balance.percentageChange"
+                    v-for="key in Object.keys(globals.balance)"
+                    :name="key.replace('_', ' ')"
+                    :balance="globals.balance[key]"
+                    previousBalance="-"
+                    percentageChange="-"
                     />
                     </div>
             <div class="tw-grid md:tw-grid-cols-2 tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-5 tw-gap-4 tw-mb-4"
