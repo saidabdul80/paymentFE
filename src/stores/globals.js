@@ -33,7 +33,7 @@ export const useGlobalsStore = defineStore('globals', {
   actions: {
     async bootstrap() {
         //this.pageLoading = true
-        this.getBalance()
+       
         // const response = await useClient().http({method:'get',path:'/bootstrap'})
         // this.pageLoading =false
         // if(response){
@@ -170,7 +170,7 @@ export const useGlobalsStore = defineStore('globals', {
     },
     async getTrasactions(data = null){
       this.loadingTransactions = true
-      const response = await useClient().http({ method: 'get', path: '/transactions/history', data })                
+      const response = await useClient().http({ method: 'get', path: 'transactions/history', data })                
       this.loadingTransactions =false
       if(response){
         this.transactions = response
@@ -178,27 +178,27 @@ export const useGlobalsStore = defineStore('globals', {
     },
     async getCustomers(data = null){
       this.loadingTransactions = true
-      const response = await useClient().http({ method: 'get', path: '/transactions/customers', data })                
+      const response = await useClient().http({ method: 'get', path: 'transactions/customers', data })                
       this.loadingTransactions =false
       if(response){
         this.transactions = response
       }
     },
     async getBalance(){
-      const response = await useClient().http({ method: 'get', path: '/transactions/balance' })                
+      const response = await useClient().http({ method: 'get', path: 'transactions/balance' })                
       if(response){
         this.balance = response
       }
     },
 
-    async getBalance(data = null){
-      this.loadingStats = true
-      const response = await useClient().http({ method: 'get', path: '/transactions/stat', data })                
-      if(response){
-        this.stats = response
-      }
-      this.loadingStats = false
-    },
+    // async getBalance(data = null){
+    //   this.loadingStats = true
+    //   const response = await useClient().http({ method: 'get', path: '/transactions/stat', data })                
+    //   if(response){
+    //     this.stats = response
+    //   }
+    //   this.loadingStats = false
+    // },
     
   }
 });

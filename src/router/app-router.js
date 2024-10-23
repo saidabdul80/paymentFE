@@ -1,4 +1,4 @@
-import LayoutBasic from '@/admin/layouts/LayoutBasic.vue';
+//import LayoutBasic from '@/admin/layouts/LayoutBasic.vue';
 import HomeView from '@/views/HomeView.vue';
 import Join from '@/views/Join.vue';
 import Login from '@/views/Login.vue';
@@ -9,6 +9,7 @@ import Transactions from '@/views/Transactions.vue';
 import HomeLayout from '@/views/HomeLayout.vue';
 import Settings from '@/views/Settings.vue';
 import Customers from '@/views/Customers.vue';
+import LayoutBasic from '@/views/layouts/LayoutBasic.vue';
 
 export default [
     {

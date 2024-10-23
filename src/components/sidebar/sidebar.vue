@@ -1,8 +1,8 @@
 
 <template>    
-    <v-navigation-drawer v-model="pdrawer" :rail="computedRail" :temporary="temporary" :color="$constants.light" :width="280">
+    <v-navigation-drawer class="tw-transition-all" v-model="pdrawer" :rail="computedRail" :temporary="temporary" :color="$constants.light" :width="280">
         
-        <div class="tw-h-[calc(100vh-200px)] tw-overflow-y-auto tw-font-[300]">
+        <div class="tw-h-[calc(100vh-200px)] tw-overflow-y-auto tw-font-[300] tw-transition-all ">
             <v-list-item nav class="tw-py-[6px] tw-px-[6px]" @mouseenter="startMarquee" @mouseleave="stopMarquee">
                 <template v-slot:default>
                     <div class="tw-flex tw-py-2 tw-items-center">
@@ -17,7 +17,8 @@
                     </div>
 
                     <div class="tw-flex  tw-py-2 tw-items-center" :class="!modelValue?'tw-px-4':'tw-px-0 tw-w-[90px]'">
-                    <Badge v-if="!user?.picture_url || user?.imageError" class="tw-mt-[18px]" :style="{
+                        <CompanyCard />
+                    <!-- <Badge v-if="!user?.picture_url || user?.imageError" class="tw-mt-[18px]" :style="{
                         backgroundColor: getColorFromWord(getInitials(user?.business_name)), 
                         borderRadius: '50%', 
                         width:!modelValue? '50px' :'40px', 
@@ -34,7 +35,7 @@
                                 {{ user.business_name }}
                             </p>
                             <p class="tw-font-[300]">  {{ user?.first_name }} {{ user?.last_name  }}</p>
-                        </div>
+                        </div> -->
                     </div>
                 </template>
             </v-list-item>
@@ -80,6 +81,7 @@ import {
     PhBell,
     PhQuestion,
 } from "@phosphor-icons/vue";
+import CompanyCard from "../CompanyCard.vue";
 
 export default {
     components: {
@@ -94,13 +96,14 @@ export default {
         PhGear,
         PhSignOut,
         Badge,
+        CompanyCard
         
     },
     data() {
         return {
             authStore:useAuthStore(),
             // user: JSON.parse(Ls.get('auth.client')||"{}"),
-            user: JSON.parse(Ls.get('auth.user')||"{}"),
+            user: Ls.get('auth.user'),
             globals: useGlobalsStore(),
             isHovered: false,
             pdrawer: true,
