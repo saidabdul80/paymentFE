@@ -29,6 +29,12 @@ router.beforeEach(async (to, from, next) => {
     return;
   }
 
+    // Check if the user is authenticated and is navigating to the base URL
+    if (ls.get('auth.token') && to.path === '/') {
+      next('/app/dashboard'); // Redirect to /app/dashboard
+      return; // Ensure no further navigation is processed
+    }
+
   if (to.meta.requiresAuth) {
 
     let userRootPath = to.matched[0]?.path?.replace('/', '') || '';
@@ -56,7 +62,7 @@ router.beforeEach(async (to, from, next) => {
         //   next({path:'/app/settings'})
         // }
         next();
-      }
+      } 
 
      
     } else {

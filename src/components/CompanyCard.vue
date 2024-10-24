@@ -24,7 +24,7 @@
         </div>
         <Transition name="fade">
             <div v-if="show && !name" class="tw-fixed tw-top-15 tw-z-10 tw-right-5" >
-                <v-btn class="tw-bg-white tw-text-black">Logout</v-btn>
+                <v-btn class="tw-bg-white tw-text-black" @click="logout">Logout</v-btn>
             </div>
         </Transition>
     </span>
@@ -33,6 +33,7 @@
 <script>
 import ls from '@/services/ls';
 import Badge from 'primevue/badge';
+import { useAuthStore } from "@/admin/stores/auth";
 
 export default {
     props:{
@@ -44,7 +45,8 @@ export default {
     data() {
         return {
             show: false,
-            user:ls.get('auth.user')
+            user:ls.get('auth.user'),
+            authStore:useAuthStore(),
         }
     },
     components: {
@@ -57,6 +59,9 @@ export default {
             }else{
                 this.show = !this.show
             }
+        },
+        logout(){
+            this.authStore.logout()
         },
         getInitials(fullName) {
         if (!fullName) return '';

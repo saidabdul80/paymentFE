@@ -4,7 +4,7 @@
     <p class="tw-mb-6">Kindly provide the following information for review and verification.</p>
     <form @submit.prevent="submitForm" class="tw-grid md:tw-grid-cols-2 tw-gap-x-4">
       <div class="tw-mb-1">
-        <TextField v-model="form.company_name" disabled label="Company Name" :error-messages="errors.company_name"/>
+        <TextField v-model="form.company_name" label="Company Name" :error-messages="errors.company_name"/>
       </div>
       <div class="tw-mb-1">
         <SelectField :options="businessTypes" v-model="form.business_type" label="Business Type" :error-messages="errors.business_type"/>
