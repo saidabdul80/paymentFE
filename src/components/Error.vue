@@ -12,6 +12,6 @@
     </template>
 </v-empty-state>
 <center>
-    <v-btn to="/admin/login" color="green" class="tw-text-white">Home</v-btn>
+    <v-btn to="/" color="green" class="tw-text-white">Home</v-btn>
 </center>
 </template>

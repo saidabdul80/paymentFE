@@ -52,9 +52,9 @@
           <Checkbox id="terms" v-model="form.acceptTerms" :binary="true" required class="tw-mr-2" />
           <label for="terms" class="tw-text-sm">
             I have read and accepted the 
-            <router-link to="/terms" class="tw-text-blue-600 tw-underline">Terms & conditions</router-link>
+            <router-link to="/#terms" class="tw-text-blue-600 tw-underline">Terms & conditions</router-link>
             and
-            <router-link to="/data-processing" class="tw-text-blue-600 tw-underline">Data Processing Policy</router-link>
+            <router-link to="/#data-processing" class="tw-text-blue-600 tw-underline">Data Processing Policy</router-link>
           </label>
         </div>
         <small class="tw-mb-4 tw-w-full tw-text-[#d13333]" v-if="errors.acceptTerms">{{ errors.acceptTerms }}</small>

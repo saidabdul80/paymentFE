@@ -80,11 +80,11 @@ export default {
         return {
             ls:ls,
             globals: useGlobalsStore(),
-            main_items:[
-            {name:'Resources', href:'/',  permission:'', current: true },
-            {name:'Developer', href:'/',  permission:'', current: true },
-            {name:'Pricing', href:'/',  permission:'', current: true },
-            ],
+            // main_items:[
+            // {name:'Resources', href:'/',  permission:'', current: true },
+            // {name:'Developer', href:'/',  permission:'', current: true },
+            // {name:'Pricing', href:'/',  permission:'', current: true },
+            // ],
             items: [
                 { name: 'Sign In', href: '/login', color: '#000', permission:'', current: true },
                 // { name: 'Contact Us', href: '/admin/users', color: '#000', permission:'' , current: false },
