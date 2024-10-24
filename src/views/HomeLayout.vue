@@ -86,8 +86,8 @@ export default {
             {name:'Pricing', href:'/',  permission:'', current: true },
             ],
             items: [
-                { name: 'Sign In', href: '/admin/dashboard', color: '#000', permission:'', current: true },
-                { name: 'Contact Us', href: '/admin/users', color: '#000', permission:'' , current: false },
+                { name: 'Sign In', href: '/login', color: '#000', permission:'', current: true },
+                // { name: 'Contact Us', href: '/admin/users', color: '#000', permission:'' , current: false },
             ],
             drawer: false,
             userStore: useUserStore(),
