@@ -4,7 +4,7 @@
     <p class="tw-mb-6">Kindly provide the following information for review and verification.</p>
     <form @submit.prevent="submitForm" class="tw-grid md:tw-grid-cols-2 tw-gap-x-4">
       <div class="tw-mb-1">
-        <TextField v-model="form.company_name" label="Company Name" :error-messages="errors.company_name"/>
+        <TextField v-model="form.company_name" disabled label="Company Name" :error-messages="errors.company_name"/>
       </div>
       <div class="tw-mb-1">
         <SelectField :options="businessTypes" v-model="form.business_type" label="Business Type" :error-messages="errors.business_type"/>
@@ -63,69 +63,95 @@ export default {
   },
   data() {
     return {
-      businessTypes :[
-          "Corporation",
-          "Sole Proprietorship",
-          " Limited",
-          "Partnership",
-          "LLC",
-        ],
-      user:ls.get('auth.user'),
-      form: { ...this.modelValue, ...{company_name:ls.get('auth.user')?.business_name} }, // Initialize form with the modelValue prop
-      isSubmitting: false, 
+      businessTypes: [
+        "Corporation",
+        "Sole Proprietorship",
+        "Limited",
+        "Partnership",
+        "LLC",
+      ],
+      user: ls.get('auth.user'),
+      form: {},
+      isSubmitting: false,
       errors: {},
       global: useGlobalsStore()
     };
   },
+  created() {
+    // Initialize form with both modelValue and user's business name
+    this.initializeForm();
+  },
   watch: {
     modelValue: {
       handler(newValue) {
-        this.form = { ...newValue };
+        // Preserve the company name when model value changes
+        const currentCompanyName = this.form.company_name;
+        this.form = { 
+          ...newValue,
+          company_name: currentCompanyName || this.user?.business_name
+        };
       },
       deep: true,
     },
   },
   methods: {
+    initializeForm() {
+      this.form = {
+        ...this.modelValue,
+        company_name: this.user?.business_name
+      };
+    },
     validateForm() {
       const errors = {};
       
       if (!this.form.company_name) errors.company_name = "Company Name is required.";
       if (!this.form.business_type) errors.business_type = "Business Type is required.";
       if (!this.form.business_sector) errors.business_sector = "Business Sector is required.";
-      //if (!this.form.rc_number) errors.rc_number = "RC Number is required.";
       if (!this.form.company_email) errors.company_email = "Company Email is required.";
       if (!this.form.business_country) errors.business_country = "Business Country is required.";
       if (!this.form.business_state) errors.business_state = "Business State is required.";
       if (!this.form.business_address) errors.business_address = "Business Address is required.";
+      //if (!this.form.rc_number) errors.rc_number = "RC Number is required.";
       //if (!this.form.cac_document) errors.cac_document = "CAC Document URL is required.";
       //if (!this.form.bank_statement) errors.bank_statement = "Bank Statement URL is required.";
 
       this.errors = errors;
-
       return Object.keys(errors).length === 0;
     },
     async submitForm() {
-      if (!this.validateForm()) {
-        return;
-      }
+      if (!this.validateForm()) return;
 
-      this.isSubmitting = true; // Disable the button
-      // Emit the updated form data to the parent component
-      this.$emit('update:modelValue', this.form);
-      const res = await useClient().http({
-        method: 'post',
-        path: '/clients/details',
-        data: {...this.form, ...{company_name:this.user.business_name}}
-      });
-      if (res) {
+      this.isSubmitting = true;
+      
+      try {
+        const response = await useClient().http({
+          method: 'post',
+          path: '/clients/details',
+          data: {
+            ...this.form,
+            company_name: this.form.company_name || this.user?.business_name
+          }
+        });
+
+        if (response) {
+          const notificationStore = useNotificationStore();
+          notificationStore.showNotification({
+            type: 'success',
+            message: 'Form submitted successfully',
+          });
+          
+          // Update the modelValue after successful submission
+          this.$emit('update:modelValue', this.form);
+        }
+      } catch (error) {
         const notificationStore = useNotificationStore();
         notificationStore.showNotification({
-          type: 'success',
-          message: 'Form submitted successfully',
+          type: 'error',
+          message: 'Failed to submit form',
         });
+      } finally {
+        this.isSubmitting = false;
       }
-
-      this.isSubmitting = false; 
     },
   },
 };
