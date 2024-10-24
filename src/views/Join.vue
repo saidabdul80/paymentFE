@@ -119,7 +119,6 @@ export default {
     validateForm() {
       let valid = true;
       const publicEmailDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'];
-      
       if (!this.form.business_name) {
         this.errors.business_name = 'Business Name is required';
         valid = false;

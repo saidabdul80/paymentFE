@@ -102,7 +102,7 @@ export default {
         }
     },
     beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('scroll', this.handleScroll);
     },
     watch: {
       
