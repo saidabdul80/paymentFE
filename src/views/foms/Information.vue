@@ -13,7 +13,7 @@
         <TextField v-model="form.business_sector" label="Business Sector" :error-messages="errors.business_sector"/>
       </div>
       <div class="tw-mb-1">
-        <TextField v-model="form.rc_number" label="RC Number" :error-messages="errors.rc_number"/>
+        <TextField v-model="form.rc_number" label="Corporate Number" :error-messages="errors.rc_number"/>
       </div>
       <div class="tw-mb-1">
         <TextField v-model="form.company_email" label="Company Email" :error-messages="errors.company_email"/>
@@ -27,11 +27,9 @@
       <div class="tw-mb-1">
         <TextField v-model="form.business_address" label="Business Address" :error-messages="errors.business_address"/>
       </div>
-      <div class="tw-mb-1">
-        <TextField v-model="form.cac_document" label="CAC Document URL" :error-messages="errors.cac_document"/>
-      </div>
-      <div class="tw-mb-1">
-        <TextField v-model="form.bank_statement" label="Bank Statement URL" :error-messages="errors.bank_statement"/>
+      <div class="tw-mb-3">
+        <Upload v-if="!fileLoading" v-model="form.cac_document" label="Corporation Letter" :error-messages="errors.cac_document"/>
+        <v-btn  v-else :loading="true"  class="tw-bg-[#0003] tw-w-full tw-h-[38px]" flat ></v-btn>
       </div>
       <div class="tw-mb-1 md:tw-col-span-2">
         <v-btn type="submit" :loading="isSubmitting" class="tw-w-md tw-bg-black tw-text-white tw-py-2 tw-rounded">
@@ -45,6 +43,7 @@
 <script>
 import SelectField from '@/components/SelectField.vue';
 import TextField from '@/components/TextField.vue';
+import Upload from '@/components/Upload.vue';
 import ls from '@/services/ls';
 import { useClient } from '@/stores/client';
 import { useGlobalsStore } from '@/stores/globals';
@@ -53,7 +52,8 @@ import { useNotificationStore } from '@/stores/notification';
 export default {
   components: {
     TextField,
-    SelectField
+    SelectField,
+    Upload
   },
   props: {
     modelValue: {
@@ -74,7 +74,8 @@ export default {
       form: {},
       isSubmitting: false,
       errors: {},
-      global: useGlobalsStore()
+      global: useGlobalsStore(),
+      fileLoading:false
     };
   },
   created() {
@@ -93,8 +94,32 @@ export default {
       },
       deep: true,
     },
+    'form.cac_document':async function(newVal){
+      if(this.isUrl(this.form.cac_document)){
+        return;
+      }
+      this.fileLoading = true;
+      setTimeout(async()=>{
+        const formData =  new FormData()
+        formData.append('file',this.form.cac_document);
+        formData.append('folder','pg');
+        const res = await useClient().http({method:'post',path:'upload',data:formData})
+        this.form.cac_document = res.url;
+        this.fileLoading = false;
+      },500)
+    }
   },
   methods: {
+    isUrl(file) {
+        let url;
+        try {
+            url = new URL(file);
+        } catch (_) {
+            return false;  
+        }
+
+        return url.protocol === "http:" || url.protocol === "https:";
+    },
     initializeForm() {
       this.form = {
         ...this.modelValue,

@@ -1,14 +1,14 @@
 <template>
     <h2 class="tw-text-md tw-text-gray-800 tw-mb-3">{{ title }}</h2>
-    <div v-if="isUrl || disabled" class="tw-flex  tw-border tw-rounded-md tw-items-center tw-py-0">
-        <div class="tw-text-end tw-font-bold tw-text-green-900 hover:tw-text-green-700 ">
+    <div v-if="isUrl || disabled" class="tw-flex  tw-border tw-rounded-lg tw-items-center tw-py-[2px]">
+        <div class="tw-text-end tw-font-bold tw-text-black-900 hover:tw-text-black-700 ">
             <span class=" tw-px-3 tw-text-md">
                 {{ title }}:
             </span>
             <v-btn @click="show = true" class="tw-bg-bg-900" variant="text">Preview</v-btn>
         </div>
-        <div v-if="!disabled" class="tw-text-end tw-font-bold tw-text-green-900 hover:tw-text-green-700">
-            <v-btn  @click="edit" variant="text">Edit</v-btn>
+        <div v-if="!disabled" class="tw-text-end tw-font-bold tw-text-black-900 hover:tw-text-black-700">
+            <v-btn  @click="edit" variant="text">New Upload</v-btn>
         </div>
     </div>
     <div v-else>
@@ -27,7 +27,7 @@
             <img v-if="filePreview" :src="filePreview" alt="File Preview" class="tw-mt-4 tw-max-h-48 tw-object-contain" />
         </div>
     </div>
-    <p v-if="selectedFileName == '' " class="tw-text-gray-500 tw-text-xs tw-mt-2 tw-items-center tw-flex">
+    <p v-if="!isUrl " class="tw-text-gray-500 tw-text-xs tw-mt-2 tw-items-center tw-flex">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M10.1664 9.83937L8.99138 11.0144C8.34138 11.6644 8.34138 12.7227 8.99138 13.3727C9.64138 14.0227 10.6997 14.0227 11.3497 13.3727L13.1998 11.5227C14.4998 10.2227 14.4998 8.11439 13.1998 6.80605C11.8998 5.50605 9.79139 5.50605 8.48306 6.80605L6.46641 8.82271C5.34974 9.93937 5.34974 11.7477 6.46641 12.8644"
@@ -46,9 +46,9 @@
             <b>
                 {{ title }}
             </b>
-            <div class="tw-text-end tw-font-bold tw-text-green-900 hover:tw-text-green-700">
-                <v-btn class="tw-bg-bg-900" @click="zoom(-1)" variant="text" icon="ph ph-magnifying-glass-minus"></v-btn>
-                <v-btn class="tw-bg-bg-900" @click="zoom(1)" variant="text" icon="ph ph-magnifying-glass-plus"></v-btn>
+            <div class="tw-text-end tw-font-bold tw-text-black-900 hover:tw-text-black-700">
+                <v-btn class="tw-bg-bg-900" @click="zoom(-1)" variant="text" icon="mdi-magnify-minus-outline"></v-btn>
+                <v-btn class="tw-bg-bg-900" @click="zoom(1)" variant="text" icon="mdi-magnify-plus-outline"></v-btn>
             </div>
         </template>
 
@@ -120,7 +120,8 @@ export default {
     watch:{
         modelValue:function(newVal){
             this.createFilePreview(newVal);
-        }
+            this.intervalValue = newVal;
+        },
     },
     created(){
       this.createFilePreview(this.modelValue);
@@ -207,19 +208,17 @@ export default {
             return '';
         },
         isUrl() {
-            return this.modelValue.length > 0;
+            let url;
+            try {
+                url = new URL(this.intervalValue);
+            } catch (_) {
+                return false;  
+            }
+
+            return url.protocol === "http:" || url.protocol === "https:";
         }
     },
-    watch: {
-        modelValue: {
-            immediate: true,
-            handler(newValue) {
-                if (newValue !== this.intervalValue) {
-                    this.intervalValue = newValue;
-                }
-            }
-        }
-    }
+  
 };
 </script>
 
