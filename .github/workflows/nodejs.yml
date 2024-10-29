@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: con-payment-gateway-fe
 
     strategy:
       matrix:
@@ -36,8 +36,8 @@ jobs:
 
       - name: Copy build files to www folder
         run: |
-          if [ ! -d "/var/www/payment" ]; then
-            sudo mkdir -p /var/www/payment
+          if [ ! -d "/var/www/payment-gateway" ]; then
+            sudo mkdir -p /var/www/payment-gateway
           fi
-          sudo rm -rf /var/www/payment/*
-          sudo cp -r dist/* /var/www/payment/
+          sudo rm -rf /var/www/payment-gateway/*
+          sudo cp -r dist/* /var/www/payment-gateway/
