@@ -10,7 +10,7 @@
                             
                             Welcome {{user.first_name}} 👋
                         </p>
-                        <p v-if="ls.get('auth.user')?.kyc_documentation_status  !== 'completed'" class="tw-flex tw-text-sm tw-mb-3"><img src="@/assets/exclamation.svg" class="tw-me-2 tw-block " /> Activate your business profile by filling in details for business verification.</p>
+                        <p @click="$router.push('/app/settings')"  v-if="ls.get('auth.user')?.kyc_documentation_status  !== 'completed'" class="tw-flex tw-text-sm tw-mb-3"><img src="@/assets/exclamation.svg" class="tw-me-2 tw-block " /> Activate your business profile by filling in details for business verification.</p>
                     </div>
                 </v-toolbar-title>
                 

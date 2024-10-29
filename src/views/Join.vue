@@ -141,10 +141,17 @@ export default {
         this.errors.last_name = 'Last Name is required';
         valid = false;
       }
+      
       if (!this.form.phone_number) {
         this.errors.phone_number = 'Phone Number is required';
         valid = false;
+      } else if (!/^\d+$/.test(this.form.phone_number)) {
+        this.errors.phone_number = 'Phone Number must contain only numbers';
+        valid = false;
+      } else {
+        this.errors.phone_number = ''; // Clear the error message if valid
       }
+
       if (!this.form.password) {
         this.errors.password = 'Password is required';
         valid = false;
