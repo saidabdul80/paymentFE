@@ -200,7 +200,7 @@ export default {
       tabIndex: 0,
       tabs: [
         { name: "Received", key: "Received" },
-        { name: "Sent", key: "Sent" },
+       // { name: "Sent", key: "Sent" },
       ],
       global: useGlobalsStore(),
       showdrawer: false,
