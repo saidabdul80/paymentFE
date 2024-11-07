@@ -24,27 +24,26 @@
         <div class="tw-mb-3">
           <vue-tel-input
             :onlyCountries="['CA']"
-              :dropdownOptions="{ showSearchBox: false, showFlags: true }"
-              :inputOptions="{ showDialCode: true }"
-              v-model="form.phone_number"
-              mode="none"
-              default-country="CA"
-              ref="phoneInput"
-              @validate="validatePhone"
-               class="tw-w-full tw-border tw-border-gray-300 tw-rounded-lg tw-px-3 tw-py-1"
-              :class="{
-                'tw-border-red-500':
-                  !isPhoneValid && form?.phoneNumber?.length > 4,
-              }"></vue-tel-input>
-              <small v-if="errorMessages !== ''" class="tw-text-[#d13333]" id="username-help">{{ errorMessages }}</small>
-          <!-- <TextField v-model="form.phone_number" label="Phone Number" :error-messages="errors.phone_number" /> -->
+            :dropdownOptions="{ showSearchBox: false, showFlags: true }"
+            :inputOptions="{ showDialCode: true }"
+            v-model="form.phone_number"
+            mode="none"
+            default-country="CA"
+            ref="phoneInput"
+            @validate="validatePhone"
+            class="tw-w-full tw-border tw-border-gray-300 tw-rounded-lg tw-px-3 tw-py-1"
+            :class="{
+              'tw-border-red-500':
+                !isPhoneValid && form?.phone_number,
+            }"
+          ></vue-tel-input>
+          <small v-if="errors.phone_number" class="tw-text-[#d13333]">{{ errors.phone_number }}</small>
         </div>
         <div class="tw-mb-3">
-          <SelectField :options="['Canada']"   v-model="form.location" label="Location/Country" :error-messages="errors.location" />
+          <SelectField :options="['Canada']" v-model="form.location" label="Location/Country" :error-messages="errors.location" />
         </div>
         <div class="tw-mb-2 tw-w-full">
-          <label class="tw-block tw-text-sm tw-font-medium tw-mb-1">
-            Password</label>
+          <label class="tw-block tw-text-sm tw-font-medium tw-mb-1">Password</label>
           <Password :feedback="false" toggleMask v-model="form.password" fluid id="password" class="tw-w-full tw-rounded-lg" :class="{ 'p-invalid': errors.password }" />
           <small v-if="errors.password" class="tw-text-[#d13333]">{{ errors.password }}</small>
         </div>
@@ -73,6 +72,7 @@ import { useClient } from '@/stores/client';
 import { useGlobalsStore } from '@/stores/globals';
 import SelectField from '@/components/SelectField.vue';
 import { VueTelInput } from "vue-tel-input";
+
 export default {
   components: {
     Special,
@@ -91,11 +91,13 @@ export default {
         first_name: '',
         last_name: '',
         phone_number: '',
+        location: 'Canada',
         password: '',
         acceptTerms: false,
       },
       errors: {},
       loading: false,
+      isPhoneValid: true, // Add phone validation status
     };
   },
   methods: {
@@ -119,10 +121,14 @@ export default {
     validateForm() {
       let valid = true;
       const publicEmailDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'];
+      
+      // Business Name Validation
       if (!this.form.business_name) {
         this.errors.business_name = 'Business Name is required';
         valid = false;
       }
+      
+      // Email Validation
       if (!this.form.email) {
         this.errors.email = 'Business Email Address is required';
         valid = false;
@@ -133,6 +139,8 @@ export default {
         this.errors.email = 'Company email address is required';
         valid = false;
       }
+      
+      // First and Last Name Validation
       if (!this.form.first_name) {
         this.errors.first_name = 'First Name is required';
         valid = false;
@@ -142,25 +150,30 @@ export default {
         valid = false;
       }
       
+      // Phone Number Validation
       if (!this.form.phone_number) {
         this.errors.phone_number = 'Phone Number is required';
         valid = false;
-      } else if (!/^\d+$/.test(this.form.phone_number)) {
-        this.errors.phone_number = 'Phone Number must contain only numbers';
+      } else if (!this.isPhoneValid) {
+        this.errors.phone_number = 'Invalid phone number format';
         valid = false;
-      } else {
-        this.errors.phone_number = ''; // Clear the error message if valid
       }
-
+      
+      // Password Validation
       if (!this.form.password) {
         this.errors.password = 'Password is required';
         valid = false;
       }
+      
+      // Terms Acceptance Validation
       if (!this.form.acceptTerms) {
         this.errors.acceptTerms = 'You must accept the terms and conditions';
         valid = false;
       }
       return valid;
+    },
+    validatePhone(isValid) {
+      this.isPhoneValid = isValid;
     },
     validEmail(email) {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()\[\]\\.,;:\s@"]+\.)+[^<>()\[\]\\.,;:\s@"]{2,})$/i;
