@@ -454,7 +454,7 @@ export default {
       this.transaction = row;
     },
     handlePageChange(path) {
-      this.adminStore.fetchDirectorates(this.filters, path);
+      this.global.getTrasactions(this.filters, path);
     },
   },
   created() {

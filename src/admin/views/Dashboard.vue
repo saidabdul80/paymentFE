@@ -7,14 +7,14 @@
         </v-breadcrumbs>
 
         <div class="container mx-auto">
-            <IndividualTaxpayerRegistration />
+          
         </div>
 
     </div>
 </template>
 
 <script>
-import IndividualTaxpayerRegistration from '@/admin/components/IndividualTaxpayerRegistration.vue';
+//import IndividualTaxpayerRegistration from '@/admin/components/IndividualTaxpayerRegistration.vue';
 
 export default {
     data: () => ({
@@ -34,7 +34,7 @@ export default {
         ],
     }),
     components: {
-        IndividualTaxpayerRegistration,
+
     },
 }
 </script>

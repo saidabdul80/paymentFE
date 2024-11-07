@@ -328,7 +328,7 @@ export default {
       this.transaction = row;
     },
     handlePageChange(path) {
-      this.adminStore.fetchDirectorates(this.filters, path);
+      this.global.getCustomers(this.filters, path);
     },
   },
   created() {

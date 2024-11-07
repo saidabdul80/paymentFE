@@ -23,10 +23,9 @@ export const useAuthStore = (useWindow = false) => {
             loadingMFA: false,
             qrcode:null,
         }),
-
         actions: {
             async login(data) {
-                const response = await useClient().http({ method: 'post', path: 'auth/login', data })                
+                const response = await useClient().http({ method: 'post', path: 'admin/login', data })                
                 if (response) {
                     const password = data.password;
                     this.handlePassed(response);
@@ -67,23 +66,10 @@ export const useAuthStore = (useWindow = false) => {
                 return is_mfa;
             },
             handlePassed(response){
-                
-//                const allPermissions = []; // Extract permissions from roles
-//                
-//                response.user.roles.forEach(role => {
-//                    role.permissions.forEach(permission => {
-//                        allPermissions.push(permission.name);
-//                    });
-//                }); // Extract root permissions
-//
-//                response.user.permissions.forEach(permission => {
-//                    allPermissions.push(permission.name);
-//                });
-//
-             //   Ls.set('permissions', JSON.stringify(allPermissions));
                 if(response){
 
                     Ls.set('auth.token', response.token)
+                    Ls.set('auth.user_type', 'admin')
                     Ls.set('auth.user', JSON.stringify(response.user))              
                     this.loginData.username = ''
                     this.loginData.password = ''                               
@@ -92,17 +78,18 @@ export const useAuthStore = (useWindow = false) => {
                         type: 'success',
                         message: 'Logged in successfully.',
                     })
+                    
                     router.push('/admin/dashboard')
                 }
             },
             async verifyMfaCode(data){
-                const response = await useClient().http({ method: 'post', path: '/auth/verify-mfa',data })          
+                const response = await useClient().http({ method: 'post', path: 'auth/verify-mfa',data })          
                 if(response){
                     router.push('/admin/home')
                 }
             },
             async changePassword(data){                
-                const response = await useClient().http({ method: 'post', path: '/auth/change-password',data })
+                const response = await useClient().http({ method: 'post', path: 'auth/change-password',data })
                 if(response){     
                     Ls.remove('oldpassword');
                     const notificationStore = useNotificationStore();

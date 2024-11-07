@@ -1,80 +1,61 @@
 import LayoutBasic from '@/admin/layouts/LayoutBasic.vue';
-import ErrorView from '@/components/Error.vue'; // Corrected import
+import ErrorView from '@/components/Error.vue';
 import MFA from './views/auth/MFA.vue';
 import ChangePassword from './views/auth/changePassword.vue';
 import Setup_MFA from './views/auth/Setup_MFA.vue';
 import HomeView from '@/views/HomeView.vue';
-import Join from '@/views/Join.vue';
-import Login from '@/views/Login.vue';
-import Otp from '@/views/Otp.vue';
-import Verified from '@/views/Verified.vue';
-import Dashbaord from '@/views/Dashbaord.vue';
-import Transactions from '@/views/Transactions.vue';
+
+import Dashboard from './views/Dashboard.vue'; // Corrected spelling
 import HomeLayout from '@/views/HomeLayout.vue';
+import Login from './views/auth/Login.vue';
 
 export default [
     {
         path: '/admin',
         component: LayoutBasic,
         meta: { breadcrumb: "Home", requiresAuth: false },
-        children: [       
+        children: [
             {
                 path: "dashboard",
-                name: "Admin-Dashbaord",
-                component: Dashbaord,
-                meta: { breadcrumb: "", requiresAuth: false },
+                name: "Admin-Dashboard",
+                component: Dashboard,
+                meta: { breadcrumb: "Dashboard", requiresAuth: false },
             },
             {
                 path: "",
                 name: "Admin-Home",
-                component: Dashbaord,
-                meta: { breadcrumb: "", requiresAuth: false },
+                component: Dashboard,
+                meta: { breadcrumb: "Home", requiresAuth: false },
             },
-            {
-                path: "transactions",
-                name: "Admin-Transactions",
-                component: Transactions,
-                meta: { breadcrumb: "", requiresAuth: false },
-            },
+            // {
+            //     path: "transactions",
+            //     name: "Admin-Transactions",
+            //     component: Transactions,
+            //     meta: { breadcrumb: "Transactions", requiresAuth: false },
+            // },
         ],
     },
-   { 
+    {
         path: '/admin',
         component: HomeLayout,
         meta: { breadcrumb: "Home", requiresAuth: false },
-        children: [      
+        children: [
             {
-                path: "/",
+                path: "",
                 name: "AdHome",
                 component: HomeView,
-                meta: { breadcrumb: "Login", requiresAuth: false },
+                meta: { breadcrumb: "Home", requiresAuth: false },
             },
+
             {
-                path: "/register",
-                name: "AdRegister",
-                component: Join,
-                meta: { requiresAuth: false },
-            },
-            {
-                path: "/login",
+                path: "login",
                 name: "AdLogin",
                 component: Login,
                 meta: { requiresAuth: false },
             },
-            {
-                path: "/otp",
-                name: "AdOtp",
-                component: Otp,
-                meta: { requiresAuth: false },
-            },
-            {
-                path: "/verified",
-                name: "Adverified",
-                component: Verified,
-                meta: { requiresAuth: false },
-            },   
-        ]
-    }, 
+         
+        ],
+    },
     {
         path: "/:pathMatch(.*)*",
         name: 'ErrorView',
