@@ -7,7 +7,7 @@
           :paginationData="global.transactions"
           :headers="headers"
           @row-click="handleRowClick"
-          @page-change="handlePageChange"
+          @page-change="handlePageChangeR"
         >
     </DataTable>
       </template>
@@ -17,7 +17,7 @@
           :paginationData="global.transactions"
           :headers="headers"
           @row-click="handleRowClick"
-          @page-change="handlePageChange"
+          @page-change="handlePageChangeS"
         >
             <template v-slot:td-action="{ row}" >
                 <v-btn  @click.stop="updateRecord(row)" v-if="row?.status?.toLowerCase() !== 'completed' " size="small" icon="mdi-redo" :loading="row?.loading" color="black" title="Re Try Transaction" ></v-btn>
@@ -200,7 +200,7 @@ export default {
       tabIndex: 0,
       tabs: [
         { name: "Received", key: "Received" },
-       // { name: "Sent", key: "Sent" },
+       { name: "Sent", key: "Sent" },
       ],
       global: useGlobalsStore(),
       showdrawer: false,
@@ -245,7 +245,6 @@ export default {
           transaction_number: newFilters.search||'',
           transaction_type: this.type||'',
         };
-
         this.global.getTrasactions(this.filters);
       },
       deep: true,
@@ -453,9 +452,17 @@ export default {
       this.showdrawer = true;
       this.transaction = row;
     },
-    handlePageChange(path) {
+    handlePageChangeR(path) {
+      this.filters.transaction_type=this.type ;
+      console.log(this.type,'rece')
       this.global.getTrasactions(this.filters, path);
     },
+    handlePageChangeS(path) {
+
+      this.filters.transaction_type=this.type;
+      this.global.getTrasactions(this.filters, path);
+    },
+
   },
   created() {
     this.filters.transaction_type=this.type ;

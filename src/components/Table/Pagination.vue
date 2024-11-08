@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     changePage(path) {
-      this.$emit('page-change', path);
+      this.$emit('on-page-change', path);
     },
     changeRowsPerPage(event) {
       //this.globals.filters.paginate = parseInt(event.target.value)

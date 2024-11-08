@@ -169,17 +169,17 @@ export const useGlobalsStore = defineStore('globals', {
       }
       return form;
     },
-    async getTrasactions(data = null){
+    async getTrasactions(data = null,path=null){
       this.loadingTransactions = true
-      const response = await useClient().http({ method: 'get', path: 'transactions/history', data })                
+      const response = await useClient().http({ method: 'get', path:path?path:'transactions/history', data, fullPath:path?true:false })                
       this.loadingTransactions =false
       if(response){
         this.transactions = response
       }
     },
-    async getCustomers(data = null){
+    async getCustomers(data = null, path=null){
       this.loadingTransactions = true
-      const response = await useClient().http({ method: 'get', path: 'transactions/customers', data })                
+      const response = await useClient().http({ method: 'get', path: path?path:'transactions/customers', data, fullPath:path?true:false})                
       this.loadingTransactions =false
       if(response){
         this.transactions = response

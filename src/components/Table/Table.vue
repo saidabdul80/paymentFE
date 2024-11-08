@@ -140,7 +140,7 @@
         :rows-per-page="paginationData?.meta?.per_page"
         :total-items="paginationData?.meta?.total"
         :links="paginationData?.links"
-        @page-change="changePage"
+        @on-page-change="changePage"
         @rows-per-page-change="changeRowsPerPage" />
     </div>
   </div>
