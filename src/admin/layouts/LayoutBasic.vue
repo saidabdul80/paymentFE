@@ -7,10 +7,8 @@
                 <v-toolbar-title class="">
                     <div>
                         <p class="tw-text-xl tw-mb-2">
-                            
-                            Welcome Derick 👋
+                            Welcome {{ ls.get('auth.user')?.first_name }} 👋
                         </p>
-                        <p @click="$router.push('/app/settings')" v-if="ls.get('auth.user')?.kyc_documentation_status  !== 'completed'" class="tw-flex tw-text-sm tw-mb-3"><img src="@/assets/exclamation.svg" class="tw-me-2 tw-block " /> Activate your business profile by filling in details for business verification.</p>
                     </div>
                 </v-toolbar-title>
                 
@@ -35,7 +33,7 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
 import useUserStore from '@/admin/stores/admin';
-import SideBar from "@/components/sidebar/sidebar.vue"
+import SideBar from "@/components/sidebar/AdminSidebar.vue"
 import { useNotificationStore } from '@/stores/notification';
 import { useGlobalsStore } from "@/stores/globals";
 import ls from "@/services/ls";

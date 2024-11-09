@@ -8,6 +8,9 @@ import HomeView from '@/views/HomeView.vue';
 import Dashboard from './views/Dashboard.vue'; // Corrected spelling
 import HomeLayout from '@/views/HomeLayout.vue';
 import Login from './views/auth/Login.vue';
+import Transactions from './views/Transactions.vue';
+import Customers from './views/Customers.vue';
+import Clients from './views/Clients.vue';
 
 export default [
     {
@@ -27,12 +30,24 @@ export default [
                 component: Dashboard,
                 meta: { breadcrumb: "Home", requiresAuth: false },
             },
-            // {
-            //     path: "transactions",
-            //     name: "Admin-Transactions",
-            //     component: Transactions,
-            //     meta: { breadcrumb: "Transactions", requiresAuth: false },
-            // },
+            {
+                path: "transactions",
+                name: "Admin-Transactions",
+                component: Transactions,
+                meta: { breadcrumb: "Transactions", requiresAuth: false },
+            },
+            {
+                path: "customers",
+                name: "Admin-Customers",
+                component: Customers,
+                meta: { breadcrumb: "Customers", requiresAuth: false },
+            },
+            {
+                path: "clients",
+                name: "Admin-Clients",
+                component: Clients,
+                meta: { breadcrumb: "Clients", requiresAuth: false },
+            },
         ],
     },
     {

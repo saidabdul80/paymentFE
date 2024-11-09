@@ -70,7 +70,7 @@ export const useAuthStore = (useWindow = false) => {
 
                     Ls.set('auth.token', response.token)
                     Ls.set('auth.user_type', 'admin')
-                    Ls.set('auth.user', JSON.stringify(response.user))              
+                    Ls.set('auth.user', JSON.stringify(response.admin))              
                     this.loginData.username = ''
                     this.loginData.password = ''                               
                     const notificationStore = useNotificationStore();

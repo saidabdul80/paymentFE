@@ -1,37 +1,15 @@
 <template>
   <div class="tw-h-full tw-w-full" color="light">
-    <Tab :tabs="tabs" v-model="tabIndex" :withBorder="true" :config="tabConfig" refresh  @change="handleTabDrupdwonButton">
-      <template v-slot:Sent>
-        <DataTable
+    <DataTable
           :loading="global.loadingTransactions"
           :paginationData="global.transactions"
           :headers="headers"
           @row-click="handleRowClick"
-          @page-change="handlePageChangeR"
-        >
-    </DataTable>
-      </template>
-      <template v-slot:Received>
-        <DataTable
-          :loading="global.loadingTransactions"
-          :paginationData="global.transactions"
-          :headers="headers"
-          @row-click="handleRowClick"
-          @page-change="handlePageChangeS"
-        >
-            <template v-slot:td-action="{ row}" >
-                <v-btn  @click.stop="updateRecord(row)" v-if="row?.status?.toLowerCase() !== 'completed' " size="small" icon="mdi-redo" :loading="row?.loading" color="black" title="Re Try Transaction" ></v-btn>
-                <!-- <v-btn @click="confirmSendMoney(row)" v-if="row?.status?.toLowerCase() =='completed' && !row?.fulfilled" size="small"  icon="mdi-check"  :loading="isLoading" color="primary" title="Fulfil"></v-btn> -->
-                <!-- <v-btn  @click.stop="getTransaction(row)"  icon="mdi-redo" size="small"> 
-                </v-btn> -->
-            </template>
-        </DataTable>
-
-      </template>
-    </Tab>
+          @page-change="handlePageChange"
+        />
   </div>
 
-  <Dialog v-model:visible="showmodal" :header="getTitle" modal class="tw-min-[300px] md:tw-w-[450px]">
+  <Dialog v-model:visible="showmodal" :header="type=='debit'?'Send Money':'Receive Transaction'" modal class="tw-min-[300px] md:tw-w-[450px]">
     <div v-if="type=='debit'">
       <div class="tw-grid md:tw-grid-cols-2 tw-grid-cols-1 tw-gap-3">
         <div  >
@@ -65,26 +43,15 @@
     </div>
     <div v-else>
         <div class="tw-grid tw-grid-cols-1 tw-gap-3">
-        <!-- <div  v-if="receiveData?.reference_number" >
-          <TextField :disabled="receiveData?.reference_number"  v-model="receiveData.reference_number" label="Reference number" required />
-         
-        </div> -->
-        <div class="tw-flex ">
-          <TextField v-model="receiveData.reference_number" label="Reference number" required class="tw-w-full tw-rounded-e-none" />
-          <v-btn :loading="loadingFetchedReceivedData" @click="fetchReceived()" class="tw-bg-black tw-text-white tw-rounded-s-none tw-h-[42px] tw-w-[100px]" style="align-self: flex-end;">Fetch</v-btn>
+        <div  >
+          <TextField  v-model="receiveData.reference_number" label="Reference number" required />
         </div>
-
-        <div class="tw-my-3">
-            <p><b>Amount:</b>  {{fetchedReceivedData?.amount}}</p>
-            <p><b>Security Question:</b>  {{fetchedReceivedData?.security_question}}</p>
-            <p><b>Sender Name:</b>  {{fetchedReceivedData?.sender_name}}</p>
-            <p><b>Description:</b>  {{fetchedReceivedData?.description}}</p>
+        <div  >
+          <TextField v-model="receiveData.answer" label="Answer" required />
         </div>
-    
         </div>
         <div class="tw-flex tw-justify-center tw-my-4">
-            <v-btn ref="btnRef" @click="accept" :loading="loadingTx" color="black">Accept Transaction</v-btn>
-            <v-btn ref="btnRef" class="tw-ms-2" @click="reject" :loading="loadingTx" color="red">Reject Transaction</v-btn>
+          <v-btn ref="btnRef" @click="receiveMoney" :loading="loadingTx" color="black">Add Transaction</v-btn>
       </div>
     </div>
   </Dialog>
@@ -173,9 +140,7 @@ import DataTable from "@/components/Table/Table.vue";
 import TextField from "@/components/TextField.vue";
 import { useClient } from "@/stores/client";
 import { useGlobalsStore } from "@/stores/globals";
-import { useNotificationStore } from "@/stores/notification";
 import { PhCaretLeft } from "@phosphor-icons/vue";
-import Checkbox from "primevue/checkbox";
 import Dialog from "primevue/dialog";
 import Drawer from "primevue/drawer";
 export default {
@@ -186,13 +151,10 @@ export default {
     Tab,
     PhCaretLeft,
     Dialog,
-    TextField,
-    Checkbox
+    TextField
   },
   data() {
     return {
-      fetchedReceivedData:{},
-      loadingFetchedReceivedData:false,
       sendData:{},
       receiveData:{},
       type: "credit",
@@ -200,7 +162,7 @@ export default {
       tabIndex: 0,
       tabs: [
         { name: "Received", key: "Received" },
-      //  { name: "Sent", key: "Sent" },
+        { name: "Sent", key: "Sent" },
       ],
       global: useGlobalsStore(),
       showdrawer: false,
@@ -208,14 +170,12 @@ export default {
       filters: {},
       showmodal:false,
       headers: [
-        { key: "customer_detail.full_name", title: "Customer name" },
-        { key: "transaction_number", title: "Trx Number",copy:true },
-        { key: "type", title: "Trx type" },
-        { key: "date", title: "Date" },
-        { key: "amount", title: "Amount" },
-        { key: "status", title: "Status" },
-        { key: "action", title: "#" },
-        
+        { key: "full_name", title: "Customer name" },
+        { key: "email", title: "Email", copy:true },
+        { key: "total_receive", title: "Total Received Amount" },
+        { key: "total_sent", title: "Total Sent Amount" },
+        { key: "transaction_count", title: "Total Trx Count" },
+        { key: "last_transaction_date", title: "Last Trx Date", formatDate: true  }
       ],
       tabConfig:{
           'Sent':{
@@ -245,7 +205,8 @@ export default {
           transaction_number: newFilters.search||'',
           transaction_type: this.type||'',
         };
-        this.global.getTrasactions(this.filters);
+
+        this.global.getCustomersForAdmin(this.filters);
       },
       deep: true,
     },
@@ -253,94 +214,20 @@ export default {
       if (newV == 0) {
         this.type = "credit";
         this.filters.transaction_type = this.type
-        this.global.getTrasactions({
+        this.global.getCustomersForAdmin({
             transaction_type: this.type,
         });
       } else {
         this.type = "debit";
         this.filters.transaction_type = this.type
-        this.global.getTrasactions({
+        this.global.getCustomersForAdmin({
             transaction_type: this.type,
         });
       }
     },
   },
- computed:{
- getTitle(){
-        if(this.type=='debit'){
-            return 'Send Money'
-        }else{
-            return this.receiveData?.transaction_number ?'Re-try Receive Transaction': 'New Receive Transaction'
-        }
-    }
- },
+ 
   methods: {
-    async fetchReceived(){
-        this.loadingFetchedReceivedData = true
-        const res = await useClient().http({
-                method:'post',
-                path:'transactions/incoming/details',
-                data:{reference_number:this.receiveData.reference_number}
-            })
-        if(res){
-            this.fetchedReceivedData = res
-        }
-        
-        this.loadingFetchedReceivedData = false
-    },
-    accept(){
-        this.global.palert({
-                title:'Accept?',
-                text: '<p class="tw-mb-3">Enter Security Question Answer</p> '+
-                  '<input type="text" id="answer-input" name="simple-input" placeholder="Anwser"'+
-                      'class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">',
-                cancelBtnText:'Cancel',
-                confirmBtnText:'Proceed',
-                loading:false,
-                callback: async()=>{
-                    const val = document.getElementById('answer-input').value
-                    this.loadingTx = true
-                    const res = await useClient().http({
-                            method:'post',
-                            path:'transactions/receive',
-                            data:{reference_number:this.receiveData.reference_number, answer:val}
-                        })
-                        if(res){
-                            const notificationStore = useNotificationStore();
-                            notificationStore.showNotification({
-                                type: 'success',
-                                message: 'Completed',
-                            });
-                        }
-                        this.loadingTx = false
-                }
-            })
-    },
-    async reject(){
-        this.loadingTx = true
-        const res = await useClient().http({
-                method:'post',
-                path:'transactions/decline',
-                data:{reference_number:this.receiveData.reference_number}
-            })
-            if(res){
-                const notificationStore = useNotificationStore();
-                notificationStore.showNotification({
-                    type: 'success',
-                    message: 'Declined',
-                });
-            }
-            this.loadingTx = false
-    },
-    updateRecord(rowData) {
-      this.showmodal = true;
-      this.receiveData.replyTo = rowData.customer_detail; // store the selected row data
-      this.receiveData.reference_number = rowData.transaction_ref
-      const currentDate = new Date();
-      const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
-      this.receiveData.date = formattedDate;
-      this.receiveData.answer = ''
-    },
     async sendMoney(){
         this.loadingTx = true
         await useClient().http({
@@ -352,27 +239,15 @@ export default {
     },
     async receiveMoney(){
         this.loadingTx = true
-        if(this.receiveData?.reference_number){
-
-            await useClient().http({
+        await useClient().http({
                 method:'post',
                 path:'/transactions/receive',
                 data:this.receiveData
             })
-        }else{
-            await useClient().http({
-                method:'post',
-                path:'/transactions/incoming/details',
-                data:this.receiveData
-            })
-        }
         this.loadingTx = false
     },
     handleTabDrupdwonButton(title){
         this.showmodal = true
-    },
-    getTransaction(row){
-
     },
     printDrawerContent() {
       const printContent = this.$refs.drawerContent.innerHTML;
@@ -452,21 +327,13 @@ export default {
       this.showdrawer = true;
       this.transaction = row;
     },
-    handlePageChangeR(path) {
-      this.filters.transaction_type=this.type ;
-      console.log(this.type,'rece')
-      this.global.getTrasactions(this.filters, path);
+    handlePageChange(path) {
+      this.global.getCustomersForAdmin(this.filters, path);
     },
-    handlePageChangeS(path) {
-
-      this.filters.transaction_type=this.type;
-      this.global.getTrasactions(this.filters, path);
-    },
-
   },
   created() {
     this.filters.transaction_type=this.type ;
-    this.global.getTrasactions(this.filters);
+    this.global.getCustomersForAdmin(this.filters);
   },
 };
 </script>

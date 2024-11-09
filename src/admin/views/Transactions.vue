@@ -200,7 +200,7 @@ export default {
       tabIndex: 0,
       tabs: [
         { name: "Received", key: "Received" },
-      //  { name: "Sent", key: "Sent" },
+       { name: "Sent", key: "Sent" },
       ],
       global: useGlobalsStore(),
       showdrawer: false,
@@ -208,6 +208,8 @@ export default {
       filters: {},
       showmodal:false,
       headers: [
+      
+        { key: "client.company_name", title: "Company" },
         { key: "customer_detail.full_name", title: "Customer name" },
         { key: "transaction_number", title: "Trx Number",copy:true },
         { key: "type", title: "Trx type" },
@@ -221,15 +223,15 @@ export default {
           'Sent':{
             search: false,
          
-            sideButton: true,
+            sideButton: false,
             toolTipText: '',
-            dropDownLabel: 'Send Money',
+            // dropDownLabel: 'Send Money',
           },
           'Received':{
             search: false,
-            sideButton: true,
+            sideButton: false,
             toolTipText: '',
-            dropDownLabel: 'Manual Receive',
+            // dropDownLabel: 'Manual Receive',
           },
           
         },
@@ -245,7 +247,7 @@ export default {
           transaction_number: newFilters.search||'',
           transaction_type: this.type||'',
         };
-        this.global.getTrasactions(this.filters);
+        this.global.getTrasactionsForAdmin(this.filters);
       },
       deep: true,
     },
@@ -253,13 +255,13 @@ export default {
       if (newV == 0) {
         this.type = "credit";
         this.filters.transaction_type = this.type
-        this.global.getTrasactions({
+        this.global.getTrasactionsForAdmin({
             transaction_type: this.type,
         });
       } else {
         this.type = "debit";
         this.filters.transaction_type = this.type
-        this.global.getTrasactions({
+        this.global.getTrasactionsForAdmin({
             transaction_type: this.type,
         });
       }
@@ -455,18 +457,18 @@ export default {
     handlePageChangeR(path) {
       this.filters.transaction_type=this.type ;
       console.log(this.type,'rece')
-      this.global.getTrasactions(this.filters, path);
+      this.global.getTrasactionsForAdmin(this.filters, path);
     },
     handlePageChangeS(path) {
 
       this.filters.transaction_type=this.type;
-      this.global.getTrasactions(this.filters, path);
+      this.global.getTrasactionsForAdmin(this.filters, path);
     },
 
   },
   created() {
     this.filters.transaction_type=this.type ;
-    this.global.getTrasactions(this.filters);
+    this.global.getTrasactionsForAdmin(this.filters);
   },
 };
 </script>

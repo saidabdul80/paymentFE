@@ -29,7 +29,8 @@ export const useGlobalsStore = defineStore('globals', {
     loadingTransactions:false,
     balance:0,
     error:'',
-    stats:[]
+    stats:[],
+    clients:[]
   }),
   actions: {
     async bootstrap() {
@@ -177,12 +178,36 @@ export const useGlobalsStore = defineStore('globals', {
         this.transactions = response
       }
     },
+    async getTrasactionsForAdmin(data = null,path=null){
+      this.loadingTransactions = true
+      const response = await useClient().http({ method: 'get', path:path?path:'admin/transactions', data, fullPath:path?true:false })                
+      this.loadingTransactions =false
+      if(response){
+        this.transactions = response
+      }
+    },
     async getCustomers(data = null, path=null){
       this.loadingTransactions = true
       const response = await useClient().http({ method: 'get', path: path?path:'transactions/customers', data, fullPath:path?true:false})                
       this.loadingTransactions =false
       if(response){
         this.transactions = response
+      }
+    },
+    async getCustomersForAdmin(data = null, path=null){
+      this.loadingTransactions = true
+      const response = await useClient().http({ method: 'get', path: path?path:'admin/customers', data, fullPath:path?true:false})                
+      this.loadingTransactions =false
+      if(response){
+        this.transactions = response
+      }
+    },
+    async getClientsForAdmin(data = null, path=null){
+      this.loadingTransactions = true
+      const response = await useClient().http({ method: 'get', path: path?path:'admin/clients', data, fullPath:path?true:false})                
+      this.loadingTransactions =false
+      if(response){
+        this.clients = response
       }
     },
     async getBalance(){
