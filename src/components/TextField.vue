@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label class="tw-block tw-text-sm tw-font-medium tw-mb-1">{{ label }}</label>
+    <label class="tw-block tw-text-sm tw-font-medium tw-text-left tw-mb-1">{{ label }}</label>
     <InputText
       :disabled="disabled"
       :invalid="errorMessages !== ''"

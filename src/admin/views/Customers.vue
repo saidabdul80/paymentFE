@@ -123,7 +123,7 @@
       @click="printDrawerContent()"
         class="tw-bg-black tw-text-white tw-py-2 tw-px-4 tw-rounded-lg tw-mb-2 hover:tw-bg-gray-800"
       >
-        Download receipt
+        Download
       </button>
       <a href="#" class="tw-text-sm tw-text-gray-500 hover:tw-underline">
         Report an issue
@@ -193,6 +193,7 @@ export default {
           },
           
         },
+      client_id:null
     };
   },
   watch: {
@@ -200,10 +201,9 @@ export default {
         handler: function (newFilters) {
         let status = newFilters?.status == "All" ? "" : newFilters?.status;
         this.filters = {
-          transaction_status: status||'',
+          //transaction_status: status||'',
           sort: newFilters.sort||'',
-          transaction_number: newFilters.search||'',
-          transaction_type: this.type||'',
+          search: newFilters.search||'',
         };
 
         this.global.getCustomersForAdmin(this.filters);
@@ -332,7 +332,11 @@ export default {
     },
   },
   created() {
-    this.filters.transaction_type=this.type ;
+    this.client_id = this.$route.params.id || null;
+    if(this.client_id){
+      this.filters.client_id = this.client_id
+    }
+    //this.filters.transaction_type=this.type ;
     this.global.getCustomersForAdmin(this.filters);
   },
 };

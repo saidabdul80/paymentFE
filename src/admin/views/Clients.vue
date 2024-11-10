@@ -6,7 +6,11 @@
             :headers="headers"
             @row-click="handleRowClick"
             @page-change="handlePageChange"
-          />
+          >
+        <template v-slot:td-action="{ row }">
+            <UsersActions :row="row" @reload="reload" />
+        </template>
+        </DataTable>
     </div>
 <!--   
     <Dialog v-model:visible="showmodal" :header="type=='debit'?'Send Money':'Receive Transaction'" modal class="tw-min-[300px] md:tw-w-[450px]">
@@ -47,67 +51,106 @@
         </div>
       </div>
     </Dialog>
-    <Drawer v-model:visible="showdrawer" class="" :header="type + ' Transaction'" position="right">
-  
-      <template #header>
-          <span class="tw-capitalize">{{type}} Transaction</span>
-      </template>
-      <div ref="drawerContent">
+-->
+<Drawer v-model:visible="showdrawer" class="tw-w-[]" :header="''" position="right">
+    <template #header>
+      <span class="tw-capitalize">Client Details</span>
+    </template>
+    <div ref="drawerContent">
       <div class="tw-text-center tw-mb-4">
-        <h1 class="tw-text-2xl tw-font-semibold">{{ formatAmount(transaction.amount) }} {{ transaction.currency }}</h1>
+        <h1 class="tw-text-2xl tw-font-semibold">{{ client.company_name }}</h1>
         <div class="tw-mt-2">
-          <span
-            class="tw-bg-gray-100 tw-text-gray-600 tw-py-1 tw-px-3 tw-rounded-lg tw-text-sm"
-          >
-            {{ transaction.transaction_number }}
+          <span class="tw-bg-gray-100 tw-text-gray-600 tw-py-1 tw-px-3 tw-rounded-lg tw-text-sm">
+            {{ client.business_type }}
           </span>
         </div>
       </div>
-  
+
       <div class="tw-mb-4">
         <div class="tw-grid tw-grid-cols-2 tw-gap-y-2">
-          <div class="tw-text-gray-500 tw-text-sm">Customer name</div>
-          <div class="tw-text-sm">{{ transaction.customer_detail?.full_name }}</div>
-  
-          <div class="tw-text-gray-500 tw-text-sm">Customer email</div>
-          <div class="tw-text-sm tw-w-[150px] tw-truncate">
-            {{ transaction.customer_detail?.email }}
-          </div>
-  
-          <div class="tw-text-gray-500 tw-text-sm">amount</div>
-          <div class="tw-text-sm">{{ formatAmount(transaction.amount) }} {{ transaction.currency }}</div>
+          <div class="tw-text-gray-500 tw-text-sm">KYC Status</div>
+          <div class="tw-text-sm">{{ client.kyc_status }}</div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Description</div>
-          <div class="tw-text-sm">
-            {{ transaction.provider_request_response?.Description || 'No description available' }}
-          </div>
-  
-          <div class="tw-text-gray-500 tw-text-sm">Date</div>
-          <div class="tw-text-sm">{{ formatDate(transaction.created_at) }}</div>
-  
-          <div class="tw-text-gray-500 tw-text-sm">Status</div>
-          <div class="tw-text-sm">
-            <span
-              :class="`tw-inline-block tw-px-2 tw-py-1 tw-rounded-full ${statusClass(transaction.status)}`"
-            >
-              {{ transaction.status }}
-            </span>
-          </div>
+          <div class="tw-text-gray-500 tw-text-sm">KYC Documentation Status</div>
+          <div class="tw-text-sm">{{ client.kyc_documentation_status }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Company Name</div>
+          <div class="tw-text-sm">{{ client.company_name }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Business Type</div>
+          <div class="tw-text-sm">{{ client.business_type }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Business Sector</div>
+          <div class="tw-text-sm">{{ client.business_sector }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">RC Number</div>
+          <div class="tw-text-sm">{{ client.rc_number }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Company Email</div>
+          <div class="tw-text-sm tw-w-[150px] tw-truncate">{{ client.company_email }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Business Country</div>
+          <div class="tw-text-sm">{{ client.business_country }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Business State</div>
+          <div class="tw-text-sm">{{ client.business_state }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Business Address</div>
+          <div class="tw-text-sm">{{ client.business_address }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">CAC Document</div>
+          <div class="tw-text-sm">{{ client.cac_document ? 'Available' : 'Not Available' }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Bank Statement</div>
+          <div class="tw-text-sm">{{ client.bank_statement ? 'Available' : 'Not Available' }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Can Send Money</div>
+          <div class="tw-text-sm">{{ client.can_send_money ? 'Yes' : 'No' }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Account Suspended</div>
+          <div class="tw-text-sm">{{ client.is_account_suspend ? 'Yes' : 'No' }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Ledger Balance</div>
+          <div class="tw-text-sm">{{ global.toCurrency(clientBalance.ledger_balance, false, false) }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Available Balance</div>
+          <div class="tw-text-sm">{{ global.toCurrency(clientBalance.available_balance, false,false) }}</div>
         </div>
       </div>
+
+      <div class="tw-mt-6">
+        <h2 class="tw-text-lg tw-font-semibold">User Details</h2>
+        <div v-for="user in client.users" :key="user.id" class="tw-mt-4 tw-grid tw-grid-cols-2 tw-gap-y-2">
+          <div class="tw-text-gray-500 tw-text-sm">User ID</div>
+          <div class="tw-text-sm">{{ user.id }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Email</div>
+          <div class="tw-text-sm">{{ user.email }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">First Name</div>
+          <div class="tw-text-sm">{{ user.first_name }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Last Name</div>
+          <div class="tw-text-sm">{{ user.last_name }}</div>
+
+          <div class="tw-text-gray-500 tw-text-sm">Phone Number</div>
+          <div class="tw-text-sm">{{ user.phone_number }}</div>
+        </div>
+      </div>
+
       <div class="tw-mt-6 tw-flex tw-flex-col tw-items-center">
-        <button
-        @click="printDrawerContent()"
-          class="tw-bg-black tw-text-white tw-py-2 tw-px-4 tw-rounded-lg tw-mb-2 hover:tw-bg-gray-800"
-        >
-          Download receipt
-        </button>
-        <a href="#" class="tw-text-sm tw-text-gray-500 hover:tw-underline">
+        <v-btn @click="approveClient()" class="tw-bg-black tw-text-white tw-py-2 tw-px-4 tw-rounded-lg tw-mb-2 hover:tw-bg-gray-800">
+            Approve Client
+        </v-btn>
+        <v-btn variant="text" @click="printDrawerContent()" class="tw-bg-black tw-text-white tw-py-2 tw-px-4 tw-rounded-lg tw-mb-2 hover:tw-bg-gray-800">
+            Downlod Info
+        </v-btn>
+        <!-- <a href="#" class="tw-text-sm tw-text-gray-500 hover:tw-underline">
           Report an issue
-        </a>
+        </a> -->
       </div>
-      </div>
-    </Drawer> -->
+    </div>
+  </Drawer>
   </template>
   
   <script>
@@ -115,6 +158,7 @@
   import Tab from "@/components/tab.vue";
   import DataTable from "@/components/Table/Table.vue";
   import TextField from "@/components/TextField.vue";
+  import UsersActions from "@/components/UsersActions.vue";
   import { useClient } from "@/stores/client";
   import { useGlobalsStore } from "@/stores/globals";
   import { PhCaretLeft } from "@phosphor-icons/vue";
@@ -128,7 +172,8 @@
       Tab,
       PhCaretLeft,
       Dialog,
-      TextField
+      TextField,
+      UsersActions
     },
     data() {
       return {
@@ -142,6 +187,7 @@
         ],
         global: useGlobalsStore(),
         showdrawer: false,
+        clientBalance:{},
         transaction: {},
         filters: {},
         showmodal:false,
@@ -150,6 +196,7 @@
           { key: "company_email", title: "Email", copy:true },
           { key: "rc_number", title: "Corporate Number" },
           { key: "kyc_status", title: "KYC Status" },
+          { key: "action", title: "Actions" },
         ],
         tabConfig:{
             'Sent':{
@@ -167,6 +214,7 @@
             },
             
           },
+          client:{}
       };
     },
     watch: {
@@ -174,10 +222,10 @@
           handler: function (newFilters) {
           let status = newFilters?.status == "All" ? "" : newFilters?.status;
           this.filters = {
-            transaction_status: status||'',
+            //transaction_status: status||'',
             sort: newFilters.sort||'',
-            transaction_number: newFilters.search||'',
-            transaction_type: this.type||'',
+            search: newFilters.search||'',
+           // transaction_type: this.type||'',
           };
   
           this.global.getClientsForAdmin(this.filters);
@@ -202,6 +250,9 @@
     },
    
     methods: {
+      async approveClient(){
+          const res = await useClient().http({method:'post', path:''})
+      },
       async sendMoney(){
           this.loadingTx = true
           await useClient().http({
@@ -297,13 +348,21 @@
       formatAmount(amount) {
         return amount ? parseFloat(amount).toFixed(2) : '0.00';
       },
-      handleRowClick(row) {
-        this.showdrawer = true;
-        this.transaction = row;
+      async handleRowClick(row) {
+        const res = await useClient().http({method:'get', path:'admin/clients/'+row.id})
+        if(res){
+            this.client = res.client
+            this.clientBalance = res.balance
+            this.showdrawer = true;
+        }
+        //this.transaction = row;
       },
       handlePageChange(path) {
         this.global.getClientsForAdmin(this.filters, path);
       },
+      reload(){
+        this.global.getClientsForAdmin(this.filters);
+      }
     },
     created() {
       this.filters.transaction_type=this.type ;

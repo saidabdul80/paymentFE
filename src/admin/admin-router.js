@@ -31,13 +31,13 @@ export default [
                 meta: { breadcrumb: "Home", requiresAuth: false },
             },
             {
-                path: "transactions",
+                path: "transactions/:id?",
                 name: "Admin-Transactions",
                 component: Transactions,
                 meta: { breadcrumb: "Transactions", requiresAuth: false },
             },
             {
-                path: "customers",
+                path: "customers/:id?",
                 name: "Admin-Customers",
                 component: Customers,
                 meta: { breadcrumb: "Customers", requiresAuth: false },

@@ -1,5 +1,5 @@
 <template>
-    <label class="tw-block tw-text-sm tw-font-medium tw-mb-1">
+    <label class="tw-block tw-text-left tw-text-sm tw-font-medium tw-mb-1">
         {{ label }}
         <span v-if="isRequired" class="text-red">*</span>
     </label>

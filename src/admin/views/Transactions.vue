@@ -235,6 +235,7 @@ export default {
           },
           
         },
+        client_id:null
     };
   },
   watch: {
@@ -467,6 +468,10 @@ export default {
 
   },
   created() {
+    this.client_id = this.$route.params.id || null;
+    if(this.client_id){
+      this.filters.client_id = this.client_id
+    }
     this.filters.transaction_type=this.type ;
     this.global.getTrasactionsForAdmin(this.filters);
   },

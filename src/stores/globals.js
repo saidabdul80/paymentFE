@@ -91,37 +91,27 @@ export const useGlobalsStore = defineStore('globals', {
     setCurrentPageName(item) {
         this.currentPageName = item;
     },
-    toCurrency(amount, symbol = true) {
+    toCurrency(amount, symbol = true, shorten = true) {
       if (amount == null || isNaN(amount)) {
-        return '₦0';
+        return symbol ? '₦0' : '0';
       }
-    
+
       let formattedAmount;
-      if (amount >= 1000000) {
+      const currencySymbol = '₦';
+      amount = Number(amount)
+      if (shorten && amount >= 1000000) {
         formattedAmount = (amount / 1000000).toFixed(1) + 'M';
-      } else if (amount >= 100000) {
+      } else if (shorten && amount >= 100000) {
         formattedAmount = (amount / 1000).toFixed(1) + 'K';
       } else {
-        formattedAmount = amount.toLocaleString('en-NG', {
-          style: 'currency',
-          currency: 'NGN'
-        });
+        formattedAmount = amount.toFixed(0);
+        formattedAmount = formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       }
-    
+
       if (symbol) {
-        if (typeof formattedAmount === 'string' && !formattedAmount.startsWith('₦')) {
-          formattedAmount = '₦' + formattedAmount;
-        }
-      } else {
-        formattedAmount = formattedAmount.replace(/₦/g, '').replace('.00','');
+        formattedAmount = `${currencySymbol}${formattedAmount}`;
       }
-    
-      if (amount >= 1000000) {
-        formattedAmount += '+';
-      } else if (amount >= 100000) {
-        formattedAmount += '+';
-      }
-    
+
       return formattedAmount;
     },
     palert({ text, title, cancelBtnText, confirmBtnText,icon=null, loading = false, callback = () => { }, imgpath = null }) {
