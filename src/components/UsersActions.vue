@@ -9,7 +9,7 @@
         <v-list>
           
             <v-list-item @click.stop="handleDeactivate">
-                {{ row.is_suspend === 'ACTIVE' ? 'Suspend' : 'Activate' }}  Account
+                {{ row.is_suspended === 'ACTIVE' ? 'Suspend' : 'Activate' }}  Account
             </v-list-item>
             <v-list-item @click.stop="updateDialog = true">
                 Update Account
@@ -205,7 +205,7 @@ export default {
         },
         async handleDeactivateActivate(row) {
             this.isLoading= true
-            const type = row?.is_suspend? 'unsuspend':'suspend'
+            const type = row?.is_suspended? 'unsuspend':'suspend'
             const res = await useClient().http({ method: 'post', path: 'admin/clients/'+row.id+'/'+type});
             this.isLoading= false
             this.dialog = false;
