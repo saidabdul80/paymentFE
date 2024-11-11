@@ -26,7 +26,7 @@ export default {
                 class: 'tw-text-gray-500 tw-font-bold'
             },
             {
-                title: 'ADD INDIVIDUAL TAXPAYER',
+                title: '',
                 disabled: false,
                 href: '#',
                 class: 'tw-text-green-700 tw-font-bold'
