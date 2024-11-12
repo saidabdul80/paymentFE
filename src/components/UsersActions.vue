@@ -206,7 +206,8 @@ export default {
         async handleDeactivateActivate(row) {
             this.isLoading= true
             const type = row?.is_suspended? 'unsuspend':'suspend'
-            const res = await useClient().http({ method: 'post', path: 'admin/clients/'+row.id+'/'+type});
+            const method = row?.is_suspended? 'get':'post'
+            const res = await useClient().http({ method: method, path: 'admin/clients/'+row.id+'/'+type});
             this.isLoading= false
             this.dialog = false;
             this.isMenuOpen = false

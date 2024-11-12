@@ -1,7 +1,7 @@
 <template>
     <div class="tw-px-4">
         <div class="md:tw-p-5">
-       
+            <v-btn color="black" @click="transferDialog=true" class="tw-w-[150px] tw-capitalize !tw-p-0" size="small" variant="outlined" >Make transfer</v-btn>
             <!-- <hr class="tw-my-4 tw-border-2 tw-shadow-2xl"/> -->
             <div class="tw-grid md:tw-grid-cols-4 tw-mb-4 tw-items-center tw-place-items-center">                  
                 <DashboardCard 
@@ -37,6 +37,27 @@
             </div>
         </div>
     </div>
+
+    <Dialog v-model:visible="transferDialog" modal :closable="false" :draggable="false" style="width: 300px;" class="tw-float-left" header="Internal Transfer">
+        
+        <!-- Loop through messages and match with the id -->
+        <div>
+            <TextField v-model="transfer.amount" label="Amount" :error-messages="errors.amount" class="tw-mb-3" />
+            <TextField v-model="transfer.client_id" label="Recipient ID" :error-messages="errors.client_id" class="tw-mb-3" />
+            <TextField v-model="transfer.notes" label="Notes" :error-messages="errors.notes" class="tw-mb-3" />
+            <br />
+            <div class="tw-flex tw-gap-4">
+                <v-btn @click="transferDialog = false"
+                    class="tw-rounded-md tw-bg-white tw-px-3 tw-py-2 tw-font-semibold tw-text-gray-900 tw-shadow-sm tw-ring-1 tw-ring-inset tw-ring-gray-300 hover:tw-bg-gray-50 tw-mr-2">
+                    Cancel
+                </v-btn>
+                <v-btn @click="handleTranser()" :loading="isLoadingOpen"
+                    class="tw-bg-[black]/90 hover:tw-bg-black tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded">
+                    Continue
+                </v-btn>
+            </div>
+        </div>
+        </Dialog>
 </template>
 
 <script>
@@ -47,6 +68,9 @@ import DashboardCard from '@/components/DashboardCard.vue';
 import useAdminStore from '@/admin/stores/admin';
 import { useClient } from '@/stores/client';
 import Highcharts from 'highcharts';
+import ls from '@/services/ls';
+import Dialog from 'primevue/dialog';
+import TextField from '@/components/TextField.vue';
 export default {
     data() {
         const currentDate = new Date();
@@ -153,7 +177,11 @@ export default {
 
          
             },
-
+            transferDialog:false,
+            transfer:{},
+            isLoadingOpen:false,
+            errors:{},
+            user: ls.get('auth.user')
         };
     },
     watch: {
@@ -169,6 +197,34 @@ export default {
         // Same computed properties as before
     },
     methods: {
+        async handleTranser() {
+            
+            this.transfer.amount = Number(this.transfer.amount)
+
+            if(this.transfer.amount < 1 || this.transfer.amount == '' || isNaN(this.transfer.amount)){
+                this.errors.amount ='a valid amount is required'
+                return;
+            }
+            if(this.transfer?.client_id == '' || this.transfer?.client_id  == undefined){
+                this.errors.client_id ='a valid recipient ID is required'
+                return;
+            }
+            
+            this.isLoadingOpen = true
+            const res = await useClient().http({ method: 'post', path: 'transactions/internal-transfer', data:{
+                ...this.transfer
+            }});
+            this.transferDialog = false;
+            this.isLoadingOpen = false
+            if (res) {
+                this.transfer.amount = {}
+                const notificationStore = useNotificationStore();
+                notificationStore.showNotification({
+                    type: 'success',
+                    message: 'Acccount transfered successfully.',
+                })
+            }
+        },
         updateCards() {
             // Same updateCards method as before
         },
@@ -339,6 +395,8 @@ export default {
     components: {
         Tab,
         DashboardCard,
+        Dialog,
+        TextField
     }
 };
 </script>

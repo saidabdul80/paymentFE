@@ -6,10 +6,12 @@
                 <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
                 <v-toolbar-title class="">
                     <div>
-                        <p class="tw-text-xl tw-mb-2">
+                        <div class="tw-grid md:tw-grid-cols-3 tw-grid-cols-1 tw-gap-4 tw-w-full tw-mb-2">
+                            <p class="tw-text-xl ">    
+                                Welcome {{user.first_name}} 👋 
+                            </p>
                             
-                            Welcome {{user.first_name}} 👋
-                        </p>
+                        </div>
                         <p @click="$router.push('/app/settings')"  v-if="ls.get('auth.user')?.kyc_documentation_status  !== 'completed'" class="tw-flex tw-text-sm tw-mb-3"><img src="@/assets/exclamation.svg" class="tw-me-2 tw-block " /> Activate your business profile by filling in details for business verification.</p>
                     </div>
                 </v-toolbar-title>
