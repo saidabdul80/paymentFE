@@ -30,7 +30,9 @@ export const useGlobalsStore = defineStore('globals', {
     balance:0,
     error:'',
     stats:[],
-    clients:[]
+    clients:[],
+    loadingClient:false,
+    client:{}
   }),
   actions: {
     async bootstrap() {
@@ -200,10 +202,10 @@ export const useGlobalsStore = defineStore('globals', {
         this.clients = response
       }
     },
-    async getBalance(){
+    async getBalance(id =null){
       const [response, response2] = await Promise.all([
-            useClient().http({ method: 'get', path: 'transactions/count-stats' }),
-            useClient().http({ method: 'get', path: 'transactions/balance' })                
+            useClient().http({ method: 'get', path: 'transactions/count-stats', data:{client_id:id} }),
+            useClient().http({ method: 'get', path: 'transactions/balance', data:{client_id:id}  })                
       ])
 
       if(response){
@@ -214,14 +216,14 @@ export const useGlobalsStore = defineStore('globals', {
       }
     },
 
-    // async getBalance(data = null){
-    //   this.loadingStats = true
-    //   const response = await useClient().http({ method: 'get', path: '/transactions/stat', data })                
-    //   if(response){
-    //     this.stats = response
-    //   }
-    //   this.loadingStats = false
-    // },
+    async getClient(id){
+      this.loadingClient = true
+      const response = await useClient().http({ method: 'get', path: 'admin/clients/'+id, data:{} })                
+      if(response){
+        this.client = response.client || {}
+      }
+      this.loadingClient = false
+    },
     
   }
 });

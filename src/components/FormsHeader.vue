@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="`tw-px-2 mb-7 tw-w-[98%] ${showControls ? 'tw-grid tw-grid-cols-1 tw-gap-3 md:tw-gap-0 md:tw-grid-cols-2' : 'tw-grid tw-grid-cols-1'}`">
+    :class="` mb-7 tw-w-[98%] ${showControls ? 'tw-grid tw-grid-cols-1 tw-gap-3 md:tw-gap-0 md:tw-grid-cols-2' : 'tw-grid tw-grid-cols-1'}`">
     <div>
       <h4 :class="`tw-text-[${$constants.primary}] ${$constants.text_size.s5}`"
         class="tw-font-visby tw-font-black tw-text-2xl tw-uppercase">{{ header }}</h4>
@@ -26,11 +26,11 @@ export default {
   props: {
     header: {
       type: String,
-      default: 'tax-collecting vendor registration'
+      default: 'Client XYZ'
     },
     title: {
       type: String,
-      default: 'Follow the steps to register a new vendor.'
+      default: 'showing dashboard'
     },
     showControls: {
       type: Boolean,

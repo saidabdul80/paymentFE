@@ -8,7 +8,7 @@
             @page-change="handlePageChange"
           >
         <template v-slot:td-action="{ row }">
-            <UsersActions :row="row" @reload="reload" />
+            <UsersActions :row="row" @reload="reload" @viewClient="showdrawer=true" />
         </template>
         </DataTable>
     </div>
@@ -52,7 +52,7 @@
       </div>
     </Dialog>
 -->
-<Drawer v-model:visible="showdrawer" class="tw-w-[]" :header="''" position="right">
+<Drawer v-model:visible="showdrawer" class="md:tw-w-[50%] tw-w-[95%]" :header="''" position="right">
     <template #header>
       <span class="tw-capitalize">Client Details</span>
     </template>
@@ -67,74 +67,116 @@
       </div>
 
       <div class="tw-mb-4">
-        <div class="tw-grid tw-grid-cols-2 tw-gap-y-2">
-          <div class="tw-text-gray-500 tw-text-sm">KYC Status</div>
-          <div class="tw-text-sm">{{ client.kyc_status }}</div>
+        <div class="tw-grid tw-grid-cols-2 tw-gap-5">
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">KYC Status</div>
+                 <div class="tw-text-lg">{{ client.kyc_status }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">KYC Documentation Status</div>
-          <div class="tw-text-sm">{{ client.kyc_documentation_status }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">KYC Documentation Status</div>
+                 <div class="tw-text-lg">{{ client.kyc_documentation_status }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Company Name</div>
-          <div class="tw-text-sm">{{ client.company_name }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Company Name</div>
+                 <div class="tw-text-lg">{{ client.company_name }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Business Type</div>
-          <div class="tw-text-sm">{{ client.business_type }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Type</div>
+                 <div class="tw-text-lg">{{ client.business_type }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Business Sector</div>
-          <div class="tw-text-sm">{{ client.business_sector }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Sector</div>
+                 <div class="tw-text-lg">{{ client.business_sector }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">RC Number</div>
-          <div class="tw-text-sm">{{ client.rc_number }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">RC Number</div>
+                 <div class="tw-text-lg">{{ client.rc_number }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Company Email</div>
-          <div class="tw-text-sm tw-w-[150px] tw-truncate">{{ client.company_email }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Company Email</div>
+                 <div class="tw-text-lg tw-w-[150px] tw-truncate">{{ client.company_email }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Business Country</div>
-          <div class="tw-text-sm">{{ client.business_country }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Country</div>
+                 <div class="tw-text-lg">{{ client.business_country }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Business State</div>
-          <div class="tw-text-sm">{{ client.business_state }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business State</div>
+                 <div class="tw-text-lg">{{ client.business_state }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Business Address</div>
-          <div class="tw-text-sm">{{ client.business_address }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Address</div>
+                 <div class="tw-text-lg">{{ client.business_address }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">CAC Document</div>
-          <div class="tw-text-sm">{{ client.cac_document ? 'Available' : 'Not Available' }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">CAC Document</div>
+                 <div class="tw-text-lg">{{ client.cac_document ? 'Available' : 'Not Available' }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Bank Statement</div>
-          <div class="tw-text-sm">{{ client.bank_statement ? 'Available' : 'Not Available' }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Bank Statement</div>
+                 <div class="tw-text-lg">{{ client.bank_statement ? 'Available' : 'Not Available' }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Can Send Money</div>
-          <div class="tw-text-sm">{{ client.can_send_money ? 'Yes' : 'No' }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Can Send Money</div>
+                 <div class="tw-text-lg">{{ client.can_send_money ? 'Yes' : 'No' }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Account Suspended</div>
-          <div class="tw-text-sm">{{ client.is_account_suspend ? 'Yes' : 'No' }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Account Suspended</div>
+                 <div class="tw-text-lg">{{ client.is_account_suspend ? 'Yes' : 'No' }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Ledger Balance</div>
-          <div class="tw-text-sm">{{ global.toCurrency(clientBalance.ledger_balance, false, false) }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Ledger Balance</div>
+                 <div class="tw-text-lg">{{ global.toCurrency(clientBalance.ledger_balance, false, false) }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Available Balance</div>
-          <div class="tw-text-sm">{{ global.toCurrency(clientBalance.available_balance, false,false) }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Available Balance</div>
+                 <div class="tw-text-lg">{{ global.toCurrency(clientBalance.available_balance, false,false) }}</div>
+            </div>
         </div>
       </div>
 
       <div class="tw-mt-6">
         <h2 class="tw-text-lg tw-font-semibold">User Details</h2>
         <div v-for="user in client.users" :key="user.id" class="tw-mt-4 tw-grid tw-grid-cols-2 tw-gap-y-2">
-          <div class="tw-text-gray-500 tw-text-sm">User ID</div>
-          <div class="tw-text-sm">{{ user.id }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">User ID</div>
+                 <div class="tw-text-lg">{{ user.id }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Email</div>
-          <div class="tw-text-sm">{{ user.email }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Email</div>
+                 <div class="tw-text-lg">{{ user.email }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">First Name</div>
-          <div class="tw-text-sm">{{ user.first_name }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">First Name</div>
+                 <div class="tw-text-lg">{{ user.first_name }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Last Name</div>
-          <div class="tw-text-sm">{{ user.last_name }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Last Name</div>
+                 <div class="tw-text-lg">{{ user.last_name }}</div>
+            </div>
 
-          <div class="tw-text-gray-500 tw-text-sm">Phone Number</div>
-          <div class="tw-text-sm">{{ user.phone_number }}</div>
+             <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Phone Number</div>
+                 <div class="tw-text-lg">{{ user.phone_number }}</div>
+            </div>
         </div>
       </div>
 
@@ -349,12 +391,13 @@
         return amount ? parseFloat(amount).toFixed(2) : '0.00';
       },
       async handleRowClick(row) {
-        const res = await useClient().http({method:'get', path:'admin/clients/'+row.id})
-        if(res){
-            this.client = res.client
-            this.clientBalance = res.balance
-            this.showdrawer = true;
-        }
+        this.$router.push('/admin/dashboard/'+row.id);
+        // const res = await useClient().http({method:'get', path:'admin/dashboard/'+row.id})
+        // if(res){
+        //     this.client = res.client
+        //     this.clientBalance = res.balance
+        //     this.showdrawer = true;
+        // }
         //this.transaction = row;
       },
       handlePageChange(path) {

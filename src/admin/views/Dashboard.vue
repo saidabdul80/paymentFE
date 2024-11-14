@@ -1,11 +1,5 @@
 <template>
     <div>
-        <v-breadcrumbs :items="items" class="tw-mx-5">
-            <template v-slot:divider color="red">
-                <v-icon icon="mdi-chevron-right"></v-icon>
-            </template>
-        </v-breadcrumbs>
-
         <div class="container mx-auto">
           
         </div>

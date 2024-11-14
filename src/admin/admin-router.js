@@ -11,6 +11,7 @@ import Login from './views/auth/Login.vue';
 import Transactions from './views/Transactions.vue';
 import Customers from './views/Customers.vue';
 import Clients from './views/Clients.vue';
+import ClientDashbaord from './views/ClientDashbaord.vue';
 
 export default [
     {
@@ -18,6 +19,10 @@ export default [
         component: LayoutBasic,
         meta: { breadcrumb: "Home", requiresAuth: false },
         children: [
+            {
+                path: '',
+                redirect: '/admin/dashboard',  
+            },
             {
                 path: "dashboard",
                 name: "Admin-Dashboard",
@@ -28,25 +33,31 @@ export default [
                 path: "",
                 name: "Admin-Home",
                 component: Dashboard,
-                meta: { breadcrumb: "Home", requiresAuth: false },
+                meta: { breadcrumb: "Home", requiresAuth: true },
             },
             {
                 path: "transactions/:id?",
                 name: "Admin-Transactions",
                 component: Transactions,
-                meta: { breadcrumb: "Transactions", requiresAuth: false },
+                meta: { breadcrumb: "Transactions", requiresAuth: true },
             },
             {
                 path: "customers/:id?",
                 name: "Admin-Customers",
                 component: Customers,
-                meta: { breadcrumb: "Customers", requiresAuth: false },
+                meta: { breadcrumb: "Customers", requiresAuth: true },
             },
             {
                 path: "clients",
                 name: "Admin-Clients",
                 component: Clients,
-                meta: { breadcrumb: "Clients", requiresAuth: false },
+                meta: { breadcrumb: "Clients", requiresAuth: true },
+            },
+            {
+                path: "dashboard/:id",
+                name: "Admin-Clients-Dashboard",
+                component: ClientDashbaord,
+                meta: { breadcrumb: "Dashboard", parent:'Admin-Clients', requiresAuth: true },
             },
         ],
     },

@@ -17,9 +17,17 @@
                 <!-- <v-btn icon="mdi-dots-vertical" variant="text"></v-btn> -->
             </v-app-bar>            
             <v-main style="min-height:100vh;" class="tw-bg-gray-100/70">
-                <BreadCrumbs />
-            <div class="tw-px-[18px] tw-pt-[36px] tw-mt-2 ">
+                <div class="tw-px-[18px] tw-pt-[36px] tw-mt-2 ">
                 <RouterView v-slot="{ Component }">
+                    <div class="tw-grid md:tw-grid-cols-2 tw-grid-cols-1 tw-items-center tw-gap-4 tw-w-full ">
+                        <div>
+                            <BreadCrumbs />
+                        </div>
+                        <div class="tw-text-black">
+                            <br /> <br />
+                            <div id="breadcrubs-right"></div>
+                        </div>
+                    </div>
                     <transition name="scale">
                         <component :is="Component" />
                     </transition>

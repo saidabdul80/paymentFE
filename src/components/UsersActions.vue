@@ -7,12 +7,8 @@
             </button>
         </template>
         <v-list>
-          
-            <v-list-item @click.stop="handleDeactivate">
-                {{ row.is_suspended === 'ACTIVE' ? 'Suspend' : 'Activate' }}  Account
-            </v-list-item>
-            <v-list-item @click.stop="updateDialog = true">
-                Update Account
+            <v-list-item @click.stop="$emit('viewClient',true)">
+                View Client
             </v-list-item>
             <v-list-item @click.stop="handleView">
                 View Customers
@@ -20,6 +16,13 @@
             <v-list-item @click.stop="handleViewTransaction">
                 View Transactions
             </v-list-item>
+            <v-list-item @click.stop="handleDeactivate">
+                {{ row.is_suspended === 'ACTIVE' ? 'Suspend' : 'Activate' }}  Account
+            </v-list-item>
+            <v-list-item @click.stop="updateDialog = true">
+                Update Account
+            </v-list-item>
+          
             <v-list-item :loading="true" @click.stop="debitDialog = true">
                Debit
             </v-list-item>

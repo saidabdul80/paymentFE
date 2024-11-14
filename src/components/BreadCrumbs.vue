@@ -1,4 +1,6 @@
 <template>
+    <br />
+    <br />
     <v-breadcrumbs :items="breadcrumbs" :color="mode === 'LIGHT' ? '' : 'white'"
         :active-class="mode === 'LIGHT' ? '' : 'tw-text-white'">
         <template v-slot:divider>
