@@ -6,7 +6,7 @@
              <!-- <FormsHeader :title=""  /> -->
             <Teleport v-if="!globals.loadingClient" defer to="#breadcrubs-right">
                 <h4 :class="`tw-text-[${$constants.primary}] ${$constants.text_size.s5}`"
-                     class="tw-font-visby md:tw-text-right tw-font-black tw-text-2xl tw-uppercase">{{ globals.client?.company_name || "Company XYZ" }}</h4>
+                     class="tw-font-visby md:tw-text-right tw-font-black tw-text-2xl tw-uppercase">{{ globals.client?.client.company_name || "Company XYZ" }}</h4>
             </Teleport> 
             <div class="tw-grid md:tw-grid-cols-4 tw-mb-4 tw-items-center tw-place-items-center">                  
                 <DashboardCard 
@@ -246,7 +246,7 @@ export default {
                 client_id: this.$route.params.id
             };
             this.loading = true;
-            const response = await useClient().http({ method: 'get', path: 'transactions/count-stats', data: payload });
+            const response = await useClient().http({ method: 'get', path: 'admin/transactions/stats', data: payload });
             this.loading = false;
             const data = response;
             const labels = [];
@@ -277,6 +277,7 @@ export default {
 
         },
         async fetchDashboards2() {
+
             this.all_transaction_key = true;
             const payload = {
                 transaction_type: 'debit',
@@ -288,9 +289,9 @@ export default {
             };
             //alert(this.all_transaction_date_type)
 
-            const debit = await useClient().http({ method: 'get', path: 'transactions/count-stats', data: payload });
+            const debit = await useClient().http({ method: 'get', path: 'admin/transactions/stats', data: payload });
 
-            const received = await useClient().http({ method: 'get', path: 'transactions/count-stats', data:{...payload,transaction_type: 'credit' }});
+            const received = await useClient().http({ method: 'get', path: 'admin/transactions/stats', data:{...payload,transaction_type: 'credit' }});
 
             this.loading = false;
 
@@ -355,9 +356,9 @@ export default {
             this.loading = true;
 
             // Fetch data for 'credit'
-            const response1 = await useClient().http({ method: 'get', path: 'transactions/count-stats', data: payload1 });
+            const response1 = await useClient().http({ method: 'get', path: 'admin/transactions/count-stats', data: payload1 });
             // Fetch data for 'debit'
-            const response2 = await useClient().http({ method: 'get', path: 'transactions/count-stats', data: payload2 });
+            const response2 = await useClient().http({ method: 'get', path: 'admin/transactions/count-stats', data: payload2 });
 
             this.loading = false;
 
@@ -437,32 +438,3 @@ export default {
    }
   
 </style>
-
-
-<!-- <template>
-    <div>
-     
-        <div class="tw-grid md:tw-grid-cols-3 ">
-        <DashboardCard 
-            v-for="x in 3"
-            :balance="7820000"
-            :previousBalance="3910000"
-            :percentageChange="50"
-            />
-            </div>
-    </div>
-</template>
-
-<script>
-import DashboardCard from '@/components/DashboardCard.vue';
-
-    export default {
-        components: {
-            DashboardCard,
-        },
-    }
-</script>
-
-<style lang="scss" scoped>
-
-</style> -->

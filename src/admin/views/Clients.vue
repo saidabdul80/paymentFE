@@ -8,7 +8,7 @@
             @page-change="handlePageChange"
           >
         <template v-slot:td-action="{ row }">
-            <UsersActions :row="row" @reload="reload" @viewClient="showdrawer=true" />
+            <UsersActions :row="row" @reload="reload" @viewClient="showClient" />
         </template>
         </DataTable>
     </div>
@@ -67,115 +67,119 @@
       </div>
 
       <div class="tw-mb-4">
-        <div class="tw-grid tw-grid-cols-2 tw-gap-5">
+        <div class="tw-grid tw-grid-cols-3 tw-gap-5">
+            <div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Client ID</div>
+                 <div class="tw-text-md">{{ client.id }}</div>
+            </div>
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">KYC Status</div>
-                 <div class="tw-text-lg">{{ client.kyc_status }}</div>
+                 <div class="tw-text-md">{{ client.kyc_status }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">KYC Documentation Status</div>
-                 <div class="tw-text-lg">{{ client.kyc_documentation_status }}</div>
+                 <div class="tw-text-md">{{ client.kyc_documentation_status }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Company Name</div>
-                 <div class="tw-text-lg">{{ client.company_name }}</div>
+                 <div class="tw-text-md">{{ client.company_name }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Type</div>
-                 <div class="tw-text-lg">{{ client.business_type }}</div>
+                 <div class="tw-text-md">{{ client.business_type }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Sector</div>
-                 <div class="tw-text-lg">{{ client.business_sector }}</div>
+                 <div class="tw-text-md">{{ client.business_sector }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">RC Number</div>
-                 <div class="tw-text-lg">{{ client.rc_number }}</div>
+                 <div class="tw-text-md">{{ client.rc_number }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Company Email</div>
-                 <div class="tw-text-lg tw-w-[150px] tw-truncate">{{ client.company_email }}</div>
+                 <div class="tw-text-md tw-w-[150px] tw-truncate">{{ client.company_email }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Country</div>
-                 <div class="tw-text-lg">{{ client.business_country }}</div>
+                 <div class="tw-text-md">{{ client.business_country }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business State</div>
-                 <div class="tw-text-lg">{{ client.business_state }}</div>
+                 <div class="tw-text-md">{{ client.business_state }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Address</div>
-                 <div class="tw-text-lg">{{ client.business_address }}</div>
+                 <div class="tw-text-md">{{ client.business_address }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">CAC Document</div>
-                 <div class="tw-text-lg">{{ client.cac_document ? 'Available' : 'Not Available' }}</div>
+                 <div class="tw-text-md">{{ client.cac_document ? 'Available' : 'Not Available' }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Bank Statement</div>
-                 <div class="tw-text-lg">{{ client.bank_statement ? 'Available' : 'Not Available' }}</div>
+                 <div class="tw-text-md">{{ client.bank_statement ? 'Available' : 'Not Available' }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Can Send Money</div>
-                 <div class="tw-text-lg">{{ client.can_send_money ? 'Yes' : 'No' }}</div>
+                 <div class="tw-text-md">{{ client.can_send_money ? 'Yes' : 'No' }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Account Suspended</div>
-                 <div class="tw-text-lg">{{ client.is_account_suspend ? 'Yes' : 'No' }}</div>
+                 <div class="tw-text-md">{{ client.is_account_suspend ? 'Yes' : 'No' }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Ledger Balance</div>
-                 <div class="tw-text-lg">{{ global.toCurrency(clientBalance.ledger_balance, false, false) }}</div>
+                 <div class="tw-text-md">{{ global.toCurrency(clientBalance.ledger_balance, false, false) }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Available Balance</div>
-                 <div class="tw-text-lg">{{ global.toCurrency(clientBalance.available_balance, false,false) }}</div>
+                 <div class="tw-text-md">{{ global.toCurrency(clientBalance.available_balance, false,false) }}</div>
             </div>
         </div>
       </div>
 
       <div class="tw-mt-6">
-        <h2 class="tw-text-lg tw-font-semibold">User Details</h2>
+        <h2 class="tw-text-md tw-font-semibold">User Details</h2>
         <div v-for="user in client.users" :key="user.id" class="tw-mt-4 tw-grid tw-grid-cols-2 tw-gap-y-2">
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">User ID</div>
-                 <div class="tw-text-lg">{{ user.id }}</div>
+                 <div class="tw-text-md">{{ user.id }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Email</div>
-                 <div class="tw-text-lg">{{ user.email }}</div>
+                 <div class="tw-text-md">{{ user.email }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">First Name</div>
-                 <div class="tw-text-lg">{{ user.first_name }}</div>
+                 <div class="tw-text-md">{{ user.first_name }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Last Name</div>
-                 <div class="tw-text-lg">{{ user.last_name }}</div>
+                 <div class="tw-text-md">{{ user.last_name }}</div>
             </div>
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Phone Number</div>
-                 <div class="tw-text-lg">{{ user.phone_number }}</div>
+                 <div class="tw-text-md">{{ user.phone_number }}</div>
             </div>
         </div>
       </div>
@@ -390,14 +394,18 @@
       formatAmount(amount) {
         return amount ? parseFloat(amount).toFixed(2) : '0.00';
       },
+      async showClient(id){
+        this.showdrawer = true
+        const res = await useClient().http({method:'get', path:'admin/clients/'+id})
+        if(res){
+            this.client = res.client
+            this.clientBalance = res.balance
+            this.showdrawer = true;
+        }
+      },
       async handleRowClick(row) {
         this.$router.push('/admin/dashboard/'+row.id);
-        // const res = await useClient().http({method:'get', path:'admin/dashboard/'+row.id})
-        // if(res){
-        //     this.client = res.client
-        //     this.clientBalance = res.balance
-        //     this.showdrawer = true;
-        // }
+        
         //this.transaction = row;
       },
       handlePageChange(path) {

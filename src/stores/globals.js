@@ -203,15 +203,24 @@ export const useGlobalsStore = defineStore('globals', {
       }
     },
     async getBalance(id =null){
+      let prefix = 'admin/'
+      if(id == null){
+        prefix = ''
+      }
       const [response, response2] = await Promise.all([
-            useClient().http({ method: 'get', path: 'transactions/count-stats', data:{client_id:id} }),
-            useClient().http({ method: 'get', path: 'transactions/balance', data:{client_id:id}  })                
+            useClient().http({ method: 'get', path: prefix+ 'transactions/count-stats', data:{client_id:id} }),
+            id==null? useClient().http({ method: 'get', path: prefix+'transactions/balance', data:{client_id:id}  }):{}               
       ])
 
       if(response){
         this.balance = {...response2,
             'Total Debit': response.debit_transactions.total_amount,
             'Total Credit': response.credit_transactions.total_amount,
+        }
+
+        if(this.client?.client?.company_name && id != null){
+          this.balance.ledger_balance = this.client?.balance?.ledger_balance || 0
+          this.balance.available_balance = this.client?.balance?.available_balance || 0
         }
       }
     },
@@ -220,7 +229,7 @@ export const useGlobalsStore = defineStore('globals', {
       this.loadingClient = true
       const response = await useClient().http({ method: 'get', path: 'admin/clients/'+id, data:{} })                
       if(response){
-        this.client = response.client || {}
+        this.client = response || {}
       }
       this.loadingClient = false
     },

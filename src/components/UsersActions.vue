@@ -7,7 +7,7 @@
             </button>
         </template>
         <v-list>
-            <v-list-item @click.stop="$emit('viewClient',true)">
+            <v-list-item @click.stop="$emit('viewClient', row.id)">
                 View Client
             </v-list-item>
             <v-list-item @click.stop="handleView">
