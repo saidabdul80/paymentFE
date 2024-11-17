@@ -187,7 +187,7 @@ export default {
             
             this.debit.amount = Number(this.debit.amount)
 
-            if(this.debit.amount < 1 || this.debit.amount == '' || isNaN(this.debit.amount)){
+            if(this.debit.amount <= 0 || this.debit.amount == '' || isNaN(this.debit.amount)){
                 this.errors.amount ='a valid amount is required'
                 return;
             }
