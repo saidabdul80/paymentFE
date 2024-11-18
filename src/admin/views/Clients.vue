@@ -6,6 +6,7 @@
             :headers="headers"
             @row-click="handleRowClick"
             @page-change="handlePageChange"
+            placeholder="Search clients"
           >
         <template v-slot:td-action="{ row }">
             <UsersActions :row="row" @reload="reload" @viewClient="showClient" />

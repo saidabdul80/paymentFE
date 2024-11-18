@@ -204,6 +204,7 @@ export default {
                     type: 'success',
                     message: 'Acccount debited successfully.',
                 })
+                this.globals.getBalance(row.id)
             }
         },
         async handleDeactivateActivate(row) {

@@ -6,7 +6,9 @@
              <!-- <FormsHeader :title=""  /> -->
             <Teleport v-if="!globals.loadingClient" defer to="#breadcrubs-right">
                 <h4 :class="`tw-text-[${$constants.primary}] ${$constants.text_size.s5}`"
-                     class="tw-font-visby md:tw-text-right tw-font-black tw-text-2xl tw-uppercase">{{ globals.client?.client.company_name || "Company XYZ" }}</h4>
+                     class="tw-font-visby md:tw-text-right tw-font-black tw-text-2xl tw-uppercase">
+                     {{ globals.client?.client?.company_name || "Admin" }}
+                    </h4>
             </Teleport> 
             <div class="tw-grid md:tw-grid-cols-4 tw-mb-4 tw-items-center tw-place-items-center">                  
                 <DashboardCard 
@@ -187,7 +189,8 @@ export default {
             transfer:{},
             isLoadingOpen:false,
             errors:{},
-            user: ls.get('auth.user')
+            user: ls.get('auth.user'),
+            client_id:null,
         };
     },
     watch: {
@@ -243,8 +246,11 @@ export default {
                 year: this.year,
                 month: this.month,
                 currency: this.selectedCurrency,
-                client_id: this.$route.params.id
             };
+            if(this.client_id != null){
+                payload.client_id = this.client_id
+            }
+
             this.loading = true;
             const response = await useClient().http({ method: 'get', path: 'admin/transactions/stats', data: payload });
             this.loading = false;
@@ -285,8 +291,10 @@ export default {
                 year: this.all_transaction_date_type === 'year' ? null : this.all_transaction_year,
                 month: null,
                 currency: this.selectedCurrency,
-                client_id: this.$route.params.id
             };
+            if(this.client_id != null){
+                payload.client_id = this.client_id
+            }
             //alert(this.all_transaction_date_type)
 
             const debit = await useClient().http({ method: 'get', path: 'admin/transactions/stats', data: payload });
@@ -342,17 +350,21 @@ export default {
                 year: this.year,
                 month: this.month,
                 currency: this.selectedCurrency,
-                client_id:this.$route.params.id
             };
+            if(this.client_id != null){
+                payload1.client_id = this.client_id
+            }
             const payload2 = {
                 type: 'debit',
                 date_type: this.date_type,
                 year: this.year,
                 month: this.month,
                 currency: this.selectedCurrency,
-                client_id:this.$route.params.id
             };
-
+            
+            if(this.client_id != null){
+                payload2.client_id = this.client_id
+            }
             this.loading = true;
 
             // Fetch data for 'credit'
@@ -398,13 +410,14 @@ export default {
 
     },
     created() {
-        if(this.$route.params?.id == ''){
-            this.$router.push('/admin/clients')
-        }
-
+        // if(this.$route.params?.id == ''){
+        //     this.$router.push('/admin/clients')
+        // }
+        this.client_id = this.$route.params?.id
+        this.globals.client = {}
         this.fetchDashboards2();
-        this.globals.getBalance(this.$route.params?.id)
-        this.globals.getClient(this.$route.params?.id)
+        this.globals.getBalance(this.client_id)
+        this.globals.getClient(this.client_id)
     },
    
     components: {

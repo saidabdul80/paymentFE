@@ -12,7 +12,7 @@
                     <PhMagnifyingGlass/>
                   </template>
               </InputIcon>
-              <InputText v-model="search" @input="asyncFind"   placeholder="Search transactions" class="tw-bg-[#e8ecf0]" />
+              <InputText v-model="search" @input="asyncFind"   :placeholder="placeholder" class="tw-bg-[#e8ecf0]" />
           </IconField>
         </div>
         
@@ -160,6 +160,10 @@ export default {
     pageTitle:{
       type: String,
       default: 'Recent Transactions'
+    },
+    placeholder:{
+      type: String,
+      default: 'Search transactions'
     },
     statuses:{
       type: Array,

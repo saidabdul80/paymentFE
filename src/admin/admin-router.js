@@ -23,12 +23,12 @@ export default [
                 path: '',
                 redirect: '/admin/dashboard',  
             },
-            {
-                path: "dashboard",
-                name: "Admin-Dashboard",
-                component: Dashboard,
-                meta: { breadcrumb: "Dashboard", requiresAuth: false },
-            },
+            // {
+            //     path: "dashboard",
+            //     name: "Admin-Dashboard",
+            //     component: Dashboard,
+            //     meta: { breadcrumb: "Dashboard", requiresAuth: false },
+            // },
             {
                 path: "",
                 name: "Admin-Home",
@@ -54,7 +54,7 @@ export default [
                 meta: { breadcrumb: "Clients", requiresAuth: true },
             },
             {
-                path: "dashboard/:id",
+                path: "dashboard/:id?",
                 name: "Admin-Clients-Dashboard",
                 component: ClientDashbaord,
                 meta: { breadcrumb: "Dashboard", parent:'Admin-Clients', requiresAuth: true },

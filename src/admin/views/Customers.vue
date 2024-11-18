@@ -6,6 +6,7 @@
           :headers="headers"
           @row-click="handleRowClick"
           @page-change="handlePageChange"
+          placeholder="Search customers"
         />
   </div>
 
