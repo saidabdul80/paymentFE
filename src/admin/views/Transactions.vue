@@ -208,7 +208,6 @@ export default {
       filters: {},
       showmodal:false,
       headers: [
-      
         { key: "client.company_name", title: "Company" },
         { key: "customer_detail.full_name", title: "Customer name" },
         { key: "transaction_number", title: "Trx Number",copy:true },

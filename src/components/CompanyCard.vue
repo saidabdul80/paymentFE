@@ -2,7 +2,7 @@
     
     <span @click="goto()" class="tw-relative tw-cursor-pointer tw-flex tw-items-center">
         <Badge v-if="!user?.picture_url || user?.imageError" class="tw-mt-[18px]" :style="{
-            backgroundColor: getColorFromWord(getInitials( user.business_name )),
+            backgroundColor: getColorFromWord(getInitials( user?.business_name )),
             borderRadius: '50%',
             width: !modelValue ? '50px' : '40px',
             marginBottom: '20px',
@@ -10,15 +10,15 @@
             marginTop: '10px',
         }" severity="contrast">
             <span class="tw-text-[16px] tw-font-[500]">{{
-                getInitials( user.business_name )
+                getInitials( user?.business_name )
                 }}</span>
         </Badge>
 
-        <img v-else :src="user?.picture_url" @error="handleImageError(user)" :alt=" user.business_name "
+        <img v-else :src="user?.picture_url" @error="handleImageError(user)" :alt=" user?.business_name "
             class="tw-h-[40px] tw-w-[40px] tw-rounded-full" />
         <div v-if="name" class="tw-ms-3">
             <p class="tw-text-xl tw-font-[400] tw-capitalize tw-truncate tw-w-[159px]">
-                {{ user.business_name }}
+                {{ user?.business_name }}
             </p>
             <p class="tw-font-[300]">  {{ user?.first_name }} {{ user?.last_name  }}</p>
         </div>

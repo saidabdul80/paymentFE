@@ -9,8 +9,9 @@
                         <img class=" tw-w-auto" src="@/assets/logo-plain.svg" alt="logo" />
                         <div>
                             <transition name="slide-fade">
-                                <div class="tw-ms-2 tw text-truncate tw-font-visby uppercase">
-                                    <span class="tw-text-black tw-text-2xl tw-font-bold">COWRIS</span>                                    
+                                <div class="tw-ms-2 tw text-truncate tw-font-visby uppercase tw-flex tw-items-center">
+                                    <span class="tw-text-black tw-text-2xl tw-font-bold">COWRIS</span>     
+                                    <Badge severity="danger" :pt="{root:{class:'tw-ms-2 tw-bg-red tw-text-white !tw-opacity-[1]'}}" value="Beta" />                                                                
                                 </div>
                             </transition>
                         </div>

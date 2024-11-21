@@ -12,7 +12,8 @@
                     alt="Company name" />
             </div>
             <ul class="tw-flex tw-flex-auto tw-gap-8 tw-my-auto tw-text-base tw-font-bold tw-text-center tw-text-black">
-                <!-- <li><a href="#resources">Resources</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <!-- 
                 <li><a href="#developer">Developer</a></li>
                 <li><a href="#pricing">Pricing</a></li> -->
             </ul>

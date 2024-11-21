@@ -8,7 +8,7 @@
                     <div>
                         <div class="tw-grid md:tw-grid-cols-3 tw-grid-cols-1 tw-gap-4 tw-w-full tw-mb-2">
                             <p class="tw-text-xl ">    
-                                Welcome {{user.first_name}} 👋 
+                                Welcome {{user?.first_name}} 👋 
                             </p>
                             
                         </div>

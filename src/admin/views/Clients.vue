@@ -170,7 +170,7 @@
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">First Name</div>
-                 <div class="tw-text-md">{{ user.first_name }}</div>
+                 <div class="tw-text-md">{{ user?.first_name }}</div>
             </div>
 
              <div>

@@ -10,6 +10,7 @@
                             src="@/assets/logo-plain.svg"
                             class="tw-object-contain tw-shrink-0 tw-w-18 tw-aspect-square" alt="Company logo" />
                        <span class="tw-font-bold tw-text-xl">COWRIS</span>
+                       <Badge severity="danger" :pt="{root:{class:'tw-bg-red tw-text-white !tw-opacity-[1]'}}" value="Beta" />
                     </div>
                     <v-divider class="border-opacity-100" :class="`tw-bg-[${$constants.primary}]`"></v-divider>
                     <v-list density="compact" nav class="py-8">
@@ -30,6 +31,7 @@
                             src="@/assets/logo-plain.svg"
                             class="tw-object-contain tw-shrink-0 tw-w-18 tw-aspect-square" alt="Company logo" />
                        <span class="tw-font-bold tw-text-xl">COWRIS</span>
+                       <Badge severity="danger" :pt="{root:{class:'tw-bg-red tw-text-white !tw-opacity-[1]'}}" value="Beta" />
                     </div>
                  <div class="tw-ms-4">
                      <v-btn v-for="item in main_items" class="tw-capitalize tw-font-semibold" variant="link">{{ item.name }}</v-btn></div>
@@ -67,6 +69,8 @@ import useAdminStore from "@/admin/stores/admin";
 import Select from "primevue/select";
 import SideBarItem from "@/components/sidebar/SideBarItem.vue"
 import CompanyCard from "@/components/CompanyCard.vue";
+import Badge from "primevue/badge";
+
 export default {
     components: {
         RouterView,
@@ -74,7 +78,8 @@ export default {
         BreadCrumbs,
         Select,
         SideBarItem,
-        CompanyCard
+        CompanyCard,
+        Badge
     },
     data() {
         return {
