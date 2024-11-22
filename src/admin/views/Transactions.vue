@@ -212,7 +212,7 @@ export default {
         { key: "customer_detail.full_name", title: "Customer name" },
         { key: "transaction_number", title: "Trx Number",copy:true },
         { key: "type", title: "Trx type" },
-        { key: "date", title: "Date" },
+        { key: "created_at", title: "Date" },
         { key: "amount", title: "Amount" },
         { key: "status", title: "Status" },
         { key: "action", title: "#" },

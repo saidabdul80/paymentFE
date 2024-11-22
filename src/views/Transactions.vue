@@ -213,6 +213,7 @@ export default {
         { key: "type", title: "Trx type" },
         { key: "date", title: "Date" },
         { key: "amount", title: "Amount" },
+        { key: "created_at", title: "Date" },
         { key: "status", title: "Status" },
         { key: "action", title: "#" },
         
