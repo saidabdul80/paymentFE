@@ -29,7 +29,7 @@
       </div>
       <div class="tw-mb-3">
         <Upload v-if="!fileLoading" v-model="form.cac_document" label="Corporation Letter" :error-messages="errors.cac_document"/>
-        <v-btn  v-else :loading="true"  class="tw-bg-[#0003] tw-w-full tw-h-[38px]" flat ></v-btn>
+        <v-btn  v-else :loading="fileLoading"  class="tw-bg-[#0003] tw-w-full tw-h-[38px]" flat ></v-btn>
       </div>
       <div class="tw-mb-1 md:tw-col-span-2">
         <v-btn type="submit" :loading="isSubmitting" class="tw-w-md tw-bg-black tw-text-white tw-py-2 tw-rounded">
@@ -98,9 +98,15 @@ export default {
       if(this.isUrl(this.form.cac_document)){
         return;
       }
+      if(!this.form.cac_document){
+          return;
+        }
+        
       this.fileLoading = true;
+
       setTimeout(async()=>{
         const formData =  new FormData()
+     
         formData.append('file',this.form.cac_document);
         formData.append('folder','pg');
         const res = await useClient().http({method:'post',path:'upload',data:formData})

@@ -67,7 +67,9 @@ export default {
     return {
       tabIndex: 0,
       info:{
-        payment_info:{}
+        payment_info:{
+          webhook_url:''
+        }
       },
       tabs: [
         { name: "Bussiness Information", key: "Bussiness" },
@@ -118,7 +120,6 @@ export default {
           path: 'clients/details',
         });
         if (res) {
-          console.log(res,3223)
           this.info = res.client; // Assuming the API returns a list of keys in `data`
         }
     },
