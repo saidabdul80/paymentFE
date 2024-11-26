@@ -37,30 +37,18 @@
       <div class="tw-grid md:tw-grid-cols-3 tw-grid-cols-1 tw-gap-6 ">
         <Article 
         icon="https://cdn.builder.io/api/v1/image/assets/TEMP/76b45a50e98e3adc35dbc75b293290c47e6c26bd4f9b91ed4bee8c7512d3dbaa?placeholderIfAbsent=true&apiKey=7ab38dc50e694bef84ba311c212964a7"
-          title="Collect payments" 
-          content="Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit,
-              sed do eiusmod tempor
-              incididunt ut labore et dolore
-              magna aliqua."
+          title="Payment Collection" 
+          content="Easily collect payment through our secure and efficient platform. Design to ensure that every transaction is processed seamlessly"
         />
         <Article 
         icon="https://cdn.builder.io/api/v1/image/assets/TEMP/302ddde47aaea970760c1721c994d01246272239205cab3930b6efb576112fef?placeholderIfAbsent=true&apiKey=7ab38dc50e694bef84ba311c212964a7"
-          title="Subscriptions" 
-          content="Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit,
-              sed do eiusmod tempor
-              incididunt ut labore et dolore
-              magna aliqua."
+          title="Seamless Integration" 
+          content="Our flexible APIs and plug-and-play solutions ensure a quick and smooth setup, so you can start accepting payments without delays."
         />
         <Article 
         icon="https://cdn.builder.io/api/v1/image/assets/TEMP/c6edb2f0e54d057eb96284d021fc0fd3069040af0a24d3aa932f3850df833567?placeholderIfAbsent=true&apiKey=7ab38dc50e694bef84ba311c212964a7"
           title="24/7 Support" 
-          content="Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit,
-              sed do eiusmod tempor
-              incididunt ut labore et dolore
-              magna aliqua."
+          content="Whether it’s a technical issue or a question about your transactions, we’re always here to help, ensuring your operations run smoothly without interruptions."
         />
       </div>
     </section>

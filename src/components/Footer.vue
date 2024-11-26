@@ -5,9 +5,9 @@
           &copy; 2024 Cowris Technologies
         </span>
         <div class="tw-flex tw-gap-4 tw-text-sm tw-text-gray-600">
-          <a href="https://twitter.com" target="_blank" class="tw-hover:underline">Twitter</a>
-          <a href="https://linkedin.com" target="_blank" class="tw-hover:underline">LinkedIn</a>
-          <a href="https://instagram.com" target="_blank" class="tw-hover:underline">Instagram</a>
+          <a href="https://twitter.com/SendCowris" target="_blank" class="tw-hover:underline">Twitter</a>
+          <a href="https://www.linkedin.com/in/send-cowris-a68bba302/" target="_blank" class="tw-hover:underline">LinkedIn</a>
+          <a href="https://www.instagram.com/sendcowris/" target="_blank" class="tw-hover:underline">Instagram</a>
         </div>
       </div>
     </footer>
