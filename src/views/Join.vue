@@ -105,7 +105,7 @@ export default {
       this.errors = {}; // Reset errors
       if (this.validateForm()) {
         this.loading = true;
-        this.form.phone_number = this.form?.phone_number?.replaceAll(' ','')
+        this.form.phone_number = Number(this.form?.phone_number?.replaceAll(' ','')?.replaceAll('+',''));
         const res = await useClient().http({ method: 'post', path: '/auth/register', data: this.form });
         if (res) {
           this.global.palert({
