@@ -22,7 +22,7 @@
                     </v-list>
                 </div>
             </v-navigation-drawer>
-            <v-app-bar flat :color="$constants.light" class="tw-shadow-none tw-border-b tw-py-2 tw-top-10 tw-transition-all" :style="isScrollingUp?'top:0px !important':''">                                            
+            <v-app-bar flat :color="$constants.light" class="tw-shadow-none tw-border-b tw-py-0 tw-top-10 tw-transition-all" :style="isScrollingUp?'top:0px !important':''">                                            
                 <v-app-bar-nav-icon v-if="!$vuetify.display.mdAndUp" variant="text" @click.stop="pdrawer = !pdrawer"></v-app-bar-nav-icon>
                 <div class="tw-w-[92%] tw-mx-auto tw-flex tw-items-center tw-pe-3">
                 <div  v-if="$vuetify.display.mdAndUp" class="tw-flex tw-items-center ">
@@ -38,7 +38,7 @@
                 </div>
                 <v-spacer></v-spacer>
                 <v-btn to="/login" v-if="$vuetify.display.mdAndUp && !ls.isLoggedIn()" class="tw-capitalize tw-font-semibold tw-border tw-border-gray-300 tw-me-3 " outlined color="black" >Sign In</v-btn>
-                <v-btn  v-if="$vuetify.display.mdAndUp" class="tw-capitalize tw-font-semibold tw-me-3 tw-bg-black tw-text-white" elevated color="black" >Contact Us</v-btn>
+                <v-btn  v-if="$vuetify.display.mdAndUp"     @click="$router.push('/contact')" class="tw-capitalize tw-font-semibold tw-me-3 tw-bg-black tw-text-white" elevated color="black" >Contact Us</v-btn>
                 <CompanyCard v-if="ls.isLoggedIn()" class="tw-cursor-pointer" :name="false" />
                 </div>
             </v-app-bar>            

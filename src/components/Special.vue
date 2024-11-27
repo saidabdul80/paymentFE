@@ -8,7 +8,7 @@
     <div
       class="tw-w-full tw-grid md:tw-grid-cols-3 tw-pt-4 tw-items-center tw-pb-5 tw-grid-cols-1"
     >
-      <a href="#" class="tw-text-white tw-underline">Back to Homepage</a>
+      <a @click="$router.push('/')" class="tw-text-white tw-underline">Back to Homepage</a>
       
       <div></div>
     </div>

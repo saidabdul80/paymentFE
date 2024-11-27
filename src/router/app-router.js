@@ -10,6 +10,7 @@ import HomeLayout from '@/views/HomeLayout.vue';
 import Settings from '@/views/Settings.vue';
 import Customers from '@/views/Customers.vue';
 import LayoutBasic from '@/views/layouts/LayoutBasic.vue';
+import Contact from '@/views/Contact.vue';
 
 export default [
     {
@@ -76,6 +77,12 @@ export default [
                 path: "/login",
                 name: "Login",
                 component: Login,
+                meta: { requiresAuth: false },
+            },
+            {
+                path: "/contact",
+                name: "Contact",
+                component: Contact,
                 meta: { requiresAuth: false },
             },
             {

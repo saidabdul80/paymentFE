@@ -24,6 +24,7 @@
                 Sign in
             </button>
             <button
+                @click="$router.push('/contact')"
                 class="tw-px-5 tw-py-3 tw-text-white tw-bg-black tw-rounded-xl tw-border tw-border-white tw-border-solid tw-min-h-[47px]">
                 Contact Sales
             </button>
