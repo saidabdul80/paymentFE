@@ -61,6 +61,7 @@ export const useAppAuthStore = (useWindow = false) => {
 
                     Ls.set('auth.token', response.token)
                     Ls.set('auth.user_type', 'app')
+                    Ls.set('auth.prefix', 'app')
                     Ls.set('auth.user', JSON.stringify(response.user))              
                     this.loginData.username = ''
                     this.loginData.password = ''                               

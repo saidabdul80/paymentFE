@@ -25,6 +25,7 @@ export const useAuthStore = (useWindow = false) => {
         }),
         actions: {
             async login(data) {
+                localStorage.clear();
                 const response = await useClient().http({ method: 'post', path: 'admin/login', data })                
                 if (response) {
                     const password = data.password;
@@ -70,6 +71,7 @@ export const useAuthStore = (useWindow = false) => {
 
                     Ls.set('auth.token', response.token)
                     Ls.set('auth.user_type', 'admin')
+                    Ls.set('auth.prefix', 'admin')
                     Ls.set('auth.user', JSON.stringify(response.admin))              
                     this.loginData.username = ''
                     this.loginData.password = ''                               
@@ -117,6 +119,7 @@ export const useAuthStore = (useWindow = false) => {
                         Ls.remove('auth.user');
                         Ls.remove('permissions');
                         Ls.remove('auth.token');
+                        localStorage.clear();
                         const notificationStore = useNotificationStore();
                         notificationStore.showNotification({
                             type: 'success',

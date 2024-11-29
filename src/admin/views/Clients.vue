@@ -396,6 +396,7 @@
         return amount ? parseFloat(amount).toFixed(2) : '0.00';
       },
       async showClient(id){
+        this.isMenuOpenisMenuOpen = false
         this.showdrawer = true
         const res = await useClient().http({method:'get', path:'admin/clients/'+id})
         if(res){

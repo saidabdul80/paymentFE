@@ -23,6 +23,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   window.currentRoute = to;
   useGlobalsStore().error = ''
+  useGlobalsStore().setPrefix();
   const correctedPath = to.fullPath.replace(/\/{2,}/g, '/');
   if (correctedPath !== to.fullPath) {
     next({ path: correctedPath, replace: true });

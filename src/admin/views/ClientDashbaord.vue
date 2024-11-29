@@ -50,7 +50,7 @@
         <!-- Loop through messages and match with the id -->
         <div>
             <TextField v-model="transfer.amount" label="Amount" :error-messages="errors.amount" class="tw-mb-3" />
-            <TextField v-model="transfer.client_id" label="Recipient ID" :error-messages="errors.client_id" class="tw-mb-3" />
+            <TextField v-model="transfer.email" label="Recipient Email" :error-messages="errors.client_id" class="tw-mb-3" />
             <TextField v-model="transfer.notes" label="Notes" :error-messages="errors.notes" class="tw-mb-3" />
             <br />
             <div class="tw-flex tw-gap-4">

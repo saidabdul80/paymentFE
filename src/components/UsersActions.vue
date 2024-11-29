@@ -7,7 +7,7 @@
             </button>
         </template>
         <v-list>
-            <v-list-item @click.stop="$emit('viewClient', row.id)">
+            <v-list-item @click.stop="viewClient(row.id)">
                 View Client
             </v-list-item>
             <v-list-item @click.stop="handleView">
@@ -17,12 +17,11 @@
                 View Transactions
             </v-list-item>
             <v-list-item @click.stop="handleDeactivate">
-                {{ row.is_suspended === 'ACTIVE' ? 'Suspend' : 'Activate' }}  Account
+                {{ row.is_suspended === false ? 'Suspend' : 'Activate' }}  Account
             </v-list-item>
             <v-list-item @click.stop="updateDialog = true">
                 Update Account
             </v-list-item>
-          
             <v-list-item :loading="true" @click.stop="debitDialog = true">
                Debit
             </v-list-item>
@@ -40,7 +39,7 @@
                 Confirmation
             </h1>
             <p class="tw-text-lg tw-text-gray-500 tw-text-center tw-mb-6">
-                Are you sure you want to {{ row.status === 'ACTIVE' ? 'Suspend' : 'Activate' }}?
+                Are you sure you want to {{ row.is_suspended === false ? 'Suspend' : 'Activate' }}?
             </p>
             <button @click="closeDialog"
                 class="tw-rounded-md tw-bg-white tw-px-3 tw-py-2 tw-font-semibold tw-text-gray-900 tw-shadow-sm tw-ring-1 tw-ring-inset tw-ring-gray-300 hover:tw-bg-gray-50 tw-mr-2">
@@ -157,7 +156,12 @@ export default {
                 })
             }
         },
+        viewClient(id){
+            this.isMenuOpen = false
+            this.$emit('viewClient', id)
+        },
         handleDeactivate() {
+            this.isMenuOpen = false
             this.dialog = true;
         },
         async handleResetPassword() {
@@ -184,7 +188,7 @@ export default {
             this.$router.push('/admin/transactions/'+this.row.id)
         },
         async handleDebit(row) {
-            
+            this.isMenuOpen = false
             this.debit.amount = Number(this.debit.amount)
 
             if(this.debit.amount <= 0 || this.debit.amount == '' || isNaN(this.debit.amount)){
@@ -208,6 +212,7 @@ export default {
             }
         },
         async handleDeactivateActivate(row) {
+            this.isMenuOpen = false
             this.isLoading= true
             const type = row?.is_suspended? 'unsuspend':'suspend'
             const method = row?.is_suspended? 'get':'post'

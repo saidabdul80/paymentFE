@@ -2,6 +2,7 @@ import { ref, computed, reactive } from "vue";
 import { defineStore } from "pinia";
 import useUserStore from "@/admin/stores/admin";
 import { useClient } from "./client";
+import ls from "@/services/ls";
 
 export const useGlobalsStore = defineStore('globals', {
   state: () => ({
@@ -56,14 +57,66 @@ export const useGlobalsStore = defineStore('globals', {
         },headers:{}})
         this.acess_token = response.data.access_token;
       },
+      routeTo(prefix) {
+        if (!prefix.includes('login')) {
+          router.push({ path: `/login`, replace: true })
+          return true;
+        }
+        return false;
+      },
+      setPrefix() {
+        window.prefix = '';
+        const authPrefix = ls.get('auth.prefix');
+        if (authPrefix) {
+          window.prefix = `/${authPrefix}`;
+          window.userRoot = ls.get('auth.user_type');;
+        }
+      },
+      async logout(root = false) {
+        try {
+          localStorage.clear();
+  
+          if (root) {
+            if (!this.routeTo(root)) { return; }
+          } else {
+            //const token = ls.get('auth.token');
+            let prefix = window.prefix || ''; // Initialize prefix
+            if (prefix.includes('null')) {
+              prefix = '-'; // Handle 'null' case
+            }
+  
+            prefix = prefix === '-' ? 'admin' : prefix; // Default to 'admin' if prefix is empty
+            this.routeTo(prefix)
+            // if (token) {
+            //  // ls.clear();
+  
+            // } else {
+            //   this.routeTo(prefix)
+            // }
+          }
+          if(!window.isActive401){ //controlling popups, set to true on notification timeout
+            const notificationStore = useNotificationStore();
+            notificationStore.showNotification({
+              type: 'success',
+              message: 'Logged out successfully.',
+            });
+          }
+        } catch (err) {
+          console.log(err)
+          const notificationStore = useNotificationStore();
+          notificationStore.showNotification({
+            type: 'error',
+            message: 'An error occurred while logging out.',
+          });
+        }
+      },
       getContacts(){
         const response = useClient().http({method:'get',path: 'https://www.zohoapis.com/crm/v2/Contacts',fullPath:true,
           headers: {
             'Authorization': `Bearer ${this.access_token}`
           }
         })
-        console.log(response,28830000000);
-       
+       // console.log(response,28830000000);
       },
       async bootstrap(background_process = false) {
         const handleResponse = (response) => {
