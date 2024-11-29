@@ -214,8 +214,8 @@ export default {
                 this.errors.amount ='a valid amount is required'
                 return;
             }
-            if(this.transfer?.client_id == '' || this.transfer?.client_id  == undefined){
-                this.errors.client_id ='a valid recipient ID is required'
+            if(this.transfer?.email == '' || this.transfer?.email  == undefined){
+                this.errors.email ='a valid email is required'
                 return;
             }
             
