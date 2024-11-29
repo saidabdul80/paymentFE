@@ -75,9 +75,9 @@
         </div>
 
         <div class="tw-my-3">
+            <p><b>Senders Name:</b>  {{fetchedReceivedData?.sender_name}}</p>
             <p><b>Amount:</b>  {{fetchedReceivedData?.amount}}</p>
             <p><b>Security Question:</b>  {{fetchedReceivedData?.security_question}}</p>
-            <p><b>Sender Name:</b>  {{fetchedReceivedData?.sender_name}}</p>
             <p><b>Description:</b>  {{fetchedReceivedData?.description}}</p>
         </div>
     
