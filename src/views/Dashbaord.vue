@@ -206,7 +206,7 @@ export default {
                 return;
             }
             if(this.transfer?.email == '' || this.transfer?.email  == undefined){
-                this.errors.email ='a valid recipient Email is required'
+                this.errors.email ='a valid recipient email is required'
                 return;
             }
             
