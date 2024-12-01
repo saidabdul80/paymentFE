@@ -43,7 +43,7 @@
         <!-- Loop through messages and match with the id -->
         <div>
             <TextField v-model="transfer.amount" label="Amount" :error-messages="errors.amount" class="tw-mb-3" />
-            <TextField v-model="transfer.email" label="Recipient Email" :error-messages="errors.client_id" class="tw-mb-3" />
+            <TextField v-model="transfer.email" label="Recipient Email" :error-messages="errors.email" class="tw-mb-3" />
             <TextField v-model="transfer.notes" label="Notes" :error-messages="errors.notes" class="tw-mb-3" />
             <br />
             <div class="tw-flex tw-gap-4">
@@ -205,8 +205,8 @@ export default {
                 this.errors.amount ='a valid amount is required'
                 return;
             }
-            if(this.transfer?.client_id == '' || this.transfer?.client_id  == undefined){
-                this.errors.client_id ='a valid recipient ID is required'
+            if(this.transfer?.email == '' || this.transfer?.email  == undefined){
+                this.errors.email ='a valid recipient Email is required'
                 return;
             }
             
