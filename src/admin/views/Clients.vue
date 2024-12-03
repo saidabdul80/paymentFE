@@ -140,7 +140,7 @@
 
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Account Suspended</div>
-                 <div class="tw-text-md">{{ client.is_account_suspend ? 'Yes' : 'No' }}</div>
+                 <div class="tw-text-md">{{ client.is_suspended ? 'Yes' : 'No' }}</div>
             </div>
 
              <div>

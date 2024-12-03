@@ -171,6 +171,7 @@ import CompanyCard from "@/components/CompanyCard.vue";
 import Tab from "@/components/tab.vue";
 import DataTable from "@/components/Table/Table.vue";
 import TextField from "@/components/TextField.vue";
+import ls from "@/services/ls";
 import { useClient } from "@/stores/client";
 import { useGlobalsStore } from "@/stores/globals";
 import { useNotificationStore } from "@/stores/notification";
@@ -198,10 +199,10 @@ export default {
       type: "credit",
       loadingTx:false,
       tabIndex: 0,
-      tabs: [
-        { name: "Received", key: "Received" },
-      //  { name: "Sent", key: "Sent" },
-      ],
+      // tabs: [
+       
+      //   { name: "Sent", key: "Sent" },
+      // ],
       global: useGlobalsStore(),
       showdrawer: false,
       transaction: {},
@@ -234,6 +235,7 @@ export default {
           },
           
         },
+      user: ls.get('auth.user'),
     };
   },
   watch: {
@@ -267,6 +269,13 @@ export default {
     },
   },
  computed:{
+  filteredTabs(){
+    const tabs =  [{ name: "Received", key: "Received" }]
+    if(this.user?.can_send_money){
+      tabs.push({ name: "Sent", key: "Sent" });
+    }
+    return tabs;
+  },
  getTitle(){
         if(this.type=='debit'){
             return 'Send Money'
