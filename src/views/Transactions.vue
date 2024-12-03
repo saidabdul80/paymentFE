@@ -269,7 +269,7 @@ export default {
     },
   },
  computed:{
-  filteredTabs(){
+  tabs(){
     const tabs =  [{ name: "Received", key: "Received" }]
     if(this.user?.can_send_money){
       tabs.push({ name: "Sent", key: "Sent" });
