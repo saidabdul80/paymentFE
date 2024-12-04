@@ -112,13 +112,13 @@ export default {
             transactions: [],
             theader: 
             [
+                { field: "created_at", header: "Date" },
                 { field: "customer_detail.full_name", header: "Customer name" },
                 { field: "transaction_number", header: "Trx Number",copy:true },
                 { field: "start_balance", header: "Start Balance" },
                 { field: "type", header: "Trx type" },
                 { field: "amount", header: "Amount" },
                 { field: "end_balance", header: "End Balance" },
-                { field: "created_at", header: "Date" },
                 { field: "status", header: "Status" },
                 { field: "action", header: "#" },
                 
