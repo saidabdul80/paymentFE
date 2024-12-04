@@ -9,7 +9,7 @@
           @row-click="handleRowClick"
           @page-change="handlePageChangeR"
         >
-    </DataTable>
+       </DataTable>
       </template>
       <template v-slot:Received>
         <DataTable
@@ -211,6 +211,8 @@ export default {
         { key: "client.company_name", title: "Company" },
         { key: "customer_detail.full_name", title: "Customer name" },
         { key: "transaction_number", title: "Trx Number",copy:true },
+        { key: "start_balance", title: "Start Balance" },
+        { key: "end_balance", title: "End Balance" },
         { key: "type", title: "Trx type" },
         { key: "created_at", title: "Date" },
         { key: "amount", title: "Amount" },

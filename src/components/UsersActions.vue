@@ -28,7 +28,7 @@
         </v-list>
     </v-menu>
 
-    <Dialog v-model:visible="dialog" modal :draggable="false"  :closable="false" class="tw-float-left">
+    <Dialog v-model:visible="dialog" modal :draggable="false"  :closable="true" class="tw-float-left">
         <div class="checkmark-container tw-mb-5 tw-text-center">
             <i class="ph-circle-wavy-warning tw-text-6xl"></i>
         </div>
@@ -52,7 +52,7 @@
         </div>
     </Dialog>
     
-    <Dialog v-model:visible="updateDialog" modal :closable="false" :draggable="false" style="width: 300px;" class="tw-float-left" header="Update Client">
+    <Dialog v-model:visible="updateDialog" modal :closable="true" :draggable="false" style="width: 300px;" class="tw-float-left" header="Update Client">
         
         <!-- Loop through messages and match with the id -->
         <SelectField v-model="clientData.kyc_status" label="KYC Status" :options="['pending','rejected','approved']" :error-messages="errors.kyc_status" class="tw-mb-3" />
@@ -69,7 +69,7 @@
             </v-btn>
         </div>
     </Dialog>
-    <Dialog v-model:visible="debitDialog" modal :closable="false" :draggable="false" style="width: 300px;" class="tw-float-left" header="Debit Client">
+    <Dialog v-model:visible="debitDialog" modal :closable="true" :draggable="false" style="width: 300px;" class="tw-float-left" header="Debit Client">
  
         <!-- Loop through messages and match with the id -->
         <div>
@@ -146,6 +146,7 @@ export default {
                 can_send_money:this.clientData?.can_send_money,
                 kyc_status: this.clientData?.kyc_status
             }});
+            this.updateDialog = false
             this.isMenuOpen=false
             this.isLoadingOpen = false
             if(res){

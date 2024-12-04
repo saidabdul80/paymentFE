@@ -211,8 +211,9 @@ export default {
       headers: [
         { key: "customer_detail.full_name", title: "Customer name" },
         { key: "transaction_number", title: "Trx Number",copy:true },
+        { key: "start_balance", title: "Start Balance" },
+        { key: "end_balance", title: "End Balance" },
         { key: "type", title: "Trx type" },
-        { key: "date", title: "Date" },
         { key: "amount", title: "Amount" },
         { key: "created_at", title: "Date" },
         { key: "status", title: "Status" },
