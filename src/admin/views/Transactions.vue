@@ -41,10 +41,10 @@
           <TextField v-model="sendData.recipient_email" label="Recipient Email" required />
         </div>
         <div  >
-          <TextField v-model="sendData.customer_full_name" label="Customer Email" required />
+          <TextField v-model="sendData.customer_full_name" label="Customer Full Name" required />
         </div>
         <div  >
-          <TextField v-model="sendData.customer_email" label="Customer Full Name" required />
+          <TextField v-model="sendData.customer_email" label="Customer Full Email" required />
         </div>
         <div  >
           <TextField v-model="sendData.mount" label="Amount" required />
