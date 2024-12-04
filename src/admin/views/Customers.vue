@@ -20,13 +20,13 @@
           <TextField v-model="sendData.recipient_email" label="Recipient Email" required />
         </div>
         <div  >
-          <TextField v-model="sendData.customer_full_name" label="Customer Email" required />
+          <TextField v-model="sendData.customer_email" label="Customer Email" required />
         </div>
         <div  >
-          <TextField v-model="sendData.customer_email" label="Customer Full Name" required />
+          <TextField v-model="sendData.customer_full_name" label="Customer Full Name" required />
         </div>
         <div  >
-          <TextField v-model="sendData.mount" label="Amount" required />
+          <TextField v-model="sendData.amount" label="Amount" required />
         </div>
         <!-- <div  >
           <TextField v-model="sendData.security_question" label="Security Question" required />
@@ -234,7 +234,7 @@ export default {
         await useClient().http({
                 method:'post',
                 path:'/transactions/send',
-                data:this.sendData
+                data:{...this.sendData, amount: Number(this.sendData.amount)}
             })
         this.loadingTx = false
     },
