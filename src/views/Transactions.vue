@@ -286,6 +286,15 @@ export default {
     }
  },
   methods: {
+    async sendMoney(){
+        this.loadingTx = true
+        await useClient().http({
+                method:'post',
+                path:'/transactions/send',
+                data:{...this.sendData, amount: Number(this.sendData.amount)}
+            })
+        this.loadingTx = false
+    },
     async fetchReceived(){
         this.loadingFetchedReceivedData = true
         const res = await useClient().http({
@@ -352,15 +361,15 @@ export default {
       this.receiveData.date = formattedDate;
       this.receiveData.answer = ''
     },
-    async sendMoney(){
-        this.loadingTx = true
-        await useClient().http({
-                method:'post',
-                path:'/transactions/send',
-                data:this.sendData
-            })
-        this.loadingTx = false
-    },
+    // async sendMoney(){
+    //     this.loadingTx = true
+    //     await useClient().http({
+    //             method:'post',
+    //             path:'/transactions/send',
+    //             data:this.sendData
+    //         })
+    //     this.loadingTx = false
+    // },
     async receiveMoney(){
         this.loadingTx = true
         if(this.receiveData?.reference_number){

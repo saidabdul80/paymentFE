@@ -47,7 +47,7 @@
           <TextField v-model="sendData.customer_email" label="Customer Full Email" required />
         </div>
         <div  >
-          <TextField v-model="sendData.mount" label="Amount" required />
+          <TextField v-model="sendData.amount" label="Amount" required />
         </div>
         <!-- <div  >
           <TextField v-model="sendData.security_question" label="Security Question" required />
