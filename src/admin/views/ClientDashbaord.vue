@@ -42,6 +42,26 @@
                 <!-- Comparison Chart -->
                 <!-- <highcharts class="hc" :options="chartOptionsComparison" ref="chartComparison"></highcharts> -->
             </div>
+            <div class="tw-mb-5 tw-rounded-md tw-shadow-md">
+                <Tab :tabs="tabs" v-model="tabIndex" :withBorder="true" :config="tabConfig" refresh  @change="handleTabDrupdwonButton">
+                    <template v-slot:Sent>
+                        <DataTable :value="globals.transactions?.data?.slice(0,5)" :loading="globals.loadingTransactions" class="tw-tracking-wider" :rowClass="applyRowClass">
+                            <Column v-for="(col, index) in theader" :key="col.field" :field="col.field"
+                                :header="col.header" :bodyClass="index === 0 ? 'tw-font-semibold' : ''">
+                            </Column>
+                        </DataTable>
+                    </template>
+                    <template v-slot:Received>
+                        <DataTable :value="globals.transactions?.data?.slice(0,5)" :loading="globals.loadingTransactions" class="tw-tracking-wider" :rowClass="applyRowClass">
+                            <Column v-for="(col, index) in theader" :key="col.field" :field="col.field"
+                                :header="col.header" :bodyClass="index === 0 ? 'tw-font-semibold' : ''">
+                            </Column>
+                        </DataTable>
+                    </template>
+                </Tab>
+
+               
+            </div>
         </div>
     </div>
 
@@ -79,6 +99,8 @@ import ls from '@/services/ls';
 import Dialog from 'primevue/dialog';
 import TextField from '@/components/TextField.vue';
 import FormsHeader from '@/components/FormsHeader.vue';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 export default {
     data() {
         const currentDate = new Date();
@@ -86,6 +108,20 @@ export default {
         const currentMonth = currentDate.toLocaleString('default', { month: 'short' });
 
         return {
+            transactions: [],
+            theader: 
+            [
+                { field: "customer_detail.full_name", header: "Customer name" },
+                { field: "transaction_number", header: "Trx Number",copy:true },
+                { field: "start_balance", header: "Start Balance" },
+                { field: "type", header: "Trx type" },
+                { field: "amount", header: "Amount" },
+                { field: "end_balance", header: "End Balance" },
+                { field: "created_at", header: "Date" },
+                { field: "status", header: "Status" },
+                { field: "action", header: "#" },
+                
+            ],
             all_transaction_date_type:'month',
             all_transaction_year:currentYear,
             all_transaction_key:false,
@@ -191,6 +227,12 @@ export default {
             errors:{},
             user: ls.get('auth.user'),
             client_id:null,
+            tabs: [
+                    { name: "Received", key: "Received" },
+                    { name: "Sent", key: "Sent" },
+            ],
+            tabIndex: 0,
+            type:'credit',
         };
     },
     watch: {
@@ -201,6 +243,21 @@ export default {
         // month: 'fetchDashboards',
         all_transaction_date_type:'fetchDashboards2',
         all_transaction_year:'fetchDashboards2',
+        tabIndex: function (newV) {
+            if (newV == 0) {
+                this.type = "credit";
+                //this.filters.transaction_type = this.type
+                this.globals.getTrasactionsForAdmin({
+                    transaction_type: this.type,
+                });
+            } else {
+                this.type = "debit";
+            //    this.filters.transaction_type = this.type
+                this.globals.getTrasactionsForAdmin({
+                    transaction_type: this.type,
+                });
+            }
+        },
     },
     computed: {
         // Same computed properties as before
@@ -418,6 +475,9 @@ export default {
         this.fetchDashboards2();
         this.globals.getBalance(this.client_id)
         this.globals.getClient(this.client_id)
+        this.globals.getTrasactionsForAdmin({
+                    transaction_type: this.type,
+                });
     },
    
     components: {
@@ -425,7 +485,9 @@ export default {
         DashboardCard,
         Dialog,
         TextField,
-        FormsHeader
+        FormsHeader,
+        DataTable,
+        Column
     }
 };
 </script>
