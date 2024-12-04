@@ -43,6 +43,7 @@
                 <!-- <highcharts class="hc" :options="chartOptionsComparison" ref="chartComparison"></highcharts> -->
             </div>
             <div class="tw-mb-5 tw-rounded-md tw-shadow-md">
+                <h1 class="tw-text-2xl tw-font-semibold tw-text-gray-700 tw-bg-white tw-p-3 tw-shadow-md">Recent Transactions</h1>
                 <Tab :tabs="tabs" v-model="tabIndex" :withBorder="true" :config="tabConfig" refresh  @change="handleTabDrupdwonButton">
                     <template v-slot:Sent>
                         <DataTable :value="globals.transactions?.data?.slice(0,5)" :loading="globals.loadingTransactions" class="tw-tracking-wider" :rowClass="applyRowClass">
