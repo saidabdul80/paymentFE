@@ -9,13 +9,13 @@
             <div>
               <TextField v-model="sendData.recipient_email" label="Recipient Email" required />
             </div>
-            <div>
+            <!-- <div>
               <TextField v-model="sendData.customer_full_name" label="Customer Full Name" required />
             </div>
             <div>
               <TextField v-model="sendData.customer_email" label="Customer Email" required />
-            </div>
-            <div>
+            </div> -->
+            <div class="md:tw-cols-span-2">
               <TextField v-model="sendData.amount" label="Amount" required />
             </div>
             <div>

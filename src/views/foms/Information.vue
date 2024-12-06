@@ -4,7 +4,7 @@
     <p class="tw-mb-6">Kindly provide the following information for review and verification.</p>
     <form @submit.prevent="submitForm" class="tw-grid md:tw-grid-cols-2 tw-gap-x-4">
       <div class="tw-mb-1">
-        <TextField v-model="form.company_name" disabled label="Company Name" :error-messages="errors.company_name"/>
+        <TextField v-model="form.company_name" disabled label="Business Name" :error-messages="errors.company_name"/>
       </div>
       <div class="tw-mb-1">
         <SelectField :options="businessTypes" v-model="form.business_type" label="Business Type" :error-messages="errors.business_type"/>
@@ -13,16 +13,16 @@
         <TextField v-model="form.business_sector" label="Business Sector" :error-messages="errors.business_sector"/>
       </div>
       <div class="tw-mb-1">
-        <TextField v-model="form.rc_number" label="Corporate Number" :error-messages="errors.rc_number"/>
+        <TextField v-model="form.rc_number" label="Business Number (BN)" :error-messages="errors.rc_number"/>
       </div>
       <div class="tw-mb-1">
         <TextField v-model="form.company_email" label="Company Email" :error-messages="errors.company_email"/>
       </div>
       <div class="tw-mb-1">
-        <TextField v-model="form.business_country" label="Business Country" :error-messages="errors.business_country"/>
+        <TextField v-model="form.business_country" label="Country of Operation" :error-messages="errors.business_country"/>
       </div>
       <div class="tw-mb-1">
-        <TextField v-model="form.business_state" label="Business State" :error-messages="errors.business_state"/>
+        <TextField v-model="form.business_state" label="State / Province" :error-messages="errors.business_state"/>
       </div>
       <div class="tw-mb-1">
         <TextField v-model="form.business_address" label="Business Address" :error-messages="errors.business_address"/>
