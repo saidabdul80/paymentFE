@@ -99,7 +99,7 @@
             </div>
 
              <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">RC Number</div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Number (BN)</div>
                  <div class="tw-text-md">{{ client.rc_number }}</div>
             </div>
 
@@ -109,7 +109,7 @@
             </div>
 
              <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Country</div>
+                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Country of Operation</div>
                  <div class="tw-text-md">{{ client.business_country }}</div>
             </div>
 
@@ -137,12 +137,10 @@
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Can Send Money</div>
                  <div class="tw-text-md">{{ client.can_send_money ? 'Yes' : 'No' }}</div>
             </div>
-
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Account Suspended</div>
                  <div class="tw-text-md">{{ client.is_suspended ? 'Yes' : 'No' }}</div>
             </div>
-
              <div>
                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Ledger Balance</div>
                  <div class="tw-text-md">{{ global.toCurrency(clientBalance.ledger_balance, false, false) }}</div>

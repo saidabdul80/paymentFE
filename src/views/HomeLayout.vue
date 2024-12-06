@@ -36,6 +36,10 @@
                  <div class="tw-ms-4">
                      <v-btn v-for="item in main_items" class="tw-capitalize tw-font-semibold" variant="link">{{ item.name }}</v-btn></div>
                 </div>
+                <div v-else class="tw-flex tw-items-center tw-gap-1">
+                    <span class="tw-font-bold tw-text-xl">COWRIS Pay</span>
+                    <Badge severity="danger" :pt="{root:{class:'tw-bg-red tw-text-white !tw-opacity-[1]'}}" value="Beta" />
+                </div>
                 <v-spacer></v-spacer>
                 <v-btn to="/login" v-if="$vuetify.display.mdAndUp && !ls.isLoggedIn()" class="tw-capitalize tw-font-semibold tw-border tw-border-gray-300 tw-me-3 " outlined color="black" >Sign In</v-btn>
                 <v-btn  v-if="$vuetify.display.mdAndUp"     @click="$router.push('/contact')" class="tw-capitalize tw-font-semibold tw-me-3 tw-bg-black tw-text-white" elevated color="black" >Contact Us</v-btn>

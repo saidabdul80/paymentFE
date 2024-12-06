@@ -3,13 +3,13 @@
     <Tab :tabs="tabs" v-model="tabIndex" :withBorder="true" :config="tabConfig" refresh  @change="handleTabDrupdwonButton">
       <template v-slot:Sent>
         <DataTable
-          :loading="global.loadingTransactions"
-          :paginationData="global.transactions"
-          :headers="headers"
-          @row-click="handleRowClick"
-          @page-change="handlePageChangeR"
-        >
-    </DataTable>
+            :loading="global.loadingTransactions"
+            :paginationData="global.transactions"
+            :headers="headers"
+            @row-click="handleRowClick"
+            @page-change="handlePageChangeR"
+          >
+      </DataTable>
       </template>
       <template v-slot:Received>
         <DataTable
@@ -32,61 +32,7 @@
   </div>
 
   <Dialog v-model:visible="showmodal" :header="getTitle" modal class="tw-min-[300px] md:tw-w-[450px]">
-    <div v-if="type=='debit'">
-      <div class="tw-grid md:tw-grid-cols-2 tw-grid-cols-1 tw-gap-3">
-        <div  >
-          <TextField v-model="sendData.recipient_full_name" label="Recipient Full Name" required />
-        </div>
-        <div  >
-          <TextField v-model="sendData.recipient_email" label="Recipient Email" required />
-        </div>
-        <div  >
-          <TextField v-model="sendData.customer_full_name" label="Customer Full Name" required />
-        </div>
-        <div  >
-          <TextField v-model="sendData.customer_email" label="Customer Email" required />
-        </div>
-        <div  >
-          <TextField v-model="sendData.amount" label="Amount" required />
-        </div>
-        <!-- <div  >
-          <TextField v-model="sendData.security_question" label="Security Question" required />
-        </div>
-        <div  >
-          <TextField v-model="sendData.security_answer" label="Security Answer" required />
-        </div>
-        <div  >
-          <TextField v-model="sendData.description" label="Description" required />
-        </div> -->
-      </div>
-      <div class="tw-flex tw-justify-center tw-my-4">
-          <v-btn ref="btnRef" @click="sendMoney" :loading="loadingTx" color="black">Send Money</v-btn>
-      </div>
-    </div>
-    <div v-else>
-        <div class="tw-grid tw-grid-cols-1 tw-gap-3">
-        <!-- <div  v-if="receiveData?.reference_number" >
-          <TextField :disabled="receiveData?.reference_number"  v-model="receiveData.reference_number" label="Reference number" required />
-         
-        </div> -->
-        <div class="tw-flex ">
-          <TextField v-model="receiveData.reference_number" label="Reference number" required class="tw-w-full tw-rounded-e-none" />
-          <v-btn :loading="loadingFetchedReceivedData" @click="fetchReceived()" class="tw-bg-black tw-text-white tw-rounded-s-none tw-h-[42px] tw-w-[100px]" style="align-self: flex-end;">Fetch</v-btn>
-        </div>
-
-        <div class="tw-my-3">
-            <p><b>Senders Name:</b>  {{fetchedReceivedData?.sender_name}}</p>
-            <p><b>Amount:</b>  {{fetchedReceivedData?.amount}}</p>
-            <p><b>Security Question:</b>  {{fetchedReceivedData?.security_question}}</p>
-            <p><b>Description:</b>  {{fetchedReceivedData?.description}}</p>
-        </div>
-    
-        </div>
-        <div class="tw-flex tw-justify-center tw-my-4">
-            <v-btn ref="btnRef" @click="accept" :loading="loadingTx" color="black">Accept Transaction</v-btn>
-            <v-btn ref="btnRef" class="tw-ms-2" @click="reject" :loading="loadingTx" color="red">Reject Transaction</v-btn>
-      </div>
-    </div>
+    <SendRecieveMoney :type="type" :receiveData="receiveData" />
   </Dialog>
   <Drawer v-model:visible="showdrawer" class="" :header="type + ' Transaction'" position="right">
 
@@ -168,6 +114,7 @@
 
 <script>
 import CompanyCard from "@/components/CompanyCard.vue";
+import SendRecieveMoney from "@/components/SendRecieveMoney.vue";
 import Tab from "@/components/tab.vue";
 import DataTable from "@/components/Table/Table.vue";
 import TextField from "@/components/TextField.vue";
@@ -188,7 +135,9 @@ export default {
     PhCaretLeft,
     Dialog,
     TextField,
-    Checkbox
+    Checkbox,
+    SendRecieveMoney
+
   },
   data() {
     return {
@@ -286,72 +235,29 @@ export default {
     }
  },
   methods: {
-    async sendMoney(){
-        this.loadingTx = true
-        await useClient().http({
-                method:'post',
-                path:'/transactions/send',
-                data:{...this.sendData, amount: Number(this.sendData.amount)}
-            })
-        this.loadingTx = false
-    },
-    async fetchReceived(){
-        this.loadingFetchedReceivedData = true
-        const res = await useClient().http({
-                method:'post',
-                path:'transactions/incoming/details',
-                data:{reference_number:this.receiveData.reference_number}
-            })
-        if(res){
-            this.fetchedReceivedData = res
-        }
+    // async sendMoney(){
+    //     this.loadingTx = true
+    //     await useClient().http({
+    //             method:'post',
+    //             path:'/transactions/send',
+    //             data:{...this.sendData, amount: Number(this.sendData.amount)}
+    //         })
+    //     this.loadingTx = false
+    // },
+    // async fetchReceived(){
+    //     this.loadingFetchedReceivedData = true
+    //     const res = await useClient().http({
+    //             method:'post',
+    //             path:'transactions/incoming/details',
+    //             data:{reference_number:this.receiveData.reference_number}
+    //         })
+    //     if(res){
+    //         this.fetchedReceivedData = res
+    //     }
         
-        this.loadingFetchedReceivedData = false
-    },
-    accept(){
-        this.global.palert({
-                title:'Accept?',
-                text: '<p class="tw-mb-3">Enter Security Question Answer</p> '+
-                  '<input type="text" id="answer-input" name="simple-input" placeholder="Anwser"'+
-                      'class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">',
-                cancelBtnText:'Cancel',
-                confirmBtnText:'Proceed',
-                loading:false,
-                callback: async()=>{
-                    const val = document.getElementById('answer-input').value
-                    this.loadingTx = true
-                    const res = await useClient().http({
-                            method:'post',
-                            path:'transactions/receive',
-                            data:{reference_number:this.receiveData.reference_number, answer:val}
-                        })
-                        if(res){
-                            const notificationStore = useNotificationStore();
-                            notificationStore.showNotification({
-                                type: 'success',
-                                message: 'Completed',
-                            });
-                        }
-                        this.loadingTx = false
-                }
-            })
-    },
-    async reject(){
-        this.loadingTx = true
-        const res = await useClient().http({
-                method:'post',
-                path:'transactions/decline',
-                data:{reference_number:this.receiveData.reference_number}
-            })
-            if(res){
-                const notificationStore = useNotificationStore();
-                notificationStore.showNotification({
-                    type: 'success',
-                    message: 'Declined',
-                });
-            }
-            this.loadingTx = false
-    },
+    //     this.loadingFetchedReceivedData = false
+    // },
+ 
     updateRecord(rowData) {
       this.showmodal = true;
       this.receiveData.replyTo = rowData.customer_detail; // store the selected row data

@@ -22,7 +22,7 @@
             </v-app-bar>            
             <v-main style="min-height:100vh;" class="tw-bg-gray-100/70">
                 <BreadCrumbs />
-            <div class="tw-px-[18px] tw-pt-[36px] tw-mt-2 ">
+            <div class="tw-px-[18px] tw-pt-[16px] tw-mt-2 ">
                 <RouterView v-slot="{ Component }">
                     <transition name="scale">
                         <component :is="Component" />

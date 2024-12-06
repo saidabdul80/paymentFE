@@ -1,7 +1,11 @@
 <template>
     <div class="tw-px-4">
         <div class="md:tw-p-5">
-            <v-btn color="black" @click="transferDialog=true" class="tw-w-[150px] tw-capitalize !tw-p-0" size="small" variant="outlined" >Make transfer</v-btn>
+            <div class="tw-grid md:tw-grid-cols-4 lg:tw-grid-cols-6 tw-place-items-start tw-mb-3 tw-grid-cols-2 sm:tw-grid-cols-3 tw-gap-3">
+                <v-btn color="black" @click="transferDialog=true" class="tw-w-[150px] tw-capitalize !tw-p-0 tw-truncate" size="small" variant="outlined" >Internal transfer</v-btn>
+                <v-btn color="black" @click="showmodal=true; trType='debit'" class="tw-w-[150px] tw-capitalize !tw-p-0" size="small" variant="outlined" >Send Money</v-btn>
+                <v-btn color="black" @click="showmodal=true; trType='credit'" class="tw-w-[150px] tw-capitalize !tw-p-0" size="small" variant="outlined" >Manual Receive</v-btn>
+            </div>
             <!-- <hr class="tw-my-4 tw-border-2 tw-shadow-2xl"/> -->
             <div class="tw-grid md:tw-grid-cols-4 tw-mb-4 tw-items-center tw-place-items-center">                  
                 <DashboardCard 
@@ -18,7 +22,7 @@
             </div>
             <div v-else>
                 <div class="tw-my-4 tw-bg-white ">
-                    <div class="tw-flex tw-w-full tw-py-6 tw-px-4 tw-justify-between tw-items-center">
+                    <div class="tw-flex tw-flex-col md:tw-flex-row tw-w-full tw-py-6 tw-px-4 tw-justify-between tw-items-center">
                         <p class="tw-m-0 tw-text-md">All Transactions</p>
                         <div class="tw-flex  tw-items-center">
                             <v-btn @click="all_transaction_date_type='month'" :flat="all_transaction_date_type=='month'" :class="all_transaction_date_type=='month'?'':'tw-bg-black tw-text-white'" size="small" class=" ">Month</v-btn>
@@ -36,8 +40,11 @@
                 <!-- <highcharts class="hc" :options="chartOptionsComparison" ref="chartComparison"></highcharts> -->
             </div>
         </div>
-    </div>
 
+    </div>
+    <Dialog v-model:visible="showmodal" :header="getTitle" modal class="tw-min-[300px] md:tw-w-[450px]">
+        <SendRecieveMoney :type="trType" :receiveData="receiveData" />
+    </Dialog>
     <Dialog v-model:visible="transferDialog" modal :closable="false" :draggable="false" style="width: 300px;" class="tw-float-left" header="Internal Transfer">
         
         <!-- Loop through messages and match with the id -->
@@ -57,7 +64,7 @@
                 </v-btn>
             </div>
         </div>
-        </Dialog>
+    </Dialog>
 </template>
 
 <script>
@@ -71,6 +78,7 @@ import Highcharts from 'highcharts';
 import ls from '@/services/ls';
 import Dialog from 'primevue/dialog';
 import TextField from '@/components/TextField.vue';
+import SendRecieveMoney from '@/components/SendRecieveMoney.vue';
 export default {
     data() {
         const currentDate = new Date();
@@ -78,6 +86,9 @@ export default {
         const currentMonth = currentDate.toLocaleString('default', { month: 'short' });
 
         return {
+            showmodal:false,
+            receiveData:{},
+            trType:'debit',
             all_transaction_date_type:'month',
             all_transaction_year:currentYear,
             all_transaction_key:false,
@@ -194,7 +205,13 @@ export default {
         all_transaction_year:'fetchDashboards2',
     },
     computed: {
-        // Same computed properties as before
+        getTitle(){
+            if(this.trTypeype=='debit'){
+                return 'Send Money'
+            }else{
+                return this.receiveData?.transaction_number ?'Re-try Receive Transaction': 'New Receive Transaction'
+            }
+        }
     },
     methods: {
         async handleTranser() {
@@ -396,6 +413,7 @@ export default {
         Tab,
         DashboardCard,
         Dialog,
+        SendRecieveMoney,
         TextField
     }
 };
