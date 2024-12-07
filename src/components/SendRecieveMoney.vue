@@ -43,8 +43,8 @@
               <p><b>Amount:</b> {{ fetchedReceivedData?.amount }}</p>
               <p>
                 <b>Security Question:</b>
-                {{ fetchedReceivedData?.security_question }}
-              </p>
+                    {{fetchedReceivedData?.security_question }}
+                </p>
               <p><b>Description:</b> {{ fetchedReceivedData?.description }}</p>
             </div>
           </div>
@@ -81,6 +81,7 @@ import { useClient } from "@/stores/client";
 import TextField from "./TextField.vue";
 import Checkbox from "primevue/checkbox";
 import { useNotificationStore } from "@/stores/notification";
+import { useGlobalsStore } from "@/stores/globals";
 
 export default {
   components: {
@@ -104,6 +105,7 @@ export default {
       },
       loadingTx: false,
       errors: {},
+      global:useGlobalsStore(),
       fetchedReceivedData: {},
       loadingFetchedReceivedData: false,
       transactionSuccessful: false, // Flag to check transaction success
