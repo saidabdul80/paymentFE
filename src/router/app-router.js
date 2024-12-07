@@ -11,6 +11,7 @@ import Settings from '@/views/Settings.vue';
 import Customers from '@/views/Customers.vue';
 import LayoutBasic from '@/views/layouts/LayoutBasic.vue';
 import Contact from '@/views/Contact.vue';
+import ForgortPassword from '@/views/ForgotPassword.vue';
 
 export default [
     {
@@ -89,6 +90,12 @@ export default [
                 path: "/otp",
                 name: "Otp",
                 component: Otp,
+                meta: { requiresAuth: false },
+            },
+            {
+                path: "/forgort-password",
+                name: "ForgotPassword",
+                component: ForgortPassword,
                 meta: { requiresAuth: false },
             },
             {

@@ -15,7 +15,7 @@
                                 <Password v-model="form.password" fluid id="password" :feedback="false" toggleMask class="tw-w-full tw-rounded-lg" required />
                                 <small v-if="errors.password" class="tw-text-[#d13333]">{{ errors.password }}</small>
                             </div>
-                            <p class="tw-text-right tw-mb-5 tw-cursor-pointer">Forgot Password?</p>
+                            <p class="tw-text-right tw-mb-5 tw-cursor-pointer" @click="$router.push('/forgort-password')">Forgot password?</p>
                             <v-btn :loading="loading" @click="login()" type="submit" color="black" class="tw-w-full" severity="contrast">Login</v-btn>
                             <p class="tw-text-center tw-mt-5 tw-cursor-pointer">Don't have an account? <router-link to="/register" class="tw-text-blue-600 tw-underline">Join</router-link></p>
                         </div>
