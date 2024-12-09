@@ -1,7 +1,7 @@
 <template>
     <Special>
         <div class="tw-flex tw-justify-center tw-mt-10">
-            <Card style="overflow: hidden" class="tw-py-10 md:tw-w-[35%] tw-w-[80%]">
+            <Card style="overflow: hidden" class="tw-py-10 md:tw-w-[55%] lg:tw-w-[35%] tw-w-[80%]">
                 <template #content>
                     <div class="tw-flex tw-w-full tw-flex-col tw-justify-center tw-items-center">
                         <div class="tw-w-[80%] ">
@@ -15,7 +15,8 @@
                                 <Password v-model="form.password" fluid id="password" :feedback="false" toggleMask class="tw-w-full tw-rounded-lg" required />
                                 <small v-if="errors.password" class="tw-text-[#d13333]">{{ errors.password }}</small>
                             </div>
-                            <p class="tw-text-right tw-mb-5 tw-cursor-pointer" @click="$router.push('/forgort-password')">Forgot password?</p>                            <v-btn :loading="loading" @click="login()" type="submit" color="black" class="tw-w-full" severity="contrast">Login</v-btn>
+                            <p class="tw-text-right tw-mb-5 tw-cursor-pointer" @click="$router.push('/forgort-password')">Forgot password?</p>
+                            <v-btn :loading="loading" @click="login()" type="submit" color="black" class="tw-w-full" severity="contrast">Login</v-btn>
                             <p class="tw-text-center tw-mt-5 tw-cursor-pointer">Don't have an account? <router-link to="/register" class="tw-text-blue-600 tw-underline">Join</router-link></p>
                         </div>
                     </div>
@@ -24,7 +25,6 @@
         </div>
     </Special>
 </template>
-
 <script>
 import Password from 'primevue/password';
 import Card from 'primevue/card';

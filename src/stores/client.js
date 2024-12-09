@@ -46,10 +46,33 @@ export const useClient = defineStore("client", () => {
         data:config?.data,
         headers:config?.headers?config?.headers : headers,
       });
-      
-      return response.data.data;
+      if(response.data?.data){
+        return response.data.data;
+      }
+      return response.data;
     } catch (error) {      
       handleError(error);
+      if (error?.response?.status == 401) {
+      
+    
+        if(window.isActive401){ //controlling popups, set to true on notification timeout
+          return;
+        }
+        if (route.meta.requiresAuth) {
+        
+        
+          let userRootPath = '';
+          /* console.log(useRoute()) */
+          userRootPath = window.currentRoute.matched[0]?.path?.replace('/', '') || '';
+          useGlobalsStore().logout(userRootPath)
+          /* if(userRootPath != ''){
+          }else{
+            router.push({ path: `/` }); // Redirect to login or home page
+          } */
+         window.isActive401 = true //controlling popups, set to true on notification timeout
+        }
+        
+      }
       return false
     }
   }

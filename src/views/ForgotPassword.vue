@@ -44,17 +44,16 @@ export default {
                 email: this.email
             };
             this.loading = true;
+            localStorage.setItem('email',payload.email)
             const res = await useClient().http({method:'post',path:'/auth/forgot-password', data :payload}) 
             this.loading = false;
-            if  (res) {
-                this.global.palert({
-                    title: 'Thank you',
-                    text: 'We have sent you an email',
-                    callback: async () => {
-                        this.$router.push('/otp')
-                    },
-                });
-            }
+            this.global.palert({
+                title: 'Thank you',
+                text: 'We have sent you an email',
+                callback: async () => {
+                    this.$router.push('/otp')
+                },
+            });
         }
     }
 }
