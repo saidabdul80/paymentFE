@@ -270,10 +270,11 @@ export const useGlobalsStore = defineStore('globals', {
         this.balance = {
               ...response2,
             }
-        
-        if(this.client?.client?.company_name && id != null){
+        if(id != null){
           this.balance['Total Credit'] = response.credit_transactions.total_amount;
           this.balance['Total Debit'] = response.debit_transactions.total_amount;
+        }
+        if(this.client?.client?.company_name && id != null){
           this.balance.ledger_balance = this.client?.balance?.ledger_balance || 0
           this.balance.available_balance = this.client?.balance?.available_balance || 0
         }
