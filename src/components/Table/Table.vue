@@ -4,16 +4,17 @@
     <div
       
       class="table-shadow-sm  tw-overflow-auto ">
-      <div class="tw-border-b-[1px] tw-border-gray-200 tw-text-md md:tw-text-lg tw-font-bold tw-flex tw-flex-col md:tw-flex-row tw-justify-between tw-p-5">
-        <div class="tw-font-bold tw-mb-3 md:tw-mb-0">
-          <IconField>
+      <div class="tw-border-b-[1px] tw-w-full tw-border-gray-200 tw-text-md md:tw-text-lg tw-font-bold tw-flex tw-flex-col md:tw-flex-row tw-justify-between tw-p-5">
+        <div class="tw-font-bold tw-mb-3 md:tw-mb-0 tw-w-[300px]">
+          <!-- <IconField>
               <InputIcon >
                 <template #default>
                     <PhMagnifyingGlass/>
                   </template>
               </InputIcon>
               <InputText v-model="search" @input="asyncFind"   :placeholder="placeholder" class="tw-bg-[#e8ecf0]" />
-          </IconField>
+            </IconField> -->
+            <Search  v-model="search" :options="searchOptions" :searchOptionsDropdown="searchOptionsDropdown" class="tw-bg-[#e8ecf0]"  />
         </div>
         
         <div class="tw-flex tw-flex-row">
@@ -155,6 +156,7 @@ import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import { PhMagnifyingGlass } from "@phosphor-icons/vue";
 import CopyButton from '@/components/CopyButton.vue';
+import Search from "../Search.vue";
 export default {
   props: {
     pageTitle:{
@@ -189,6 +191,14 @@ export default {
       type: Boolean,
       default: true,
     },
+    searchOptions:{
+      type:Array,
+      default:[]
+    },
+    searchOptionsDropdown:{
+      type:Object,
+      default:{}
+    }
   },
   data() {
     return {
@@ -209,7 +219,8 @@ export default {
     InputText,
     InputIcon,
     CopyButton,
-    PhMagnifyingGlass
+    PhMagnifyingGlass,
+    Search
   },
   watch:{
     status(newVal){

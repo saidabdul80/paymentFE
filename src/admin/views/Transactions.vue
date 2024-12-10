@@ -8,6 +8,7 @@
           :headers="headers"
           @row-click="handleRowClick"
           @page-change="handlePageChangeR"
+          :search-options="searchOptions"
         >
        </DataTable>
       </template>
@@ -18,6 +19,7 @@
           :headers="headers"
           @row-click="handleRowClick"
           @page-change="handlePageChangeS"
+          :search-options="searchOptions"
         >
             <template v-slot:td-action="{ row}" >
                 <v-btn  @click.stop="updateRecord(row)" v-if="row?.status?.toLowerCase() !== 'completed' " size="small" icon="mdi-redo" :loading="row?.loading" color="black" title="Re Try Transaction" ></v-btn>
@@ -207,6 +209,7 @@ export default {
       transaction: {},
       filters: {},
       showmodal:false,
+      searchOptions:['name','email', 'amount','transaction_number','date'],
       headers: [
         { key: "client.company_name", title: "Company" },
         { key: "customer_detail.full_name", title: "Customer name" },
@@ -246,28 +249,28 @@ export default {
         this.filters = {
           transaction_status: status||'',
           sort: newFilters.sort||'',
-          transaction_number: newFilters.search||'',
           transaction_type: this.type||'',
+          ...newFilters
         };
         this.global.getTrasactionsForAdmin(this.filters);
       },
       deep: true,
     },
-    tabIndex: function (newV) {
-      if (newV == 0) {
-        this.type = "credit";
-        this.filters.transaction_type = this.type
-        this.global.getTrasactionsForAdmin({
-            transaction_type: this.type,
-        });
-      } else {
-        this.type = "debit";
-        this.filters.transaction_type = this.type
-        this.global.getTrasactionsForAdmin({
-            transaction_type: this.type,
-        });
-      }
-    },
+  tabIndex: function (newV) {
+    if (newV == 0) {
+      this.type = "credit";
+      this.filters.transaction_type = this.type
+      this.global.getTrasactionsForAdmin({
+          transaction_type: this.type,
+      });
+    } else {
+      this.type = "debit";
+      this.filters.transaction_type = this.type
+      this.global.getTrasactionsForAdmin({
+          transaction_type: this.type,
+      });
+    }
+  },
   },
  computed:{
  getTitle(){

@@ -8,6 +8,8 @@
             :headers="headers"
             @row-click="handleRowClick"
             @page-change="handlePageChangeR"
+            :search-options="searchOptions"
+            :search-options-dropdown="searchOptionsDropdown"
           >
       </DataTable>
       </template>
@@ -18,6 +20,8 @@
           :headers="headers"
           @row-click="handleRowClick"
           @page-change="handlePageChangeS"
+          :search-options="searchOptions"
+          :search-options-dropdown="searchOptionsDropdown"
         >
             <template v-slot:td-action="{ row}" >
                 <v-btn  @click.stop="updateRecord(row)" v-if="row?.status?.toLowerCase() !== 'completed' " size="small" icon="mdi-redo" :loading="row?.loading" color="black" title="Re Try Transaction" ></v-btn>
@@ -169,6 +173,10 @@ export default {
         { key: "action", title: "#" },
         
       ],
+      searchOptionsDropdown:{
+   
+      },
+      searchOptions:['name','email', 'amount','transaction_number','date'],
       tabConfig:{
           'Sent':{
             search: false,
@@ -195,8 +203,9 @@ export default {
         this.filters = {
           transaction_status: status||'',
           sort: newFilters.sort||'',
-          transaction_number: newFilters.search||'',
           transaction_type: this.type||'',
+          ...newFilters
+          // transaction_number: newFilters.search||'',
         };
         this.global.getTrasactions(this.filters);
       },

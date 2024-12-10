@@ -13,7 +13,7 @@
             <div class="tw-grid md:tw-grid-cols-4 tw-mb-4 tw-items-center tw-place-items-center">                  
                 <DashboardCard 
                     v-for="key in Object.keys(globals.balance)"
-                    :name="key.replace('_', ' ')"
+                    :name="key.replaceAll('_', ' ')"
                     :balance="globals.balance[key]"
                     previousBalance="-"
                     percentageChange="-"
@@ -473,6 +473,7 @@ export default {
         // }
         this.client_id = this.$route.params?.id
         this.globals.client = {}
+
         this.fetchDashboards2();
         this.globals.getBalance(this.client_id)
         this.globals.getClient(this.client_id)
