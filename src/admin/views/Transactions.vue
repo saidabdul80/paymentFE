@@ -123,9 +123,18 @@
         <div class="tw-text-sm tw-w-[150px] tw-truncate">
           {{ transaction.customer_detail?.email }}
         </div>
-
-        <div class="tw-text-gray-500 tw-text-sm">amount</div>
+        <div class="tw-text-gray-500 tw-text-sm">Start Balance</div>
+        <div class="tw-text-sm">{{ formatAmount(transaction.start_balance) }} {{ transaction.currency }}</div>
+        <div class="tw-text-gray-500 tw-text-sm">End Balance</div>
+        <div class="tw-text-sm">{{ formatAmount(transaction.end_balance) }} {{ transaction.currency }}</div>
+        <div class="tw-text-gray-500 tw-text-sm">Amount</div>
         <div class="tw-text-sm">{{ formatAmount(transaction.amount) }} {{ transaction.currency }}</div>
+        <div class="tw-text-gray-500 tw-text-sm">Net amount</div>
+        <div class="tw-text-sm">{{ formatAmount(transaction.net_amount) }} {{ transaction.currency }}</div>
+        <div class="tw-text-gray-500 tw-text-sm">Apaylo Transaction Ref</div> 
+        <div class="tw-text-sm">{{ formatAmount(transaction?.transaction_ref) }}</div> 
+        <div class="tw-text-gray-500 tw-text-sm">Transaction Number</div>
+        <div class="tw-text-sm">{{ formatAmount(transaction?.transaction_number) }}</div> 
 <!-- 
         <div class="tw-text-gray-500 tw-text-sm">Sender amount</div>
         <div class="tw-text-sm">{{ formatAmount(transaction.provider_request_response?.Amount) }} CAD</div> -->
@@ -135,7 +144,12 @@
 
         <div class="tw-text-gray-500 tw-text-sm">Description</div>
         <div class="tw-text-sm">
-          {{ transaction.provider_request_response?.Description || 'No description available' }}
+          {{ transaction.description || 'No description available' }}
+        </div>
+
+        <div class="tw-text-gray-500 tw-text-sm">Note</div>
+        <div class="tw-text-sm">
+          {{ transaction?.notes|| 'No Note available' }}
         </div>
 
         <div class="tw-text-gray-500 tw-text-sm">Date</div>
