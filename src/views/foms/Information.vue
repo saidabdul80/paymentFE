@@ -22,7 +22,7 @@
         <TextField v-model="form.company_email" label="Company Email" :error-messages="errors.company_email"/>
       </div>
       <div class="tw-mb-1">
-        <TextField v-model="form.business_country" label="Country of Operation" :error-messages="errors.business_country"/>
+        <SelectField :options="['Canada']" v-model="form.business_country" label="Country of Operation" :error-messages="errors.business_country"/>
       </div>
       <div class="tw-mb-1">
         <TextField v-model="form.business_state" label="State / Province" :error-messages="errors.business_state"/>
@@ -166,25 +166,22 @@ export default {
     validateForm() {
       const errors = {};
 
-      if (!this.form.entity_legal_name) errors.entity_legal_name = "Entity's Legal Name is required.";
       if (!this.form.company_name) errors.company_name = "Company Name is required.";
+      if (!this.form.entity_legal_name) errors.entity_legal_name = "Entity's Legal Name is required.";
       if (!this.form.business_type) errors.business_type = "Business Type is required.";
       if (!this.form.business_sector) errors.business_sector = "Business Sector is required.";
       if (!this.form.company_email) errors.company_email = "Company Email is required.";
       if (!this.form.business_country) errors.business_country = "Business Country is required.";
       if (!this.form.business_state) errors.business_state = "Business State is required.";
       if (!this.form.business_address) errors.business_address = "Business Address is required.";
-      if (!this.form.city) errors.city = "City is required.";
-      if (!this.form.apt_unit) errors.apt_unit = "Apt / Unit is required.";
+      //if (!this.form.city) errors.city = "City is required.";
+      //if (!this.form.apt_unit) errors.apt_unit = "Apt / Unit is required.";
       if (!this.form.postal_zip_code) errors.postal_zip_code = "Postal / Zip Code is required.";
       if (!this.form.business_phone_number) errors.business_phone_number = "Business Phone Number is required.";
       if (this.form.business_sector === 'Others (Please Specify)' && !this.form.other_business_sector) errors.other_business_sector = "Please specify the Business Sector.";
       if (!this.form.company_website) errors.company_website = "Company Website is required.";
       if (!this.form.company_description) errors.company_description = "Company Description is required.";
-      // Uncomment the following lines if the fields are required.
-      // if (!this.form.rc_number) errors.rc_number = "RC Number is required.";
-      // if (!this.form.cac_document) errors.cac_document = "CAC Document URL is required.";
-      // if (!this.form.bank_statement) errors.bank_statement = "Bank Statement URL is required.";
+   
 
       this.errors = errors;
       return Object.keys(errors).length === 0;

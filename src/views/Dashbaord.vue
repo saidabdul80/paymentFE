@@ -3,7 +3,7 @@
         <div class="md:tw-p-5">
             <div class="tw-grid md:tw-grid-cols-4 lg:tw-grid-cols-6 tw-place-items-start tw-mb-3 tw-grid-cols-2 sm:tw-grid-cols-3 tw-gap-3">
                 <v-btn color="black" @click="transferDialog=true" class="tw-w-[150px] tw-capitalize !tw-p-0 tw-truncate" size="small" variant="outlined" >Internal transfer</v-btn>
-                <v-btn color="black" @click="showmodal=true; trType='debit'" class="tw-w-[150px] tw-capitalize !tw-p-0" size="small" variant="outlined" >Send Money</v-btn>
+                <v-btn v-if="user?.can_send_money" color="black" @click="showmodal=true; trType='debit'" class="tw-w-[150px] tw-capitalize !tw-p-0" size="small" variant="outlined" >Send Money</v-btn>
                 <v-btn color="black" @click="showmodal=true; trType='credit'" class="tw-w-[150px] tw-capitalize !tw-p-0" size="small" variant="outlined" >Manual Receive</v-btn>
             </div>
             <!-- <hr class="tw-my-4 tw-border-2 tw-shadow-2xl"/> -->
@@ -86,6 +86,7 @@ export default {
         const currentMonth = currentDate.toLocaleString('default', { month: 'short' });
 
         return {
+            user: ls.get('auth.user'),
             showmodal:false,
             receiveData:{},
             trType:'debit',
@@ -406,7 +407,7 @@ export default {
     },
     created() {
         this.fetchDashboards2();
-        this.globals.getBalance()
+        this.globals.getBalance(null,localStorage.getItem('auth.prefix')=='app')
     },
    
     components: {

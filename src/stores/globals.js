@@ -255,7 +255,7 @@ export const useGlobalsStore = defineStore('globals', {
         this.clients = response
       }
     },
-    async getBalance(id =null){
+    async getBalance(id =null, d=null){
 
       let prefix = 'admin/'
       if(id == null){
@@ -272,6 +272,10 @@ export const useGlobalsStore = defineStore('globals', {
             }
         if(id != null){
           this.balance['Total Credit'] = response.credit_transactions.total_amount;
+          this.balance['Total Debit'] = response.debit_transactions.total_amount;
+        }
+        if(d != null){
+         this.balance['Total Credit'] = response.credit_transactions.total_amount;
           this.balance['Total Debit'] = response.debit_transactions.total_amount;
         }
         if(this.client?.client?.company_name && id != null){
