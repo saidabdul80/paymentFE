@@ -123,18 +123,24 @@
         <div class="tw-text-sm tw-w-[150px] tw-truncate">
           {{ transaction.customer_detail?.email }}
         </div>
-        <div class="tw-text-gray-500 tw-text-sm">Start Balance</div>
-        <div class="tw-text-sm">{{ formatAmount(transaction.start_balance) }} {{ transaction.currency }}</div>
-        <div class="tw-text-gray-500 tw-text-sm">End Balance</div>
-        <div class="tw-text-sm">{{ formatAmount(transaction.end_balance) }} {{ transaction.currency }}</div>
         <div class="tw-text-gray-500 tw-text-sm">Amount</div>
         <div class="tw-text-sm">{{ formatAmount(transaction.amount) }} {{ transaction.currency }}</div>
         <div class="tw-text-gray-500 tw-text-sm">Net amount</div>
         <div class="tw-text-sm">{{ formatAmount(transaction.net_amount) }} {{ transaction.currency }}</div>
+        <div class="tw-text-gray-500 tw-text-sm">Recipient name</div>
+        <div class="tw-text-sm">{{ transaction.recipient_detail?.full_name }}</div>
+        <div class="tw-text-gray-500 tw-text-sm">Recipient email</div>
+        <div class="tw-text-sm tw-w-[150px] tw-truncate">
+          {{ transaction.recipient_detail?.email }}
+        </div>
+        <div class="tw-text-gray-500 tw-text-sm">Start Balance</div>
+        <div class="tw-text-sm">{{ formatAmount(transaction.start_balance) }} {{ transaction.currency }}</div>
+        <div class="tw-text-gray-500 tw-text-sm">End Balance</div>
+        <div class="tw-text-sm">{{ formatAmount(transaction.end_balance) }} {{ transaction.currency }}</div>
         <div class="tw-text-gray-500 tw-text-sm">Apaylo Transaction Ref</div> 
-        <div class="tw-text-sm">{{ formatAmount(transaction?.transaction_ref) }}</div> 
+        <div class="tw-text-sm">{{ transaction?.transaction_ref }}</div> 
         <div class="tw-text-gray-500 tw-text-sm">Transaction Number</div>
-        <div class="tw-text-sm">{{ formatAmount(transaction?.transaction_number) }}</div> 
+        <div class="tw-text-sm">{{ transaction?.transaction_number }}</div> 
 <!-- 
         <div class="tw-text-gray-500 tw-text-sm">Sender amount</div>
         <div class="tw-text-sm">{{ formatAmount(transaction.provider_request_response?.Amount) }} CAD</div> -->
@@ -228,6 +234,7 @@ export default {
         { key: "client.company_name", title: "Company" },
         { key: "customer_detail.full_name", title: "Customer name" },
         { key: "transaction_number", title: "Trx Number",copy:true },
+        {key: "recipient_detail.full_name", title: "Recipient name"},
         { key: "start_balance", title: "Start Balance" },
         { key: "type", title: "Trx type" },
         { key: "amount", title: "Amount" },
