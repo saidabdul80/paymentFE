@@ -35,13 +35,12 @@
           :search-options-dropdown="searchOptionsDropdown"
         >
         <template v-slot:td-status="{ row }">
-            <span class="tw-rounded-[33px] tw-bg-white tw-block ">
-                <v-chip size="small"
-                    :color="row.status.toLowerCase() == 'completed' ? '#065F46' : (row.status.toLowerCase() == 'pending') ? 'orange' : '#991B1B'"
-                    class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
-                    {{ row?.status.toLowerCase() }}
-                </v-chip>
-            </span>
+          <span class="tw-rounded-[33px] tw-bg-white tw-block">
+              <v-chip size="small" :color="getChipColor(row.status)"
+              class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
+              {{ row?.status.toLowerCase() }}
+              </v-chip>
+          </span>
         </template>
         <template v-slot:td-action="{ row}" >
             <v-btn  @click.stop="updateRecord(row)" v-if="row?.status?.toLowerCase() !== 'completed' " size="small" icon="mdi-redo" :loading="row?.loading" color="black" title="Re Try Transaction" ></v-btn>

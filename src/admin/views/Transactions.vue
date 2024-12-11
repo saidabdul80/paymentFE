@@ -10,6 +10,14 @@
           @page-change="handlePageChangeR"
           :search-options="searchOptions"
         >
+        <template v-slot:td-status="{ row }">
+          <span class="tw-rounded-[33px] tw-bg-white tw-block">
+              <v-chip size="small" :color="getChipColor(row.status)"
+              class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
+              {{ row?.status.toLowerCase() }}
+              </v-chip>
+          </span>
+        </template>
        </DataTable>
       </template>
       <template v-slot:Received>
@@ -21,6 +29,14 @@
           @page-change="handlePageChangeS"
           :search-options="searchOptions"
         >
+        <template v-slot:td-status="{ row }">
+          <span class="tw-rounded-[33px] tw-bg-white tw-block">
+              <v-chip size="small" :color="getChipColor(row.status)"
+              class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
+              {{ row?.status.toLowerCase() }}
+              </v-chip>
+          </span>
+        </template>
             <template v-slot:td-action="{ row}" >
                 <v-btn  @click.stop="updateRecord(row)" v-if="row?.status?.toLowerCase() !== 'completed' " size="small" icon="mdi-redo" :loading="row?.loading" color="black" title="Re Try Transaction" ></v-btn>
                 <!-- <v-btn @click="confirmSendMoney(row)" v-if="row?.status?.toLowerCase() =='completed' && !row?.fulfilled" size="small"  icon="mdi-check"  :loading="isLoading" color="primary" title="Fulfil"></v-btn> -->
@@ -303,6 +319,17 @@ export default {
     }
  },
   methods: {
+    getChipColor(status) {
+      const lowerStatus = status.toLowerCase();
+      if (lowerStatus === 'completed') {
+        return '#065F46'; // Green for completed
+      } else if (lowerStatus === 'pending') {
+        return 'orange'; // Orange for pending
+      } else if (lowerStatus === 'failed') {
+        return '#991B1B'; // Red for failed
+      }
+      return '#ccc'; // Default color (e.g., gray)
+    },
     async fetchReceived(){
         this.loadingFetchedReceivedData = true
         const res = await useClient().http({
