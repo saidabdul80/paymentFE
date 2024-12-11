@@ -126,6 +126,7 @@
         <div class="tw-text-gray-500 tw-text-sm">Amount</div>
         <div class="tw-text-sm">{{ formatAmount(transaction.amount) }} {{ transaction.currency }}</div>
         <div class="tw-text-gray-500 tw-text-sm">Net amount</div>
+        <div class="tw-text-sm">{{ formatAmount(transaction.net_amount) }} {{ transaction.currency }}</div>
         <div class="tw-text-gray-500 tw-text-sm">Recipient name</div>
         <div class="tw-text-sm">{{ transaction.recipient_detail?.full_name }}</div>
         <div class="tw-text-gray-500 tw-text-sm">Recipient email</div>
@@ -136,7 +137,6 @@
         <div class="tw-text-sm">{{ formatAmount(transaction.start_balance) }} {{ transaction.currency }}</div>
         <div class="tw-text-gray-500 tw-text-sm">End Balance</div>
         <div class="tw-text-sm">{{ formatAmount(transaction.end_balance) }} {{ transaction.currency }}</div>
-        <div class="tw-text-sm">{{ formatAmount(transaction.net_amount) }} {{ transaction.currency }}</div>
         <div class="tw-text-gray-500 tw-text-sm">Apaylo Transaction Ref</div> 
         <div class="tw-text-sm">{{ transaction?.transaction_ref }}</div> 
         <div class="tw-text-gray-500 tw-text-sm">Transaction Number</div>
