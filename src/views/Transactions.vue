@@ -28,7 +28,7 @@
         <DataTable
           :loading="global.loadingTransactions"
           :paginationData="global.transactions"
-          :headers="headers"
+          :headers="headers1"
           @row-click="handleRowClick"
           @page-change="handlePageChangeS"
           :search-options="searchOptions"
@@ -195,8 +195,20 @@ export default {
       transaction: {},
       filters: {},
       showmodal:false,
-      headers: [
+      headers1: [
         { key: "customer_detail.full_name", title: "Customer name" },
+        { key: "transaction_number", title: "Trx Number",copy:true },
+        { key: "start_balance", title: "Start Balance" },
+        { key: "type", title: "Trx type" },
+        { key: "amount", title: "Amount" },
+        { key: "end_balance", title: "End Balance" },
+        { key: "created_at", title: "Date" },
+        { key: "status", title: "Status" },
+        { key: "action", title: "#" },
+        
+      ],
+      headers: [
+        // { key: "customer_detail.full_name", title: "Customer name" },
         { key: "transaction_number", title: "Trx Number",copy:true },
         {key: "recipient_detail.full_name", title: "Recipient name"},
         { key: "start_balance", title: "Start Balance" },
