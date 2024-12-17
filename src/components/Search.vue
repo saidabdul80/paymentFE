@@ -134,7 +134,7 @@ export default {
   mounted(){
     
     this.$nextTick(()=>{
-  
+      this.globals.filter = 'search';
       document.getElementById('searchWrapper').addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
           //console.log('Enter key pressed!');

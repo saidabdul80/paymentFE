@@ -245,7 +245,7 @@ export default {
       transaction: {},
       filters: {},
       showmodal:false,
-      searchOptions:['name','email', 'amount','transaction_number','date'],
+      searchOptions:['search'],
       headers: [
         { key: "client.company_name", title: "Company" },
         { key: "customer_detail.full_name", title: "Customer name" },
@@ -520,6 +520,7 @@ export default {
 
   },
   created() {
+    this.globals.filter = 'search';
     this.client_id = this.$route.params.id || null;
     if(this.client_id){
       this.filters.client_id = this.client_id

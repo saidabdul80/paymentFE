@@ -223,7 +223,7 @@ export default {
       searchOptionsDropdown:{
    
       },
-      searchOptions:['name','email', 'amount','transaction_number','date'],
+      searchOptions:['search'],
       tabConfig:{
           'Sent':{
             search: false,
