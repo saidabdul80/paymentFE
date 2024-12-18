@@ -294,17 +294,20 @@ export default {
       deep: true,
     },
   tabIndex: function (newV) {
+    this.clientResolver()
     if (newV == 0) {
       this.type = "credit";
       this.filters.transaction_type = this.type
       this.global.getTrasactionsForAdmin({
           transaction_type: this.type,
+          ...this.filters
       });
     } else {
       this.type = "debit";
       this.filters.transaction_type = this.type
       this.global.getTrasactionsForAdmin({
           transaction_type: this.type,
+          ...this.filters
       });
     }
   },
@@ -517,14 +520,18 @@ export default {
       this.filters.transaction_type=this.type;
       this.global.getTrasactionsForAdmin(this.filters, path);
     },
+    clientResolver(){
+    
+      this.client_id = this.$route.params.id || null;
+      if(this.client_id){
+        this.filters.client_id = this.client_id
+      }
+    }
 
   },
   created() {
     this.globals.filter = 'search';
-    this.client_id = this.$route.params.id || null;
-    if(this.client_id){
-      this.filters.client_id = this.client_id
-    }
+    this.clientResolver()
     this.filters.transaction_type=this.type ;
     this.global.getTrasactionsForAdmin(this.filters);
   },
