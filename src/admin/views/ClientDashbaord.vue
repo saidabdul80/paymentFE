@@ -69,8 +69,17 @@
     <Dialog v-model:visible="transferDialog" modal :closable="false" :draggable="false" style="width: 300px;" class="tw-float-left" header="Internal Transfer">
         
         <!-- Loop through messages and match with the id -->
-        <div>
+        <div class="tw-relative">
             <TextField v-model="transfer.amount" label="Amount" :error-messages="errors.amount" class="tw-mb-3" />
+            <v-tooltip   location="bottom" color="red" >
+                <p class="tw-font-bold tw-text-xs" >Important!!!</p>
+                <p class="tw-text-xs tw-w-[150px]">
+                    Recipients must be CowrisPay clients, and the email must match their registered payment email
+                </p>
+                <template v-slot:activator="{ props }"> 
+                    <v-icon v-bind="props" icon="mdi-help-circle-outline tw-absolute tw-right-0" size="16" />
+                </template>
+            </v-tooltip>
             <TextField v-model="transfer.email" label="Recipient Email" :error-messages="errors.client_id" class="tw-mb-3" />
             <TextField v-model="transfer.notes" label="Notes" :error-messages="errors.notes" class="tw-mb-3" />
             <br />

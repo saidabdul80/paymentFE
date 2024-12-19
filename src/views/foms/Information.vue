@@ -25,7 +25,7 @@
         <SelectField :options="['Canada']" v-model="form.business_country" label="Country of Operation" :error-messages="errors.business_country"/>
       </div>
       <div class="tw-mb-1">
-        <TextField v-model="form.business_state" label="State / Province" :error-messages="errors.business_state"/>
+        <SelectField :options="canadianProvincesAndTerritories" v-model="form.business_state" label="State / Province" :error-messages="errors.business_state"/>
       </div>
       <div class="tw-mb-1">
         <TextField v-model="form.business_address" label="Business Address" :error-messages="errors.business_address"/>
@@ -90,6 +90,21 @@ export default {
   },
   data() {
     return {
+      canadianProvincesAndTerritories: [
+        "Alberta",
+        "British Columbia",
+        "Manitoba",
+        "New Brunswick",
+        "Newfoundland and Labrador",
+        "Northwest Territories",
+        "Nova Scotia",
+        "Nunavut",
+        "Ontario",
+        "Prince Edward Island",
+        "Quebec",
+        "Saskatchewan",
+        "Yukon"
+    ],
       businessTypes: [
         "Corporation",
         "Sole Proprietorship",

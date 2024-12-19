@@ -48,9 +48,18 @@
     <Dialog v-model:visible="transferDialog" modal :closable="false" :draggable="false" style="width: 300px;" class="tw-float-left" header="Internal Transfer">
         
         <!-- Loop through messages and match with the id -->
-        <div>
+        <div class="tw-relative">
             <TextField v-model="transfer.amount" label="Amount" :error-messages="errors.amount" class="tw-mb-3" />
-            <TextField v-model="transfer.email" label="Recipient Email" :error-messages="errors.email" class="tw-mb-3" />
+            <v-tooltip   location="bottom" color="red" >
+                <p class="tw-font-bold tw-text-xs" >Important!!!</p>
+                <p class="tw-text-xs tw-w-[150px]">
+                    Recipients must be CowrisPay clients, and the email must match their registered payment email
+                </p>
+                <template v-slot:activator="{ props }"> 
+                    <v-icon v-bind="props" icon="mdi-help-circle-outline tw-absolute tw-right-0" size="16" />
+                </template>
+            </v-tooltip>
+                <TextField v-model="transfer.email" label="Recipient Email" :error-messages="errors.email" class="tw-mb-3" />
             <TextField v-model="transfer.notes" label="Notes" :error-messages="errors.notes" class="tw-mb-3" />
             <br />
             <div class="tw-flex tw-gap-4">
@@ -70,7 +79,7 @@
 <script>
 import { useGlobalsStore } from '@/stores/globals';
 import Tab from '@/components/tab.vue';
-
+import { PrimeIcons } from '@primevue/core/api';
 import DashboardCard from '@/components/DashboardCard.vue';
 import useAdminStore from '@/admin/stores/admin';
 import { useClient } from '@/stores/client';
@@ -79,6 +88,7 @@ import ls from '@/services/ls';
 import Dialog from 'primevue/dialog';
 import TextField from '@/components/TextField.vue';
 import SendRecieveMoney from '@/components/SendRecieveMoney.vue';
+
 export default {
     data() {
         const currentDate = new Date();
@@ -86,6 +96,7 @@ export default {
         const currentMonth = currentDate.toLocaleString('default', { month: 'short' });
 
         return {
+            
             user: ls.get('auth.user'),
             showmodal:false,
             receiveData:{},
@@ -415,7 +426,8 @@ export default {
         DashboardCard,
         Dialog,
         SendRecieveMoney,
-        TextField
+        TextField,
+        PrimeIcons,
     }
 };
 </script>

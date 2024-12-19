@@ -20,6 +20,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import HighchartsVue from "highcharts-vue";
 import Highcharts from "highcharts";
 import ExportData from "highcharts/modules/export-data";
+
 import 'primeicons/primeicons.css'
 
 import PrimeVue from 'primevue/config';
