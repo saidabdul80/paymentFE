@@ -530,7 +530,7 @@ export default {
 
   },
   created() {
-    this.globals.filter = 'search';
+    this.global.filter = 'search';
     this.clientResolver()
     this.filters.transaction_type=this.type ;
     this.global.getTrasactionsForAdmin(this.filters);

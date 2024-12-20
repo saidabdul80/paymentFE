@@ -6,15 +6,15 @@
       class="table-shadow-sm  tw-overflow-auto ">
       <div class="tw-border-b-[1px] tw-w-full tw-border-gray-200 tw-text-md md:tw-text-lg tw-font-bold tw-flex tw-flex-col md:tw-flex-row tw-justify-between tw-p-5">
         <div class="tw-font-bold tw-mb-3 md:tw-mb-0 tw-w-[300px]">
-          <!-- <IconField>
+          <IconField>
               <InputIcon >
                 <template #default>
                     <PhMagnifyingGlass/>
                   </template>
               </InputIcon>
               <InputText v-model="search" @input="asyncFind"   :placeholder="placeholder" class="tw-bg-[#e8ecf0]" />
-            </IconField> -->
-            <Search  v-model="search" :options="searchOptions" :searchOptionsDropdown="searchOptionsDropdown" class="tw-bg-[#e8ecf0]"  />
+            </IconField>
+            <!-- <Search  v-model="search" :options="searchOptions" :searchOptionsDropdown="searchOptionsDropdown" class="tw-bg-[#e8ecf0]"  /> -->
         </div>
         
         <div class="tw-flex tw-flex-row">
