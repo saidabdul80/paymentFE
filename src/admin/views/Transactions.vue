@@ -46,6 +46,26 @@
         </DataTable>
 
       </template>
+      <template v-slot:All>
+        <DataTable
+          :loading="global.loadingTransactions"
+          :paginationData="global.transactions"
+          :headers="headersAll"
+          @row-click="handleRowClick"
+          @page-change="handlePageChangeR"
+          :search-options="searchOptions"
+        >
+        <template v-slot:td-status="{ row }">
+          <span class="tw-rounded-[33px] tw-bg-white tw-block">
+              <v-chip size="small" :color="getChipColor(row.status)"
+              class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
+              {{ row?.status.toLowerCase() }}
+              </v-chip>
+          </span>
+        </template>
+       </DataTable>
+       </template>
+
     </Tab>
   </div>
 
@@ -239,6 +259,7 @@ export default {
       tabs: [
         { name: "Received", key: "Received" },
        { name: "Sent", key: "Sent" },
+       { name: "All", key: "All" },
       ],
       global: useGlobalsStore(),
       showdrawer: false,
@@ -251,6 +272,20 @@ export default {
         { key: "customer_detail.full_name", title: "Customer name" },
         { key: "transaction_number", title: "Trx Number",copy:true },
         // {key: "recipient_detail.full_name", title: "Recipient name"},
+        { key: "start_balance", title: "Start Balance" },
+        { key: "type", title: "Trx type" },
+        { key: "amount", title: "Amount" },
+        { key: "end_balance", title: "End Balance" },
+        { key: "created_at", title: "Date" },
+        { key: "status", title: "Status" },
+        { key: "action", title: "#" },
+        
+      ],
+      headersAll: [
+        { key: "client.company_name", title: "Company" },
+        { key: "customer_detail.full_name", title: "Customer name" },
+        { key: "transaction_number", title: "Trx Number",copy:true },
+        {key: "recipient_detail.full_name", title: "Recipient name"},
         { key: "start_balance", title: "Start Balance" },
         { key: "type", title: "Trx type" },
         { key: "amount", title: "Amount" },
@@ -316,11 +351,17 @@ export default {
           transaction_type: this.type,
           ...this.filters
       });
-    } else {
+    } else if(newV == 1) {
       this.type = "debit";
       this.filters.transaction_type = this.type
       this.global.getTrasactionsForAdmin({
           transaction_type: this.type,
+          ...this.filters
+      });
+    }else{
+      this.type = "";
+      this.filters.transaction_type = ''
+      this.global.getTrasactionsForAdmin({
           ...this.filters
       });
     }
