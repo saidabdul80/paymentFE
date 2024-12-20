@@ -60,9 +60,9 @@
           <h2 class="tw-text-xl tw-font-bold tw-mb-4">Transaction Receipt</h2>
           <p><b>Recipient Name:</b> {{ sendData.recipient_full_name }}</p>
           <p><b>Recipient Email:</b> {{ sendData.recipient_email }}</p>
-          <p><b>Customer Name:</b> {{ sendData.customer_full_name }}</p>
-          <p><b>Customer Email:</b> {{ sendData.customer_email }}</p>
-          <p><b>Amount:</b> {{ sendData.amount }}</p>
+          <!-- <p><b>Customer Name:</b> {{ sendData.customer_full_name }}</p>
+          <p><b>Customer Email:</b> {{ sendData.customer_email }}</p> -->
+          <p><b>Amount:</b> {{ sendData.amount }} CAD</p>
           <p><b>Security Question:</b> {{ sendData.security_question }}</p>
           <p><b>Security Answer:</b> {{ sendData.security_answer }}</p>
           <p><b>Description:</b> {{ sendData.description }}</p>
