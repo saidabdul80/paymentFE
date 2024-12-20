@@ -250,7 +250,7 @@ export default {
         { key: "client.company_name", title: "Company" },
         { key: "customer_detail.full_name", title: "Customer name" },
         { key: "transaction_number", title: "Trx Number",copy:true },
-        {key: "recipient_detail.full_name", title: "Recipient name"},
+        // {key: "recipient_detail.full_name", title: "Recipient name"},
         { key: "start_balance", title: "Start Balance" },
         { key: "type", title: "Trx type" },
         { key: "amount", title: "Amount" },

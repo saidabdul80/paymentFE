@@ -250,10 +250,11 @@ export default {
   methods: {
     async asyncFind(query) {
             clearTimeout(this.typingTimer);
-            if (query == '') { return false; }
+            if (query == '') { 
+              this.globals.filters.search = this.search
+              return false; }
             this.typingTimer = setTimeout(async () => {
-             this.globals.filters.search = query.data
-            
+             this.globals.filters.search = this.search
             }, 2000)
    },
     handleRowClick(row) {
