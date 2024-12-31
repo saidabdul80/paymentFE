@@ -55,7 +55,7 @@
         <TextField v-model="form.company_description" label="Company Description" :error-messages="errors.company_description"/>
       </div>
       <div class="tw-mb-3">
-        <Upload v-if="!fileLoading" v-model="form.cac_document" label="Corporation Letter" :error-messages="errors.cac_document"/>
+        <Upload v-if="!fileLoading" v-model="form.cac_document" title="Corporation Letter" :error-messages="errors.cac_document"/>
         <v-btn v-else :loading="fileLoading" class="tw-bg-[#0003] tw-w-full tw-h-[38px]" flat></v-btn>
       </div>
       <div class="tw-mb-1 md:tw-col-span-2">
@@ -194,7 +194,7 @@ export default {
       if (!this.form.postal_zip_code) errors.postal_zip_code = "Postal / Zip Code is required.";
       if (!this.form.business_phone_number) errors.business_phone_number = "Business Phone Number is required.";
       if (this.form.business_sector === 'Others (Please Specify)' && !this.form.other_business_sector) errors.other_business_sector = "Please specify the Business Sector.";
-      if (!this.form.company_website) errors.company_website = "Company Website is required.";
+      //if (!this.form.company_website) errors.company_website = "Company Website is required.";
       if (!this.form.company_description) errors.company_description = "Company Description is required.";
    
 
