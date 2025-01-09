@@ -218,11 +218,11 @@ export default {
     },
     computed: {
         getTitle(){
-            if(this.trTypeype=='debit'){
-                return 'Send Money'
-            }else{
-                return this.receiveData?.transaction_number ?'Re-try Receive Transaction': 'New Receive Transaction'
-            }
+            return 'Send Money';
+            // if(this.trTypeype=='debit'){
+            // }else{
+            //     return this.receiveData?.transaction_number ?'Re-try Receive Transaction': 'New Receive Transaction'
+            // }
         }
     },
     methods: {

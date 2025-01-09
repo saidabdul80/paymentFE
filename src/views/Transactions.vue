@@ -51,6 +51,25 @@
         </DataTable>
 
       </template>
+      <template v-slot:All>
+        <DataTable
+          :loading="global.loadingTransactions"
+          :paginationData="global.transactions"
+          :headers="headersAll"
+          @row-click="handleRowClick"
+          @page-change="handlePageChangeR"
+          :search-options="searchOptions"
+        >
+        <template v-slot:td-status="{ row }">
+          <span class="tw-rounded-[33px] tw-bg-white tw-block">
+              <v-chip size="small" :color="getChipColor(row.status)"
+              class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
+              {{ row?.status.toLowerCase() }}
+              </v-chip>
+          </span>
+        </template>
+       </DataTable>
+       </template>
     </Tab>
   </div>
 
@@ -265,21 +284,31 @@ export default {
         this.global.getTrasactions({
             transaction_type: this.type,
         });
-      } else {
+      } else if(newV == 1) {
         this.type = "debit";
         this.filters.transaction_type = this.type
         this.global.getTrasactions({
             transaction_type: this.type,
+        });
+      }else{
+        this.type = "";
+        this.filters.transaction_type = ''
+        this.global.getTrasactionsForAdmin({
+            ...this.filters
         });
       }
     },
   },
  computed:{
   tabs(){
-    const tabs =  [{ name: "Received", key: "Received" }]
+    const tabs =  [
+      { name: "Received", key: "Received" },
+      
+    ]
     if(this.user?.can_send_money){
       tabs.push({ name: "Sent", key: "Sent" });
     }
+    tabs.push({ name: "All", key: "All" });
     return tabs;
   },
  getTitle(){

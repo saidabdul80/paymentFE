@@ -73,7 +73,7 @@
  
         <!-- Loop through messages and match with the id -->
         <div>
-            <TextField v-model="debit.amount" label="Amount" :error-messages="errors.amount" class="tw-mb-3" />
+            <NumberField v-model="debit.amount" label="Amount" :error-messages="errors.amount" class="tw-mb-3" />
             <TextField v-model="debit.notes" label="Notes" :error-messages="errors.notes" class="tw-mb-3" />
             <br />
             <div class="tw-flex tw-gap-4">
@@ -96,6 +96,7 @@ import { useClient } from '@/stores/client';
 import { useNotificationStore } from '@/stores/notification';
 import { useGlobalsStore } from "@/stores/globals";
 import TextField from './TextField.vue';
+import NumberField from './NumberField.vue';
 import SelectField from './SelectField.vue';
 
 export default {
@@ -130,7 +131,8 @@ export default {
     components: {
         Dialog,
         TextField,
-        SelectField
+        SelectField,
+        NumberField
     },
     computed:{
        
