@@ -1,77 +1,39 @@
 <template>
   <div class="tw-h-full tw-w-full" color="light">
-    <Tab
-      :tabs="tabs"
-      v-model="tabIndex"
-      :withBorder="true"
-      :config="tabConfig"
-      refresh
-      @change="handleTabDropdownButton"
-    >
-      <template v-for="tab in tabs" :key="tab.key" v-slot:[tab.key]>
-        <DataTable
-          :loading="global.loadingTransactions"
-          :paginationData="global.transactions"
-          :headers="tab.headers"
-          @row-click="handleRowClick"
-          @page-change="tab.pageChangeHandler"
-          :search-options="searchOptions"
-          :search-options-dropdown="searchOptionsDropdown"
-        >
-          <template v-slot:td-status="{ row }">
-            <span class="tw-rounded-[33px] tw-bg-white tw-block">
-              <v-chip
-                size="small"
-                :color="getChipColor(row.status)"
-                class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize"
-              >
-                {{ row?.status.toLowerCase() }}
-              </v-chip>
-            </span>
-          </template>
-          <template v-if="tab.hasActions" v-slot:td-action="{ row }">
-            <v-btn
-              v-if="row?.status?.toLowerCase() !== 'completed'"
-              @click.stop="updateRecord(row)"
-              size="small"
-              icon="mdi-redo"
-              :loading="row?.loading"
-              color="black"
-              title="Re-Try Transaction"
-            ></v-btn>
-          </template>
-        </DataTable>
-      </template>
-    </Tab>
-   
-    <!-- <Tab :tabs="tabs" v-model="tabIndex" :withBorder="true" :config="tabConfig" refresh  @change="handleTabDrupdwonButton">
+  
+    <Tab :tabs="tabs" v-model="tabIndex" :withBorder="true" :config="tabConfig" refresh  @change="handleTabDrupdwonButton">
       <template v-slot:Sent>
         <DataTable
-          :loading="global.loadingTransactions"
-          :paginationData="global.transactions"
-          :headers="headers2"
-          @row-click="handleRowClick"
-          @page-change="handlePageChangeR"
-          :search-options="searchOptions"
-        >
-        <template v-slot:td-status="{ row }">
-          <span class="tw-rounded-[33px] tw-bg-white tw-block">
-              <v-chip size="small" :color="getChipColor(row.status)"
-              class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
-              {{ row?.status.toLowerCase() }}
-              </v-chip>
-          </span>
-        </template>
-       </DataTable>
+            :loading="global.loadingTransactions"
+            :paginationData="global.transactions"
+            :headers="headers"
+            @row-click="handleRowClick"
+            @page-change="handlePageChangeR"
+            :search-options="searchOptions"
+            :search-options-dropdown="searchOptionsDropdown"
+          >
+          <template v-slot:td-status="{ row }">
+              <span class="tw-rounded-[33px] tw-bg-white tw-block">
+                  <v-chip
+                  size="small"
+                  :color="getChipColor(row.status)"
+                  class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize"
+                  >
+                  {{ row?.status.toLowerCase() }}
+                  </v-chip>
+              </span>
+          </template>
+      </DataTable>
       </template>
       <template v-slot:Received>
         <DataTable
           :loading="global.loadingTransactions"
           :paginationData="global.transactions"
-          :headers="headers"
+          :headers="headers1"
           @row-click="handleRowClick"
           @page-change="handlePageChangeS"
           :search-options="searchOptions"
+          :search-options-dropdown="searchOptionsDropdown"
         >
         <template v-slot:td-status="{ row }">
           <span class="tw-rounded-[33px] tw-bg-white tw-block">
@@ -81,10 +43,10 @@
               </v-chip>
           </span>
         </template>
-            <template v-slot:td-action="{ row}" >
-                <v-btn  @click.stop="updateRecord(row)" v-if="row?.status?.toLowerCase() !== 'completed' " size="small" icon="mdi-redo" :loading="row?.loading" color="black" title="Re Try Transaction" ></v-btn>
-
-            </template>
+        <template v-slot:td-action="{ row}" >
+            <v-btn  @click.stop="updateRecord(row)" v-if="row?.status?.toLowerCase() !== 'completed' " size="small" icon="mdi-redo" :loading="row?.loading" color="black" title="Re Try Transaction" ></v-btn>
+        
+        </template>
         </DataTable>
 
       </template>
@@ -107,66 +69,30 @@
         </template>
        </DataTable>
        </template>
-
-    </Tab> -->
+       <template v-slot:Reversal>
+        <DataTable
+          :loading="global.loadingTransactions"
+          :paginationData="global.transactions"
+          :headers="headersAll"
+          @row-click="handleRowClick"
+          @page-change="handlePageChangeR"
+          :search-options="searchOptions"
+        >
+        <template v-slot:td-status="{ row }">
+          <span class="tw-rounded-[33px] tw-bg-white tw-block">
+              <v-chip size="small" :color="getChipColor(row.status)"
+              class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
+              {{ row?.status.toLowerCase() }}
+              </v-chip>
+          </span>
+        </template>
+       </DataTable>
+       </template>
+    </Tab>
   </div>
 
   <Dialog v-model:visible="showmodal" :header="getTitle" modal class="tw-min-[300px] md:tw-w-[450px]">
-    <div v-if="type=='debit'">
-      <div class="tw-grid md:tw-grid-cols-2 tw-grid-cols-1 tw-gap-3">
-        <div  >
-          <TextField v-model="sendData.recipient_full_name" label="Recipient Full Name" required />
-        </div>
-        <div  >
-          <TextField v-model="sendData.recipient_email" label="Recipient Email" required />
-        </div>
-        <div  >
-          <TextField v-model="sendData.customer_full_name" label="Customer Full Name" required />
-        </div>
-        <div  >
-          <TextField v-model="sendData.customer_email" label="Customer Full Email" required />
-        </div>
-        <div  >
-          <TextField v-model="sendData.amount" label="Amount" required />
-        </div>
-        <!-- <div  >
-          <TextField v-model="sendData.security_question" label="Security Question" required />
-        </div>
-        <div  >
-          <TextField v-model="sendData.security_answer" label="Security Answer" required />
-        </div>
-        <div  >
-          <TextField v-model="sendData.description" label="Description" required />
-        </div> -->
-      </div>
-      <div class="tw-flex tw-justify-center tw-my-4">
-          <v-btn ref="btnRef" @click="sendMoney" :loading="loadingTx" color="black">Send Money</v-btn>
-      </div>
-    </div>
-    <div v-else>
-        <div class="tw-grid tw-grid-cols-1 tw-gap-3">
-        <!-- <div  v-if="receiveData?.reference_number" >
-          <TextField :disabled="receiveData?.reference_number"  v-model="receiveData.reference_number" label="Reference number" required />
-         
-        </div> -->
-        <div class="tw-flex ">
-          <TextField v-model="receiveData.reference_number" label="Reference number" required class="tw-w-full tw-rounded-e-none" />
-          <v-btn :loading="loadingFetchedReceivedData" @click="fetchReceived()" class="tw-bg-black tw-text-white tw-rounded-s-none tw-h-[42px] tw-w-[100px]" style="align-self: flex-end;">Fetch</v-btn>
-        </div>
-
-        <div class="tw-my-3">
-            <p><b>Amount:</b>  {{fetchedReceivedData?.amount}}</p>
-            <p><b>Security Question:</b>  {{fetchedReceivedData?.security_question}}</p>
-            <p><b>Sender Name:</b>  {{fetchedReceivedData?.sender_name}}</p>
-            <p><b>Description:</b>  {{fetchedReceivedData?.description}}</p>
-        </div>
-    
-        </div>
-        <div class="tw-flex tw-justify-center tw-my-4">
-            <v-btn ref="btnRef" @click="accept" :loading="loadingTx" color="black">Accept Transaction</v-btn>
-            <v-btn ref="btnRef" class="tw-ms-2" @click="reject" :loading="loadingTx" color="red">Reject Transaction</v-btn>
-      </div>
-    </div>
+    <SendRecieveMoney :type="type" :receiveData="receiveData" />
   </Dialog>
   <Drawer v-model:visible="showdrawer" class="" :header="type + ' Transaction'" position="right">
 
@@ -215,17 +141,12 @@
         <div class="tw-text-sm">{{ formatAmount(transaction.start_balance) }} {{ transaction.currency }}</div>
         <div class="tw-text-gray-500 tw-text-sm">End Balance</div>
         <div class="tw-text-sm">{{ formatAmount(transaction.end_balance) }} {{ transaction.currency }}</div>
-        <div class="tw-text-gray-500 tw-text-sm">Apaylo Transaction Ref</div> 
-        <div class="tw-text-sm">{{ transaction?.transaction_ref }}</div> 
-        <div class="tw-text-gray-500 tw-text-sm">Transaction Number</div>
-        <div class="tw-text-sm">{{ transaction?.transaction_number }}</div> 
 <!-- 
         <div class="tw-text-gray-500 tw-text-sm">Sender amount</div>
         <div class="tw-text-sm">{{ formatAmount(transaction.provider_request_response?.Amount) }} CAD</div> -->
 
         <!-- <div class="tw-text-gray-500 tw-text-sm">Exchange rate</div>
         <div class="tw-text-sm">{{ transaction.provider_request_response?.ExchangeRate || '$1 = $0.71' }}</div> -->
-
         <div class="tw-text-gray-500 tw-text-sm">Description</div>
         <div class="tw-text-sm">
           {{ transaction.description || 'No description available' }}
@@ -268,9 +189,11 @@
 
 <script>
 import CompanyCard from "@/components/CompanyCard.vue";
+import SendRecieveMoney from "@/components/SendRecieveMoney.vue";
 import Tab from "@/components/tab.vue";
 import DataTable from "@/components/Table/Table.vue";
 import TextField from "@/components/TextField.vue";
+import ls from "@/services/ls";
 import { useClient } from "@/stores/client";
 import { useGlobalsStore } from "@/stores/globals";
 import { useNotificationStore } from "@/stores/notification";
@@ -287,7 +210,9 @@ export default {
     PhCaretLeft,
     Dialog,
     TextField,
-    Checkbox
+    Checkbox,
+    SendRecieveMoney
+
   },
   data() {
     return {
@@ -298,12 +223,16 @@ export default {
       type: "credit",
       loadingTx:false,
       tabIndex: 0,
-      tabs:[
-        {
-        name: "Received",
-        key: "Received",
-        headers: [
-        { key: "client.company_name", title: "Company" },
+      // tabs: [
+       
+      //   { name: "Sent", key: "Sent" },
+      // ],
+      global: useGlobalsStore(),
+      showdrawer: false,
+      transaction: {},
+      filters: {},
+      showmodal:false,
+      headers1: [
         { key: "customer_detail.full_name", title: "Customer name" },
         { key: "transaction_number", title: "Trx Number",copy:true },
         { key: "start_balance", title: "Start Balance" },
@@ -313,52 +242,10 @@ export default {
         { key: "created_at", title: "Date" },
         { key: "status", title: "Status" },
         { key: "action", title: "#" },
-        ],
-        pageChangeHandler: this.handlePageChangeS,
-        hasActions: true,
-      },
-      {
-          name: "Sent",
-          key: "Sent",
-          headers: [
-          { key: "client.company_name", title: "Company" },
-          {key: "recipient_detail.full_name", title: "Recipient name"},
-          { key: "transaction_number", title: "Trx Number",copy:true },
-          { key: "start_balance", title: "Start Balance" },
-          { key: "type", title: "Trx type" },
-          { key: "amount", title: "Amount" },
-          { key: "end_balance", title: "End Balance" },
-          { key: "created_at", title: "Date" },
-          { key: "status", title: "Status" },
-          { key: "action", title: "#" },
-          ],
-          pageChangeHandler: this.handlePageChangeR,
-          hasActions: false,
-        },
-        {
-        name: "Reversal",
-        key: "Reversal",
-        headers: [
-        { key: "client.company_name", title: "Company" },
-        { key: "transaction_number", title: "Trx Number",copy:true },
-          //{key: "recipient_detail.full_name", title: "Recipient name"},
-          { key: "start_balance", title: "Start Balance" },
-          { key: "type", title: "Trx type" },
-          { key: "amount", title: "Amount" },
-          { key: "end_balance", title: "End Balance" },
-          { key: "created_at", title: "Date" },
-          { key: "status", title: "Status" },
-          { key: "action", title: "#" },
-        ],
-        pageChangeHandler: this.handlePageChangeR,
-        hasActions: false,
-      }
-        ,{
-        name: "All",
-        key: "All",
-        headers: [
-        { key: "client.company_name", title: "Company" },
-        { key: "customer_detail.full_name", title: "Customer name" },
+        
+      ],
+      headers: [
+        // { key: "customer_detail.full_name", title: "Customer name" },
         { key: "transaction_number", title: "Trx Number",copy:true },
         {key: "recipient_detail.full_name", title: "Recipient name"},
         { key: "start_balance", title: "Start Balance" },
@@ -368,74 +255,29 @@ export default {
         { key: "created_at", title: "Date" },
         { key: "status", title: "Status" },
         { key: "action", title: "#" },
-        ],
-        pageChangeHandler: this.handlePageChangeR,
-        hasActions: false,
-      }
-    ],
-      global: useGlobalsStore(),
-      showdrawer: false,
-      transaction: {},
-      filters: {},
-      showmodal:false,
+        
+      ],
+      searchOptionsDropdown:{
+   
+      },
       searchOptions:['search'],
-      // headers: [
-      //   { key: "client.company_name", title: "Company" },
-      //   { key: "customer_detail.full_name", title: "Customer name" },
-      //   { key: "transaction_number", title: "Trx Number",copy:true },
-      //   { key: "start_balance", title: "Start Balance" },
-      //   { key: "type", title: "Trx type" },
-      //   { key: "amount", title: "Amount" },
-      //   { key: "end_balance", title: "End Balance" },
-      //   { key: "created_at", title: "Date" },
-      //   { key: "status", title: "Status" },
-      //   { key: "action", title: "#" },
-      // ],
-      // headersAll: [
-      //   { key: "client.company_name", title: "Company" },
-      //   { key: "customer_detail.full_name", title: "Customer name" },
-      //   { key: "transaction_number", title: "Trx Number",copy:true },
-      //   {key: "recipient_detail.full_name", title: "Recipient name"},
-      //   { key: "start_balance", title: "Start Balance" },
-      //   { key: "type", title: "Trx type" },
-      //   { key: "amount", title: "Amount" },
-      //   { key: "end_balance", title: "End Balance" },
-      //   { key: "created_at", title: "Date" },
-      //   { key: "status", title: "Status" },
-      //   { key: "action", title: "#" },
-        
-      // ],
-      // headers2: [
-      //   { key: "client.company_name", title: "Company" },
-    
-      //   { key: "transaction_number", title: "Trx Number",copy:true },
-      //   {key: "recipient_detail.full_name", title: "Recipient name"},
-      //   { key: "start_balance", title: "Start Balance" },
-      //   { key: "type", title: "Trx type" },
-      //   { key: "amount", title: "Amount" },
-      //   { key: "end_balance", title: "End Balance" },
-      //   { key: "created_at", title: "Date" },
-      //   { key: "status", title: "Status" },
-      //   { key: "action", title: "#" },
-        
-      // ],
-      // tabConfig:{
-      //     'Sent':{
-      //       search: false,
+      tabConfig:{
+          'Sent':{
+            search: false,
          
-      //       sideButton: false,
-      //       toolTipText: '',
-      //       // dropDownLabel: 'Send Money',
-      //     },
-      //     'Received':{
-      //       search: false,
-      //       sideButton: false,
-      //       toolTipText: '',
-      //       // dropDownLabel: 'Manual Receive',
-      //     },
+            sideButton: true,
+            toolTipText: '',
+            dropDownLabel: 'Send Money',
+          },
+          'Received':{
+            search: false,
+            sideButton: true,
+            toolTipText: '',
+            dropDownLabel: 'Manual Receive',
+          },
           
-      //   },
-        client_id:null
+        },
+      user: ls.get('auth.user'),
     };
   },
   watch: {
@@ -447,44 +289,52 @@ export default {
           sort: newFilters.sort||'',
           transaction_type: this.type||'',
           ...newFilters
+          // transaction_number: newFilters.search||'',
         };
-        this.global.getTrasactionsForAdmin(this.filters);
+        this.global.getTrasactions(this.filters);
       },
       deep: true,
     },
-  tabIndex: function (newV) {
-    this.clientResolver()
-    if (newV == 0) {
-      this.type = "credit";
-      this.filters.transaction_type = this.type
-      this.global.getTrasactionsForAdmin({
+    tabIndex: function (newV) {
+      if (newV == 0) {
+        this.type = "credit";
+        this.filters.transaction_type = this.type
+        this.global.getTrasactions({
+            transaction_type: this.type,
+        });
+      } else if(newV == 1) {
+        this.type = "debit";
+        this.filters.transaction_type = this.type
+        this.global.getTrasactions({
+            transaction_type: this.type,
+        });
+      }else if(newV == 2){
+        this.type = "reversal";
+        this.filters.transaction_type = ''
+        this.global.getTrasactions({
           transaction_type: this.type,
-          ...this.filters
-      });
-    } else if(newV == 1) {
-      this.type = "debit";
-      this.filters.transaction_type = this.type
-      this.global.getTrasactionsForAdmin({
+        });
+      }else {
+        this.type = "";
+        this.filters.transaction_type = ''
+        this.global.getTrasactions({
           transaction_type: this.type,
-          ...this.filters
-      });
-    }else if(newV == 2) {
-      this.type = "reversal";
-      this.filters.transaction_type = this.type
-      this.global.getTrasactionsForAdmin({
-          transaction_type: this.type,
-          ...this.filters
-      });
-    }else{
-      this.type = "";
-      this.filters.transaction_type = ''
-      this.global.getTrasactionsForAdmin({
-          ...this.filters
-      });
-    }
-  },
+        });
+      }
+    },
   },
  computed:{
+  tabs(){
+    const tabs =  [
+      { name: "Received", key: "Received" },
+    ]
+    if(this.user?.can_send_money){
+      tabs.push({ name: "Sent", key: "Sent" });
+    }
+    tabs.push({ name: "Reversal", key: "Reversal" });
+    tabs.push({ name: "All", key: "All" });
+    return tabs;
+  },
  getTitle(){
         if(this.type=='debit'){
             return 'Send Money'
@@ -505,63 +355,7 @@ export default {
       }
       return '#ccc'; // Default color (e.g., gray)
     },
-    async fetchReceived(){
-        this.loadingFetchedReceivedData = true
-        const res = await useClient().http({
-                method:'post',
-                path:'transactions/incoming/details',
-                data:{reference_number:this.receiveData.reference_number}
-            })
-        if(res){
-            this.fetchedReceivedData = res
-        }
-        
-        this.loadingFetchedReceivedData = false
-    },
-    accept(){
-        this.global.palert({
-                title:'Accept?',
-                text: '<p class="tw-mb-3">Enter Security Question Answer</p> '+
-                  '<input type="text" id="answer-input" name="simple-input" placeholder="Anwser"'+
-                      'class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">',
-                cancelBtnText:'Cancel',
-                confirmBtnText:'Proceed',
-                loading:false,
-                callback: async()=>{
-                    const val = document.getElementById('answer-input').value
-                    this.loadingTx = true
-                    const res = await useClient().http({
-                            method:'post',
-                            path:'transactions/receive',
-                            data:{reference_number:this.receiveData.reference_number, answer:val}
-                        })
-                        if(res){
-                            const notificationStore = useNotificationStore();
-                            notificationStore.showNotification({
-                                type: 'success',
-                                message: 'Completed',
-                            });
-                        }
-                        this.loadingTx = false
-                }
-            })
-    },
-    async reject(){
-        this.loadingTx = true
-        const res = await useClient().http({
-                method:'post',
-                path:'transactions/decline',
-                data:{reference_number:this.receiveData.reference_number}
-            })
-            if(res){
-                const notificationStore = useNotificationStore();
-                notificationStore.showNotification({
-                    type: 'success',
-                    message: 'Declined',
-                });
-            }
-            this.loadingTx = false
-    },
+    
     updateRecord(rowData) {
       this.showmodal = true;
       this.receiveData.replyTo = rowData.customer_detail; // store the selected row data
@@ -571,15 +365,7 @@ export default {
       this.receiveData.date = formattedDate;
       this.receiveData.answer = ''
     },
-    async sendMoney(){
-        this.loadingTx = true
-        await useClient().http({
-                method:'post',
-                path:'/transactions/send',
-                data:this.sendData
-            })
-        this.loadingTx = false
-    },
+  
     async receiveMoney(){
         this.loadingTx = true
         if(this.receiveData?.reference_number){
@@ -685,27 +471,18 @@ export default {
     handlePageChangeR(path) {
       this.filters.transaction_type=this.type ;
       console.log(this.type,'rece')
-      this.global.getTrasactionsForAdmin(this.filters, path);
+      this.global.getTrasactions(this.filters, path);
     },
     handlePageChangeS(path) {
 
       this.filters.transaction_type=this.type;
-      this.global.getTrasactionsForAdmin(this.filters, path);
+      this.global.getTrasactions(this.filters, path);
     },
-    clientResolver(){
-    
-      this.client_id = this.$route.params.id || null;
-      if(this.client_id){
-        this.filters.client_id = this.client_id
-      }
-    }
 
   },
   created() {
-    this.global.filter = 'search';
-    this.clientResolver()
     this.filters.transaction_type=this.type ;
-    this.global.getTrasactionsForAdmin(this.filters);
+    this.global.getTrasactions(this.filters);
   },
 };
 </script>

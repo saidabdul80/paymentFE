@@ -1,76 +1,49 @@
 <template>
   <div class="tw-h-full tw-w-full" color="light">
-    <Tab :tabs="tabs" v-model="tabIndex" :withBorder="true" :config="tabConfig" refresh  @change="handleTabDrupdwonButton">
-      <template v-slot:Sent>
-        <DataTable
-            :loading="global.loadingTransactions"
-            :paginationData="global.transactions"
-            :headers="headers"
-            @row-click="handleRowClick"
-            @page-change="handlePageChangeR"
-            :search-options="searchOptions"
-            :search-options-dropdown="searchOptionsDropdown"
-          >
-          <template v-slot:td-status="{ row }">
-              <span class="tw-rounded-[33px] tw-bg-white tw-block">
-                  <v-chip
-                  size="small"
-                  :color="getChipColor(row.status)"
-                  class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize"
-                  >
-                  {{ row?.status.toLowerCase() }}
-                  </v-chip>
-              </span>
-          </template>
-      </DataTable>
-      </template>
-      <template v-slot:Received>
+    <Tab
+      :tabs="tabs"
+      v-model="tabIndex"
+      :withBorder="true"
+      :config="tabConfig"
+      refresh
+      @change="handleTabDropdownButton"
+    >
+      <template v-for="tab in tabs" :key="tab.key" v-slot:[tab.key]>
         <DataTable
           :loading="global.loadingTransactions"
           :paginationData="global.transactions"
-          :headers="headers1"
+          :headers="tab.headers"
           @row-click="handleRowClick"
-          @page-change="handlePageChangeS"
+          @page-change="tab.pageChangeHandler"
           :search-options="searchOptions"
           :search-options-dropdown="searchOptionsDropdown"
         >
-        <template v-slot:td-status="{ row }">
-          <span class="tw-rounded-[33px] tw-bg-white tw-block">
-              <v-chip size="small" :color="getChipColor(row.status)"
-              class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
-              {{ row?.status.toLowerCase() }}
+          <template v-slot:td-status="{ row }">
+            <span class="tw-rounded-[33px] tw-bg-white tw-block">
+              <v-chip
+                size="small"
+                :color="getChipColor(row.status)"
+                class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize"
+              >
+                {{ row?.status.toLowerCase() }}
               </v-chip>
-          </span>
-        </template>
-        <template v-slot:td-action="{ row}" >
-            <v-btn  @click.stop="updateRecord(row)" v-if="row?.status?.toLowerCase() !== 'completed' " size="small" icon="mdi-redo" :loading="row?.loading" color="black" title="Re Try Transaction" ></v-btn>
-            <!-- <v-btn @click="confirmSendMoney(row)" v-if="row?.status?.toLowerCase() =='completed' && !row?.fulfilled" size="small"  icon="mdi-check"  :loading="isLoading" color="primary" title="Fulfil"></v-btn> -->
-            <!-- <v-btn  @click.stop="getTransaction(row)"  icon="mdi-redo" size="small"> 
-            </v-btn> -->
-        </template>
+            </span>
+          </template>
+          <template v-if="tab.hasActions" v-slot:td-action="{ row }">
+            <v-btn
+              v-if="row?.status?.toLowerCase() !== 'completed'"
+              @click.stop="updateRecord(row)"
+              size="small"
+              icon="mdi-redo"
+              :loading="row?.loading"
+              color="black"
+              title="Re-Try Transaction"
+            ></v-btn>
+          </template>
         </DataTable>
-
       </template>
-      <template v-slot:All>
-        <DataTable
-          :loading="global.loadingTransactions"
-          :paginationData="global.transactions"
-          :headers="headersAll"
-          @row-click="handleRowClick"
-          @page-change="handlePageChangeR"
-          :search-options="searchOptions"
-        >
-        <template v-slot:td-status="{ row }">
-          <span class="tw-rounded-[33px] tw-bg-white tw-block">
-              <v-chip size="small" :color="getChipColor(row.status)"
-              class="tw-py-0 tw-flex tw-justify-center tw-font-bold tw-capitalize">
-              {{ row?.status.toLowerCase() }}
-              </v-chip>
-          </span>
-        </template>
-       </DataTable>
-       </template>
     </Tab>
+   
   </div>
 
   <Dialog v-model:visible="showmodal" :header="getTitle" modal class="tw-min-[300px] md:tw-w-[450px]">
@@ -243,22 +216,7 @@ export default {
    
       },
       searchOptions:['search'],
-      tabConfig:{
-          'Sent':{
-            search: false,
-         
-            sideButton: true,
-            toolTipText: '',
-            dropDownLabel: 'Send Money',
-          },
-          'Received':{
-            search: false,
-            sideButton: true,
-            toolTipText: '',
-            dropDownLabel: 'Manual Receive',
-          },
-          
-        },
+    
       user: ls.get('auth.user'),
     };
   },
@@ -278,39 +236,100 @@ export default {
       deep: true,
     },
     tabIndex: function (newV) {
-      if (newV == 0) {
-        this.type = "credit";
-        this.filters.transaction_type = this.type
-        this.global.getTrasactions({
-            transaction_type: this.type,
-        });
-      } else if(newV == 1) {
-        this.type = "debit";
-        this.filters.transaction_type = this.type
-        this.global.getTrasactions({
-            transaction_type: this.type,
-        });
-      }else{
-        this.type = "";
-        this.filters.transaction_type = ''
-        this.global.getTrasactionsForAdmin({
-            ...this.filters
-        });
-      }
+      const transactionTypes = ["credit", "debit", "reversal", ""];
+      this.type = transactionTypes[newV] || "";
+      this.filters.transaction_type =  this.type; 
+      this.global.getTrasactions({
+        transaction_type: this.type,
+      });
     },
   },
  computed:{
-  tabs(){
-    const tabs =  [
-      { name: "Received", key: "Received" },
+  tabs() {
+      const tabs = [];
       
-    ]
-    if(this.user?.can_send_money){
-      tabs.push({ name: "Sent", key: "Sent" });
-    }
-    tabs.push({ name: "All", key: "All" });
-    return tabs;
-  },
+      // Add "Received" tab
+      tabs.push({
+        name: "Received",
+        key: "Received",
+        headers: [
+        { key: "customer_detail.full_name", title: "Customer name" },
+        { key: "transaction_number", title: "Trx Number",copy:true },
+        { key: "start_balance", title: "Start Balance" },
+        { key: "type", title: "Trx type" },
+        { key: "amount", title: "Amount" },
+        { key: "end_balance", title: "End Balance" },
+        { key: "created_at", title: "Date" },
+        { key: "status", title: "Status" },
+        { key: "action", title: "#" },
+        ],
+        pageChangeHandler: this.handlePageChangeS,
+        hasActions: true,
+      });
+
+      // Add "Sent" tab if the user can send money
+      if (this.user?.can_send_money) {
+        tabs.push({
+          name: "Sent",
+          key: "Sent",
+          headers: [
+          { key: "transaction_number", title: "Trx Number",copy:true },
+          {key: "recipient_detail.full_name", title: "Recipient name"},
+          { key: "start_balance", title: "Start Balance" },
+          { key: "type", title: "Trx type" },
+          { key: "amount", title: "Amount" },
+          { key: "end_balance", title: "End Balance" },
+          { key: "created_at", title: "Date" },
+          { key: "status", title: "Status" },
+          { key: "action", title: "#" },
+          ],
+          pageChangeHandler: this.handlePageChangeR,
+          hasActions: false,
+        });
+      }
+
+      // Add "Reversal" tab
+      tabs.push({
+        name: "Reversal",
+        key: "Reversal",
+        headers: [
+        { key: "transaction_number", title: "Trx Number",copy:true },
+          //{key: "recipient_detail.full_name", title: "Recipient name"},
+          { key: "start_balance", title: "Start Balance" },
+          { key: "type", title: "Trx type" },
+          { key: "amount", title: "Amount" },
+          { key: "end_balance", title: "End Balance" },
+          { key: "created_at", title: "Date" },
+          { key: "status", title: "Status" },
+          { key: "action", title: "#" },
+        ],
+        pageChangeHandler: this.handlePageChangeR,
+        hasActions: false,
+      });
+
+      // Add "All" tab
+      tabs.push({
+        name: "All",
+        key: "All",
+        headers: [
+        // { key: "client.company_name", title: "Company" },
+        { key: "customer_detail.full_name", title: "Customer name" },
+        { key: "transaction_number", title: "Trx Number",copy:true },
+        {key: "recipient_detail.full_name", title: "Recipient name"},
+        { key: "start_balance", title: "Start Balance" },
+        { key: "type", title: "Trx type" },
+        { key: "amount", title: "Amount" },
+        { key: "end_balance", title: "End Balance" },
+        { key: "created_at", title: "Date" },
+        { key: "status", title: "Status" },
+        { key: "action", title: "#" },
+        ],
+        pageChangeHandler: this.handlePageChangeR,
+        hasActions: false,
+      });
+
+      return tabs;
+    },
  getTitle(){
         if(this.type=='debit'){
             return 'Send Money'
@@ -331,29 +350,7 @@ export default {
       }
       return '#ccc'; // Default color (e.g., gray)
     },
-    // async sendMoney(){
-    //     this.loadingTx = true
-    //     await useClient().http({
-    //             method:'post',
-    //             path:'/transactions/send',
-    //             data:{...this.sendData, amount: Number(this.sendData.amount)}
-    //         })
-    //     this.loadingTx = false
-    // },
-    // async fetchReceived(){
-    //     this.loadingFetchedReceivedData = true
-    //     const res = await useClient().http({
-    //             method:'post',
-    //             path:'transactions/incoming/details',
-    //             data:{reference_number:this.receiveData.reference_number}
-    //         })
-    //     if(res){
-    //         this.fetchedReceivedData = res
-    //     }
-        
-    //     this.loadingFetchedReceivedData = false
-    // },
- 
+    
     updateRecord(rowData) {
       this.showmodal = true;
       this.receiveData.replyTo = rowData.customer_detail; // store the selected row data
@@ -363,15 +360,7 @@ export default {
       this.receiveData.date = formattedDate;
       this.receiveData.answer = ''
     },
-    // async sendMoney(){
-    //     this.loadingTx = true
-    //     await useClient().http({
-    //             method:'post',
-    //             path:'/transactions/send',
-    //             data:this.sendData
-    //         })
-    //     this.loadingTx = false
-    // },
+  
     async receiveMoney(){
         this.loadingTx = true
         if(this.receiveData?.reference_number){
