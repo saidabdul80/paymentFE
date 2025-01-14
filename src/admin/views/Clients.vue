@@ -240,6 +240,7 @@
           { key: "company_name", title: "Customer name" },
           { key: "company_email", title: "Email", copy:true },
           { key: "rc_number", title: "Corporate Number" },
+          { key: "balance.available_balance", title: "Balance" },
           { key: "kyc_status", title: "KYC Status" },
           { key: "action", title: "Actions" },
         ],
