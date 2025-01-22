@@ -147,7 +147,7 @@ export default {
     },
     mounted() {
         const driverObj = window.driver({
-            showProgress: true,
+            //showProgress: true,
             steps: [
                 { element: '#activate-me', popover: { title: 'Important Notice', description: 'Click here to activate your business profile.', side: "left", align: 'start' }},
              
@@ -161,7 +161,10 @@ export default {
             // },
             });
 
-            driverObj.drive();
+
+            setTimeout(()=>{
+                driverObj.drive();
+            },1000)
     },
 }
 
