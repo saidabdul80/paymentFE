@@ -4,6 +4,7 @@ import axios from "axios";
 import { handleError } from '@/helpers/error-handling';
 import ls from "@/services/ls";
 import { useGlobalsStore } from "./globals";
+import router from "@/router";
 
 export const useClient = defineStore("client", () => {
 
@@ -58,7 +59,8 @@ export const useClient = defineStore("client", () => {
         if(window.isActive401){ //controlling popups, set to true on notification timeout
           return;
         }
-        if (route.meta.requiresAuth) {
+        const route = router.currentRoute;
+        if (route?.meta?.requiresAuth) {
         
         
           let userRootPath = '';
