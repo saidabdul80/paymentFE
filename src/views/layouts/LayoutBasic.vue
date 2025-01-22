@@ -12,7 +12,7 @@
                             </p>
                             
                         </div>
-                        <p id="activate-me" @click="$router.push('/app/settings')"  v-if="ls.get('auth.user')?.kyc_documentation_status  !== 'completed'" class="tw-flex tw-text-sm tw-mb-3">
+                        <p id="activate-me" @click="gotoSetting()"  v-if="ls.get('auth.user')?.kyc_documentation_status  !== 'completed'" class="tw-flex tw-text-sm tw-mb-3">
                             <img src="@/assets/exclamation.svg" class="tw-me-2 tw-block " /> Activate your business profile by filling in details for business verification.</p>
                     </div>
                 </v-toolbar-title>
@@ -69,7 +69,8 @@ export default {
             user:ls.get('auth.user'),
             constantsStore: useConstantsStore(),
             adminStore: useAdminStore(),
-            loading:false
+            loading:false,
+            driverObj:null
         }
     },
     watch: {
@@ -116,6 +117,10 @@ export default {
      
     },
     methods: {
+        gotoSetting(){
+            this.$router.push('/app/settings')
+            this.driverObj?.moveNext(); 
+        },
         makeRequest(){
           
             this.adminStore.showAlert({
@@ -146,7 +151,7 @@ export default {
         },
     },
     mounted() {
-        const driverObj = window.driver({
+         this.driverObj = window.driver({
             //showProgress: true,
             steps: [
                 { element: '#activate-me', popover: { title: 'Important Notice', description: 'Click here to activate your business profile.', side: "left", align: 'start' }},
@@ -163,7 +168,7 @@ export default {
 
 
             setTimeout(()=>{
-                driverObj.drive();
+                this.driverObj.drive();
             },1000)
     },
 }
