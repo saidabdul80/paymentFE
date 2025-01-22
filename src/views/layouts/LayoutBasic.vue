@@ -12,7 +12,8 @@
                             </p>
                             
                         </div>
-                        <p @click="$router.push('/app/settings')"  v-if="ls.get('auth.user')?.kyc_documentation_status  !== 'completed'" class="tw-flex tw-text-sm tw-mb-3"><img src="@/assets/exclamation.svg" class="tw-me-2 tw-block " /> Activate your business profile by filling in details for business verification.</p>
+                        <p id="activate-me" @click="$router.push('/app/settings')"  v-if="ls.get('auth.user')?.kyc_documentation_status  !== 'completed'" class="tw-flex tw-text-sm tw-mb-3">
+                            <img src="@/assets/exclamation.svg" class="tw-me-2 tw-block " /> Activate your business profile by filling in details for business verification.</p>
                     </div>
                 </v-toolbar-title>
                 
@@ -108,6 +109,7 @@ export default {
         if (savedMode) {
             this.constantsStore.setMode(savedMode);
         }
+
         
     },
     computed: {
@@ -142,7 +144,25 @@ export default {
         async created() {
             await this.userStore.fetchUserPermissions();
         },
-    }
+    },
+    mounted() {
+        const driverObj = window.driver({
+            showProgress: true,
+            steps: [
+                { element: '#activate-me', popover: { title: 'Important Notice', description: 'Click here to activate your business profile.', side: "left", align: 'start' }},
+             
+                { popover: { title: 'KYC Documentation', description: 'Please fill in the details for business verification.', side: "bottom", align: 'start' }},
+            ],
+            // onDestroyStarted is called when the user tries to exit the tour
+            // onDestroyStarted: () => {
+            //     if (!driverObj.hasNextStep() || confirm("Are you sure?")) {
+            //     driverObj.destroy();
+            //     }
+            // },
+            });
+
+            driverObj.drive();
+    },
 }
 
 </script>
