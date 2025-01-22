@@ -5,6 +5,7 @@ import { createApp } from "vue";
 import * as pinia from 'pinia'
 import '@mdi/font/css/materialdesignicons.css'
 //import 'primeicons/primeicons.css'
+import "driver.js/dist/driver.css";
 
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
@@ -25,7 +26,7 @@ import 'primeicons/primeicons.css'
 
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
-
+import { driver } from "driver.js";
 window.pinia = pinia
 const app = createApp(App);
 ExportData(Highcharts);
@@ -56,4 +57,5 @@ app.mount("#main");
 const constantsStore = useConstantsStore();
 app.config.globalProperties.$constants = constantsStore.values;
 window.baseUrl = import.meta.env.VITE_API_URL
+window.driver = driver
 //window.baseUrl = 'https://optimum-fun-bobcat.ngrok-free.app/api'

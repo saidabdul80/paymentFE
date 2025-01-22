@@ -59,22 +59,22 @@ import { useNotificationStore } from '@/stores/notification';
     },
     methods: {
         async submitForm() {
-      this.isSubmitting = true; // Disable the button
-      // Emit the updated form data to the parent component
-      this.$emit('update:modelValue', this.form);
-     const res = await useClient().http({
-        method:'post',
-        path:'/clients/details/payment-info',
-        data:this.form
-      })
-      console.log(res,322223)
-      if(res){
-        const notificationStore = useNotificationStore();
-            notificationStore.showNotification({
-                type: 'success',
-                message: '',
-            });
-      }
+            this.isSubmitting = true; // Disable the button
+            // Emit the updated form data to the parent component
+            this.$emit('update:modelValue', this.form);
+          const res = await useClient().http({
+              method:'post',
+              path:'/clients/details/payment-info',
+              data:this.form
+            })
+
+            if(res){
+              const notification = useNotificationStore();
+                notification.showNotification({
+                  type: 'success',
+                  message: 'Payment details updated successfully.',
+                });
+            }
 
       this.isSubmitting = false; 
     },

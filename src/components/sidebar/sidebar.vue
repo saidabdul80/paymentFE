@@ -53,7 +53,7 @@
         <div class="tw-py-[6px] tw-bottom-0 tw-w-full tw-bg-white">
             <v-divider class="border-opacity-100 tw-mx-4" :class="`tw-bg[${$constants.primary}]`"></v-divider>
             <v-list density="compact" nav class="py-1">
-                <SideBarItem :state="modelValue" v-for="item in filteredSubItems" :key="item.name" :item="item" @click="handleItemClick(item)" />            
+                <SideBarItem :id="'bar_'+item.name" :state="modelValue" v-for="item in filteredSubItems" :key="item.name" :item="item" @click="handleItemClick(item)" />            
             </v-list>
           
         </div>
@@ -219,7 +219,26 @@ export default {
     },
     created() {
         console.log(this.$vuetify);
-    }
+    },
+    mounted() {
+        // const driverObj = window.driver({
+        //     showProgress: true,
+        //     steps: [
+        //         { element: '#bar_Settings', popover: { title: 'Animated Tour Example', description: 'Here is the code example showing animated tour. Let\'s walk you through it.', side: "left", align: 'start' }},
+        //         { element: 'code .line:nth-child(1)', popover: { title: 'Import the Library', description: 'It works the same in vanilla JavaScript as well as frameworks.', side: "bottom", align: 'start' }},
+        //         { element: 'code .line:nth-child(2)', popover: { title: 'Importing CSS', description: 'Import the CSS which gives you the default styling for popover and overlay.', side: "bottom", align: 'start' }},
+        //         { popover: { title: 'Happy Coding', description: 'And that is all, go ahead and start adding tours to your applications.' } }
+        //     ],
+        //     // onDestroyStarted is called when the user tries to exit the tour
+        //     onDestroyStarted: () => {
+        //         if (!driverObj.hasNextStep() || confirm("Are you sure?")) {
+        //         driverObj.destroy();
+        //         }
+        //     },
+        //     });
+
+        //     driverObj.drive();
+    },
 }
 </script>
 

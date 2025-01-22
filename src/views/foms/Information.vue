@@ -218,7 +218,10 @@ export default {
 
         if (response) {
           const notification = useNotificationStore();
-          notification.showSuccess("Business details updated successfully.");
+          notification.showNotification({
+            type: 'success',
+            message: 'Business details updated successfully.',
+          });
         }
       } catch (error) {
         const notification = useNotificationStore();
