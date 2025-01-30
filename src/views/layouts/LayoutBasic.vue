@@ -168,7 +168,9 @@ export default {
 
 
             setTimeout(()=>{
-                this.driverObj.drive();
+                if(this.ls.get('auth.user')?.kyc_documentation_status  !== 'completed'){
+                    this.driverObj.drive();
+                } 
             },1000)
     },
 }
