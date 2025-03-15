@@ -52,20 +52,34 @@
         </div>
     </Dialog>
     
-    <Dialog v-model:visible="updateDialog" modal :closable="true" :draggable="false" style="width: 300px;" class="tw-float-left" header="Update Client">
-        
-        <!-- Loop through messages and match with the id -->
-        <SelectField v-model="clientData.kyc_status" label="KYC Status" :options="['pending','rejected','approved']" :error-messages="errors.kyc_status" class="tw-mb-3" />
-        <SelectField v-model="clientData.can_send_money" :options="[true, false]" label="Can Send Money" :error-messages="errors.can_send_money"  class="tw-mb-3" />
-        
+    <Dialog v-model:visible="updateDialog" modal :closable="true" :draggable="false" style="min-width: 300px;width: 65% ;" class="tw-float-left" header="CLIENT CONFIGURATION">
+        <div class="tw-pb-5">
+            <!-- Loop through messages and match with the id -->
+            <Accordion v-model:value="activeAccordion">
+                <AccordionPanel value="0">
+                    <AccordionHeader>SETTINGS</AccordionHeader>
+                    <AccordionContent>
+                        <SelectField v-model="clientData.kyc_status" label="KYC Status" :options="['pending','rejected','approved']" :error-messages="errors.kyc_status" class="tw-mb-3" />
+                        <SelectField v-model="clientData.can_send_money" :options="[true, false]" label="Can Send Money" :error-messages="errors.can_send_money"  class="tw-mb-3" />
+                    </AccordionContent>
+                </AccordionPanel>
+                <AccordionPanel value="1">
+                    <AccordionHeader>SERVICE FEE</AccordionHeader>
+                    <AccordionContent>
+                    <FeeConfiguration :update="`admin/clients/${row.id}/fees`" :fetch="`admin/clients/${row.id}/fees`" :reset="`admin/clients/${row.id}/reset-fees`" :clientId="row.id" />
+
+                    </AccordionContent>
+                </AccordionPanel>
+            </Accordion>
+        </div>
         <div class="tw-flex tw-gap-4">
             <v-btn @click="updateDialog = false"
                 class="tw-rounded-md tw-bg-white tw-px-3 tw-py-2 tw-font-semibold tw-text-gray-900 tw-shadow-sm tw-ring-1 tw-ring-inset tw-ring-gray-300 hover:tw-bg-gray-50 tw-mr-2">
                 Cancel
             </v-btn>
-            <v-btn @click="handleEditDetails(row)" :loading="isLoadingOpen"
+            <v-btn v-if="activeAccordion != '1'" @click="handleConfig(row)" :loading="isLoadingOpen"
                 class="tw-bg-[black]/90 hover:tw-bg-black tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded">
-                Continue
+                Save
             </v-btn>
         </div>
     </Dialog>
@@ -98,6 +112,13 @@ import { useGlobalsStore } from "@/stores/globals";
 import TextField from './TextField.vue';
 import NumberField from './NumberField.vue';
 import SelectField from './SelectField.vue';
+import Divider from 'primevue/divider';
+
+import Accordion from 'primevue/accordion';
+import AccordionPanel from 'primevue/accordionpanel';
+import AccordionHeader from 'primevue/accordionheader';
+import AccordionContent from 'primevue/accordioncontent';
+import FeeConfiguration from './FeeConfiguration.vue';
 
 export default {
     name: "UsersActions",
@@ -125,14 +146,22 @@ export default {
                 amount:''
             },
             updateDialog:false,
-            clientData:{}
+            clientData:{},
+            fees:{},
+            activeAccordion:null
         }
     },
     components: {
+        FeeConfiguration,
         Dialog,
         TextField,
         SelectField,
-        NumberField
+        NumberField,
+        Divider,
+        Accordion,
+        AccordionPanel,
+        AccordionHeader,
+        AccordionContent,
     },
     computed:{
        
@@ -142,15 +171,42 @@ export default {
             this.openRowId = this.openRowId === rowId ? null : rowId;
             this.isMenuOpen = true
         },
-        async handleEditDetails() {
+        async handleConfig() {
             this.isLoadingOpen = true
+            await Promise.all([this.handleEditDetails(), this.handleFees()]);
+            this.isLoadingOpen = false
+            this.isMenuOpen=false
+            this.updateDialog = false
+            // switch(this.activeAccordion){
+            //     case '0':
+            //         break;
+            //     case '1':
+            //         break;
+            // }
+        },
+        async handleFees(){
+     
+            const res = await useClient().http({ method: 'put', path: 'admin/clients/fees'+this.row.id, data:{
+                fees:this.fees
+            }});
+    
+            // if(res){
+            //     const notificationStore = useNotificationStore();
+            //     notificationStore.showNotification({
+            //         type: 'Feesuccess',
+            //         message: 'Updated successfully.',
+            //     })
+            // }
+        },
+        async handleEditDetails() {
+            //this.isLoadingOpen = true
             const res = await useClient().http({ method: 'put', path: 'admin/clients/'+this.row.id, data:{
                 can_send_money:this.clientData?.can_send_money,
                 kyc_status: this.clientData?.kyc_status
             }});
-            this.updateDialog = false
-            this.isMenuOpen=false
-            this.isLoadingOpen = false
+            //this.updateDialog = false
+            //this.isMenuOpen=false
+            //this.isLoadingOpen = false
             if(res){
                 const notificationStore = useNotificationStore();
                 notificationStore.showNotification({
@@ -242,6 +298,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.fee .p-inputnumber-input{
+    width: 100% !important;
+}
+.fee .p-inputnumber{
+    padding:0px !important;
+}
 /* Add component-specific styles here if needed */
 </style>

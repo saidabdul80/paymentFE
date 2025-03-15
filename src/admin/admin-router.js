@@ -12,6 +12,7 @@ import Transactions from './views/Transactions.vue';
 import Customers from './views/Customers.vue';
 import Clients from './views/Clients.vue';
 import ClientDashbaord from './views/ClientDashbaord.vue';
+import Settings from './views/Settings.vue';
 
 export default [
     {
@@ -58,6 +59,12 @@ export default [
                 name: "Admin-Clients-Dashboard",
                 component: ClientDashbaord,
                 meta: { breadcrumb: "Dashboard", parent:'Admin-Clients', requiresAuth: true },
+            },
+            {
+                path: "settings",
+                name: "Admin-Settings",
+                component: Settings,
+                meta: { breadcrumb: "Settings", parent:'', requiresAuth: true },
             },
         ],
     },

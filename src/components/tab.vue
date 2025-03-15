@@ -1,6 +1,6 @@
 <template>
   <div class="lg:tw-flex lg:tw-justify-between tw-my-3">
-    <v-tabs v-model="tab" :bg-color="mode == 'LIGHT' ? 'transparent' : '#FFF6'" class="tw-border-b">
+    <v-tabs v-model="tab" :bg-color="mode == 'LIGHT' ? 'transparent' : 'transparent'" class="tw-border-b">
       <v-tab v-for="(tab, index) in tabs" :color="$constants.dark" :value="index" class="tw-capitalize">
         {{ tab.name }}
       </v-tab>
@@ -19,7 +19,7 @@
   </div>
 
   <div class="tw-min-h-[240px] tw-rounded-lg"
-    :class="`tw-text-[${$constants.dark}] tw-bg-[${$constants.light}]`">
+    :class="`tw-text-[${$constants.dark}] tw-bg-[transparent]`">
     <v-tabs-window v-model="tab">
       <v-tabs-window-item v-for="(tab, n) in tabs" :key="n" :value="n">
         <div>

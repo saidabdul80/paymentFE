@@ -5,8 +5,9 @@
       :disabled="disabled"
       :invalid="errorMessages !== ''"
       v-model="inputValue"
+      :maxFractionDigits="6"
       :placeholder="placeholder"
-      class="tw-block tw-w-full tw-border tw-border-gray-300 tw-rounded-lg tw-px-3 tw-py-2"
+      class="tw-block tw-w-full  tw-border-gray-300 tw-rounded-lg tw-px-3 tw-py-2"
     />
     <small v-if="errorMessages !== ''" class="tw-text-[#d13333]" id="username-help">{{ errorMessages }}</small>
   </div>
