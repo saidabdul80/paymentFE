@@ -273,10 +273,12 @@ export const useGlobalsStore = defineStore('globals', {
             }
 
 
-        if(id != null && id != ''){
+        if(id != null){
           this.balance['Total Credit'] = response.credit_transactions.total_amount;
           this.balance['Total Debit'] = response.debit_transactions.total_amount;
         }else{
+        }
+        if(response?.fee_count?.total_amount){
           this.balance['Total Fees'] = response.fee_count.total_amount;
         }
         if(d != null){
