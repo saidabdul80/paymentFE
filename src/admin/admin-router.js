@@ -30,12 +30,12 @@ export default [
             //     component: Dashboard,
             //     meta: { breadcrumb: "Dashboard", requiresAuth: false },
             // },
-            {
-                path: "",
-                name: "Admin-Home",
-                component: Dashboard,
-                meta: { breadcrumb: "Home", requiresAuth: true },
-            },
+            // {
+            //     path: "",
+            //     name: "Admin-Home",
+            //     component: Dashboard,
+            //     meta: { breadcrumb: "Home", requiresAuth: true },
+            // },
             {
                 path: "transactions/:id?",
                 name: "Admin-Transactions",

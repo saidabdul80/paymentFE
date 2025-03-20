@@ -122,7 +122,7 @@ export default {
     },
     async resetFee() {
       this.loading2 = true;
-      const res = await useClient().http({ method: "GET", path: reset });
+      const res = await useClient().http({ method: "GET", path: this.reset });
       this.loading2 = false;
       if (res) {
         useNotificationStore().showNotification({ type: 'success', message: 'Fees reset successfully!' });

@@ -53,19 +53,19 @@ export const useClient = defineStore("client", () => {
       return response.data;
     } catch (error) {      
       handleError(error);
+
       if (error?.response?.status == 401) {
       
-    
-        if(window.isActive401){ //controlling popups, set to true on notification timeout
+        if(window?.isActive401){ //controlling popups, set to true on notification timeout
           return;
         }
-        const route = router.currentRoute;
+        const route = window.currentRoute;
+
         if (route?.meta?.requiresAuth) {
-        
         
           let userRootPath = '';
           /* console.log(useRoute()) */
-          userRootPath = window.currentRoute.matched[0]?.path?.replace('/', '') || '';
+          userRootPath = route.matched[0]?.path?.replace('/', '') || '';
           useGlobalsStore().logout(userRootPath)
           /* if(userRootPath != ''){
           }else{

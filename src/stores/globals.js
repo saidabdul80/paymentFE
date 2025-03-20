@@ -86,6 +86,7 @@ export const useGlobalsStore = defineStore('globals', {
             }
   
             prefix = prefix === '-' ? 'admin' : prefix; // Default to 'admin' if prefix is empty
+            prefix = prefix ==''?'app':prefix
             this.routeTo(prefix)
             // if (token) {
             //  // ls.clear();
@@ -270,9 +271,13 @@ export const useGlobalsStore = defineStore('globals', {
         this.balance = {
               ...response2,
             }
-        if(id != null){
+
+
+        if(id != null && id != ''){
           this.balance['Total Credit'] = response.credit_transactions.total_amount;
           this.balance['Total Debit'] = response.debit_transactions.total_amount;
+        }else{
+          this.balance['Total Fees'] = response.fee_count.total_amount;
         }
         if(d != null){
          this.balance['Total Credit'] = response.credit_transactions.total_amount;

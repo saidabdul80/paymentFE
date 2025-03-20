@@ -207,7 +207,6 @@ const useAdminStore = (useWindow = false) => {
                 this.accounts = [];
                 const response = await useClient().http({ method: 'get', path: '/account/allocatable-accounts/user', data })                
                 if(response){
-                
                     this.accounts = response
                     this.account = this.accounts?.find(item=>item.currency.currency_symbol == 'CAD')
                 }
