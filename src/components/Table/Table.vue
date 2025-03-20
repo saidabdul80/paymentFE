@@ -157,6 +157,7 @@ import InputIcon from 'primevue/inputicon';
 import { PhMagnifyingGlass } from "@phosphor-icons/vue";
 import CopyButton from '@/components/CopyButton.vue';
 import Search from "../Search.vue";
+import { helpers } from "@/helpers/utilities";
 export default {
   props: {
     pageTitle:{
@@ -202,6 +203,7 @@ export default {
   },
   data() {
     return {
+      helpers:helpers,
       search: "",
       status: "All",
       rows: 10,

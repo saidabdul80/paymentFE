@@ -23,7 +23,7 @@ export const helpers = {
         precision: 2,
         thousand_separator: ',',
         decimal_separator: '.',
-        symbol: '$',
+        symbol: '',
       }
     }
        

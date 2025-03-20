@@ -40,7 +40,7 @@
                   </span>
                   <span v-else class="tw-flex tw-items-center">                    
                     <span v-if="header?.formatNumber">
-                        {{helpers.formatMoney(parseFloat(getNestedValue(row, header.key)))}}
+                        {{helper?.formatMoney(parseFloat(getNestedValue(row, header.key)))|| parseFloat(getNestedValue(row, header.key))}}
                     </span>
                     <span v-else>
                       {{ getNestedValue(row, header.key) }}                      
@@ -98,7 +98,7 @@ export default {
   },
   data() {
     return {
-      helpers:helpers,
+      helper:helpers,
       rows: 10,
       selectAll: false,
       selectedRows: [],
