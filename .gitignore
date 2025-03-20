@@ -49,4 +49,5 @@ Thumbs.db
 
 dist/
 .env
+.env.local
 env
