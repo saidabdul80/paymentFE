@@ -173,7 +173,8 @@ export default {
         },
         async handleConfig() {
             this.isLoadingOpen = true
-            await Promise.all([this.handleEditDetails(), this.handleFees()]);
+            await this.handleEditDetails()
+            //await Promise.all([, this.handleFees()]);
             this.isLoadingOpen = false
             this.isMenuOpen=false
             this.updateDialog = false

@@ -58,150 +58,318 @@
       <span class="tw-capitalize">Client Details</span>
     </template>
     <div ref="drawerContent">
-      <div class="tw-text-center tw-mb-4">
-        <h1 class="tw-text-2xl tw-font-semibold">{{ client.company_name }}</h1>
-        <div class="tw-mt-2">
-          <span class="tw-bg-gray-100 tw-text-gray-600 tw-py-1 tw-px-3 tw-rounded-lg tw-text-sm">
-            {{ client.business_type }}
-          </span>
+        <div class="tw-text-center tw-mb-4">
+          <Skeleton v-if="clientLoading" width="200px" height="24px" />
+          <h1 v-else class="tw-text-2xl tw-font-semibold">{{ client.company_name }}</h1>
+          <div class="tw-mt-2">
+            <Skeleton v-if="clientLoading" width="150px" height="18px" />
+            <span v-else class="tw-bg-gray-100 tw-text-gray-600 tw-py-1 tw-px-3 tw-rounded-lg tw-text-sm">
+              {{ client.business_type }}
+            </span>
+          </div>
         </div>
-      </div>
+       
 
-      <div class="tw-mb-4">
-        <div class="tw-grid tw-grid-cols-3 tw-gap-5">
-            <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Client ID</div>
-                 <div class="tw-text-md">{{ client.id }}</div>
-            </div>
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">KYC Status</div>
-                 <div class="tw-text-md">{{ client.kyc_status }}</div>
-            </div>
+        <div class="tw-mb-4">
+          <div class="tw-grid tw-grid-cols-3 tw-gap-5">
+            
+            <Skeleton v-if="clientLoading" width="200px" height="24px" />  
+            <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Client ID</div>
+                  <div class="tw-text-md">{{ client.id }}</div>
+              </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">KYC Status</div>
+                  <div class="tw-text-md">{{ client.kyc_status }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">KYC Documentation Status</div>
-                 <div class="tw-text-md">{{ client.kyc_documentation_status }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">KYC Documentation Status</div>
+                  <div class="tw-text-md">{{ client.kyc_documentation_status }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Company Name</div>
-                 <div class="tw-text-md">{{ client.company_name }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Company Name</div>
+                  <div class="tw-text-md">{{ client.company_name }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Type</div>
-                 <div class="tw-text-md">{{ client.business_type }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Type</div>
+                  <div class="tw-text-md">{{ client.business_type }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Sector</div>
-                 <div class="tw-text-md">{{ client.business_sector }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Sector</div>
+                  <div class="tw-text-md">{{ client.business_sector }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Number (BN)</div>
-                 <div class="tw-text-md">{{ client.rc_number }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Number (BN)</div>
+                  <div class="tw-text-md">{{ client.rc_number }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Company Email</div>
-                 <div class="tw-text-md tw-w-[150px] tw-truncate">{{ client.company_email }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Company Email</div>
+                  <div class="tw-text-md tw-w-[150px] tw-truncate">{{ client.company_email }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Country of Operation</div>
-                 <div class="tw-text-md">{{ client.business_country }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Country of Operation</div>
+                  <div class="tw-text-md">{{ client.business_country }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business State</div>
-                 <div class="tw-text-md">{{ client.business_state }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business State</div>
+                  <div class="tw-text-md">{{ client.business_state }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Address</div>
-                 <div class="tw-text-md">{{ client.business_address }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Address</div>
+                  <div class="tw-text-md">{{ client.business_address }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">CAC Document</div>
-                 <div class="tw-text-md">{{ client.cac_document ? 'Available' : 'Not Available' }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">CAC Document</div>
+                  <div class="tw-text-md">{{ client.cac_document ? 'Available' : 'Not Available' }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Bank Statement</div>
-                 <div class="tw-text-md">{{ client.bank_statement ? 'Available' : 'Not Available' }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Bank Statement</div>
+                  <div class="tw-text-md">{{ client.bank_statement ? 'Available' : 'Not Available' }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Can Send Money</div>
-                 <div class="tw-text-md">{{ client.can_send_money ? 'Yes' : 'No' }}</div>
-            </div>
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Account Suspended</div>
-                 <div class="tw-text-md">{{ client.is_suspended ? 'Yes' : 'No' }}</div>
-            </div>
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Ledger Balance</div>
-                 <div class="tw-text-md">{{ global.toCurrency(clientBalance.ledger_balance, false, false) }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Can Send Money</div>
+                  <div class="tw-text-md">{{ client.can_send_money ? 'Yes' : 'No' }}</div>
+              </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Account Suspended</div>
+                  <div class="tw-text-md">{{ client.is_suspended ? 'Yes' : 'No' }}</div>
+              </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Ledger Balance</div>
+                  <div class="tw-text-md">{{ global.toCurrency(clientBalance.ledger_balance, false, false) }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Available Balance</div>
-                 <div class="tw-text-md">{{ global.toCurrency(clientBalance.available_balance, false,false) }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Available Balance</div>
+                  <div class="tw-text-md">{{ global.toCurrency(clientBalance.available_balance, false,false) }}</div>
+              </div>
+          </div>
         </div>
-      </div>
 
-      <div class="tw-mt-6">
-        <h2 class="tw-text-md tw-font-semibold">User Details</h2>
-        <div v-for="user in client.users" :key="user.id" class="tw-mt-4 tw-grid tw-grid-cols-2 tw-gap-y-2">
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">User ID</div>
-                 <div class="tw-text-md">{{ user.id }}</div>
-            </div>
+        <div class="tw-mt-6">
+          <h2 class="tw-text-md tw-font-semibold">User Details</h2>
+          <div v-for="user in client.users" :key="user.id" class="tw-mt-4 tw-grid tw-grid-cols-2 tw-gap-y-2">
+            <Skeleton v-if="clientLoading" width="200px" height="24px" />  
+            <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">User ID</div>
+                  <div class="tw-text-md">{{ user.id }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Email</div>
-                 <div class="tw-text-md">{{ user.email }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Email</div>
+                  <div class="tw-text-md">{{ user.email }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">First Name</div>
-                 <div class="tw-text-md">{{ user?.first_name }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">First Name</div>
+                  <div class="tw-text-md">{{ user?.first_name }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Last Name</div>
-                 <div class="tw-text-md">{{ user.last_name }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Last Name</div>
+                  <div class="tw-text-md">{{ user.last_name }}</div>
+              </div>
 
-             <div>
-                 <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Phone Number</div>
-                 <div class="tw-text-md">{{ user.phone_number }}</div>
-            </div>
+              <Skeleton v-if="clientLoading" width="200px" height="24px" />
+              <div v-else>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Phone Number</div>
+                  <div class="tw-text-md">{{ user.phone_number }}</div>
+              </div>
+          </div>
         </div>
-      </div>
 
-      <div class="tw-mt-6 tw-flex tw-flex-col tw-items-center">
-        <v-btn @click="approveClient()" class="tw-bg-black tw-text-white tw-py-2 tw-px-4 tw-rounded-lg tw-mb-2 hover:tw-bg-gray-800">
-            Approve Client
-        </v-btn>
-        <v-btn variant="text" @click="printDrawerContent()" class="tw-bg-black tw-text-white tw-py-2 tw-px-4 tw-rounded-lg tw-mb-2 hover:tw-bg-gray-800">
-            Downlod Info
-        </v-btn>
-        <!-- <a href="#" class="tw-text-sm tw-text-gray-500 hover:tw-underline">
-          Report an issue
-        </a> -->
-      </div>
+        <div class="tw-mt-6 tw-flex tw-flex-col tw-items-center">
+          <v-btn @click="approveClient()" class="tw-bg-black tw-text-white tw-py-2 tw-px-4 tw-rounded-lg tw-mb-2 hover:tw-bg-gray-800">
+              Approve Client
+          </v-btn>
+          <v-btn variant="text" @click="printDrawerContent()" class="tw-bg-black tw-text-white tw-py-2 tw-px-4 tw-rounded-lg tw-mb-2 hover:tw-bg-gray-800">
+              Downlod Info
+          </v-btn>
+      
+        </div>
+
     </div>
-  </Drawer>
+  </Drawer> 
+<!-- <Drawer v-model:visible="showdrawer" class="md:tw-w-[50%] tw-w-[95%]" :header="''" position="right">
+    <template #header>
+      <span class="tw-capitalize">Client Details</span>
+    </template>
+    <div ref="drawerContent">
+        <div class="tw-text-center tw-mb-4">
+          <h1 class="tw-text-2xl tw-font-semibold">{{ client.company_name }}</h1>
+          <div class="tw-mt-2">
+            <span class="tw-bg-gray-100 tw-text-gray-600 tw-py-1 tw-px-3 tw-rounded-lg tw-text-sm">
+              {{ client.business_type }}
+            </span>
+          </div>
+        </div>
+
+        <div class="tw-mb-4">
+          <div class="tw-grid tw-grid-cols-3 tw-gap-5">
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Client ID</div>
+                  <div class="tw-text-md">{{ client.id }}</div>
+              </div>
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">KYC Status</div>
+                  <div class="tw-text-md">{{ client.kyc_status }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">KYC Documentation Status</div>
+                  <div class="tw-text-md">{{ client.kyc_documentation_status }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Company Name</div>
+                  <div class="tw-text-md">{{ client.company_name }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Type</div>
+                  <div class="tw-text-md">{{ client.business_type }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Sector</div>
+                  <div class="tw-text-md">{{ client.business_sector }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Number (BN)</div>
+                  <div class="tw-text-md">{{ client.rc_number }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Company Email</div>
+                  <div class="tw-text-md tw-w-[150px] tw-truncate">{{ client.company_email }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Country of Operation</div>
+                  <div class="tw-text-md">{{ client.business_country }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business State</div>
+                  <div class="tw-text-md">{{ client.business_state }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Business Address</div>
+                  <div class="tw-text-md">{{ client.business_address }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">CAC Document</div>
+                  <div class="tw-text-md">{{ client.cac_document ? 'Available' : 'Not Available' }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Bank Statement</div>
+                  <div class="tw-text-md">{{ client.bank_statement ? 'Available' : 'Not Available' }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Can Send Money</div>
+                  <div class="tw-text-md">{{ client.can_send_money ? 'Yes' : 'No' }}</div>
+              </div>
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Account Suspended</div>
+                  <div class="tw-text-md">{{ client.is_suspended ? 'Yes' : 'No' }}</div>
+              </div>
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Ledger Balance</div>
+                  <div class="tw-text-md">{{ global.toCurrency(clientBalance.ledger_balance, false, false) }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Available Balance</div>
+                  <div class="tw-text-md">{{ global.toCurrency(clientBalance.available_balance, false,false) }}</div>
+              </div>
+          </div>
+        </div>
+
+        <div class="tw-mt-6">
+          <h2 class="tw-text-md tw-font-semibold">User Details</h2>
+          <div v-for="user in client.users" :key="user.id" class="tw-mt-4 tw-grid tw-grid-cols-2 tw-gap-y-2">
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">User ID</div>
+                  <div class="tw-text-md">{{ user.id }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Email</div>
+                  <div class="tw-text-md">{{ user.email }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">First Name</div>
+                  <div class="tw-text-md">{{ user?.first_name }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Last Name</div>
+                  <div class="tw-text-md">{{ user.last_name }}</div>
+              </div>
+
+              <div>
+                  <div class="tw-text-gray-500 tw-text-sm tw-font-bold">Phone Number</div>
+                  <div class="tw-text-md">{{ user.phone_number }}</div>
+              </div>
+          </div>
+        </div>
+
+        <div class="tw-mt-6 tw-flex tw-flex-col tw-items-center">
+          <v-btn @click="approveClient()" class="tw-bg-black tw-text-white tw-py-2 tw-px-4 tw-rounded-lg tw-mb-2 hover:tw-bg-gray-800">
+              Approve Client
+          </v-btn>
+          <v-btn variant="text" @click="printDrawerContent()" class="tw-bg-black tw-text-white tw-py-2 tw-px-4 tw-rounded-lg tw-mb-2 hover:tw-bg-gray-800">
+              Downlod Info
+          </v-btn>
+      
+        </div>
+
+    </div>
+  </Drawer> -->
   </template>
   
   <script>
   import CompanyCard from "@/components/CompanyCard.vue";
   import Tab from "@/components/tab.vue";
   import DataTable from "@/components/Table/Table.vue";
+
   import TextField from "@/components/TextField.vue";
   import UsersActions from "@/components/UsersActions.vue";
   import { useClient } from "@/stores/client";
@@ -209,6 +377,7 @@
   import { PhCaretLeft } from "@phosphor-icons/vue";
   import Dialog from "primevue/dialog";
   import Drawer from "primevue/drawer";
+import Skeleton from "primevue/skeleton";
   export default {
     components: {
       DataTable,
@@ -218,7 +387,8 @@
       PhCaretLeft,
       Dialog,
       TextField,
-      UsersActions
+      UsersActions,
+      Skeleton
     },
     data() {
       return {
@@ -260,7 +430,8 @@
             },
             
           },
-          client:{}
+          client:{},
+          clientLoading: false
       };
     },
     watch: {
@@ -397,7 +568,9 @@
       async showClient(id){
         this.isMenuOpenisMenuOpen = false
         this.showdrawer = true
+        this.clientLoading = true
         const res = await useClient().http({method:'get', path:'admin/clients/'+id})
+        this.clientLoading = false
         if(res){
             this.client = res.client
             this.clientBalance = res.balance

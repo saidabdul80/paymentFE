@@ -319,7 +319,8 @@ export default {
         rejected: 'tw-bg-red-100 tw-text-red-600',
         canceled: 'tw-bg-red-100 tw-text-red-600',
       };
-      return statusClasses[status.toLowerCase()] || 'tw-bg-gray-100 tw-text-gray-600';
+      
+      return statusClasses[status?.toLowerCase()] || 'tw-bg-gray-100 tw-text-gray-600';
     },
     formatAmount(amount) {
       return amount ? parseFloat(amount).toFixed(2) : '0.00';
