@@ -12,6 +12,8 @@ import Customers from '@/views/Customers.vue';
 import LayoutBasic from '@/views/layouts/LayoutBasic.vue';
 import Contact from '@/views/Contact.vue';
 import ForgortPassword from '@/views/ForgotPassword.vue';
+import MFA from '@/admin/views/auth/MFA.vue';
+import Setup_MFA from '@/admin/views/auth/Setup_MFA.vue';
 
 export default [
     {
@@ -56,6 +58,18 @@ export default [
                 meta: { breadcrumb: "", requiresAuth: true, ability:[] },
             },
         ],
+    },
+     {
+        path: "/auth/verification",
+        name: "MFA",
+        component: MFA,
+        meta: { requiresAuth: false },
+    },
+    {
+        path: "/auth/setup-mfa",
+        name: "MFA-Setup",
+        component: Setup_MFA,
+        meta: { requiresAuth: false },
     },
     { 
         path: '/',

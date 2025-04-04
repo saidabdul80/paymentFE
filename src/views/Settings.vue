@@ -101,6 +101,7 @@ export default {
             type: 'success',
             message: 'API Key generated successfully',
           });
+
           this.fetchApiKeys(); // Refresh the API keys list
         }
         this.isGenerating = false
@@ -111,7 +112,8 @@ export default {
           path: 'clients/keys',
         });
         if (res) {
-          this.apiKeys = res.keys?.key; // Assuming the API returns a list of keys in `data`
+
+          this.apiKeys = res.key.key; // Assuming the API returns a list of keys in `data`
         }
     },
     async fetchDetails() {

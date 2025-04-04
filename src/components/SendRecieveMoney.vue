@@ -27,6 +27,9 @@
             <div>
               <TextField v-model="sendData.description" label="Description" required />
             </div>
+            <div>
+              <TextField v-model="sendData.mfa_token" label="MFA Token" required />
+            </div>
           </div>
           <div class="tw-flex tw-justify-center tw-my-4">
             <v-btn ref="btnRef" @click="sendMoney" :loading="loadingTx" color="black">Send Money</v-btn>

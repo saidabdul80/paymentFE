@@ -5,6 +5,7 @@ import { handleError } from '@/helpers/error-handling'
 import Ls from '@/services/ls.js'
 import { useClient } from '@/stores/client'
 import router from '@/router'
+import ls from '@/services/ls.js'
 export const useAppAuthStore = (useWindow = false) => {
     const defineStoreFunc = useWindow ? window.pinia.defineStore : defineStore
 
@@ -26,10 +27,24 @@ export const useAppAuthStore = (useWindow = false) => {
 
         actions: {
             async login(data) {
-                const response = await useClient().http({ method: 'post', path: '/auth/login', data })                
+                const response = await useClient().http({ method: 'post', path: 'auth/login', data })                
                 if (response) {
                     const password = data.password;
-                    this.handlePassed(response);
+                    //this.handlePassed(response);
+
+                    ls.set('user', JSON.stringify(response))
+                    ls.set('auth.user', JSON.stringify(response.user))
+                    ls.set("auth.token", response.token)
+                    const user =  response.user
+
+                    console.log(user,1003)
+                    if(!user.is_mfa_setup){
+                      //  this.setUpMFA()
+                        router.push('/auth/setup-mfa')                            
+                        return false;
+                    }else{
+                        router.push('/auth/verification')
+                    }
                 }
             },
             requireMFA(){
@@ -75,9 +90,9 @@ export const useAppAuthStore = (useWindow = false) => {
                 }
             },
             async verifyMfaCode(data){
-                const response = await useClient().http({ method: 'post', path: '/auth/verify-mfa',data })          
+                const response = await useClient().http({ method: 'post', path: 'auth/verify-mfa',data })          
                 if(response){
-                    router.push('/admin/home')
+                    router.push('/app/dashboard')
                 }
             },
             async changePassword(data){                
@@ -94,9 +109,10 @@ export const useAppAuthStore = (useWindow = false) => {
             },
             async setUpMFA(data){    
                 this.loadingMFA = true;            
-                const response = await useClient().http({ method: 'get', path: '/auth/setup-mfa',data })
+
+                const response = await useClient().http({ method: 'get', path: 'auth/setup-mfa',data })
                 this.loadingMFA = false
-                if(response){     
+                if(response){   
                     this.qrcode = response.qrCodeDataUrl;
                     Ls.set('mfa.qrcode',response.qrCodeDataUrl);                       
                 }

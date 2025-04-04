@@ -65,7 +65,7 @@ export default [
                 name: "Admin-Settings",
                 component: Settings,
                 meta: { breadcrumb: "Settings", parent:'', requiresAuth: true },
-            },
+            }
         ],
     },
     {

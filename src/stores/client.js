@@ -11,8 +11,10 @@ export const useClient = defineStore("client", () => {
 
   async function http(config={method:'get',path:'',data: {},fullPath :false, headers:false})  {
     const token = ls.get("auth.token");
+    if(!config.path.startsWith('/') && !config.fullPath){
+      config.path = '/'+config.path
+    }
     let url =window.baseUrl+ config?.path;
-
     if (config?.fullPath) {
       url = config?.path;
     }
@@ -55,7 +57,6 @@ export const useClient = defineStore("client", () => {
       handleError(error);
 
       if (error?.response?.status == 401) {
-      
         if(window?.isActive401){ //controlling popups, set to true on notification timeout
           return;
         }

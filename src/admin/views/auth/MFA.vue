@@ -1,20 +1,21 @@
 <template>
     <div class="tw-flex tw-min-h-full tw-flex-1">
         <v-row align="start" no-gutters>
-            <v-col cols="12" md="6">
+            <!-- <v-col cols="12" md="6">
                 <div class="tw-relative tw-hidden tw-flex-1 lg:tw-block mx-4 my-4 mt-2">
-                 <!--    <img class="tw-absolute tw-inset-0 tw-h-full tw-w-full tw-object-cover tw-rounded-3xl"
-                        src="@/assets/mfa-image.png" style="height: 98vh;" alt="" /> -->
+                    <img class="tw-absolute tw-inset-0 tw-h-full tw-w-full tw-object-cover tw-rounded-3xl"
+                        src="@/assets/mfa-image.png" style="height: 98vh;" alt="" />
                 </div>
             </v-col>
-            <v-col md="6" sm="12">
+            -->
+            <v-col md="12" sm="12"> 
                 <div class="tw-flex tw-flex-1 tw-flex-col tw-justify-center tw-px-4 tw-py-12 sm:tw-px-6 lg:tw-flex-none lg:tw-px-20 xl:tw-px-24">
                     <div class="tw-mx-auto tw-w-full tw-max-w-sm lg:tw-w-96">
                         <div>
                             <div class="tw-flex tw-justify-center tw-mb-10">
-                                <img class="tw-h-20 tw-w-auto tw-mt-10 " src="@/assets/logo.png" alt="Your Company" />
+                                <img class="tw-h-20 tw-w-auto tw-mt-10 " src="@/assets/logo.png" alt="COWRISPAY" />
                             </div>
-                            <p class="tw-mt-10 tw-text-sm tw-leading-6 tw-text-green-900 tw-text-center tw-font-semibold">
+                            <p class="tw-mt-10 tw-text-sm tw-leading-6 tw-text-black-900 tw-text-center tw-font-semibold">
                                 Enter MFA code from your google authenticator.
                             </p>
                         </div>
@@ -28,9 +29,8 @@
                                     </v-col>
                                 </v-row>
                                 <div>
-                                    <v-btn @click.prevent="verifyCode" type="submit" block color="green" size="large"
+                                    <v-btn :loading="isLoading" @click.prevent="verifyCode" type="submit" block color="black" size="large"
                                         :class="`tw-bg-${$constants.primary}-900 tw-w-full tw-p-3 tw-mt-3`">
-                                        <span v-if="isLoading" class="loader tw-h-5 tw-w-5"></span>
                                         Verify
                                     </v-btn>
                                 </div>                                
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/admin/stores/auth';
+import { useAppAuthStore } from '@/stores/auth';
 import { useNotificationStore } from '@/stores/notification';
 import TextField from '@/components/TextField.vue';
 import ls from '@/services/ls';
@@ -59,7 +59,7 @@ export default {
             isLoading: false,
             verificationCode: '',
             notificationStore: useNotificationStore(),
-            authStore: useAuthStore(),
+            authStore: useAppAuthStore(),
             verificationCodeRules: [
                 value => {
                     if (value) return true
