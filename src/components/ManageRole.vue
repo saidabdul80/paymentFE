@@ -75,6 +75,7 @@
   import Dialog from 'primevue/dialog'
   import CreateRole from './CreateRole.vue'
   import { useClient } from '@/stores/client'
+  import { useGlobalsStore } from '@/stores/globals'
   
   const client = useClient()
   
@@ -136,12 +137,18 @@
   }
   
   const deleteRole = async (roleId) => {
-    try {
-      await client.http({ method: 'delete', path: `/roles/${roleId}`, showMesage:true })
-      fetchRoles()
-    } catch (err) {
-      console.error('Error deleting role:', err)
-    }
+    useGlobalsStore().palert({
+        title:'Confirm Delete',
+        text:'Deleting will erase this role and its permissions totally from the database. Note that this action cannot be undone.',
+        cancelBtnText:'Delete',
+        confirmBtnText:'Cancel',
+        callback:async (res)=>{
+            if(res){
+                await client.http({ method: 'delete', path: `/roles/${roleId}`, showMesage:true })
+                fetchRoles()
+            }
+        }
+    })
   }
   
   const cancelEdit = () => {
