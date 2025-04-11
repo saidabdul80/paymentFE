@@ -1,17 +1,19 @@
 
 <template>    
-    <v-navigation-drawer class="tw-transition-all" v-model="pdrawer" :rail="computedRail" :temporary="temporary" :color="$constants.light" :width="280">
+    <v-navigation-drawer class="tw-transition-all" v-model="pdrawer" :rail="computedRail" :temporary="temporary" :color="$constants.light" :width="240">
         
         <div class="tw-h-[calc(100vh-200px)] tw-overflow-y-auto tw-font-[300] tw-transition-all ">
             <v-list-item nav class="tw-py-[6px] tw-px-[6px]" @mouseenter="startMarquee" @mouseleave="stopMarquee">
                 <template v-slot:default>
                     <div class="tw-flex tw-py-2 tw-items-center">
-                        <img class=" tw-w-auto" src="@/assets/logo-plain.svg" alt="logo" />
+                        <div class="tw-relative">
+                            <img class=" tw-w-auto" src="@/assets/logo-plain.svg" alt="logo" />
+                            <Badge size="small" severity="danger" :pt="{root:{class:'tw-ms-2 tw-absolute -tw-bottom-2 tw-right-5 tw-bg-red tw-text-white !tw-opacity-[1]'}}" value="Beta" />                                                                
+                        </div>
                         <div>
                             <transition name="slide-fade">
-                                <div class="tw-ms-2 tw text-truncate tw-font-visby uppercase tw-flex tw-items-center">
+                                <div class="tw-ms-2 tw text-truncate tw-font-visby uppercase  tw-flex tw-items-center tw-pt-3 tw-w-[135px]">
                                     <span class="tw-text-black tw-text-2xl tw-font-bold">COWRIS</span>    
-                                    <Badge severity="danger" :pt="{root:{class:'tw-ms-2 tw-bg-red tw-text-white !tw-opacity-[1]'}}" value="Beta" />                                                                
                                 </div>
                             </transition>
                         </div>
@@ -119,9 +121,9 @@ export default {
         
             ],
             subItems: [
-                { name: 'Settings', href: '/admin/settings', icon:PhGear, permission:'', current: true },
+                { name: 'Settings', href: '/admin/settings/personal-info', icon:PhGear, permission:'', current: true },
                 // { name: 'Supports', href: '/app/supports', icon: PhQuestion, permission:'', current: true },
-                { name: 'Logout', href: '', icon: PhSignOut, current: false }
+                { name: 'Logout', href: '#', icon: PhSignOut, current: false }
             ]
         }
     },

@@ -5,11 +5,12 @@ import { handleError } from '@/helpers/error-handling';
 import ls from "@/services/ls";
 import { useGlobalsStore } from "./globals";
 import router from "@/router";
+import { useNotificationStore } from "./notification";
 
 export const useClient = defineStore("client", () => {
 
 
-  async function http(config={method:'get',path:'',data: {},fullPath :false, headers:false})  {
+  async function http(config={method:'get',path:'',data: {},fullPath :false, headers:false, showMesage:false})  {
     const token = ls.get("auth.token");
     if(!config.path.startsWith('/') && !config.fullPath){
       config.path = '/'+config.path
@@ -50,6 +51,9 @@ export const useClient = defineStore("client", () => {
         headers:config?.headers?config?.headers : headers,
       });
       if(response.data?.data){
+        if(config.showMesage){
+          useNotificationStore().showNotification({ type: 'success', message: response.data.message });
+        }
         return response.data.data;
       }
       return response.data;

@@ -1,11 +1,13 @@
 <template>
   <div class="tw-h-full tw-w-full">
-    <Tab :tabs="tabs" v-model="tabIndex" bg-color="LIGHT" :withBorder="true" :config="tabConfig" refresh>
+    <!-- <Tab :tabs="tabs" v-model="tabIndex" bg-color="LIGHT" :withBorder="true" :config="tabConfig" refresh>
       <template v-slot:Fee>
         <FeeConfiguration update="admin/fees" fetch="admin/fees" reset="admin/clients/reset-fees" :clientId="clientId" />
     
       </template>
-    </Tab>
+    </Tab> -->
+    <component :is="page" :key="$route.params.id"  />
+
   </div>
 </template>
 
@@ -19,6 +21,10 @@ import Divider from "primevue/divider";
 import SelectField from "@/components/SelectField.vue";
 import { useNotificationStore } from "@/stores/notification";
 import FeeConfiguration from "@/components/FeeConfiguration.vue";
+import SubAdmin from "../../components/SubAdmin.vue";
+import PersonalInfo from "../../components/PersonalInfo.vue";
+import ChangePassword from "./auth/changePassword.vue";
+import ManageRole from "@/components/ManageRole.vue";
 
 
 export default {
@@ -28,7 +34,10 @@ export default {
     TextField,
     Divider,
     SelectField,
-    FeeConfiguration
+    FeeConfiguration,
+    SubAdmin,
+    PersonalInfo,
+    ChangePassword,
   },
   data() {
     return {
@@ -95,6 +104,27 @@ export default {
 
     formatLabel(name) {
       return name.replace(/_/g, " ").toUpperCase();
+    }
+  },
+  computed: {
+    page() {
+        if(this.$route.params.id == 'fees'){
+            return FeeConfiguration;
+        }
+        if(this.$route.params.id == 'sub-admins'){
+
+            return SubAdmin;
+        }
+        if(this.$route.params.id == 'personal-info'){
+            return PersonalInfo;
+        }
+
+        if(this.$route.params.id == 'change-password'){
+            return ChangePassword;
+        }
+        if(this.$route.params.id == 'manage-role'){
+            return ManageRole;
+        }
     }
   },
   created() {

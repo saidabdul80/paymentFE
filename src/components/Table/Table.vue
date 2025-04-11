@@ -5,7 +5,11 @@
       
       class="table-shadow-sm  tw-overflow-auto ">
       <div class="tw-border-b-[1px] tw-w-full tw-border-gray-200 tw-text-md md:tw-text-lg tw-font-bold tw-flex tw-flex-col md:tw-flex-row tw-justify-between tw-p-5">
+        <div v-if="left">
+          <slot name="left"></slot>
+        </div>
         <div class="tw-font-bold tw-mb-3 md:tw-mb-0 tw-w-[300px]">
+          
           <IconField>
               <InputIcon >
                 <template #default>
@@ -17,7 +21,7 @@
             <!-- <Search  v-model="search" :options="searchOptions" :searchOptionsDropdown="searchOptionsDropdown" class="tw-bg-[#e8ecf0]"  /> -->
         </div>
         
-        <div class="tw-flex tw-flex-row">
+        <div class="tw-flex tw-flex-row" v-if="statuses.length >0 || sort">
        
           <div v-if="statuses.length >0"
             class="tw-flex tw-flex-row tw-items-center tw-justify-between tw-gap-1 tw-border tw-border-gray-200 md:tw-border-none tw-p-2 tw-rounded-md">
@@ -29,6 +33,7 @@
             </select>
           </div>
           <div
+          v-if="sort"
             class="tw-inline-flex tw-rounded-md tw-shadow-sm md:tw-ml-2 tw-ml-auto">
             <button
               class="tw-px-4 tw-py-2 tw-border  
@@ -199,7 +204,17 @@ export default {
     searchOptionsDropdown:{
       type:Object,
       default:{}
+    },
+    sort:{
+      type:Boolean,
+      default:true
+    },
+    left:{
+      type:Boolean,
+      default:false
     }
+    
+
   },
   data() {
     return {

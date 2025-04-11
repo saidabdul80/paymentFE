@@ -4,7 +4,7 @@ import { createApp } from "vue";
 //import { createPinia } from "pinia";
 import * as pinia from 'pinia'
 import '@mdi/font/css/materialdesignicons.css'
-//import 'primeicons/primeicons.css'
+
 import "driver.js/dist/driver.css";
 
 import 'vuetify/styles'
@@ -22,11 +22,12 @@ import HighchartsVue from "highcharts-vue";
 import Highcharts from "highcharts";
 import ExportData from "highcharts/modules/export-data";
 
-import 'primeicons/primeicons.css'
-
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
 import { driver } from "driver.js";
+import DataTable from "@/components/Table/Table.vue";
+import { definePreset } from "@primevue/themes";
+import 'primeicons/primeicons.css'
 window.pinia = pinia
 const app = createApp(App);
 ExportData(Highcharts);
@@ -36,7 +37,24 @@ app.use(HighchartsVue);
 const { createPinia } = window.pinia
 app.use(PrimeVue, { 
   theme: {
-    preset: Aura,
+    preset: definePreset(Aura, {
+      semantic: {
+        primary: {
+            50: "#f5f5f5",
+            100: "#e0e0e0",
+            200: "#c2c2c2",
+            300: "#a3a3a3",
+            400: "#858585",
+            500: "#1a1a1a", // Main color
+            600: "#4d4d4d",
+            700: "#333333",
+            800: "#1a1a1a",
+            900: "#0a0a0a",
+            950: "#000000",
+
+        }
+      },
+    }),
     options: {
         prefix: 'prime',
         darkModeSelector: 'none',
@@ -45,6 +63,7 @@ app.use(PrimeVue, {
 }
 });
 app.component('VueDatePicker', VueDatePicker);
+app.component('DataTable', DataTable);
 app.use(createPinia());
 app.use(router);
 const vuetify = createVuetify({

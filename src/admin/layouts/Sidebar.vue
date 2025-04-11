@@ -6,7 +6,7 @@
             <div class="tw-flex tw-h-16 tw-shrink-0 tw-items-center">
                 
             </div>
-            <nav class="tw-flex tw-flex-1 tw-flex-col">
+            <div class="tw-flex tw-flex-1 tw-flex-col">
                 <ul role="list" class="tw-flex tw-flex-1 tw-flex-col tw-gap-y-7">
                     <li>
                         <ul role="list" class="-tw-mx-2 tw-space-y-1">
@@ -45,7 +45,7 @@
                         </a>
                     </li>
                 </ul>
-            </nav>
+            </div>
         </div>
     </div>
 </template>

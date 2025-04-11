@@ -61,7 +61,7 @@ export default [
                 meta: { breadcrumb: "Dashboard", parent:'Admin-Clients', requiresAuth: true },
             },
             {
-                path: "settings",
+                path: "settings/:id?/:id2?",
                 name: "Admin-Settings",
                 component: Settings,
                 meta: { breadcrumb: "Settings", parent:'', requiresAuth: true },

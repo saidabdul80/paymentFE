@@ -16,23 +16,29 @@
                 <div id="topbar-right"></div>
                 <!-- <v-btn icon="mdi-dots-vertical" variant="text"></v-btn> -->
             </v-app-bar>            
-            <v-main style="min-height:100vh;" class="tw-bg-gray-100/70">
-                <div class="tw-px-[18px] tw-pt-[36px] tw-mt-2 ">
-                <RouterView v-slot="{ Component }">
-                    <div class="tw-grid md:tw-grid-cols-2 tw-grid-cols-1 tw-items-center tw-gap-4 tw-w-full ">
-                        <div>
-                            <BreadCrumbs />
+            <v-main style="min-height:100vh;" class="tw-bg-gray-100/70 tw-flex">
+                <Panel :header="user.first_name" :pt="{content:'tw-px-0'}" class="tw-w-[230px] tw-px-0" v-if="$route.fullPath.includes('settings')" style="padding-top:96px !important"> 
+                    <v-list density="compact" nav class="py-8">
+                        <SideBarItem :state="false" v-for="item in settingItems" :key="item.name" :item="item"/>
+                    </v-list>
+                </Panel>
+
+                <div class="tw-px-[18px] tw-pt-[36px] tw-mt-2 tw-grow">
+                    <RouterView v-slot="{ Component }">
+                        <div v-if="!$route.fullPath.includes('settings')" class="tw-grid md:tw-grid-cols-2 tw-grid-cols-1 tw-items-center tw-gap-4 tw-w-full ">
+                            <div>
+                                <BreadCrumbs />
+                            </div>
+                            <div class="tw-text-black">
+                                <br /> <br />
+                                <div id="breadcrubs-right"></div>
+                            </div>
                         </div>
-                        <div class="tw-text-black">
-                            <br /> <br />
-                            <div id="breadcrubs-right"></div>
-                        </div>
-                    </div>
-                    <transition name="scale">
-                        <component :is="Component" />
-                    </transition>
-                </RouterView>
-            </div>
+                        <transition name="scale">
+                            <component :is="Component" />
+                        </transition>
+                    </RouterView>
+                </div>
             </v-main>
         </v-layout>
     </div>
@@ -50,12 +56,19 @@ import BreadCrumbs  from '@/components/BreadCrumbs.vue'
 import useAdminStore from "@/admin/stores/admin";
 import Select from "primevue/select";
 import { root } from "postcss";
+
+import Panel from 'primevue/panel';
+import SideBarItem from "@/components/sidebar/SideBarItem.vue";
+import { PhLock, PhUserCircle, PhUsers } from "@phosphor-icons/vue";
+
 export default {
     components: {
         RouterView,
         SideBar,
         BreadCrumbs,
         Select,
+        Panel,
+        SideBarItem
     },
     data() {
         return {
@@ -71,7 +84,9 @@ export default {
             userStore: useUserStore(),
             constantsStore: useConstantsStore(),
             adminStore: useAdminStore(),
-            loading:false
+            loading:false,
+            settingItems:[],
+            user:ls.get('auth.user')
         }
     },
     watch: {
@@ -111,6 +126,14 @@ export default {
         if (savedMode) {
             this.constantsStore.setMode(savedMode);
         }
+
+    const accountType = this.ls.get('auth.user').account_type ==='super_admin'?'admin':'app';
+    this.settingItems = [
+            { name: 'Personal Info', href: '/'+accountType+'/settings/personal-info', icon:PhUserCircle, permission:'', current: false },
+            { name: 'Change Password',href: '/'+accountType+'/settings/change-password', icon: PhLock, current: false },
+            { name: 'Sub-admins', href: '/'+accountType+'/settings/sub-admins', icon: PhUsers, current: false },
+            { name: 'Manage Role', href: '/'+accountType+'/settings/manage-role', icon: PhUsers, current: false },
+        ];
         
     },
     computed: {
