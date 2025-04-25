@@ -3,7 +3,7 @@
         {{ label }}
         <span v-if="isRequired" class="text-red">*</span>
     </label>
-    <Select  class="tw-w-full tw-border tw-border-gray-300 tw-rounded-lg tw-px-3 " :options="options" variant="outlined" v-bind="$attrs" v-on="$listeners" ></Select>
+    <Select :filter="filter" :option-label="optionLabel" :option-value="optionValue" @change="$emit('change', true)"  class="tw-w-full tw-border tw-border-gray-300 tw-rounded-lg tw-px-3 " :options="options" variant="outlined" v-bind="$attrs" v-on="$listeners" ></Select>
     <small v-if="errorMessages !== ''" class="tw-text-[#d13333]" id="username-help">{{ errorMessages }}</small>
 </template>
 
@@ -25,7 +25,19 @@ export default {
             type: Array,
             required: true,
         },
+        optionLabel: {
+            type: String,
+            default: null,
+        },
+        optionValue: {
+            type: String,
+            default: null,
+        },
         isRequired: {
+            type: Boolean,
+            default: false,
+        },
+        filter: {
             type: Boolean,
             default: false,
         },

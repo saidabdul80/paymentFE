@@ -25,7 +25,7 @@ export const handleError = (err) => {
 
       showToaster(msg)
       if(ls.get('auth.token')){
-        authStore.logout()
+     //   authStore.logout()
       }
     } else if (err.response.data.errors) {
       // Show a notification per error

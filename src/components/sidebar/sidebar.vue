@@ -2,7 +2,7 @@
 <template>    
     <v-navigation-drawer class="tw-transition-all" v-model="pdrawer" :rail="computedRail" :temporary="temporary" :color="$constants.light" :width="280">
         
-        <div class="tw-h-[calc(100vh-200px)] tw-overflow-y-auto tw-font-[300] tw-transition-all ">
+        <div class="tw-h-[calc(100vh-300px)] tw-overflow-y-auto tw-font-[300] tw-transition-all ">
             <v-list-item nav class="tw-py-[6px] tw-px-[6px]" @mouseenter="startMarquee" @mouseleave="stopMarquee">
                 <template v-slot:default>
                     <div class="tw-flex tw-py-2 tw-items-center">
@@ -46,8 +46,25 @@
             <v-list density="compact" nav class="py-8">
                 <SideBarItem :state="modelValue" v-for="item in filteredItems" :key="item.name" :item="item" />
             </v-list>
+            <v-divider class="border-opacity-100" :class="`tw-bg-[${$constants.primary}]`"></v-divider>
         </div>
-
+        <div class="tw-h-[150px] tw-overflow-y-auto tw-font-[300] tw-transition-all ">
+            <div v-if="info?.payment_info?.account_number" class="tw-mb-4 tw-pl-3">
+                <h2 class="tw-text-lg tw-font-bold tw-mb-2">Account Details</h2>
+                <div class="tw-mb-1 tw-text-md">
+                    <span>Account Name:</span>
+                    <span class="tw-font-bold tw-text-gray-500">{{ info.payment_info.account_name }}</span>
+                </div>
+                <div class="tw-mb-1 tw-text-md">
+                    <span>Account Number:</span>
+                    <span class="tw-font-bold tw-text-gray-500">{{ info.payment_info.account_number }}</span>
+                </div>
+                <div class="tw-mb-1 tw-text-md">
+                    <span>Bank Name:</span> 
+                    <span class="tw-font-bold tw-text-gray-500">{{ info.payment_info.bank_name }}</span>
+                </div>
+            </div>
+        </div>
         <!-- <v-list density="compact" nav slot="append"></v-list> -->
 
         <div class="tw-py-[6px] tw-bottom-0 tw-w-full tw-bg-white">
@@ -55,7 +72,6 @@
             <v-list density="compact" nav class="py-1">
                 <SideBarItem :id="'bar_'+item.name" :state="modelValue" v-for="item in filteredSubItems" :key="item.name" :item="item" @click="handleItemClick(item)" />            
             </v-list>
-          
         </div>
     </v-navigation-drawer>
 </template>
@@ -83,6 +99,7 @@ import {
     PhQuestion,
 } from "@phosphor-icons/vue";
 import CompanyCard from "../CompanyCard.vue";
+import { useClient } from "@/stores/client";
 
 export default {
     components: {
@@ -102,6 +119,12 @@ export default {
     },
     data() {
         return {
+            info:{
+                payment_info:{
+                    account_name:'',
+                    bank_name:'',
+                }
+            },
             authStore:useAuthStore(),
             // user: JSON.parse(Ls.get('auth.client')||"{}"),
             user: Ls.get('auth.user'),
@@ -157,6 +180,15 @@ export default {
         }
     },
     methods: {
+        async fetchDetails() {
+            const res = await useClient().http({
+            method: 'get',
+            path: 'clients/details',
+            });
+            if (res) {
+            this.info = res.client; // Assuming the API returns a list of keys in `data`
+            }
+        },
         permissions(){
             return Ls.get('permissions');
         },
@@ -218,7 +250,8 @@ export default {
         },
     },
     created() {
-        console.log(this.$vuetify);
+        this.fetchDetails()
+        //console.log(this.$vuetify);
     },
     mounted() {
         // const driverObj = window.driver({

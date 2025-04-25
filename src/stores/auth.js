@@ -38,6 +38,7 @@ export const useAppAuthStore = (useWindow = false) => {
                     const user =  response.user
 
                     console.log(user,1003)
+                  
                     if(!user.is_mfa_setup){
                       //  this.setUpMFA()
                         router.push('/auth/setup-mfa')                            

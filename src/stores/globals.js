@@ -33,7 +33,8 @@ export const useGlobalsStore = defineStore('globals', {
     stats:[],
     clients:[],
     loadingClient:false,
-    client:{}
+    client:{},
+    currency:'CAD'
   }),
   actions: {
     async bootstrap() {
@@ -258,32 +259,37 @@ export const useGlobalsStore = defineStore('globals', {
     },
     async getBalance(id =null, d=null){
 
+      let payload = {client_id:id}
       let prefix = 'admin/'
       if(id == null){
         prefix = ''
       }
-      const [response, response2] = await Promise.all([
-            useClient().http({ method: 'get', path: prefix+ 'transactions/count-stats', data:{client_id:id} }),
-            useClient().http({ method: 'get', path: prefix+'transactions/balance', data:{client_id:id}  })
-      ])
 
+      if(id=='admin'){
+         prefix = 'admin/'
+         payload = {}
+      }
+
+      const [response, response2] = await Promise.all([
+            useClient().http({ method: 'get', path: prefix+ 'transactions/count-stats', data:payload }),
+            useClient().http({ method: 'get', path: prefix+'transactions/balance', data:payload })
+      ])
+      let response4= response2[this.currency]
       if(response){
         this.balance = {
-              ...response2,
+              ...response4,
             }
-
-
         if(id != null){
-          this.balance['Total Credit'] = response.credit_transactions.total_amount;
-          this.balance['Total Debit'] = response.debit_transactions.total_amount;
+          this.balance['Total Credit'] = response.credit_transactions.by_currency?.[this.currency]?.total||0;
+          this.balance['Total Debit'] = response.debit_transactions.by_currency?.[this.currency]?.total|| 0;
         }else{
         }
-        if(response?.fee_count?.total_amount){
-          this.balance['Total Fees'] = response.fee_count.total_amount;
+        if(response.fee_count.by_currency?.[this.currency]?.total_amount){
+          this.balance['Total Fees'] = response.fee_count.by_currency?.[this.currency]?.total_amount;
         }
         if(d != null){
-         this.balance['Total Credit'] = response.credit_transactions.total_amount;
-          this.balance['Total Debit'] = response.debit_transactions.total_amount;
+         this.balance['Total Credit'] = response.credit_transactions.by_currency?.[this.currency]?.total || 0;
+          this.balance['Total Debit'] = response.debit_transactions.by_currency?.[this.currency]?.total || 0;
         }
         if(this.client?.client?.company_name && id != null){
           this.balance.ledger_balance = this.client?.balance?.ledger_balance || 0

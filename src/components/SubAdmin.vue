@@ -123,11 +123,10 @@ export default {
 
         },
         async addAdmin(){
-            const res = await useClient().http({ method: 'post', path: '/register', data: this.admin, showMesage:true })
+            const res = await useClient().http({ method: 'post', path: '/admin/register', data: this.admin, showMesage:true })
             if(res){
                 this.fetchAdmins()
             }
-
         },
     },
     created(){

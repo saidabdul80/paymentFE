@@ -8,6 +8,11 @@
             @page-change="handlePageChange"
             placeholder="Search clients"
           >
+        <template v-slot:td-currency="{ row }">
+          <div class="tw-flex tw-flex-wrap tw-gap-2">
+            <Tag severity="contrast" v-for="cur in row.client_currencies.map(c=>c.currency_code)" :value="cur" />
+          </div>
+        </template>
         <template v-slot:td-action="{ row }">
             <UsersActions :row="row" @reload="reload" @viewClient="showClient" />
         </template>
@@ -378,6 +383,9 @@
   import Dialog from "primevue/dialog";
   import Drawer from "primevue/drawer";
 import Skeleton from "primevue/skeleton";
+
+import Tag from 'primevue/tag';
+
   export default {
     components: {
       DataTable,
@@ -388,7 +396,8 @@ import Skeleton from "primevue/skeleton";
       Dialog,
       TextField,
       UsersActions,
-      Skeleton
+      Skeleton,
+      Tag
     },
     data() {
       return {
@@ -409,6 +418,7 @@ import Skeleton from "primevue/skeleton";
         headers: [
           { key: "company_name", title: "Customer name" },
           { key: "company_email", title: "Email", copy:true },
+          { key: "currency", title: "Enabled Currency" },
           { key: "rc_number", title: "Corporate Number" },
           { key: "balance.available_balance", title: "Balance" },
           { key: "kyc_status", title: "KYC Status" },

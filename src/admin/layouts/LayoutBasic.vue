@@ -129,10 +129,11 @@ export default {
 
     const accountType = this.ls.get('auth.user').account_type ==='super_admin'?'admin':'app';
     this.settingItems = [
-            { name: 'Personal Info', href: '/'+accountType+'/settings/personal-info', icon:PhUserCircle, permission:'', current: false },
-            { name: 'Change Password',href: '/'+accountType+'/settings/change-password', icon: PhLock, current: false },
+            // { name: 'Personal Info', href: '/'+accountType+'/settings/personal-info', icon:PhUserCircle, permission:'', current: false },
+            // { name: 'Change Password',href: '/'+accountType+'/settings/change-password', icon: PhLock, current: false },
             { name: 'Sub-admins', href: '/'+accountType+'/settings/sub-admins', icon: PhUsers, current: false },
             { name: 'Manage Role', href: '/'+accountType+'/settings/manage-role', icon: PhUsers, current: false },
+            { name: 'Mgt Fees', href: '/'+accountType+'/settings/fees', icon: PhUsers, current: false },
         ];
         
     },

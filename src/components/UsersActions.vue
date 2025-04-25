@@ -22,11 +22,31 @@
             <v-list-item @click.stop="updateDialog = true">
                 Update Account
             </v-list-item>
+            <v-list-item @click.stop="openCurrencyDialog">
+                Enable Currency
+            </v-list-item>
+
             <v-list-item :loading="true" @click.stop="debitDialog = true">
                Debit
             </v-list-item>
         </v-list>
     </v-menu>
+    <Dialog v-model:visible="enableCurrencyDialog" modal :closable="true" :draggable="false" style="width: 400px;" 
+    :header="'Enable New Currency '+ row.company_name">
+            <div>
+                <SelectField v-model="selectedCurrencyId" label="Select Currency" :options="currencies" :option-label="null" :option-value="null" class="tw-mb-3" />
+                <div class="tw-flex tw-gap-4">
+                    <v-btn @click="enableCurrencyDialog = false"
+                        class="tw-rounded-md tw-bg-white tw-px-3 tw-py-2 tw-font-semibold tw-text-gray-900 tw-shadow-sm tw-ring-1 tw-ring-inset tw-ring-gray-300 hover:tw-bg-gray-50 tw-mr-2">
+                        Cancel
+                    </v-btn>
+                    <v-btn @click="handleEnableCurrency" :loading="isEnablingCurrency"
+                        class="tw-bg-[black]/90 hover:tw-bg-black tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded">
+                        Enable
+                    </v-btn>
+                </div>
+            </div>
+        </Dialog>
 
     <Dialog v-model:visible="dialog" modal :draggable="false"  :closable="true" class="tw-float-left">
         <div class="checkmark-container tw-mb-5 tw-text-center">
@@ -134,6 +154,12 @@ export default {
     },
     data() {
         return {
+            enableCurrencyDialog: false,
+            selectedCurrencyId: null,
+            currencies: ['CAD', 'NGN'],
+            isEnablingCurrency: false,
+
+
             dialog: false,
             openRowId: null,
             globals: useGlobalsStore(),
@@ -292,6 +318,41 @@ export default {
         closeDialog() {
             this.dialog = false;
         },
+
+        openCurrencyDialog() {
+            this.isMenuOpen = false;
+            this.enableCurrencyDialog = true;
+            //this.fetchAvailableCurrencies();
+        },
+
+        // async fetchAvailableCurrencies() {
+        //     // Replace with actual API call if necessary
+        //     const res = await useClient().http({ method: 'get', path: 'admin/currencies' });
+        //     if (res) {
+        //         this.currencies = res.data;
+        //     }
+        // },
+
+        async handleEnableCurrency() {
+            if (!this.selectedCurrencyId) return;
+            this.isEnablingCurrency = true;
+
+            const res = await useClient().http({
+                method: 'get',
+                path: `admin/clients/${this.row.id}/currency/${this.selectedCurrencyId}/enable`
+            });
+
+            this.isEnablingCurrency = false;
+            this.enableCurrencyDialog = false;
+
+            if (res) {
+                useNotificationStore().showNotification({
+                    type: 'success',
+                    message: 'Currency enabled successfully.',
+                });
+            }
+        }
+
     },
     created(){
         this.clientData = this.row

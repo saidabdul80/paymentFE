@@ -71,7 +71,7 @@ export const useClient = defineStore("client", () => {
           let userRootPath = '';
           /* console.log(useRoute()) */
           userRootPath = route.matched[0]?.path?.replace('/', '') || '';
-          useGlobalsStore().logout(userRootPath)
+         // useGlobalsStore().logout(userRootPath)
           /* if(userRootPath != ''){
           }else{
             router.push({ path: `/` }); // Redirect to login or home page

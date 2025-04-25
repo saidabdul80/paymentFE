@@ -6,16 +6,26 @@
                 <v-btn v-if="user?.can_send_money" color="black" @click="showmodal=true; trType='debit'" class="tw-w-[150px] tw-capitalize !tw-p-0" size="small" variant="outlined" >Send Money</v-btn>
                 <v-btn color="black" @click="showmodal=true; trType='credit'" class="tw-w-[150px] tw-capitalize !tw-p-0" size="small" variant="outlined" >Manual Receive</v-btn>
             </div>
-            <!-- <hr class="tw-my-4 tw-border-2 tw-shadow-2xl"/> -->
+            <div class="tw-flex tw-items-center tw-mb-4">
+                <v-select
+                    v-model="selectedCurrency"
+                    :items="currencyOptions"
+                    label="Currency"
+                    variant="outlined"
+                    density="compact"
+                    class="tw-w-[120px]"
+                ></v-select>
+            </div>
             <div class="tw-grid md:tw-grid-cols-4 tw-mb-4 tw-items-center tw-place-items-center">                  
                 <DashboardCard 
                     v-for="key in Object.keys(globals.balance)"
                     :name="key.replace('_', ' ')"
                     :balance="globals.balance[key]"
+                    :currency="selectedCurrency"
                     previousBalance="-"
                     percentageChange="-"
                     />
-                    </div>
+            </div>
             <div class="tw-grid md:tw-grid-cols-2 tw-grid-cols-1 lg:tw-grid-cols-3 xl:tw-grid-cols-5 tw-gap-4 tw-mb-4"
                 v-if="loading">
                 <v-skeleton-loader type="card" v-for="x in 5" :key="x"></v-skeleton-loader>
@@ -34,10 +44,6 @@
                     <v-skeleton-loader   v-if="all_transaction_key" type="card" v-for="x in 2" :key="x"></v-skeleton-loader>
                     <highcharts v-else  class="hc" :options="chartOptions2" ref="chart2"></highcharts>
                 </div>
-                <!-- <highcharts class="hc" :options="chartOptions" ref="chart"></highcharts> -->
-
-                <!-- Comparison Chart -->
-                <!-- <highcharts class="hc" :options="chartOptionsComparison" ref="chartComparison"></highcharts> -->
             </div>
         </div>
 
@@ -46,8 +52,6 @@
         <SendRecieveMoney :type="trType" :receiveData="receiveData" />
     </Dialog>
     <Dialog v-model:visible="transferDialog" modal :closable="false" :draggable="false" style="width: 300px;" class="tw-float-left" header="Internal Transfer">
-        
-        <!-- Loop through messages and match with the id -->
         <div class="tw-relative">
             <TextField v-model="transfer.amount" label="Amount" :error-messages="errors.amount" class="tw-mb-3" />
             <v-tooltip   location="bottom" color="red" >
@@ -96,7 +100,6 @@ export default {
         const currentMonth = currentDate.toLocaleString('default', { month: 'short' });
 
         return {
-            
             user: ls.get('auth.user'),
             showmodal:false,
             receiveData:{},
@@ -106,7 +109,7 @@ export default {
             all_transaction_key:false,
             adminStore: useAdminStore(),
             selectedCurrency: 'CAD',
-            currencyOptions: ['CAD', 'USD', 'EUR', 'NGN'],
+            currencyOptions: ['CAD', 'NGN'], // Updated to only include supported currencies
             receivedCards: [],
             sentCards: [],
             receivedData: {
@@ -127,7 +130,6 @@ export default {
             type: 'credit',
             date_type: 'days',
             year: currentYear,
-    
             month: currentMonth,
             months: [
                 'Jan',
@@ -182,7 +184,7 @@ export default {
                 xAxis: {
                     lineWidth: 1,
                     tickWidth: 1,
-                     lineColor: '#ccc',
+                    lineColor: '#ccc',
                     tickColor: '#ccc',
                     categories: []
                 },
@@ -193,12 +195,10 @@ export default {
                 },
                 plotOptions: {
                     series: {
-                    groupPadding: 0,
-                    pointPadding: 0
+                        groupPadding: 0,
+                        pointPadding: 0
                     },
                 },
-
-         
             },
             transferDialog:false,
             transfer:{},
@@ -208,57 +208,64 @@ export default {
         };
     },
     watch: {
-        selectedCurrency: 'fetchDashboards2',
-        //type: 'fetchDashboards',
-        // date_type: 'fetchDashboards',
-        // year: 'fetchDashboards',
-        // month: 'fetchDashboards',
-        all_transaction_date_type:'fetchDashboards2',
-        all_transaction_year:'fetchDashboards2',
+        selectedCurrency: {
+            handler: function(){
+                this.fetchDashboards2()
+                this.globals.currency = this.selectedCurrency;
+                this.globals.getBalance(null, localStorage.getItem('auth.prefix')=='app')
+            }
+        },
+        all_transaction_date_type: 'fetchDashboards2',
+        all_transaction_year: 'fetchDashboards2',
     },
     computed: {
-        getTitle(){
-            if(this.trType=='debit'){
-             }else{
-                return 'Receive Money'
-             }
+        getTitle() {
+            if(this.trType=='debit') {
+                return 'Send Money';
+            } else {
+                return 'Receive Money';
+            }
         }
     },
     methods: {
         async handleTranser() {
-            
-            this.transfer.amount = Number(this.transfer.amount)
+            this.transfer.amount = Number(this.transfer.amount);
 
-            if(this.transfer.amount < 1 || this.transfer.amount == '' || isNaN(this.transfer.amount)){
-                this.errors.amount ='a valid amount is required'
+            if(this.transfer.amount < 1 || this.transfer.amount == '' || isNaN(this.transfer.amount)) {
+                this.errors.amount ='a valid amount is required';
                 return;
             }
-            if(this.transfer?.email == '' || this.transfer?.email  == undefined){
-                this.errors.email ='a valid recipient email is required'
+            if(this.transfer?.email == '' || this.transfer?.email  == undefined) {
+                this.errors.email ='a valid recipient email is required';
                 return;
             }
             
-            this.isLoadingOpen = true
-            const res = await useClient().http({ method: 'post', path: 'transactions/internal-transfer', data:{
-                ...this.transfer
-            }});
+            this.isLoadingOpen = true;
+            const res = await useClient().http({ 
+                method: 'post', 
+                path: 'transactions/internal-transfer', 
+                data: {
+                    ...this.transfer,
+                    currency: this.selectedCurrency // Include selected currency in transfer
+                }
+            });
             this.transferDialog = false;
-            this.isLoadingOpen = false
+            this.isLoadingOpen = false;
             if (res) {
-                this.transfer.amount = {}
+                this.transfer = {};
                 const notificationStore = useNotificationStore();
                 notificationStore.showNotification({
                     type: 'success',
-                    message: 'Acccount transfered successfully.',
-                })
+                    message: 'Account transfer completed successfully.',
+                });
             }
         },
         updateCards() {
             // Same updateCards method as before
         },
         async fetchDashboards() {
-            this.comparison()
-            this.fetchDashboards2()
+            this.comparison();
+            this.fetchDashboards2();
             const payload = {
                 type: this.type,
                 date_type: this.date_type,
@@ -280,24 +287,24 @@ export default {
             Object.keys(data).forEach(date => {
                 if (data[date][this.selectedCurrency]) {
                     labels.push(date);
-                    totalReceived.push(parseFloat(data[date][this.selectedCurrency].total_received));
+                    totalReceived.push(parseFloat(data[date][this.selectedCurrency].total_amount));
                     totalTransactions.push(parseInt(data[date][this.selectedCurrency].total_transactions));
                     completedTransactions.push(parseInt(data[date][this.selectedCurrency].completed_transactions));
                     failedTransactions.push(parseInt(data[date][this.selectedCurrency].failed_transactions));
                     averageTransactionValue.push(parseFloat(data[date][this.selectedCurrency].average_transaction_value));
                 }
             });
-            this.chartOptions.title.text = this.type == 'credit' ? 'Received Stats' : 'Debit Stats'
+            this.chartOptions.title.text = this.type == 'credit' ? 'Received Stats' : 'Debit Stats';
             this.chartOptions.xAxis.categories = labels;
             this.chartOptions.series[0].data = totalReceived;
-            this.chartOptions.series[0].name = this.type == 'credit' ? 'Total Received' : 'Total Debit'
+            this.chartOptions.series[0].name = this.type == 'credit' ? 'Total Received' : 'Total Debit';
             this.chartOptions.series[1].data = totalTransactions;
             this.chartOptions.series[2].data = completedTransactions;
             this.chartOptions.series[3].data = failedTransactions;
             this.chartOptions.series[4].data = averageTransactionValue;
-
         },
         async fetchDashboards2() {
+           
             this.all_transaction_key = true;
             const payload = {
                 transaction_type: 'debit',
@@ -306,39 +313,52 @@ export default {
                 month: null,
                 currency: this.selectedCurrency
             };
-            //alert(this.all_transaction_date_type)
 
-            const debit = await useClient().http({ method: 'get', path: 'transactions/stats', data: payload });
-
-            const received = await useClient().http({ method: 'get', path: 'transactions/stats', data:{...payload,transaction_type: 'credit' }});
+            const [debit, received] = await Promise.all([
+                useClient().http({ method: 'get', path: 'transactions/stats', data: payload }),
+                useClient().http({ method: 'get', path: 'transactions/stats', data: {...payload, transaction_type: 'credit' }})
+            ]);
 
             this.loading = false;
 
             const totalReceived = [];
             const totalSent = [];
             const labels = [];
-
-            // Combine the dates from both datasets to ensure all dates are covered
-            const allDates = Array.from(new Set([...Object.keys(received), ...Object.keys(debit)])).sort();
+            
+            // Get all unique dates from both responses
+            const allDates = Array.from(new Set([...Object.keys(received), ...Object.keys(debit)]));
+            
+            // Sort dates based on whether we're viewing by year or month
+            if (this.all_transaction_date_type === 'year') {
+                allDates.sort((a, b) => this.months.indexOf(a) - this.months.indexOf(b));
+            } else {
+                allDates.sort();
+            }
 
             allDates.forEach(date => {
                 labels.push(date);
 
+                // Handle received data
                 if (received[date] && received[date][this.selectedCurrency]) {
                     totalReceived.push(parseFloat(received[date][this.selectedCurrency].total_amount));
                 } else {
-                    totalReceived.push(0);  // Add 0 if no data for the date
+                    totalReceived.push(0);
                 }
 
+                // Handle debit data
                 if (debit[date] && debit[date][this.selectedCurrency]) {
                     totalSent.push(parseFloat(debit[date][this.selectedCurrency].total_amount));
                 } else {
-                    totalSent.push(0);  // Add 0 if no data for the date
+                    totalSent.push(0);
                 }
             });
 
+            // Update chart with currency symbol
+            const currencySymbol = this.selectedCurrency === 'NGN' ? '₦' : '$';
+            
             this.chartOptions2.title.text = '';
             this.chartOptions2.xAxis.categories = labels;
+            this.chartOptions2.yAxis.title.text = `Amount (${currencySymbol})`;
             this.chartOptions2.series = [
                 {
                     name: 'Received',
@@ -353,8 +373,6 @@ export default {
             ];
             this.all_transaction_key = false;
         },
-
-
         async comparison() {
             const payload1 = {
                 type: 'credit',
@@ -404,22 +422,13 @@ export default {
                 } else {
                     //totalSent.push(0);
                 }
-                
             });
-
-            // Update chart data
-            this.chartOptionsComparison.xAxis.categories = labels;
-            this.chartOptionsComparison.series[0].data = totalReceived;
-            this.chartOptionsComparison.series[1].data = totalSent;
         }
-
-
     },
     created() {
         this.fetchDashboards2();
-        this.globals.getBalance(null,localStorage.getItem('auth.prefix')=='app')
+        this.globals.getBalance(null, localStorage.getItem('auth.prefix')=='app')
     },
-   
     components: {
         Tab,
         DashboardCard,
@@ -431,7 +440,7 @@ export default {
 };
 </script>
 
-<style >
+<style>
 .text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
@@ -449,35 +458,5 @@ export default {
     min-height: auto !important;
     display: flex !important;
     align-items: center !important
-   }
-  
+}
 </style>
-
-
-<!-- <template>
-    <div>
-     
-        <div class="tw-grid md:tw-grid-cols-3 ">
-        <DashboardCard 
-            v-for="x in 3"
-            :balance="7820000"
-            :previousBalance="3910000"
-            :percentageChange="50"
-            />
-            </div>
-    </div>
-</template>
-
-<script>
-import DashboardCard from '@/components/DashboardCard.vue';
-
-    export default {
-        components: {
-            DashboardCard,
-        },
-    }
-</script>
-
-<style lang="scss" scoped>
-
-</style> -->

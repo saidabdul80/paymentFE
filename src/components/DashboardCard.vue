@@ -43,6 +43,10 @@
         type: Number,
         required: true,
       },
+      currency: {
+        type: String,
+        default: 'CAD',
+      },
     },
     computed: {
       formattedBalance() {
@@ -54,19 +58,21 @@
     },
     methods: {
        formatCurrency(value) {
+        let res = 0;
         if (value >= 1000000) {
-          return new Intl.NumberFormat('en-US', {
+          res = new Intl.NumberFormat('en-US', {
             style: 'currency',
-            currency: 'USD',
+            currency: this.currency,
             minimumFractionDigits: 0,
             maximumFractionDigits: 1,
           }).format(value / 1000000) + 'M';
         } else {
-          return new Intl.NumberFormat('en-US', {
+          res = new Intl.NumberFormat('en-US', {
             style: 'currency',
-            currency: 'USD',
+            currency: this.currency,
           }).format(value);
         }
+          return res;
       }
 
     },

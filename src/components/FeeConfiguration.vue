@@ -1,10 +1,20 @@
 
 <template>
-  <div class="tw-grid tw-grid-cols-1 tw-gap-4 fee tw-mb-4">
+  <br>
+  <div class="tw-mb-2 mt-10 tw-w-full">
+        <v-select
+            v-model="selectedCurrency"
+            :items="currencyOptions"
+            label="Currency"
+            variant="outlined"
+            density="compact"
+            ></v-select>
+    </div>
+  <div class="tw-grid tw-grid-cols-1 tw-gap-4 fee tw-mb-4 ">
     <template v-for="(fee, index) in fees" :key="fee.id">
       <div class="tw-flex tw-items-end tw-space-x-2 tw-bottom-1">
         <div class="tw-w-[100px]">
-          <NumberField 
+          <NumberField
             v-model="fee.value" 
             :label="formatLabel(fee.name)" 
             :error-messages="errors?.[fee.name]" 
@@ -22,7 +32,7 @@
     </template>
     <Divider />
     <div class="tw-flex tw-items-center tw-gap-4 tw-space-x-2">
-      <h2 class="tw-text-2xl tw-font-semibold">Reset Fees to Default</h2>
+      <h2 class="tw-text-2xl tw-font-semibold">Reset All Clients Fees to Default</h2>
       <v-btn :loading="loading2" class="tw-w-[70px] tw-bg-black" color="red" @click="resetFee" small>
         Reset
       </v-btn>
@@ -36,24 +46,23 @@ import SelectField from "@/components/SelectField.vue";
 import Divider from "primevue/divider";
 import { useClient } from "@/stores/client";
 import { useNotificationStore } from "@/stores/notification";
-
 export default {
   props: {
     update: {
       type: String,
-      required: true
+      default: "admin/fees"
     },
     clientId: {
         type: String,
-        default: null
+        default: null,
     },
     fetch: {
       type: String,
-      required: true
+      default: "admin/fees"
     },
     reset: {
       type: String,
-      required: true
+      default: "admin/clients/reset-fees"
     }
   },
   components: {
@@ -64,26 +73,25 @@ export default {
   data() {
     return {
       fees: [],
-      loading2: false
+      loading2: false,
+      selectedCurrency: 'CAD',
+      currencyOptions: ['CAD', 'NGN'],
     };
   },
+  watch: {
+    selectedCurrency: {
+      handler: function(){
+        this.fetchFees()
+      },
+      intermediate: true,
+    },
+  },
   methods: {
-    // async fetchFees() {
-    //   const res = await useClient().http({ method: "get", path: this.fetch });
-    //   if (res) {
-    //     this.fees = res.fees.map(fee => ({
-    //       id: fee.id,
-    //       name: fee.name,
-    //       type: fee.type,
-    //       value: parseFloat(fee.value),
-    //       is_active: fee.is_active
-    //     }));
-    //   }
-    // },
+
     async fetchFees() {
       const res = await useClient().http({
         method: "get",
-        path: this.fetch,
+        path: this.fetch+'?currency='+this.selectedCurrency  ,
       });
 
       if (res) {
@@ -114,7 +122,7 @@ export default {
             }
         }
       }
-      const res = await useClient().http({ method: "put", path:path , data:payload });
+      const res = await useClient().http({ method: "put", path:path, data:payload });
       fee.loading = false;
       if (res) {
         useNotificationStore().showNotification({ type: 'success', message: 'Fees updated successfully!' });
@@ -122,7 +130,7 @@ export default {
     },
     async resetFee() {
       this.loading2 = true;
-      const res = await useClient().http({ method: "GET", path: this.reset });
+      const res = await useClient().http({ method: "GET", path: this.reset+'/'+this.selectedCurrency });
       this.loading2 = false;
       if (res) {
         useNotificationStore().showNotification({ type: 'success', message: 'Fees reset successfully!' });

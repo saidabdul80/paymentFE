@@ -2,6 +2,8 @@
   <div>
     <label class="tw-block tw-text-sm tw-font-medium tw-text-left tw-mb-1">{{ label }}</label>
     <InputText
+    @keyup="$emit('keyup')"
+      @update:modelValue="$emit('change')"
       :disabled="disabled"
       :invalid="errorMessages !== ''"
       v-model="inputValue"
@@ -40,7 +42,7 @@ export default {
     errorMessages: {
       type: String,
       default: "",
-    },
+    }
   },
   computed: {
     inputValue: {
