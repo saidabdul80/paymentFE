@@ -12,6 +12,9 @@
               <v-btn to="/register"   class="tw-px-5 tw-py-3 tw-capitalize tw-text-black tw-bg-white tw-rounded-xl tw-min-h-[47px]">
                 Get Started for Free
               </v-btn>
+              <v-btn to="/ugcc/interest" variant="outlined" class="tw-px-5 tw-py-3 tw-capitalize tw-text-white tw-border-white tw-rounded-xl tw-min-h-[47px]">
+                Join UGCC
+              </v-btn>
               <!-- <button class="tw-px-5 tw-py-3 tw-text-white tw-bg-black tw-rounded-xl tw-border tw-border-white tw-border-solid tw-min-h-[47px]">
                 Join Waiting List
               </button> -->
