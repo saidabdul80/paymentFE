@@ -15,6 +15,12 @@ import ForgortPassword from '@/views/ForgotPassword.vue';
 import MFA from '@/admin/views/auth/MFA.vue';
 import Setup_MFA from '@/admin/views/auth/Setup_MFA.vue';
 
+// UGCC Components
+import UgccInterest from '@/views/UgccInterest.vue';
+import UgccLogin from '@/views/UgccLogin.vue';
+import UgccRegister from '@/views/UgccRegister.vue';
+import UgccDashboard from '@/views/UgccDashboard.vue';
+
 export default [
     {
         path: '/app',
@@ -125,5 +131,30 @@ export default [
         name: "Success",
         component: () => import("@/views/Success.vue"),
         meta: { requiresAuth: false, breadcrumb: '', parent: "" },
+    },
+    // UGCC Routes
+    {
+        path: "/ugcc/interest",
+        name: "UgccInterest",
+        component: UgccInterest,
+        meta: { requiresAuth: false, breadcrumb: 'UGCC Interest Registration' },
+    },
+    {
+        path: "/ugcc/login",
+        name: "UgccLogin", 
+        component: UgccLogin,
+        meta: { requiresAuth: false, breadcrumb: 'UGCC Member Login' },
+    },
+    {
+        path: "/ugcc/register",
+        name: "UgccRegister",
+        component: UgccRegister,
+        meta: { requiresAuth: false, breadcrumb: 'UGCC Member Registration' },
+    },
+    {
+        path: "/ugcc/dashboard",
+        name: "UgccDashboard",
+        component: UgccDashboard,
+        meta: { requiresAuth: true, breadcrumb: 'UGCC Dashboard' },
     },
 ];
